@@ -214,15 +214,13 @@ export function WelcomeIntro() {
           <pattern id="edge-grid" width="22" height="22" patternUnits="userSpaceOnUse">
             <path d="M22 0H0V22" fill="none" stroke="rgba(150,180,210,0.22)" strokeWidth="0.5" />
           </pattern>
-          {/* Custom sci-fi HUD tile: notched frame + crosshair + corner ticks */}
-          <pattern id="edge-tri" width="64" height="64" patternUnits="userSpaceOnUse">
-            <g fill="none" stroke="rgba(170,200,225,0.32)" strokeWidth="0.6">
-              <path d="M6 2 H22 L26 6 V14 M58 6 V22 L54 26 H46 M58 58 H42 L38 54 V46 M6 58 V42 L10 38 H18" />
-              <path d="M32 26 V38 M26 32 H38" />
-              <circle cx="32" cy="32" r="1.2" fill="rgba(180,210,235,0.55)" stroke="none" />
-              <path d="M2 2 H4 M2 2 V4 M62 2 H60 M62 2 V4 M2 62 H4 M2 62 V60 M62 62 H60 M62 62 V60" strokeWidth="0.9" />
-              <path d="M14 32 H22 M42 32 H50 M32 14 V22 M32 42 V50" strokeDasharray="1 2" opacity="0.6" />
+          {/* Simpler sci-fi tile: corner bracket + center tick */}
+          <pattern id="edge-tri" width="56" height="56" patternUnits="userSpaceOnUse">
+            <g fill="none" stroke="rgba(170,200,225,0.3)" strokeWidth="0.6">
+              <path d="M4 12 V4 H12" />
+              <path d="M52 28 H44" />
             </g>
+            <circle cx="28" cy="28" r="0.9" fill="rgba(180,210,235,0.5)" />
           </pattern>
           <linearGradient id="fade-t" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="white" stopOpacity="1" />
