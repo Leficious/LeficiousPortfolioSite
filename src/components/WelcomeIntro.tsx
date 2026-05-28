@@ -1,19 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 
+/**
+ * Matrix / geometric grid overlay.
+ * - Cursor pushes/distorts a lattice of dots & lines (field warp).
+ * - Subtle scanline + noise dither kills color banding from large gradients.
+ */
 export function WelcomeIntro() {
   const [dismissed, setDismissed] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Show only once per session
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (sessionStorage.getItem("intro-seen") === "1") {
-      setDismissed(true);
-    }
+    if (sessionStorage.getItem("intro-seen") === "1") setDismissed(true);
   }, []);
 
-  // Liquid cursor effect
   useEffect(() => {
     if (dismissed) return;
     const canvas = canvasRef.current;
@@ -21,9 +22,12 @@ export function WelcomeIntro() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let width = 0;
     let height = 0;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let cols = 0;
+    let rows = 0;
+    const spacing = 28;
 
     const resize = () => {
       width = canvas.clientWidth;
@@ -31,82 +35,117 @@ export function WelcomeIntro() {
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.ceil(width / spacing) + 2;
+      rows = Math.ceil(height / spacing) + 2;
     };
     resize();
     window.addEventListener("resize", resize);
 
-    const mouse = { x: width / 2, y: height / 2 };
-    const trail: { x: number; y: number; r: number; life: number }[] = [];
-
+    const mouse = { x: -9999, y: -9999, active: false };
     const onMove = (e: PointerEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
-      for (let i = 0; i < 2; i++) {
-        trail.push({
-          x: mouse.x + (Math.random() - 0.5) * 8,
-          y: mouse.y + (Math.random() - 0.5) * 8,
-          r: 60 + Math.random() * 40,
-          life: 1,
-        });
-      }
-      if (trail.length > 120) trail.splice(0, trail.length - 120);
+      mouse.active = true;
+    };
+    const onLeave = () => {
+      mouse.active = false;
     };
     window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerleave", onLeave);
 
-    // ambient blobs
-    const blobs = Array.from({ length: 5 }, (_, i) => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      r: 140 + i * 30,
-    }));
+    // dither noise tile to break up banding
+    const noise = document.createElement("canvas");
+    noise.width = noise.height = 128;
+    const nctx = noise.getContext("2d")!;
+    const img = nctx.createImageData(128, 128);
+    for (let i = 0; i < img.data.length; i += 4) {
+      const v = (Math.random() * 255) | 0;
+      img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+      img.data[i + 3] = 14;
+    }
+    nctx.putImageData(img, 0, 0);
+    const noisePattern = ctx.createPattern(noise, "repeat")!;
 
+    let t = 0;
     let raf = 0;
+    const influence = 140;
+
     const tick = () => {
-      ctx.clearRect(0, 0, width, height);
-      ctx.globalCompositeOperation = "lighter";
+      t += 0.008;
 
-      for (const b of blobs) {
-        b.x += b.vx;
-        b.y += b.vy;
-        if (b.x < -b.r || b.x > width + b.r) b.vx *= -1;
-        if (b.y < -b.r || b.y > height + b.r) b.vy *= -1;
-        const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
-        g.addColorStop(0, "rgba(120, 160, 200, 0.18)");
-        g.addColorStop(1, "rgba(120, 160, 200, 0)");
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      // base wash
+      ctx.fillStyle = "rgb(14, 18, 26)";
+      ctx.fillRect(0, 0, width, height);
 
-      for (let i = trail.length - 1; i >= 0; i--) {
-        const p = trail[i];
-        p.life -= 0.02;
-        p.r *= 0.985;
-        if (p.life <= 0) {
-          trail.splice(i, 1);
-          continue;
+      // dither layer kills the OKLCH banding
+      ctx.fillStyle = noisePattern;
+      ctx.fillRect(0, 0, width, height);
+
+      // grid dots warped toward cursor
+      for (let j = 0; j < rows; j++) {
+        for (let i = 0; i < cols; i++) {
+          const baseX = i * spacing;
+          const baseY = j * spacing;
+          let x = baseX;
+          let y = baseY;
+          let intensity = 0;
+
+          if (mouse.active) {
+            const dx = baseX - mouse.x;
+            const dy = baseY - mouse.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < influence) {
+              const f = 1 - dist / influence;
+              const push = f * f * 18;
+              const ang = Math.atan2(dy, dx);
+              x += Math.cos(ang) * push;
+              y += Math.sin(ang) * push;
+              intensity = f;
+            }
+          }
+
+          // subtle ambient drift
+          const drift = Math.sin(t + (i + j) * 0.35) * 0.6;
+          y += drift;
+
+          const size = 1 + intensity * 2.2;
+          const alpha = 0.18 + intensity * 0.6;
+          ctx.fillStyle = `rgba(150, 180, 210, ${alpha})`;
+          ctx.fillRect(x - size / 2, y - size / 2, size, size);
         }
-        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
-        g.addColorStop(0, `rgba(170, 210, 240, ${0.35 * p.life})`);
-        g.addColorStop(0.6, `rgba(120, 160, 200, ${0.12 * p.life})`);
-        g.addColorStop(1, "rgba(120, 160, 200, 0)");
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
       }
 
-      // soft glow around cursor
-      const cg = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 180);
-      cg.addColorStop(0, "rgba(200, 225, 245, 0.25)");
-      cg.addColorStop(1, "rgba(200, 225, 245, 0)");
-      ctx.fillStyle = cg;
-      ctx.beginPath();
-      ctx.arc(mouse.x, mouse.y, 180, 0, Math.PI * 2);
-      ctx.fill();
+      // matrix-style scan ring around cursor
+      if (mouse.active) {
+        ctx.strokeStyle = "rgba(120, 180, 220, 0.18)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, influence, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(120, 180, 220, 0.35)";
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, 4 + (Math.sin(t * 6) + 1) * 3, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // crosshair
+        ctx.strokeStyle = "rgba(170, 200, 220, 0.25)";
+        ctx.beginPath();
+        ctx.moveTo(mouse.x - 14, mouse.y);
+        ctx.lineTo(mouse.x + 14, mouse.y);
+        ctx.moveTo(mouse.x, mouse.y - 14);
+        ctx.lineTo(mouse.x, mouse.y + 14);
+        ctx.stroke();
+      }
+
+      // horizontal scanline
+      const scanY = ((t * 60) % (height + 60)) - 30;
+      const grad = ctx.createLinearGradient(0, scanY - 30, 0, scanY + 30);
+      grad.addColorStop(0, "rgba(120, 180, 220, 0)");
+      grad.addColorStop(0.5, "rgba(120, 180, 220, 0.05)");
+      grad.addColorStop(1, "rgba(120, 180, 220, 0)");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, scanY - 30, width, 60);
 
       raf = requestAnimationFrame(tick);
     };
@@ -116,6 +155,7 @@ export function WelcomeIntro() {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerleave", onLeave);
     };
   }, [dismissed]);
 
@@ -124,7 +164,7 @@ export function WelcomeIntro() {
   const handleDismiss = () => {
     setLeaving(true);
     sessionStorage.setItem("intro-seen", "1");
-    setTimeout(() => setDismissed(true), 600);
+    setTimeout(() => setDismissed(true), 500);
   };
 
   return (
@@ -134,34 +174,31 @@ export function WelcomeIntro() {
         e.preventDefault();
         handleDismiss();
       }}
-      className={`fixed inset-0 z-[100] cursor-pointer overflow-hidden bg-background transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[100] cursor-crosshair overflow-hidden bg-background transition-opacity duration-500 ${
         leaving ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
-      style={{ filter: "url(#liquid-goo)" }}
       aria-label="Welcome — click to enter"
       role="button"
     >
-      {/* SVG filter for goo/liquid feel */}
-      <svg className="pointer-events-none absolute h-0 w-0" aria-hidden>
-        <defs>
-          <filter id="liquid-goo">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="blur" />
-            <feColorMatrix
-              in="blur"
-              mode="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10"
-              result="goo"
-            />
-            <feBlend in="SourceGraphic" in2="goo" />
-          </filter>
-        </defs>
-      </svg>
-
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
-      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground">
-          Welcome
+      {/* corner registration marks */}
+      <div className="pointer-events-none absolute inset-6 z-10">
+        {(["tl", "tr", "bl", "br"] as const).map((pos) => (
+          <div
+            key={pos}
+            className={`absolute h-4 w-4 border-foreground/30 ${
+              pos === "tl" ? "left-0 top-0 border-l border-t" : ""
+            } ${pos === "tr" ? "right-0 top-0 border-r border-t" : ""} ${
+              pos === "bl" ? "bottom-0 left-0 border-b border-l" : ""
+            } ${pos === "br" ? "bottom-0 right-0 border-b border-r" : ""}`}
+          />
+        ))}
+      </div>
+
+      <div className="pointer-events-none relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+        <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
+          ▘ ▝ ▖ ▗ &nbsp; Welcome &nbsp; ▘ ▝ ▖ ▗
         </p>
         <h1 className="mt-6 max-w-3xl font-display text-4xl font-semibold leading-[1.05] text-balance text-foreground md:text-6xl">
           I'm <span className="text-accent">leficious</span> — technical &amp;
@@ -169,10 +206,10 @@ export function WelcomeIntro() {
         </h1>
         <p className="mt-6 max-w-xl text-pretty text-base text-muted-foreground md:text-lg">
           Prototypes, combat systems, AI, and the tools that ship them. Move
-          your cursor. Click anywhere to enter.
+          your cursor across the lattice. Click to enter.
         </p>
-        <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground/70 animate-pulse">
-          ▸ click to continue
+        <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground/70 animate-pulse">
+          [ click to continue ]
         </p>
       </div>
     </div>
