@@ -214,13 +214,15 @@ export function WelcomeIntro() {
           <pattern id="edge-grid" width="22" height="22" patternUnits="userSpaceOnUse">
             <path d="M22 0H0V22" fill="none" stroke="rgba(150,180,210,0.22)" strokeWidth="0.5" />
           </pattern>
-          <pattern id="edge-tri" width="40" height="34.64" patternUnits="userSpaceOnUse">
-            <path
-              d="M0 0 L20 34.64 L40 0 M0 34.64 L20 0 L40 34.64"
-              fill="none"
-              stroke="rgba(170,200,225,0.28)"
-              strokeWidth="0.5"
-            />
+          {/* Custom sci-fi HUD tile: notched frame + crosshair + corner ticks */}
+          <pattern id="edge-tri" width="64" height="64" patternUnits="userSpaceOnUse">
+            <g fill="none" stroke="rgba(170,200,225,0.32)" strokeWidth="0.6">
+              <path d="M6 2 H22 L26 6 V14 M58 6 V22 L54 26 H46 M58 58 H42 L38 54 V46 M6 58 V42 L10 38 H18" />
+              <path d="M32 26 V38 M26 32 H38" />
+              <circle cx="32" cy="32" r="1.2" fill="rgba(180,210,235,0.55)" stroke="none" />
+              <path d="M2 2 H4 M2 2 V4 M62 2 H60 M62 2 V4 M2 62 H4 M2 62 V60 M62 62 H60 M62 62 V60" strokeWidth="0.9" />
+              <path d="M14 32 H22 M42 32 H50 M32 14 V22 M32 42 V50" strokeDasharray="1 2" opacity="0.6" />
+            </g>
           </pattern>
           <linearGradient id="fade-t" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="white" stopOpacity="1" />
@@ -289,7 +291,7 @@ export function WelcomeIntro() {
       </div>
 
       <div className="pointer-events-none relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-        <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
+        <p className="font-mono text-sm uppercase tracking-[0.5em] text-muted-foreground md:text-base">
           ▘ ▝ ▖ ▗ &nbsp; Welcome &nbsp; ▘ ▝ ▖ ▗
         </p>
         <h1 className="mt-6 max-w-3xl font-display text-4xl font-semibold leading-[1.05] text-balance text-foreground md:text-6xl">
