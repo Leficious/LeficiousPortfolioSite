@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteFooter, SiteNav } from "@/components/SiteNav";
+import { WelcomeIntro } from "@/components/WelcomeIntro";
 import { projects } from "@/lib/projects";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
