@@ -290,7 +290,7 @@ export function WelcomeIntro() {
 
       <div className="pointer-events-none relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
         <p className="font-mono text-sm uppercase tracking-[0.5em] text-muted-foreground md:text-base">
-          ▘ ▝ ▖ ▗ &nbsp; Welcome &nbsp; ▘ ▝ ▖ ▗
+          Welcome
         </p>
         <h1 className="mt-6 max-w-3xl font-display text-4xl font-semibold leading-[1.05] text-balance text-foreground md:text-6xl">
           I'm <span className="text-accent">leficious</span> — technical &amp;
