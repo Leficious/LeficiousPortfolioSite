@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteFooter, SiteNav } from "@/components/SiteNav";
 import { CodeBlock } from "@/components/CodeBlock";
 import { Media } from "@/components/Media";
-import { getProject, projects } from "@/lib/projects";
+import { getProject, projects, type MediaItem, type CodeSnippet } from "@/lib/projects";
 
 export const Route = createFileRoute("/projects/$slug")({
   loader: ({ params }) => {
@@ -79,7 +79,7 @@ function ProjectPage() {
                 Stack
               </dt>
               <dd className="flex flex-wrap gap-1.5">
-                {project.tags.map((t) => (
+                {project.tags.map((t: string) => (
                   <span
                     key={t}
                     className="rounded-full border border-border bg-surface px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
@@ -109,7 +109,7 @@ function ProjectPage() {
           <div className="md:col-span-9 space-y-4 text-pretty leading-relaxed">
             <p>{project.overview}</p>
             <ul className="mt-4 space-y-2 text-muted-foreground">
-              {project.responsibilities.map((r) => (
+              {project.responsibilities.map((r: string) => (
                 <li key={r} className="flex gap-3">
                   <span className="mt-2 inline-block h-1 w-3 shrink-0 bg-accent" />
                   <span>{r}</span>
@@ -127,7 +127,7 @@ function ProjectPage() {
               </h2>
             </div>
             <div className="md:col-span-9 space-y-8">
-              {project.media.map((m, i) => (
+              {project.media.map((m: MediaItem, i: number) => (
                 <Media key={i} item={m} />
               ))}
             </div>
@@ -142,7 +142,7 @@ function ProjectPage() {
               </h2>
             </div>
             <div className="md:col-span-9 space-y-6">
-              {project.snippets.map((s, i) => (
+              {project.snippets.map((s: CodeSnippet, i: number) => (
                 <CodeBlock key={i} {...s} />
               ))}
             </div>
