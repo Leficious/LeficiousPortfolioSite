@@ -189,9 +189,17 @@ export function WelcomeIntro() {
     setTimeout(() => setDismissed(true), 500);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleDismiss();
+    }
+  };
+
   return (
     <div
       onClick={handleDismiss}
+      onKeyDown={handleKeyDown}
       onContextMenu={(e) => {
         e.preventDefault();
         handleDismiss();
@@ -201,6 +209,7 @@ export function WelcomeIntro() {
       }`}
       aria-label="Welcome — click to enter"
       role="button"
+      tabIndex={0}
     >
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
