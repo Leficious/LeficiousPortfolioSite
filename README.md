@@ -1,6 +1,6 @@
 # Leficious Portfolio
 
-A standalone React portfolio for [leficious.com](https://leficious.com). It has no Lovable runtime, packages, metadata, or deployment dependency.
+A standalone React portfolio for [leficious.com](https://leficious.com).
 
 ## Local development
 
