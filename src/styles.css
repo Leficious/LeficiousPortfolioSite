@@ -138,6 +138,53 @@
   display: none;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes system-mark-enter {
+    from { opacity: 0; transform: translateY(-5px); letter-spacing: 0.04em; }
+    to { opacity: 1; transform: translateY(0); letter-spacing: -0.025em; }
+  }
+
+  @keyframes system-content-enter {
+    from { opacity: 0; transform: translateY(12px); filter: blur(4px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+
+  @keyframes system-diagram-enter {
+    from { opacity: 0; transform: scale(0.965); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes system-grid-enter {
+    from { opacity: 0; }
+    to { opacity: 0.3; }
+  }
+
+  @keyframes ambient-pattern-enter {
+    from { opacity: 0; }
+    to { opacity: 0.18; }
+  }
+
+  .site-mark-enter {
+    animation: system-mark-enter 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .work-copy-enter {
+    animation: system-content-enter 650ms 70ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .work-diagram-enter {
+    animation: system-diagram-enter 650ms 160ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .work-meta-enter {
+    animation: system-content-enter 600ms 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .work-grid-enter {
+    animation: system-grid-enter 800ms ease-out both;
+  }
+}
+
 @media (min-width: 1280px) {
   .ambient-backdrop {
     --ambient-x: 50vw;
@@ -165,10 +212,15 @@
   .ambient-backdrop::after { right: calc(50% - 606px); }
 
   .ambient-backdrop__pattern,
-  .ambient-backdrop__glow {
+  .ambient-backdrop__glow,
+  .ambient-backdrop__map {
     position: absolute;
     inset: 0;
     mask-image: linear-gradient(to right, black 0%, black calc(50% - 650px), transparent calc(50% - 510px), transparent calc(50% + 510px), black calc(50% + 650px), black 100%);
+  }
+
+  .ambient-backdrop__map {
+    opacity: 0.9;
   }
 
   .ambient-backdrop__pattern {
@@ -178,6 +230,12 @@
       linear-gradient(to bottom, var(--color-border) 1px, transparent 1px),
       repeating-linear-gradient(135deg, transparent 0 23px, color-mix(in oklch, var(--color-accent) 16%, transparent) 24px, transparent 25px 48px);
     background-size: 36px 36px, 36px 36px, auto;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ambient-backdrop__pattern {
+      animation: ambient-pattern-enter 900ms 100ms ease-out both;
+    }
   }
 
   .ambient-backdrop__glow {
