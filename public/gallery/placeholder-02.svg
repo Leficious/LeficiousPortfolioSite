@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200">
+  <rect width="900" height="1200" fill="#111821"/>
+  <g fill="none" stroke="#6b9bac" stroke-width="2" opacity=".7"><ellipse cx="450" cy="520" rx="270" ry="390"/><ellipse cx="450" cy="520" rx="180" ry="300"/><path d="M180 520h540M450 130v780M260 245l380 550M640 245 260 795"/></g>
+  <rect x="90" y="980" width="720" height="4" fill="#bf8468"/>
+  <text x="90" y="1045" fill="#dce5ec" font-family="monospace" font-size="22" letter-spacing="8">PLACEHOLDER / STUDY</text>
+</svg>
