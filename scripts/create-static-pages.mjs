@@ -15,10 +15,10 @@ const routes = [
       "About Leficious — technical and combat designer focused on combat systems, AI, and tooling. Contact and portfolio links.",
   },
   {
-    path: "/projects/directional-parry-system",
-    title: "Directional Parry System — Leficious",
+    path: "/projects/starshore",
+    title: "Starshore — Leficious",
     description:
-      "A frame-perfect directional parry with stagger, posture, and riposte windows tuned for melee duels.",
+      "A 15-week gameplay prototype connecting character movement, abilities, targeting, inventory, shops, and data-driven pickups.",
   },
   {
     path: "/projects/adaptive-enemy-ai",
