@@ -133,3 +133,55 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   }
 }
+
+.ambient-backdrop {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .ambient-backdrop {
+    --ambient-x: 50vw;
+    --ambient-y: 38vh;
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: block;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .ambient-backdrop::before,
+  .ambient-backdrop::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent 6%, var(--color-border) 22%, var(--color-border) 78%, transparent 94%);
+    opacity: 0.42;
+  }
+
+  .ambient-backdrop::before { left: calc(50% - 606px); }
+  .ambient-backdrop::after { right: calc(50% - 606px); }
+
+  .ambient-backdrop__pattern,
+  .ambient-backdrop__glow {
+    position: absolute;
+    inset: 0;
+    mask-image: linear-gradient(to right, black 0%, black calc(50% - 650px), transparent calc(50% - 510px), transparent calc(50% + 510px), black calc(50% + 650px), black 100%);
+  }
+
+  .ambient-backdrop__pattern {
+    opacity: 0.18;
+    background-image:
+      linear-gradient(to right, var(--color-border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-border) 1px, transparent 1px),
+      repeating-linear-gradient(135deg, transparent 0 23px, color-mix(in oklch, var(--color-accent) 16%, transparent) 24px, transparent 25px 48px);
+    background-size: 36px 36px, 36px 36px, auto;
+  }
+
+  .ambient-backdrop__glow {
+    background: radial-gradient(380px circle at var(--ambient-x) var(--ambient-y), color-mix(in oklch, var(--color-accent) 16%, transparent), transparent 72%);
+    transition: opacity 180ms ease;
+  }
+}
