@@ -41,7 +41,7 @@ function ContactIcon({ name }: { name: IconName }) {
 
 const details = [
   { number: "01", label: "Focus", value: "Technical + combat design" },
-  { number: "02", label: "Engine", value: "Unreal Engine 5" },
+  { number: "02", label: "Engines", value: "Unreal Engine · Unity" },
   { number: "03", label: "Perspective", value: "Design / code / 3D" },
 ];
 
@@ -96,7 +96,7 @@ export function AboutPage() {
                 Technical design, gameplay systems, <span className="text-accent">3D production.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                I&apos;m a technical game designer focused on combat design and gameplay systems in Unreal Engine. My background in 3D environment production and technical art helps me understand how design, animation, tools, and asset pipelines fit together in a working game.
+                I&apos;m a technical game designer focused on combat design and gameplay systems. I prototype, implement, and iterate in commercial game engines, while my background in 3D environment production and technical art helps me understand how design, animation, tools, and asset pipelines fit together in a working game.
               </p>
             </div>
 
@@ -164,7 +164,7 @@ export function AboutPage() {
               <span aria-hidden="true" className="absolute -right-3 -top-7 font-display text-8xl font-bold text-foreground/[0.025]">T</span>
               <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">Toolkit</p>
               <ul className="mt-6 space-y-4">
-                {["UE5 · Blueprint · C++", "StateTree · GAS · Behavior Trees", "UMG · Animation Blueprints · Control Rig", "Python · C# · Git", "Maya · Substance · Houdini · SpeedTree"].map((item, index) => (
+                {["Unreal Engine · Unity", "Blueprint · C++ · C#", "Gameplay AI · Behavior Trees · State Machines", "Animation systems · UI · Debug tools", "Python · Git · Maya · Substance · Houdini · SpeedTree"].map((item, index) => (
                   <li key={item} className="flex items-center gap-3 text-sm"><span className="font-mono text-[9px] text-muted-foreground">0{index + 1}</span><span className="h-px w-5 bg-border" />{item}</li>
                 ))}
               </ul>
