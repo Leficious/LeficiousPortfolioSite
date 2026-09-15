@@ -42,7 +42,7 @@ export function GalleryPage() {
                 Process, studies, and <span className="text-accent">finished frames.</span>
               </h1>
               <p className="mt-6 max-w-2xl text-pretty text-base text-muted-foreground md:text-lg">
-                A visual archive spanning realtime work, characters, environments, tools, and experiments.
+                A visual archive featuring realtime work, characters, game-ready environments, tools, and other experiments.
               </p>
             </div>
           </section>

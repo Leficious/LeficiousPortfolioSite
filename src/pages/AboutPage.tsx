@@ -40,9 +40,16 @@ function ContactIcon({ name }: { name: IconName }) {
 }
 
 const details = [
-  { number: "01", label: "Focus", value: "Combat systems" },
+  { number: "01", label: "Focus", value: "Technical + combat design" },
   { number: "02", label: "Engine", value: "Unreal Engine 5" },
-  { number: "03", label: "Languages", value: "C++ / Python" },
+  { number: "03", label: "Perspective", value: "Design / code / 3D" },
+];
+
+const systems = [
+  { number: "01", title: "Combat Design", description: "Player actions, enemy behaviors, encounters, controls, feedback, and the pacing that connects them." },
+  { number: "02", title: "Gameplay Systems", description: "Clear, scalable rules and data structures designed around iteration, tuning, and player readability." },
+  { number: "03", title: "Tools & Workflows", description: "Designer-facing utilities, editor interfaces, debug visualization, and production-minded pipelines." },
+  { number: "04", title: "Technical Production", description: "Animation systems, procedural workflows, art implementation, and the bridge between assets and gameplay." },
 ];
 
 const contactLinks: { label: string; detail: string; href: string; icon: IconName }[] = [
@@ -83,13 +90,13 @@ export function AboutPage() {
             <div>
               <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
                 <span className="h-px w-8 bg-accent" />
-                Profile / Systems designer
+                Technical / Game designer
               </div>
               <h1 className="mt-7 max-w-3xl font-display text-5xl font-semibold leading-[0.95] text-balance sm:text-6xl lg:text-7xl">
-                I make systems that <span className="text-accent">fight back.</span>
+                Technical design, gameplay systems, <span className="text-accent">3D production.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                Technical and combat designer working where gameplay, animation, and tools overlap. I build combat that reads clearly, hits hard, and stays easy to tune.
+                I&apos;m a technical game designer focused on combat design and gameplay systems in Unreal Engine. My background in 3D environment production and technical art helps me understand how design, animation, tools, and asset pipelines fit together in a working game.
               </p>
             </div>
 
@@ -102,7 +109,7 @@ export function AboutPage() {
               <div className="absolute inset-x-0 top-1/2 h-px bg-border/70" />
               <div className="absolute inset-y-0 left-1/2 w-px bg-border/70" />
               <div className="absolute inset-[31%] grid place-items-center rotate-45 border border-accent/60 bg-background/80 shadow-[0_0_60px_rgba(91,154,172,0.14)]">
-                <span className="-rotate-45 font-mono text-[9px] uppercase leading-loose tracking-[0.2em] text-muted-foreground">Design<br />Build<br />Tune</span>
+                <span className="-rotate-45 font-mono text-[9px] uppercase leading-loose tracking-[0.2em] text-muted-foreground">Design<br />Implement<br />Iterate</span>
               </div>
             </div>
           </div>
@@ -118,17 +125,37 @@ export function AboutPage() {
           ))}
         </div>
 
-        <section className="grid gap-6 py-16 md:grid-cols-12 md:py-24">
+        <section className="py-16 md:py-24" aria-labelledby="systems-title">
+          <div className="grid gap-6 md:grid-cols-12">
+            <div className="md:col-span-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Areas of practice</p>
+              <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">From design intent to <span className="text-accent">implementation.</span></h2>
+              <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">A broad working range, with technical and combat design at the center.</p>
+            </div>
+            <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border md:col-span-8 sm:grid-cols-2">
+              {systems.map((system) => (
+                <article key={system.number} className="group min-h-52 bg-surface p-6 transition-colors hover:bg-muted/55">
+                  <div className="flex items-center justify-between"><span className="font-mono text-[9px] tracking-[0.18em] text-accent">SYS_{system.number}</span><span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-border transition-all group-hover:bg-accent group-hover:shadow-[0_0_12px_var(--color-accent)]" /></div>
+                  <h3 className="mt-9 font-display text-xl font-semibold">{system.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{system.description}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="grid gap-6 border-t border-border/60 py-16 md:grid-cols-12 md:py-24">
           <div className="md:col-span-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">How I work</p>
-            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">Half designer.<br /><span className="text-accent">Half builder.</span></h2>
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Capabilities</p>
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">A design focus with <span className="text-accent">production range.</span></h2>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">My environment and technical-art training supports the design work: I understand the assets, shaders, rigs, animation, and optimization constraints around a gameplay system.</p>
           </div>
           <div className="grid gap-4 md:col-span-8 sm:grid-cols-2">
             <article className="relative overflow-hidden rounded-lg border border-border bg-surface/55 p-6">
               <span aria-hidden="true" className="absolute -right-3 -top-7 font-display text-8xl font-bold text-foreground/[0.025]">D</span>
               <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">Disciplines</p>
               <ul className="mt-6 space-y-4">
-                {["Combat & encounter design", "Enemy AI", "Tools & pipeline", "Gameplay programming"].map((item, index) => (
+                {["Combat & encounter design", "Gameplay systems", "AI systems", "Designer tools & debugging", "Level design & 3Cs"].map((item, index) => (
                   <li key={item} className="flex items-center gap-3 text-sm"><span className="font-mono text-[9px] text-muted-foreground">0{index + 1}</span><span className="h-px w-5 bg-border" />{item}</li>
                 ))}
               </ul>
@@ -137,11 +164,22 @@ export function AboutPage() {
               <span aria-hidden="true" className="absolute -right-3 -top-7 font-display text-8xl font-bold text-foreground/[0.025]">T</span>
               <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">Toolkit</p>
               <ul className="mt-6 space-y-4">
-                {["UE5 · C++ / Blueprint", "Python · Pandas · NumPy", "Behavior Trees · Utility AI", "Houdini / Maya"].map((item, index) => (
+                {["UE5 · Blueprint · C++", "StateTree · GAS · Behavior Trees", "UMG · Animation Blueprints · Control Rig", "Python · C# · Git", "Maya · Substance · Houdini · SpeedTree"].map((item, index) => (
                   <li key={item} className="flex items-center gap-3 text-sm"><span className="font-mono text-[9px] text-muted-foreground">0{index + 1}</span><span className="h-px w-5 bg-border" />{item}</li>
                 ))}
               </ul>
             </article>
+          </div>
+        </section>
+
+        <section className="mb-16 grid overflow-hidden rounded-lg border border-border md:grid-cols-[0.32fr_0.68fr]" aria-labelledby="education-title">
+          <div className="border-b border-border bg-surface/55 p-6 md:border-b-0 md:border-r md:p-8">
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Foundation</p>
+            <h2 id="education-title" className="mt-3 font-display text-2xl font-semibold">Education</h2>
+          </div>
+          <div className="divide-y divide-border/60">
+            <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">MS, Game Design and Development</p><p className="mt-1 text-sm text-muted-foreground">USC School of Cinematic Arts</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">Expected 2028</p></div>
+            <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">BFA, Digital Production - Games</p><p className="mt-1 text-sm text-muted-foreground">Gnomon School of Visual Effects · Featured in Gnomon&apos;s student reel</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">2025</p></div>
           </div>
         </section>
 
@@ -151,7 +189,7 @@ export function AboutPage() {
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Contact / Open channel</p>
               <h2 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl">Let&apos;s make something <span className="text-accent">feel good</span> to play.</h2>
-              <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">For collaborations, opportunities, or just to compare notes on combat systems and technical art.</p>
+              <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">For technical design, combat design, gameplay systems, or interdisciplinary game-development work.</p>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">

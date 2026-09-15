@@ -15,10 +15,10 @@ export function HomePage() {
           <div className="md:col-span-3"><p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Portfolio · {new Date().getFullYear()}</p></div>
           <div className="md:col-span-9">
             <h1 className="font-display text-4xl font-semibold leading-[1.05] text-balance md:text-6xl">
-              Technical &amp; combat design that ships <span className="text-accent">readable, tunable, brutal</span> systems.
+              Combat systems, gameplay tools, and implementation in <span className="text-accent">Unreal Engine.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-pretty text-base text-muted-foreground md:text-lg">
-              I&apos;m leficious. I prototype combat mechanics, AI behavior, and the tools that let design teams iterate on them. C++ in engine, Python for tooling, playtests as ground truth.
+              I focus on technical and combat design: prototyping mechanics, AI behavior, and designer-facing tools, then refining them through playtesting and iteration. My background in 3D production helps me work across gameplay, animation, and asset pipelines.
             </p>
           </div>
         </section>
