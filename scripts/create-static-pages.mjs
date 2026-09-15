@@ -21,6 +21,18 @@ const routes = [
       "A 15-week gameplay prototype connecting character movement, abilities, targeting, inventory, shops, and data-driven pickups.",
   },
   {
+    path: "/projects/fallen-valkyrie",
+    title: "Fallen Valkyrie — Leficious",
+    description:
+      "A 10-week action-combat prototype centered on weapon-dependent movesets, directional hit reactions, lock-on targeting, and a multiphase boss encounter.",
+  },
+  {
+    path: "/projects/sacred-forest",
+    title: "Sacred Forest — Leficious",
+    description:
+      "A stylized forest shrine developed end to end through modeling, procedural materials, foliage, lighting, effects, and engine assembly.",
+  },
+  {
     path: "/projects/adaptive-enemy-ai",
     title: "Adaptive Enemy AI — Leficious",
     description:
