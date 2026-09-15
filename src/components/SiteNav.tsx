@@ -18,8 +18,8 @@ export function SiteNav() {
         </Link>
         <nav aria-label="Primary" className="flex items-center gap-6 text-sm text-muted-foreground">
           <NavLink to="/" end className={navClass}>Work</NavLink>
+          <NavLink to="/gallery" className={navClass}>Gallery</NavLink>
           <NavLink to="/about" className={navClass}>About</NavLink>
-          <a href="mailto:hello@leficious.com" className="transition-colors hover:text-foreground">Contact</a>
         </nav>
       </div>
     </header>
