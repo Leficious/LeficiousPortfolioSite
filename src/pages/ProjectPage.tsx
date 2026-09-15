@@ -18,7 +18,7 @@ export function ProjectPage() {
     <div className="min-h-screen bg-background text-foreground">
       <Seo title={`${project.title} — Leficious`} description={project.summary} path={`/projects/${project.slug}`} image={project.cover} />
       <SiteNav />
-      <article className="mx-auto max-w-5xl px-6 py-16 md:py-24">
+      <article id="main-content" tabIndex={-1} className="mx-auto max-w-5xl px-6 py-16 md:py-24">
         <Link to="/" className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-accent">← All projects</Link>
         <header className="mt-8 grid gap-6 md:grid-cols-12">
           <div className="md:col-span-8"><h1 className="font-display text-3xl font-semibold leading-tight md:text-5xl">{project.title}</h1><p className="mt-4 text-pretty text-lg text-muted-foreground">{project.summary}</p></div>
@@ -28,7 +28,7 @@ export function ProjectPage() {
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">Stack</dt><dd className="flex flex-wrap gap-1.5">{project.tags.map((tag) => <span key={tag} className="rounded-full border border-border bg-surface px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{tag}</span>)}</dd></div>
           </dl>
         </header>
-        <div className="mt-12 overflow-hidden rounded-lg border border-border"><img src={project.cover} alt={`${project.title} cover`} className="h-auto w-full" /></div>
+        <div className="mt-12 aspect-video overflow-hidden rounded-lg border border-border bg-surface"><img src={project.cover} alt={`${project.title} cover`} width="1600" height="900" decoding="async" fetchPriority="high" className="h-full w-full object-cover" /></div>
         <section className="mt-16 grid gap-10 md:grid-cols-12">
           <div className="md:col-span-3"><h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Overview</h2></div>
           <div className="space-y-4 text-pretty leading-relaxed md:col-span-9"><p>{project.overview}</p><ul className="mt-4 space-y-2 text-muted-foreground">{project.responsibilities.map((item) => <li key={item} className="flex gap-3"><span className="mt-2 inline-block h-1 w-3 shrink-0 bg-accent" /><span>{item}</span></li>)}</ul></div>

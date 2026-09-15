@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
  * Matrix / geometric lattice intro.
@@ -6,14 +6,29 @@ import { useEffect, useRef, useState } from "react";
  * cached noise dither, capped DPR, eased mouse.
  */
 export function WelcomeIntro() {
-  const [dismissed, setDismissed] = useState(false);
+  const [dismissed, setDismissed] = useState(() => {
+    if (typeof window === "undefined") return true;
+    try {
+      return (
+        localStorage.getItem("intro-seen") === "1" ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        window.matchMedia("(pointer: coarse)").matches
+      );
+    } catch {
+      return false;
+    }
+  });
   const [leaving, setLeaving] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (sessionStorage.getItem("intro-seen") === "1") setDismissed(true);
-  }, []);
+    if (dismissed) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [dismissed]);
 
   useEffect(() => {
     if (dismissed) return;
@@ -68,10 +83,12 @@ export function WelcomeIntro() {
 
     let t = 0;
     let raf = 0;
+    let running = true;
     const influence = 200;
     const influenceSq = influence * influence;
 
     const tick = () => {
+      if (!running) return;
       t += 0.008;
       if (mouse.active) {
         mouse.x += (mouse.tx - mouse.x) * 0.25;
@@ -173,43 +190,52 @@ export function WelcomeIntro() {
     };
     raf = requestAnimationFrame(tick);
 
+    const onVisibilityChange = () => {
+      running = !document.hidden;
+      cancelAnimationFrame(raf);
+      if (running) raf = requestAnimationFrame(tick);
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
     return () => {
+      running = false;
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerleave", onLeave);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, [dismissed]);
 
-  if (dismissed) return null;
-
-  const handleDismiss = () => {
+  const handleDismiss = useCallback(() => {
+    if (leaving) return;
     setLeaving(true);
-    sessionStorage.setItem("intro-seen", "1");
-    setTimeout(() => setDismissed(true), 500);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      handleDismiss();
+    try {
+      localStorage.setItem("intro-seen", "1");
+    } catch {
+      // Storage can be unavailable in privacy-restricted contexts.
     }
-  };
+    setTimeout(() => setDismissed(true), 500);
+  }, [leaving]);
+
+  useEffect(() => {
+    if (dismissed) return;
+    const timer = window.setTimeout(handleDismiss, 5000);
+    return () => window.clearTimeout(timer);
+  }, [dismissed, handleDismiss]);
+
+  if (dismissed) return null;
 
   return (
     <div
       onClick={handleDismiss}
-      onKeyDown={handleKeyDown}
-      onContextMenu={(e) => {
-        e.preventDefault();
-        handleDismiss();
-      }}
       className={`fixed inset-0 z-[100] cursor-crosshair overflow-hidden bg-background transition-opacity duration-500 ${
         leaving ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
-      aria-label="Welcome — click to enter"
-      role="button"
-      tabIndex={0}
+      aria-labelledby="welcome-title"
+      aria-describedby="welcome-description"
+      aria-modal="true"
+      role="dialog"
     >
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
@@ -301,17 +327,24 @@ export function WelcomeIntro() {
         <p className="font-mono text-sm uppercase tracking-[0.5em] text-muted-foreground md:text-base">
           Welcome
         </p>
-        <h1 className="mt-6 max-w-3xl font-display text-4xl font-semibold leading-[1.05] text-balance text-foreground md:text-6xl">
+        <h1 id="welcome-title" className="mt-6 max-w-3xl font-display text-4xl font-semibold leading-[1.05] text-balance text-foreground md:text-6xl">
           I'm <span className="text-accent">leficious</span> — technical &amp;
           combat designer.
         </h1>
-        <p className="mt-6 max-w-xl text-pretty text-base text-muted-foreground md:text-lg">
+        <p id="welcome-description" className="mt-6 max-w-xl text-pretty text-base text-muted-foreground md:text-lg">
           Prototypes, combat systems, AI, and the tools that ship them. Move
           your cursor across the lattice. Click to enter.
         </p>
-        <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground/70 animate-pulse">
-          [ click to continue ]
-        </p>
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            handleDismiss();
+          }}
+          className="pointer-events-auto mt-10 rounded-full border border-border bg-background/70 px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
+        >
+          Enter portfolio
+        </button>
       </div>
     </div>
   );

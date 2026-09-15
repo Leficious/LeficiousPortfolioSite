@@ -6,6 +6,12 @@ export function SiteNav() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/70 backdrop-blur-md">
+      <a
+        href="#main-content"
+        className="fixed left-4 top-4 z-[200] -translate-y-24 rounded-md bg-foreground px-4 py-2 text-sm font-semibold text-background transition-transform focus:translate-y-0"
+      >
+        Skip to content
+      </a>
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link to="/" className="font-display text-lg font-semibold tracking-tight">
           leficious<span className="text-accent">.</span>

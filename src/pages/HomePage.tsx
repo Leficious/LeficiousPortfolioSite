@@ -10,9 +10,9 @@ export function HomePage() {
       <Seo title="Leficious — Technical & Combat Design Portfolio" description="Selected work by Leficious — combat systems, AI, weapon frameworks, and design tooling for games." />
       <WelcomeIntro />
       <SiteNav />
-      <main className="mx-auto max-w-6xl px-6">
+      <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6">
         <section className="grid gap-10 border-b border-border/60 py-20 md:grid-cols-12 md:py-28">
-          <div className="md:col-span-3"><p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Portfolio · 2025</p></div>
+          <div className="md:col-span-3"><p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Portfolio · {new Date().getFullYear()}</p></div>
           <div className="md:col-span-9">
             <h1 className="font-display text-4xl font-semibold leading-[1.05] text-balance md:text-6xl">
               Technical &amp; combat design that ships <span className="text-accent">readable, tunable, brutal</span> systems.

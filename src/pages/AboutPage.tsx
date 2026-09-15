@@ -6,7 +6,7 @@ export function AboutPage() {
     <div className="min-h-screen bg-background text-foreground">
       <Seo title="About — Leficious" description="About Leficious — technical and combat designer focused on combat systems, AI, and tooling." path="/about" />
       <SiteNav />
-      <main className="mx-auto max-w-5xl px-6 py-20 md:py-28">
+      <main id="main-content" tabIndex={-1} className="mx-auto max-w-5xl px-6 py-20 md:py-28">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">About</p>
