@@ -3,10 +3,16 @@ import { dirname, join } from "node:path";
 
 const routes = [
   {
-    path: "/about",
-    title: "About — Leficious",
+    path: "/gallery",
+    title: "Gallery — Leficious",
     description:
-      "About Leficious — technical and combat designer focused on combat systems, AI, and tooling.",
+      "A gallery of 3D, 2D, environment, character, animation, and technical art work by Leficious.",
+  },
+  {
+    path: "/about",
+    title: "About & Contact — Leficious",
+    description:
+      "About Leficious — technical and combat designer focused on combat systems, AI, and tooling. Contact and portfolio links.",
   },
   {
     path: "/projects/directional-parry-system",
