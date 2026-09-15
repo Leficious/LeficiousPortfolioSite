@@ -32,24 +32,6 @@ const routes = [
     description:
       "A stylized forest shrine developed end to end through modeling, procedural materials, foliage, lighting, effects, and engine assembly.",
   },
-  {
-    path: "/projects/adaptive-enemy-ai",
-    title: "Adaptive Enemy AI — Leficious",
-    description:
-      "Utility-AI driven enemies that adapt aggression based on the player's recent combat behavior.",
-  },
-  {
-    path: "/projects/modular-weapon-framework",
-    title: "Modular Weapon Framework — Leficious",
-    description:
-      "A data-driven weapon system with hot-swappable movesets, hit reactions, and VFX hooks.",
-  },
-  {
-    path: "/projects/encounter-balancing-tool",
-    title: "Encounter Balancing Tool — Leficious",
-    description:
-      "A Python tool that simulates thousands of encounters to surface difficulty outliers before playtesting.",
-  },
 ];
 
 const escapeAttribute = (value) =>

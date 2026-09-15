@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import { FeaturedReel } from "../components/FeaturedReel";
 import { GalleryLightbox } from "../components/GalleryLightbox";
 import { Seo } from "../components/Seo";
 import { SiteFooter, SiteNav } from "../components/SiteNav";
@@ -45,6 +46,22 @@ export function GalleryPage() {
                 A visual archive featuring realtime work, characters, game-ready environments, tools, and other experiments.
               </p>
             </div>
+          </section>
+
+          <section className="border-b border-border/60 py-10 md:py-14" aria-labelledby="environment-reel-title">
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Featured reel</p>
+                <h2 id="environment-reel-title" className="mt-3 font-display text-2xl font-semibold sm:text-3xl">Environments and props.</h2>
+              </div>
+              <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">3D · Environment · Realtime · Props</span>
+            </div>
+            <FeaturedReel
+              id="HvyQJapdR8o"
+              title="Environment & Props Reel 2026"
+              description="Environment art, props, material work, foliage, and realtime scene assembly across game-focused projects."
+              eyebrow="Environment + props · 2026"
+            />
           </section>
 
           <section className="py-10 md:py-14" aria-labelledby="gallery-filter-title">

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FeaturedReel } from "../components/FeaturedReel";
 import { Seo } from "../components/Seo";
 import { SiteFooter, SiteNav } from "../components/SiteNav";
 import { projects } from "../lib/projects";
@@ -58,6 +59,22 @@ export function HomePage() {
             </div>
           ))}
         </div>
+
+        <section className="border-x border-b border-border/60 px-6 py-12 sm:px-10 md:py-16 lg:px-14" aria-labelledby="technical-reel-title">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Featured reel</p>
+              <h2 id="technical-reel-title" className="mt-3 font-display text-2xl font-semibold sm:text-3xl">Technical game design.</h2>
+            </div>
+            <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">Selected work · 2026</span>
+          </div>
+          <FeaturedReel
+            id="rVIavxdutJE"
+            title="Technical Game Design Reel 2026"
+            description="Combat systems, gameplay prototypes, enemy behavior, and design-focused implementation across recent projects."
+            eyebrow="Primary reel · 2026"
+          />
+        </section>
 
         <section className="py-16 md:py-24">
           <div className="mb-12 grid gap-6 border-b border-border/60 pb-10 md:grid-cols-12 md:items-end">
