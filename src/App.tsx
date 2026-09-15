@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AboutPage } from "./pages/AboutPage";
 import { HomePage } from "./pages/HomePage";
+import { GalleryPage } from "./pages/GalleryPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ProjectPage } from "./pages/ProjectPage";
 
@@ -15,6 +16,7 @@ export function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/gallery" element={<GalleryPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/projects/:slug" element={<ProjectPage />} />
       <Route path="*" element={<NotFoundPage />} />
