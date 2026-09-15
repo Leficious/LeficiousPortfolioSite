@@ -13,7 +13,7 @@ export function SiteNav() {
         Skip to content
       </a>
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link to="/" className="font-display text-lg font-semibold tracking-tight">
+        <Link to="/" className="site-mark-enter font-display text-lg font-semibold tracking-tight">
           leficious<span className="text-accent">.</span>
         </Link>
         <nav aria-label="Primary" className="flex items-center gap-6 text-sm text-muted-foreground">
