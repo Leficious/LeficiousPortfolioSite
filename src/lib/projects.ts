@@ -255,6 +255,69 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "sacred-forest",
+    title: "Sacred Forest",
+    role: "Environment / Technical Artist",
+    year: "2025",
+    summary:
+      "A stylized forest shrine developed end to end through modeling, procedural materials, foliage, lighting, effects, and engine assembly.",
+    tags: ["Unreal Engine", "Environment Art", "Substance", "Maya / Python"],
+    cover: "/projects/sacred-forest/cover.avif",
+    overview:
+      "Sacred Forest is a stylized environment built to carry a consistent visual language from individual assets through the final scene. I handled the modeling, sculpting, texturing, lighting, visual effects, foliage, and engine assembly, using a compact production pipeline across Maya, ZBrush, Substance Painter, Substance Designer, Photoshop, and Unreal Engine.",
+    responsibilities: [
+      "Modeled, sculpted, baked, and textured the shrine as the environment's primary focal point.",
+      "Created procedural and hand-painted materials, modular foliage, lighting, and atmospheric effects.",
+      "Built a Maya Python tool to automate vertex-normal transfers for stylized foliage assets.",
+    ],
+    media: [
+      {
+        type: "youtube",
+        id: "jdfmAHiv5ro",
+        caption: "Full walkthrough of the Sacred Forest environment.",
+      },
+    ],
+    snippets: [],
+    sections: [
+      {
+        eyebrow: "01 / Focal asset",
+        title: "Stylized shrine",
+        body: [
+          "The shrine anchors the composition and establishes the environment's shape language. Its low-poly structure was modeled in Maya, then taken into ZBrush for a high-poly sculpting pass before being baked and textured in Substance Painter.",
+          "Detail and grunge information was condensed into packed texture maps and combined through reusable material functions. This kept the asset flexible in-engine while reducing the number of separate textures and material operations needed for the final result.",
+        ],
+        media: [
+          { type: "image", src: "/projects/sacred-forest/shrine-01.avif", alt: "Two finished views of the textured Sacred Forest shrine", caption: "Final textured shrine shown from its open and closed sides." },
+          { type: "image", src: "/projects/sacred-forest/shrine-02.avif", alt: "Untextured model of the Sacred Forest shrine", caption: "The shrine's modeled forms before the final texture and material pass." },
+        ],
+      },
+      {
+        eyebrow: "02 / Surface language",
+        title: "Procedural and painted textures",
+        body: [
+          "The environment's stylized surfaces were generated procedurally in Substance Designer, then adjusted in ZBrush and Photoshop where more authored control was needed. Building the materials from shared shape and wear principles helped the shrine, rocks, terrain, and foliage sit within the same visual treatment.",
+          "The grass texture was painted by hand and made tileable in Photoshop. That mix of procedural construction and manual finishing kept repetition under control without losing the broad, graphic forms that define the scene.",
+        ],
+        media: [
+          { type: "image", src: "/projects/sacred-forest/textures-01.avif", alt: "Stylized stone material shown on cylinder and sphere previews", caption: "Procedural stone forms developed in Substance Designer." },
+          { type: "image", src: "/projects/sacred-forest/textures-02.avif", alt: "Stylized painted grass material shown on cylinder and sphere previews", caption: "A softer painted surface treatment used to support the environment's color language." },
+        ],
+      },
+      {
+        eyebrow: "03 / Scene integration",
+        title: "Foliage, blending, and tooling",
+        body: [
+          "Foliage was assembled from lightweight cards using a hand-painted texture atlas. In Unreal Engine, Runtime Virtual Texture data samples the landscape color and feeds it into the foliage material, helping plants blend into the terrain instead of reading as disconnected assets.",
+          "Bushes and other fuller forms use vertex normals transferred from a sphere to produce softer, more cohesive lighting. I built a Python utility in Maya to automate that transfer workflow, reducing a repetitive asset-preparation step and keeping the treatment consistent across the foliage set.",
+        ],
+        media: [
+          { type: "image", src: "/projects/sacred-forest/foliage-01.avif", alt: "Wireframe view of stylized flowers, clover, and foliage cards", caption: "The foliage set combines modeled stems and leaves with lightweight flower and ground-cover cards." },
+          { type: "image", src: "/projects/sacred-forest/foliage-02.avif", alt: "Maya Python utility for transferring stylized foliage normals", caption: "The Maya utility automates sphere-based vertex-normal transfers across selected foliage assets." },
+        ],
+      },
+    ],
+  },
+  {
     slug: "adaptive-enemy-ai",
     title: "Adaptive Enemy AI",
     role: "Technical / Combat Designer",
