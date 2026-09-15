@@ -1,5 +1,111 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { MediaItem } from "../lib/projects";
+
+function ExpandIcon({ close = false }: { close?: boolean }) {
+  if (close) {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-none stroke-current stroke-[1.5]">
+        <path d="m6 6 12 12M18 6 6 18" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-none stroke-current stroke-[1.5]">
+      <path d="M9 4H4v5M15 4h5v5M20 15v5h-5M4 15v5h5" />
+    </svg>
+  );
+}
+
+function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }> }) {
+  const [expanded, setExpanded] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!expanded) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const trigger = triggerRef.current;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setExpanded(false);
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+      trigger?.focus();
+    };
+  }, [expanded]);
+
+  return (
+    <>
+      <button
+        ref={triggerRef}
+        type="button"
+        onClick={() => setExpanded(true)}
+        className="group relative block w-full cursor-zoom-in overflow-hidden text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
+        aria-label={`Expand image: ${item.alt}`}
+      >
+        <img
+          src={item.src}
+          alt={item.alt}
+          width="1600"
+          height="900"
+          loading="lazy"
+          decoding="async"
+          className="aspect-video h-auto w-full bg-black/20 object-contain transition-[filter,transform] duration-300 group-hover:scale-[1.01] group-hover:brightness-110"
+        />
+        <span className="absolute bottom-3 right-3 flex items-center gap-2 rounded-sm border border-foreground/20 bg-background/85 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground opacity-0 shadow-lg backdrop-blur transition-all duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+          <ExpandIcon />
+          View full size
+        </span>
+        <span aria-hidden="true" className="pointer-events-none absolute inset-3 border border-accent/0 transition-colors duration-200 group-hover:border-accent/35 group-focus-visible:border-accent/35" />
+      </button>
+
+      {expanded &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[120] flex cursor-zoom-out items-center justify-center bg-background/95 p-4 backdrop-blur-xl sm:p-8"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Expanded image: ${item.alt}`}
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) setExpanded(false);
+            }}
+          >
+            <div className="relative flex max-h-full w-full max-w-[min(96vw,1600px)] cursor-default flex-col items-center gap-3">
+              <div className="absolute -top-1 left-0 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:-top-2">
+                Image inspection
+              </div>
+              <button
+                ref={closeRef}
+                type="button"
+                onClick={() => setExpanded(false)}
+                className="absolute -top-2 right-0 z-10 grid h-10 w-10 place-items-center rounded-full border border-foreground/20 bg-background/90 text-foreground transition-colors hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:-top-3"
+                aria-label="Close expanded image"
+              >
+                <ExpandIcon close />
+              </button>
+              <img
+                src={item.src}
+                alt={item.alt}
+                className="mt-10 max-h-[calc(100vh-8rem)] max-w-full rounded-sm border border-border bg-black/20 object-contain shadow-2xl"
+              />
+              {item.caption && <p className="max-w-4xl text-center text-sm text-muted-foreground">{item.caption}</p>}
+              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground/70">Click outside or press Esc to close</p>
+            </div>
+          </div>,
+          document.body,
+        )}
+    </>
+  );
+}
 
 function YouTubeEmbed({ id, title }: { id: string; title: string }) {
   const [active, setActive] = useState(false);
@@ -43,7 +149,7 @@ export function Media({ item }: { item: MediaItem }) {
   return (
     <figure className="space-y-2">
       <div className="overflow-hidden rounded-lg border border-border bg-surface">
-        {item.type === "image" && <img src={item.src} alt={item.alt} width="1600" height="900" loading="lazy" decoding="async" className="aspect-video h-auto w-full bg-black/20 object-contain" />}
+        {item.type === "image" && <ExpandableImage item={item} />}
         {item.type === "video" && <video src={item.src} poster={item.poster} controls playsInline preload="metadata" className="h-auto w-full" />}
         {item.type === "youtube" && (
           <div className="relative aspect-video w-full">
