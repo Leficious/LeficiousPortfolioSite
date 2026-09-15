@@ -34,6 +34,25 @@ export function ProjectPage() {
           <div className="space-y-4 text-pretty leading-relaxed md:col-span-9"><p>{project.overview}</p><ul className="mt-4 space-y-2 text-muted-foreground">{project.responsibilities.map((item) => <li key={item} className="flex gap-3"><span className="mt-2 inline-block h-1 w-3 shrink-0 bg-accent" /><span>{item}</span></li>)}</ul></div>
         </section>
         {project.media.length > 0 && <section className="mt-16 grid gap-10 md:grid-cols-12"><div className="md:col-span-3"><h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Media</h2></div><div className="space-y-8 md:col-span-9">{project.media.map((item, mediaIndex) => <Media key={mediaIndex} item={item} />)}</div></section>}
+        {project.sections?.map((section, sectionIndex) => (
+          <section key={section.title} className="relative mt-20 border-t border-border/60 pt-10 md:mt-28 md:pt-14">
+            <span aria-hidden="true" className="absolute right-0 top-4 font-display text-7xl font-semibold text-foreground/[0.025] md:text-9xl">{String(sectionIndex + 1).padStart(2, "0")}</span>
+            <div className="relative grid gap-8 md:grid-cols-12 md:gap-10">
+              <div className="md:col-span-3">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">{section.eyebrow}</p>
+                <h2 className="mt-3 font-display text-2xl font-semibold leading-tight">{section.title}</h2>
+              </div>
+              <div className="space-y-4 text-pretty leading-relaxed text-muted-foreground md:col-span-9">
+                {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              </div>
+            </div>
+            {section.media && section.media.length > 0 && (
+              <div className="mt-8 grid gap-5 sm:grid-cols-2 md:mt-10">
+                {section.media.map((item, mediaIndex) => <Media key={mediaIndex} item={item} />)}
+              </div>
+            )}
+          </section>
+        ))}
         {project.snippets.length > 0 && <section className="mt-16 grid gap-10 md:grid-cols-12"><div className="md:col-span-3"><h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Code</h2></div><div className="space-y-6 md:col-span-9">{project.snippets.map((snippet, snippetIndex) => <CodeBlock key={snippetIndex} {...snippet} />)}</div></section>}
         <nav className="mt-24 flex items-center justify-between border-t border-border/60 pt-8"><Link to="/" className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-accent">← All projects</Link><Link to={`/projects/${next.slug}`} className="group text-right"><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Next</p><p className="font-display text-lg font-semibold transition-colors group-hover:text-accent">{next.title} →</p></Link></nav>
       </article>
