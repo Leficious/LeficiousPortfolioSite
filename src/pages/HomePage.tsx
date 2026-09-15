@@ -1,22 +1,20 @@
 import { Link } from "react-router-dom";
 import { Seo } from "../components/Seo";
 import { SiteFooter, SiteNav } from "../components/SiteNav";
-import { WelcomeIntro } from "../components/WelcomeIntro";
 import { projects } from "../lib/projects";
 
 export function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Seo title="Leficious — Technical & Combat Design Portfolio" description="Selected work by Leficious — combat systems, AI, weapon frameworks, and design tooling for games." />
-      <WelcomeIntro />
       <SiteNav />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
-          <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-30 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_88%)]" />
+          <div aria-hidden="true" className="work-grid-enter absolute inset-0 -z-10 opacity-30 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_88%)]" />
           <div aria-hidden="true" className="absolute -left-32 top-12 -z-10 h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
 
           <div className="grid items-center gap-14 lg:grid-cols-[1.35fr_0.65fr]">
-            <div>
+            <div className="work-copy-enter">
               <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
                 <span className="h-px w-8 bg-accent" />
                 Portfolio · {new Date().getFullYear()}
@@ -29,7 +27,7 @@ export function HomePage() {
               </p>
             </div>
 
-            <div aria-hidden="true" className="relative mx-auto aspect-square w-full max-w-[320px] overflow-hidden rounded-xl border border-border bg-background/65 shadow-[0_0_80px_rgba(91,154,172,0.08)]">
+            <div aria-hidden="true" className="work-diagram-enter relative mx-auto aspect-square w-full max-w-[320px] overflow-hidden rounded-xl border border-border bg-background/65 shadow-[0_0_80px_rgba(91,154,172,0.08)]">
               <div className="absolute inset-5 border border-border/70" />
               <div className="absolute inset-10 border border-dashed border-accent/40" />
               <div className="absolute left-1/2 top-5 h-[calc(100%-2.5rem)] w-px bg-border/60" />
@@ -47,7 +45,7 @@ export function HomePage() {
           </div>
         </section>
 
-        <div className="grid border-x border-b border-border/60 sm:grid-cols-3">
+        <div className="work-meta-enter grid border-x border-b border-border/60 sm:grid-cols-3">
           {[
             ["01", "Focus", "Technical + combat design"],
             ["02", "Engines", "Unreal Engine · Unity"],
