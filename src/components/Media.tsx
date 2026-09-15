@@ -43,7 +43,7 @@ export function Media({ item }: { item: MediaItem }) {
   return (
     <figure className="space-y-2">
       <div className="overflow-hidden rounded-lg border border-border bg-surface">
-        {item.type === "image" && <img src={item.src} alt={item.alt} width="1600" height="900" loading="lazy" decoding="async" className="aspect-video h-auto w-full object-cover" />}
+        {item.type === "image" && <img src={item.src} alt={item.alt} width="1600" height="900" loading="lazy" decoding="async" className="aspect-video h-auto w-full bg-black/20 object-contain" />}
         {item.type === "video" && <video src={item.src} poster={item.poster} controls playsInline preload="metadata" className="h-auto w-full" />}
         {item.type === "youtube" && (
           <div className="relative aspect-video w-full">
