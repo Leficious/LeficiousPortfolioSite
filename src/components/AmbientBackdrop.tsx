@@ -25,8 +25,8 @@ const pageLabels: Record<string, string[]> = {
 };
 
 function routeKey(pathname: string) {
-  if (pathname === "/gallery") return "gallery";
-  if (pathname === "/about") return "about";
+  if (pathname.startsWith("/gallery")) return "gallery";
+  if (pathname.startsWith("/about")) return "about";
   if (pathname.startsWith("/projects/")) return "project";
   return "work";
 }
