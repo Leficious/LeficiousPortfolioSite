@@ -96,7 +96,7 @@ export function AboutPage() {
                 Technical design, gameplay systems, <span className="text-accent">3D production.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                I&apos;m a technical game designer focused on combat design and gameplay systems. I prototype, implement, and iterate in commercial game engines, while my background in 3D environment production and technical art helps me understand how design, animation, tools, and asset pipelines fit together in a working game.
+                I&apos;m a technical game designer with a focus on combat and gameplay systems. My interdisciplinary background spans 3D environments, technical art, animation, and tools, helping me communicate across disciplines and carry ideas from an early concept into a playable form.
               </p>
             </div>
 

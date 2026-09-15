@@ -25,7 +25,7 @@ export function HomePage() {
                 Combat systems, gameplay tools, and <span className="text-accent">technical design.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                I prototype mechanics, AI behavior, and designer-facing tools, then refine them through playtesting and iteration. I work across commercial game engines, with a 3D production background that helps me collaborate across gameplay, animation, and asset pipelines.
+                My work centers on turning design goals into playable, tunable systems. I build mechanics, AI behaviors, and designer-facing tools, then use testing and feedback to improve clarity, feel, and iteration speed.
               </p>
             </div>
 
@@ -72,26 +72,34 @@ export function HomePage() {
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{String(projects.length).padStart(2, "0")} case studies</p>
             </div>
           </div>
-          <ul className="grid gap-6 md:grid-cols-2 md:gap-8">
+          <ul className="space-y-5">
             {projects.map((project, index) => (
-              <li key={project.slug} className={index % 2 === 1 ? "md:translate-y-10" : undefined}>
-                <Link to={`/projects/${project.slug}`} className="group block h-full overflow-hidden rounded-lg border border-border bg-surface/45 transition-all hover:-translate-y-1 hover:border-accent/70 hover:bg-surface">
-                  <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+              <li key={project.slug}>
+                <Link to={`/projects/${project.slug}`} className="group grid overflow-hidden rounded-lg border border-border bg-surface/45 transition-all hover:-translate-y-0.5 hover:border-accent/70 hover:bg-surface md:grid-cols-[0.42fr_0.58fr]">
+                  <div className="relative min-h-56 overflow-hidden bg-muted md:min-h-72">
                     <img src={project.cover} alt="" width="800" height="500" loading={index < 2 ? "eager" : "lazy"} decoding="async" className="h-full w-full object-cover opacity-75 grayscale-[25%] transition duration-500 group-hover:scale-[1.025] group-hover:opacity-90 group-hover:grayscale-0" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/10" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-background/45" />
                     <span className="absolute left-4 top-4 rounded-full border border-foreground/20 bg-background/70 px-2.5 py-1 font-mono text-[9px] tracking-[0.16em] backdrop-blur-sm">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="absolute bottom-4 right-4 font-mono text-[9px] uppercase tracking-[0.16em] text-foreground/80">View case study ↗</span>
                   </div>
-                  <div className="p-5 sm:p-6">
-                    <div className="flex items-start justify-between gap-5">
-                      <h3 className="font-display text-xl font-semibold tracking-tight transition-colors group-hover:text-accent md:text-2xl">{project.title}</h3>
-                      <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">{project.year}</span>
+                  <div className="flex min-h-64 flex-col justify-between p-6 sm:p-8 md:min-h-72">
+                    <div>
+                      <div className="flex items-center justify-between gap-5">
+                        <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent">Case study {String(index + 1).padStart(2, "0")}</p>
+                        <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">{project.year}</span>
+                      </div>
+                      <h3 className="mt-6 font-display text-2xl font-semibold tracking-tight transition-colors group-hover:text-accent sm:text-3xl">{project.title}</h3>
+                      <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">{project.summary}</p>
                     </div>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{project.summary}</p>
-                    <div className="mt-6 flex items-end justify-between gap-4 border-t border-border/60 pt-4">
-                      <p className="text-xs text-muted-foreground">{project.role}</p>
-                      <div className="flex flex-wrap justify-end gap-x-3 gap-y-1">
-                        {project.tags.slice(0, 3).map((tag) => <span key={tag} className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/75">{tag}</span>)}
+                    <div className="mt-8 flex flex-wrap items-end justify-between gap-5 border-t border-border/60 pt-5">
+                      <div>
+                        <p className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground/70">Role</p>
+                        <p className="mt-1 text-xs text-muted-foreground">{project.role}</p>
+                      </div>
+                      <div className="flex items-center gap-5">
+                        <div className="flex flex-wrap justify-end gap-x-3 gap-y-1">
+                          {project.tags.slice(0, 3).map((tag) => <span key={tag} className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/75">{tag}</span>)}
+                        </div>
+                        <span aria-hidden="true" className="font-mono text-sm text-accent transition-transform group-hover:translate-x-1">→</span>
                       </div>
                     </div>
                   </div>
