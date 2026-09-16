@@ -57,7 +57,7 @@ export function GalleryPage() {
               <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">3D · Environment · Realtime · Props</span>
             </div>
             <FeaturedReel
-              id="HvyQJapdR8o"
+              id="t5MchABcd3c"
               title="Environment & Props Reel 2026"
               description="Environment art, props, material work, foliage, and realtime scene assembly across game-focused projects."
               eyebrow="Environment + props · 2026"
