@@ -353,7 +353,7 @@ export const galleryEntries: GalleryEntry[] = [
     software: ["Maya", "Python"],
     year: "2025",
     tags: ["Tools", "3D", "Environment"],
-    cover: "https://i.ytimg.com/vi/ZX5VJnQhJQ4/maxresdefault.jpg",
+    cover: "/projects/sacred-forest/vertex-normals-tool.jpg",
     coverAlt: "Vertex normals transfer tool demonstration",
     aspect: "landscape",
     projectUrl: "/projects/sacred-forest",

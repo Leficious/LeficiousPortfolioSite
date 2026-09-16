@@ -125,7 +125,7 @@ export const projects: Project[] = [
           "Category filters rebuild the visible list from each item's type field. This kept presentation separate from the inventory data and made the same item definitions reusable elsewhere in the project.",
         ],
         media: [
-          { type: "image", src: "/projects/starshore/inventory-01.avif", alt: "Starshore inventory interface", caption: "The modular inventory interface and item detail view." },
+          { type: "image", src: "/projects/starshore/inventory-01.avif", alt: "Starshore inventory interface showing the Codex Fulgur item", caption: "The modular inventory interface and item detail view." },
           { type: "image", src: "/projects/starshore/inventory-02.avif", alt: "Inventory filtering Blueprint", caption: "Filtering and dynamic item-entry construction." },
         ],
       },
@@ -137,7 +137,7 @@ export const projects: Project[] = [
           "Item position is calculated from its list index, allowing the interface to create a consistent grid for inventories of different sizes without hand-placing individual entries.",
         ],
         media: [
-          { type: "image", src: "/projects/starshore/shop-01.avif", alt: "Starshore shop interface", caption: "Vendor stock displayed through the reusable item interface." },
+          { type: "image", src: "/projects/starshore/shop-01.avif", alt: "Starshore shop interface showing the Damage V item and purchase controls", caption: "Vendor stock displayed through the reusable item interface." },
           { type: "image", src: "/projects/starshore/shop-02.avif", alt: "Shop construction Blueprint", caption: "Dynamic grid construction and inventory integration." },
         ],
       },
@@ -315,7 +315,7 @@ export const projects: Project[] = [
         ],
         media: [
           { type: "image", src: "/projects/sacred-forest/shrine-01.avif", alt: "Two finished views of the textured Sacred Forest shrine", caption: "Final textured shrine shown from its open and closed sides." },
-          { type: "image", src: "/projects/sacred-forest/shrine-02.avif", alt: "Untextured model of the Sacred Forest shrine", caption: "The shrine's modeled forms before the final texture and material pass." },
+          { type: "image", src: "/gallery/artstation/stylized-shrine/zbrush-sculpt.jpg", alt: "Front view of the untextured Sacred Forest shrine sculpt", caption: "The shrine's front-facing modeled and sculpted forms before the final texture and material pass." },
         ],
       },
       {
@@ -323,11 +323,11 @@ export const projects: Project[] = [
         title: "Procedural and painted textures",
         body: [
           "The environment's stylized surfaces were generated procedurally in Substance Designer, then adjusted in ZBrush and Photoshop where more authored control was needed. Building the materials from shared shape and wear principles helped the shrine, rocks, terrain, and foliage sit within the same visual treatment.",
-          "The grass texture was painted by hand and made tileable in Photoshop. That mix of procedural construction and manual finishing kept repetition under control without losing the broad, graphic forms that define the scene.",
+          "The cracked stone and wood materials were built around broad, readable surface forms that hold up at environment scale. Their shared procedural approach made it easier to maintain a consistent level of wear and stylization across the scene.",
         ],
         media: [
           { type: "image", src: "/projects/sacred-forest/textures-01.avif", alt: "Stylized stone material shown on cylinder and sphere previews", caption: "Procedural stone forms developed in Substance Designer." },
-          { type: "image", src: "/projects/sacred-forest/textures-02.avif", alt: "Stylized painted grass material shown on cylinder and sphere previews", caption: "A softer painted surface treatment used to support the environment's color language." },
+          { type: "image", src: "/gallery/artstation/sacred-forest/bark-material.jpg", alt: "Stylized procedural wood material shown on cylinder and sphere previews", caption: "Procedural wood and bark forms developed in Substance Designer." },
         ],
       },
       {
@@ -339,7 +339,7 @@ export const projects: Project[] = [
         ],
         media: [
           { type: "image", src: "/projects/sacred-forest/foliage-01.avif", alt: "Wireframe view of stylized flowers, clover, and foliage cards", caption: "The foliage set combines modeled stems and leaves with lightweight flower and ground-cover cards." },
-          { type: "image", src: "/projects/sacred-forest/foliage-02.avif", alt: "Maya Python utility for transferring stylized foliage normals", caption: "The Maya utility automates sphere-based vertex-normal transfers across selected foliage assets." },
+          { type: "image", src: "/projects/sacred-forest/vertex-normals-tool.jpg", alt: "Maya Python vertex-normal transfer tool demonstrated on stylized trees", caption: "The Maya utility previews and applies sphere-based vertex-normal transfers across selected foliage assets." },
         ],
       },
     ],
