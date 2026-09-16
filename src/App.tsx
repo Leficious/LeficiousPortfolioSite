@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AmbientBackdrop } from "./components/AmbientBackdrop";
 import { SignalAcquisition } from "./components/SignalAcquisition";
@@ -24,6 +24,8 @@ export function App() {
       return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     }
   });
+  const [suppressInitialRouteReveal, setSuppressInitialRouteReveal] = useState(signalActive);
+  const previousLocation = useRef({ pathname, hash });
 
   useEffect(() => {
     if (!signalActive) return;
@@ -38,9 +40,17 @@ export function App() {
     return () => window.clearTimeout(timer);
   }, [signalActive]);
 
+  useEffect(() => {
+    if (pathname !== "/") setSuppressInitialRouteReveal(false);
+  }, [pathname]);
+
   useLayoutEffect(() => {
+    const previous = previousLocation.current;
+    previousLocation.current = { pathname, hash };
+
     if (!hash) {
-      window.scrollTo({ top: 0, behavior: "instant" });
+      const returningFromSection = previous.pathname === pathname && Boolean(previous.hash);
+      window.scrollTo({ top: 0, behavior: returningFromSection ? "smooth" : "instant" });
       return;
     }
 
@@ -52,7 +62,7 @@ export function App() {
   }, [pathname, hash]);
 
   return (
-    <div className={`relative min-h-screen ${signalActive ? "signal-intro-running" : ""}`}>
+    <div className={`relative min-h-screen ${signalActive ? "signal-intro-running" : ""} ${suppressInitialRouteReveal && pathname === "/" ? "suppress-initial-route-reveal" : ""}`}>
       <AmbientBackdrop />
       <SignalAcquisition active={signalActive} />
       <div className="relative z-10">

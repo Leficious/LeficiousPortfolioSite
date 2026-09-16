@@ -362,7 +362,9 @@
   .route-reveal-list > :nth-child(n + 7) { animation-delay: 300ms; }
 
   .signal-intro-running .route-reveal,
-  .signal-intro-running .route-reveal-list > * {
+  .signal-intro-running .route-reveal-list > *,
+  .suppress-initial-route-reveal .route-reveal,
+  .suppress-initial-route-reveal .route-reveal-list > * {
     animation: none;
   }
 }
