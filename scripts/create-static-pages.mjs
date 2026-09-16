@@ -14,7 +14,7 @@ const routes = [
     title: "About & Contact — Leficious",
     description:
       "About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production.",
-    image: "/projects/fallen-valkyrie/cover.avif",
+    image: "/social/leficious-site-preview.png",
   },
   {
     path: "/projects/starshore",
