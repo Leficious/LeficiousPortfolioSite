@@ -87,7 +87,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
           }}
         >
           {media.type === "image" ? (
-            <img src={media.src} alt={media.alt} className="max-h-[70vh] max-w-full rounded-lg object-contain shadow-2xl" decoding="async" />
+            <img src={media.src} alt={media.alt} className="h-full max-h-full w-full max-w-full rounded-lg object-contain shadow-2xl" decoding="async" />
           ) : (
             <div className="aspect-video h-full max-h-[70vh] w-auto max-w-full overflow-hidden rounded-lg border border-border bg-black">
               <iframe

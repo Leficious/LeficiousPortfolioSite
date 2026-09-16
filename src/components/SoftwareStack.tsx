@@ -18,6 +18,13 @@ const abbreviations: Record<SoftwareName, string> = {
   "Traditional Media": "TM",
 };
 
+const compactNames: Partial<Record<SoftwareName, string>> = {
+  "Substance 3D Designer": "Substance Designer",
+  "Substance 3D Painter": "Substance Painter",
+  "Marmoset Toolbag": "Marmoset",
+  "Clip Studio Paint": "Clip Studio",
+};
+
 type SoftwareStackProps = {
   software: SoftwareName[];
   showLabels?: boolean;
@@ -40,5 +47,18 @@ export function SoftwareStack({ software, showLabels = false }: SoftwareStackPro
         ))}
       </div>
     </div>
+  );
+}
+
+export function SoftwareSummary({ software }: Pick<SoftwareStackProps, "software">) {
+  const visible = software.slice(0, 2).map((name) => compactNames[name] ?? name);
+  const remaining = software.length - visible.length;
+  const summary = `${visible.join(" · ")}${remaining > 0 ? ` · +${remaining}` : ""}`;
+
+  return (
+    <p aria-label={`Software and tools: ${software.join(", ")}`} className="flex items-baseline gap-2 font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
+      <span className="shrink-0 text-accent/80">Toolkit</span>
+      <span className="min-w-0 truncate">{summary}</span>
+    </p>
   );
 }

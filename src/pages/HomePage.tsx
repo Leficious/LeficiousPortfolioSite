@@ -47,9 +47,9 @@ export function HomePage() {
 
         <div className="work-meta-enter grid border-x border-b border-border/60 sm:grid-cols-3">
           {[
-            ["01", "Primary focus", "Combat design · gameplay systems"],
-            ["02", "Supporting strengths", "AI · animation · technical art · 3D production"],
-            ["03", "Commercial engines", "Unreal Engine · Unity"],
+            ["01", "Primary discipline", "Combat + gameplay design"],
+            ["02", "Systems", "Player mechanics · enemy behavior · encounters"],
+            ["03", "Process", "Prototype · playtest · refine"],
           ].map(([number, label, value]) => (
             <div key={number} className="group relative min-h-32 overflow-hidden border-b border-border/60 p-6 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
               <span className="absolute right-4 top-2 font-display text-5xl font-semibold text-foreground/[0.035] transition-colors group-hover:text-accent/10">{number}</span>

@@ -39,12 +39,6 @@ function ContactIcon({ name }: { name: IconName }) {
   );
 }
 
-const details = [
-  { number: "01", label: "Focus", value: "Technical + combat design" },
-  { number: "02", label: "Engines", value: "Unreal Engine · Unity" },
-  { number: "03", label: "Perspective", value: "Design / code / 3D" },
-];
-
 const systems = [
   { number: "01", title: "Combat Design", description: "Player actions, enemy behaviors, encounters, controls, feedback, and the pacing that connects them." },
   { number: "02", title: "Gameplay Systems", description: "Clear, scalable rules and data structures designed around iteration, tuning, and player readability." },
@@ -113,16 +107,6 @@ export function AboutPage() {
             </div>
           </div>
         </section>
-
-        <div className="grid border-x border-b border-border/60 sm:grid-cols-3">
-          {details.map((detail) => (
-            <div key={detail.number} className="group relative min-h-32 overflow-hidden border-b border-border/60 p-6 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
-              <span className="absolute right-4 top-2 font-display text-5xl font-semibold text-foreground/[0.035] transition-colors group-hover:text-accent/10">{detail.number}</span>
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">{detail.label}</p>
-              <p className="mt-5 font-display text-lg font-medium">{detail.value}</p>
-            </div>
-          ))}
-        </div>
 
         <section className="py-16 md:py-24" aria-labelledby="systems-title">
           <div className="grid gap-6 md:grid-cols-12">

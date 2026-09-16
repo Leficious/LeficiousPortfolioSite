@@ -4,7 +4,7 @@ import { FeaturedReel } from "../components/FeaturedReel";
 import { GalleryLightbox } from "../components/GalleryLightbox";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
-import { SoftwareStack } from "../components/SoftwareStack";
+import { SoftwareSummary } from "../components/SoftwareStack";
 import { galleryEntries, galleryTags, type GalleryEntry, type GalleryTag } from "../lib/gallery";
 
 const aspectClasses = {
@@ -103,24 +103,18 @@ export function GalleryPage() {
                   aria-label={`Open ${entry.title}, ${entry.media.length} ${entry.media.length === 1 ? "item" : "items"}`}
                 >
                   <div className={`relative overflow-hidden bg-muted ${aspectClasses[entry.aspect]}`}>
-                    <img src={entry.cover} alt={entry.coverAlt} width="1200" height="900" loading={index < 3 ? "eager" : "lazy"} decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]" />
-                    {entry.pinned && <span className="absolute right-3 top-3 rounded-full border border-accent/60 bg-background/80 px-2.5 py-1 font-mono text-[8px] uppercase tracking-[0.16em] text-foreground shadow-lg backdrop-blur"><span aria-hidden="true" className="mr-1 text-accent">✦</span>Pinned</span>}
-                    <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-background/90 to-transparent p-4 pt-14">
-                      <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-foreground">View set</span>
-                      <span className="font-mono text-[10px] text-muted-foreground">{String(entry.media.length).padStart(2, "0")}</span>
-                    </div>
+                    <img src={entry.cover} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-30 blur-xl" />
+                    <div aria-hidden="true" className="absolute inset-0 bg-background/35" />
+                    <img src={entry.cover} alt={entry.coverAlt} width="1200" height="900" loading={index < 3 ? "eager" : "lazy"} decoding="async" className="relative h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.015]" />
+                    {entry.pinned && <span title="Pinned work" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full border border-accent/60 bg-background/80 text-sm text-accent shadow-lg backdrop-blur"><span className="sr-only">Pinned work</span><span aria-hidden="true">✦</span></span>}
                   </div>
                   <div className="p-4">
                     <div className="flex items-baseline justify-between gap-4">
                       <h3 className="font-display text-lg font-semibold transition-colors group-hover:text-accent">{entry.title}</h3>
                       <span className="font-mono text-[10px] text-muted-foreground">{entry.year}</span>
                     </div>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{entry.description}</p>
-                    <p className="mt-4 border-t border-border/60 pt-3 text-xs leading-relaxed text-muted-foreground"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">Contribution · </span>{entry.contribution}</p>
-                    <div className="mt-4"><SoftwareStack software={entry.software} /></div>
-                    <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1">
-                      {entry.tags.map((tag) => <span key={tag} className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/75">{tag}</span>)}
-                    </div>
+                    <p className="mt-3 overflow-hidden border-t border-border/60 pt-3 text-xs leading-relaxed text-muted-foreground [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">Contribution · </span>{entry.contribution}</p>
+                    <div className="mt-3"><SoftwareSummary software={entry.software} /></div>
                   </div>
                 </button>
               ))}
