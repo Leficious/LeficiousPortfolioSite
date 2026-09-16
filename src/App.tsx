@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AmbientBackdrop } from "./components/AmbientBackdrop";
 import { SignalAcquisition } from "./components/SignalAcquisition";
+import { SiteNav } from "./components/SiteNav";
 import { AboutPage } from "./pages/AboutPage";
 import { HomePage } from "./pages/HomePage";
 import { GalleryPage } from "./pages/GalleryPage";
@@ -10,6 +11,7 @@ import { ProjectPage } from "./pages/ProjectPage";
 
 export function App() {
   const { pathname, hash } = useLocation();
+  const supportsViewTransitions = typeof document !== "undefined" && "startViewTransition" in document;
   const [signalActive, setSignalActive] = useState(() => {
     if (typeof window === "undefined" || pathname !== "/") return false;
 
@@ -36,7 +38,7 @@ export function App() {
     return () => window.clearTimeout(timer);
   }, [signalActive]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!hash) {
       window.scrollTo({ top: 0, behavior: "instant" });
       return;
@@ -54,13 +56,16 @@ export function App() {
       <AmbientBackdrop />
       <SignalAcquisition active={signalActive} />
       <div className="relative z-10">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/gallery" element={<GalleryPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/projects/:slug" element={<ProjectPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <SiteNav />
+        <div key={pathname} className={`route-stage ${supportsViewTransitions ? "" : "route-stage-fallback"}`}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/gallery" element={<GalleryPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/projects/:slug" element={<ProjectPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </div>
       </div>
     </div>
   );

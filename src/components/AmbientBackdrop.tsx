@@ -237,7 +237,7 @@ export function AmbientBackdrop() {
     <div ref={backdropRef} aria-hidden="true" className="ambient-backdrop">
       <div className="ambient-backdrop__pattern" />
       <div className="ambient-backdrop__glow" />
-      <canvas ref={canvasRef} className="ambient-backdrop__map" />
+      <canvas key={pathname} ref={canvasRef} className="ambient-backdrop__map" />
     </div>
   );
 }

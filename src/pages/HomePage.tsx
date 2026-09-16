@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
 import { FeaturedReel } from "../components/FeaturedReel";
 import { Seo } from "../components/Seo";
-import { SiteFooter, SiteNav } from "../components/SiteNav";
+import { SiteFooter } from "../components/SiteNav";
 import { projects } from "../lib/projects";
 
 export function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Seo title="Leficious — Technical & Combat Design Portfolio" description="Selected work by Leficious — combat systems, AI, weapon frameworks, and design tooling for games." />
-      <SiteNav />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="work-grid-enter absolute inset-0 -z-10 opacity-30 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_88%)]" />
@@ -90,7 +89,7 @@ export function HomePage() {
           <ul className="space-y-5">
             {projects.map((project, index) => (
               <li key={project.slug}>
-                <Link to={`/projects/${project.slug}`} className="group grid overflow-hidden rounded-lg border border-border bg-surface/45 transition-all hover:-translate-y-0.5 hover:border-accent/70 hover:bg-surface md:grid-cols-[0.42fr_0.58fr]">
+                <Link to={`/projects/${project.slug}`} viewTransition className="group grid overflow-hidden rounded-lg border border-border bg-surface/45 transition-all hover:-translate-y-0.5 hover:border-accent/70 hover:bg-surface md:grid-cols-[0.42fr_0.58fr]">
                   <div className="relative min-h-56 overflow-hidden bg-muted md:min-h-72">
                     <img src={project.cover} alt="" width="800" height="500" loading={index < 2 ? "eager" : "lazy"} decoding="async" className="h-full w-full object-cover opacity-75 grayscale-[25%] transition duration-500 group-hover:scale-[1.025] group-hover:opacity-90 group-hover:grayscale-0" />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-background/45" />

@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { FeaturedReel } from "../components/FeaturedReel";
 import { GalleryLightbox } from "../components/GalleryLightbox";
 import { Seo } from "../components/Seo";
-import { SiteFooter, SiteNav } from "../components/SiteNav";
+import { SiteFooter } from "../components/SiteNav";
 import { galleryEntries, galleryTags, type GalleryEntry, type GalleryTag } from "../lib/gallery";
 
 const aspectClasses = {
@@ -32,7 +32,6 @@ export function GalleryPage() {
     <div className="min-h-screen bg-background text-foreground">
       <Seo title="Gallery — Leficious" description="A gallery of 3D, 2D, environment, character, animation, and technical art work by Leficious." path="/gallery" />
       <div aria-hidden={selected ? "true" : undefined}>
-        <SiteNav />
         <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6">
           <section className="grid gap-10 border-b border-border/60 py-16 md:grid-cols-12 md:py-24">
             <div className="md:col-span-3">

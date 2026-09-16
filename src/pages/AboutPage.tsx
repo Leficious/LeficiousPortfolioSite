@@ -1,6 +1,6 @@
 import { useRef, useState, type ReactNode } from "react";
 import { Seo } from "../components/Seo";
-import { SiteFooter, SiteNav } from "../components/SiteNav";
+import { SiteFooter } from "../components/SiteNav";
 
 type IconName = "email" | "linkedin" | "linktree" | "artstation";
 
@@ -80,7 +80,6 @@ export function AboutPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Seo title="About & Contact — Leficious" description="About Leficious — technical and combat designer focused on combat systems, AI, and tooling. Contact and portfolio links." path="/about" />
-      <SiteNav />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-35 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
