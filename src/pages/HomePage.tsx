@@ -21,10 +21,10 @@ export function HomePage() {
                 Portfolio · {new Date().getFullYear()}
               </div>
               <h1 className="mt-7 max-w-4xl font-display text-5xl font-semibold leading-[0.95] text-balance sm:text-6xl lg:text-7xl">
-                Combat systems, gameplay tools, and <span className="text-accent">technical design.</span>
+                Combat design and gameplay systems, from <span className="text-accent">prototype to playtest.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                My work centers on turning design goals into playable, tunable systems. I build mechanics, AI behaviors, and designer-facing tools, then use testing and feedback to improve clarity, feel, and iteration speed.
+                I design and implement combat mechanics, player abilities, and enemy behavior, then refine them through prototyping, playtesting, and iteration. My focus is on how systems feel, communicate, and work together in play.
               </p>
             </div>
 
