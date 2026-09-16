@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { type GalleryEntry, getYouTubeId } from "../lib/gallery";
 
 type GalleryLightboxProps = {
@@ -54,22 +55,22 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
 
   const media = entry.media[slide];
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex bg-background/95 backdrop-blur-xl"
+      className="fixed inset-0 z-[300] flex bg-background/95 backdrop-blur-xl"
       role="dialog"
       aria-modal="true"
       aria-labelledby="gallery-dialog-title"
       onClick={onClose}
     >
       <div ref={dialogRef} className="mx-auto flex min-h-0 w-full max-w-[1600px] flex-col px-4 py-4 md:px-8 md:py-6" onClick={(event) => event.stopPropagation()}>
-        <header className="flex items-start justify-between gap-6 border-b border-border/60 pb-4">
+        <header className="flex shrink-0 items-start justify-between gap-4 border-b border-border/60 pb-4">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{String(slide + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</p>
             <h2 id="gallery-dialog-title" className="mt-1 font-display text-xl font-semibold md:text-2xl">{entry.title}</h2>
           </div>
-          <button ref={closeRef} type="button" onClick={onClose} className="rounded-full border border-border px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:border-accent hover:text-foreground">
-            Close <span aria-hidden="true">×</span>
+          <button ref={closeRef} type="button" onClick={onClose} className="shrink-0 rounded-full border border-accent/70 bg-surface/80 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground shadow-lg backdrop-blur transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground sm:px-5">
+            <span aria-hidden="true">←</span> Back to gallery <span aria-hidden="true">×</span>
           </button>
         </header>
 
@@ -121,6 +122,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
           )}
         </footer>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
