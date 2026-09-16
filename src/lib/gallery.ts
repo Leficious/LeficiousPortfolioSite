@@ -77,7 +77,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Stylized Classroom — Illustration Match",
     description: "A 3D environment implementation based on an original illustration by ArseniXC, translating its composition, materials, and lighting into a complete scene.",
     contribution: "3D environment implementation, materials, lighting, and final presentation",
-    software: ["Maya"],
+    software: ["Maya", "V-Ray", "Substance 3D Painter"],
     year: "2026",
     tags: ["3D", "Environment", "Digital"],
     cover: "/gallery/thumbnails/stylized-classroom.webp",
