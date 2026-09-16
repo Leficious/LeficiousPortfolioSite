@@ -21,19 +21,19 @@ export function HomePage() {
                 Portfolio · {new Date().getFullYear()}
               </div>
               <h1 className="mt-7 max-w-4xl font-display text-5xl font-semibold leading-[0.95] text-balance sm:text-6xl lg:text-7xl">
-                Combat design and gameplay systems, from <span className="text-accent">prototype to playtest.</span>
+                Combat design and gameplay systems, from <span className="signal-headline-accent text-accent">prototype to playtest.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
                 I design and implement combat mechanics, player abilities, and enemy behavior, then refine them through prototyping, playtesting, and iteration. My focus is on how systems feel, communicate, and work together in play.
               </p>
             </div>
 
-            <div aria-hidden="true" className="work-diagram-enter relative mx-auto aspect-square w-full max-w-[320px] overflow-hidden rounded-xl border border-border bg-background/65 shadow-[0_0_80px_rgba(91,154,172,0.08)]">
+            <div id="hero-system-diagram" aria-hidden="true" className="work-diagram-enter relative mx-auto aspect-square w-full max-w-[320px] overflow-hidden rounded-xl border border-border bg-background/65 shadow-[0_0_80px_rgba(91,154,172,0.08)]">
               <div className="absolute inset-5 border border-border/70" />
               <div className="absolute inset-10 border border-dashed border-accent/40" />
               <div className="absolute left-1/2 top-5 h-[calc(100%-2.5rem)] w-px bg-border/60" />
               <div className="absolute left-5 top-1/2 h-px w-[calc(100%-2.5rem)] bg-border/60" />
-              <div className="absolute inset-[29%] grid place-items-center rounded-full border border-accent/70 bg-surface/90 shadow-[0_0_35px_rgba(91,154,172,0.15)]">
+              <div className="signal-diagram-core absolute inset-[29%] grid place-items-center rounded-full border border-accent/70 bg-surface/90 shadow-[0_0_35px_rgba(91,154,172,0.15)]">
                 <span className="text-center font-mono text-[9px] uppercase leading-loose tracking-[0.2em] text-foreground">Design<br />Build<br />Test</span>
               </div>
               <span className="absolute left-7 top-7 font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">Input</span>
