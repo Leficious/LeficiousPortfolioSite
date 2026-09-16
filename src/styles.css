@@ -164,24 +164,157 @@
     to { opacity: 0.18; }
   }
 
-  .site-mark-enter {
-    animation: system-mark-enter 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  @keyframes signal-veil-release {
+    0%, 12% { opacity: 0.92; }
+    38% { opacity: 0.48; }
+    100% { opacity: 0; }
   }
 
-  .work-copy-enter {
-    animation: system-content-enter 650ms 70ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  @keyframes signal-scan-pass {
+    0% { opacity: 0; transform: translateX(-115%); }
+    14% { opacity: 0.8; }
+    72% { opacity: 0.45; }
+    100% { opacity: 0; transform: translateX(115vw); }
   }
 
-  .work-diagram-enter {
-    animation: system-diagram-enter 650ms 160ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  @keyframes signal-status-acquired {
+    0%, 25% { opacity: 0; transform: translateY(5px); }
+    42%, 72% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-3px); }
   }
 
-  .work-meta-enter {
-    animation: system-content-enter 600ms 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  @keyframes signal-reticle-lock {
+    0%, 18% { opacity: 0; transform: translate(-50%, -50%) scale(1.45) rotate(8deg); }
+    44% { opacity: 0.55; transform: translate(-50%, -50%) scale(1) rotate(0); }
+    74% { opacity: 0.18; }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.94); }
   }
 
-  .work-grid-enter {
-    animation: system-grid-enter 800ms ease-out both;
+  @keyframes signal-headline-reveal {
+    from { opacity: 0; clip-path: inset(100% 0 0 0); transform: translateY(24px); }
+    to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
+  }
+
+  @keyframes signal-dot-online {
+    0%, 50% { opacity: 0; transform: scale(0.2); text-shadow: none; }
+    72% { opacity: 1; transform: scale(1.4); text-shadow: 0 0 18px var(--color-accent); }
+    100% { opacity: 1; transform: scale(1); text-shadow: 0 0 8px color-mix(in oklch, var(--color-accent) 55%, transparent); }
+  }
+
+  .signal-intro-running .site-mark-enter {
+    animation: system-mark-enter 520ms 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .signal-intro-running .site-mark-dot {
+    display: inline-block;
+    animation: signal-dot-online 720ms 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .signal-intro-running .signal-nav-enter {
+    animation: system-content-enter 520ms 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .signal-intro-running .work-copy-enter > div {
+    animation: system-content-enter 520ms 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .signal-intro-running .work-copy-enter > h1 {
+    animation: signal-headline-reveal 720ms 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .signal-intro-running .work-copy-enter > p {
+    animation: system-content-enter 620ms 510ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .signal-intro-running .work-diagram-enter {
+    animation: system-diagram-enter 720ms 440ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .signal-intro-running .work-meta-enter {
+    animation: system-content-enter 620ms 610ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .signal-intro-running .work-grid-enter {
+    animation: system-grid-enter 900ms 160ms ease-out both;
+  }
+}
+
+.signal-acquisition {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  overflow: hidden;
+  pointer-events: none;
+  background: color-mix(in oklch, var(--color-background) 92%, transparent);
+  animation: signal-veil-release 1150ms ease-out both;
+}
+
+.signal-acquisition__scan {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: min(34vw, 460px);
+  border-right: 1px solid color-mix(in oklch, var(--color-accent) 72%, transparent);
+  background: linear-gradient(to right, transparent, color-mix(in oklch, var(--color-accent) 11%, transparent) 76%, color-mix(in oklch, var(--color-accent) 24%, transparent));
+  box-shadow: 28px 0 80px color-mix(in oklch, var(--color-accent) 12%, transparent);
+  animation: signal-scan-pass 920ms 90ms cubic-bezier(0.32, 0, 0.24, 1) both;
+}
+
+.signal-acquisition__reticle {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  height: 96px;
+  width: 96px;
+  border: 1px solid color-mix(in oklch, var(--color-accent) 55%, transparent);
+  border-radius: 999px;
+  animation: signal-reticle-lock 900ms 80ms ease-out both;
+}
+
+.signal-acquisition__reticle::before,
+.signal-acquisition__reticle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: color-mix(in oklch, var(--color-accent) 65%, transparent);
+}
+
+.signal-acquisition__reticle::before { width: 132px; height: 1px; transform: translate(-50%, -50%); }
+.signal-acquisition__reticle::after { width: 1px; height: 132px; transform: translate(-50%, -50%); }
+.signal-acquisition__reticle span { position: absolute; inset: 13px; border: 1px dashed color-mix(in oklch, var(--color-accent) 34%, transparent); border-radius: inherit; }
+.signal-acquisition__reticle span:last-child { inset: 38px; border-style: solid; background: var(--color-accent); box-shadow: 0 0 20px var(--color-accent); }
+
+.signal-acquisition__status {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  display: flex;
+  transform: translateX(-50%);
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+  animation: signal-status-acquired 1100ms ease-out both;
+}
+
+.signal-acquisition__status-light {
+  height: 5px;
+  width: 5px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  box-shadow: 0 0 12px var(--color-accent);
+}
+
+@media (max-width: 639px) {
+  .signal-acquisition__scan,
+  .signal-acquisition__reticle,
+  .signal-acquisition__status {
+    display: none;
   }
 }
 

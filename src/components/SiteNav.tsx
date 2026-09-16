@@ -15,9 +15,9 @@ export function SiteNav() {
       </a>
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link to="/" className="site-mark-enter font-display text-lg font-semibold tracking-tight">
-          leficious<span className="text-accent">.</span>
+          leficious<span className="site-mark-dot text-accent">.</span>
         </Link>
-        <nav aria-label="Primary" className="flex items-center gap-3 text-xs text-muted-foreground sm:gap-6 sm:text-sm">
+        <nav aria-label="Primary" className="signal-nav-enter flex items-center gap-3 text-xs text-muted-foreground sm:gap-6 sm:text-sm">
           <NavLink to="/" end className={({ isActive }) => navClass(isActive)}>Work</NavLink>
           <NavLink to="/gallery" className={({ isActive }) => navClass(isActive)}>Gallery</NavLink>
           <NavLink to="/about" className={({ isActive }) => navClass(isActive && hash !== "#contact")}>About</NavLink>
