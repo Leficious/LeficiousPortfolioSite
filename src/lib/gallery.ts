@@ -77,6 +77,7 @@ export const galleryEntries: GalleryEntry[] = [
     coverAlt: "Stylized shrine hero render",
     aspect: "landscape",
     media: [
+      { type: "youtube", url: "https://www.youtube.com/watch?v=mkx379N-2n4", title: "Stylized shrine turntable" },
       { type: "image", src: "/gallery/artstation/stylized-shrine/hero-render.jpg", alt: "Stylized shrine hero render" },
       { type: "image", src: "/gallery/artstation/stylized-shrine/wireframe.jpg", alt: "Stylized shrine low-poly wireframe" },
       { type: "image", src: "/gallery/artstation/stylized-shrine/zbrush-sculpt.jpg", alt: "Stylized shrine high-poly sculpt" },
@@ -94,8 +95,22 @@ export const galleryEntries: GalleryEntry[] = [
     coverAlt: "Tenebria character presentation renders",
     aspect: "landscape",
     media: [
+      { type: "youtube", url: "https://www.youtube.com/watch?v=B1evXz2PDeI", title: "Tenebria character turntable" },
       { type: "image", src: "/gallery/artstation/tenebria/stills-composite.jpg", alt: "Tenebria character presentation renders" },
       { type: "youtube", url: "https://www.youtube.com/watch?v=BHnwLswAteg", title: "Tenebria rig demonstration" },
+    ],
+  },
+  {
+    id: "zelda-animation-studies",
+    title: "Character Animation Studies",
+    description: "A combined set of parkour, gymnastics, and seated character animation exercises.",
+    year: "2025",
+    tags: ["3D", "Character", "Animations"],
+    cover: "https://i.ytimg.com/vi/C7mkxqtJXvQ/maxresdefault.jpg",
+    coverAlt: "Zelda character animation studies",
+    aspect: "landscape",
+    media: [
+      { type: "youtube", url: "https://www.youtube.com/watch?v=C7mkxqtJXvQ", title: "Zelda animation studies" },
     ],
   },
   {
