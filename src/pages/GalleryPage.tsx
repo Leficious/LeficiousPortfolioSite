@@ -13,6 +13,20 @@ const aspectClasses = {
   square: "aspect-square",
 };
 
+function getCardLayout(index: number) {
+  const wide = index === 0 || index % 6 === 5;
+
+  return {
+    wide,
+    card: wide
+      ? "sm:col-span-2 lg:col-span-8 lg:grid lg:grid-cols-[minmax(0,1.45fr)_minmax(220px,0.55fr)]"
+      : "lg:col-span-4",
+    media: wide
+      ? "aspect-[16/10] sm:aspect-[16/8] lg:aspect-auto lg:min-h-[320px]"
+      : aspectClasses.landscape,
+  };
+}
+
 export function GalleryPage() {
   const [activeTag, setActiveTag] = useState<GalleryTag | "All">("All");
   const [searchParams, setSearchParams] = useSearchParams();
@@ -93,31 +107,41 @@ export function GalleryPage() {
               </div>
             </div>
 
-            <div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
-              {visibleEntries.map((entry, index) => (
-                <button
-                  key={entry.id}
-                  type="button"
-                  onClick={() => openEntry(entry)}
-                  className="group mb-6 block w-full break-inside-avoid overflow-hidden rounded-lg border border-border bg-surface text-left transition-colors hover:border-accent/70"
-                  aria-label={`Open ${entry.title}, ${entry.media.length} ${entry.media.length === 1 ? "item" : "items"}`}
-                >
-                  <div className={`relative overflow-hidden bg-muted ${aspectClasses[entry.aspect]}`}>
-                    <img src={entry.cover} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-30 blur-xl" />
-                    <div aria-hidden="true" className="absolute inset-0 bg-background/35" />
-                    <img src={entry.cover} alt={entry.coverAlt} width="1200" height="900" loading={index < 3 ? "eager" : "lazy"} decoding="async" className="relative h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.015]" />
-                    {entry.pinned && <span title="Pinned work" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full border border-accent/60 bg-background/80 text-sm text-accent shadow-lg backdrop-blur"><span className="sr-only">Pinned work</span><span aria-hidden="true">✦</span></span>}
-                  </div>
-                  <div className="p-4">
-                    <div className="flex items-baseline justify-between gap-4">
-                      <h3 className="font-display text-lg font-semibold transition-colors group-hover:text-accent">{entry.title}</h3>
-                      <span className="font-mono text-[10px] text-muted-foreground">{entry.year}</span>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-flow-row-dense lg:grid-cols-12">
+              {visibleEntries.map((entry, index) => {
+                const layout = getCardLayout(index);
+                const mediaAspect = layout.wide ? layout.media : aspectClasses[entry.aspect];
+
+                return (
+                  <button
+                    key={entry.id}
+                    type="button"
+                    onClick={() => openEntry(entry)}
+                    className={`group w-full overflow-hidden rounded-lg border border-border bg-surface text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/70 hover:shadow-[0_18px_60px_rgba(0,0,0,0.2)] ${layout.card}`}
+                    aria-label={`Open ${entry.title}, ${entry.media.length} ${entry.media.length === 1 ? "item" : "items"}`}
+                  >
+                    <div className={`relative overflow-hidden bg-muted ${mediaAspect}`}>
+                      <img src={entry.cover} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-30 blur-xl" />
+                      <div aria-hidden="true" className="absolute inset-0 bg-background/35" />
+                      <img src={entry.cover} alt={entry.coverAlt} width="1200" height="900" loading={index < 3 ? "eager" : "lazy"} decoding="async" className="relative h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.015]" />
+                      {entry.pinned && <span title="Pinned work" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full border border-accent/60 bg-background/80 text-sm text-accent shadow-lg backdrop-blur"><span className="sr-only">Pinned work</span><span aria-hidden="true">✦</span></span>}
                     </div>
-                    <p className="mt-3 overflow-hidden border-t border-border/60 pt-3 text-xs leading-relaxed text-muted-foreground [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">Contribution · </span>{entry.contribution}</p>
-                    <div className="mt-3"><SoftwareSummary software={entry.software} /></div>
-                  </div>
-                </button>
-              ))}
+                    <div className={`flex flex-col p-4 ${layout.wide ? "lg:justify-between lg:p-6" : ""}`}>
+                      <div>
+                        <div className="flex items-baseline justify-between gap-4">
+                          <h3 className={`font-display font-semibold transition-colors group-hover:text-accent ${layout.wide ? "text-xl lg:text-2xl" : "text-lg"}`}>{entry.title}</h3>
+                          <span className="font-mono text-[10px] text-muted-foreground">{entry.year}</span>
+                        </div>
+                        {layout.wide && <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{entry.description}</p>}
+                      </div>
+                      <div>
+                        <p className="mt-4 overflow-hidden border-t border-border/60 pt-3 text-xs leading-relaxed text-muted-foreground [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">Contribution · </span>{entry.contribution}</p>
+                        <div className="mt-3"><SoftwareSummary software={entry.software} /></div>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
 
             {!visibleEntries.length && <p className="py-20 text-center text-muted-foreground">No entries use this tag yet.</p>}

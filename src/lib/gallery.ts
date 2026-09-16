@@ -96,7 +96,7 @@ export const galleryEntries: GalleryEntry[] = [
     contribution: "Modeling, texturing, material development, and presentation",
     software: ["Maya", "Substance 3D Designer", "Substance 3D Painter", "Unreal Engine"],
     year: "2026",
-    tags: ["3D", "Props/Vehicles", "Digital"],
+    tags: ["3D", "Props/Vehicles", "Digital", "Realtime"],
     cover: "/gallery/thumbnails/flintlock-pistol.webp",
     coverAlt: "Flintlock pistol render",
     aspect: "landscape",
@@ -125,6 +125,7 @@ export const galleryEntries: GalleryEntry[] = [
     aspect: "landscape",
     projectUrl: "/projects/sacred-forest",
     projectLabel: "View environment breakdown",
+    pinned: true,
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=mkx379N-2n4", title: "Stylized shrine turntable" },
       { type: "image", src: "/gallery/artstation/stylized-shrine/hero-render.jpg", alt: "Stylized shrine hero render" },
@@ -189,7 +190,6 @@ export const galleryEntries: GalleryEntry[] = [
     cover: "https://i.ytimg.com/vi/C7mkxqtJXvQ/maxresdefault.jpg",
     coverAlt: "Zelda character animation studies",
     aspect: "landscape",
-    pinned: true,
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=C7mkxqtJXvQ", title: "Zelda animation studies" },
     ],
@@ -320,6 +320,7 @@ export const galleryEntries: GalleryEntry[] = [
     cover: "/gallery/thumbnails/antique-tabletop.webp",
     coverAlt: "Antique tabletop still life render",
     aspect: "landscape",
+    pinned: true,
     media: [{ type: "image", src: "/gallery/artstation/antique-tabletop/final.jpg", alt: "Antique tabletop still life render" }],
   },
   {
@@ -333,6 +334,7 @@ export const galleryEntries: GalleryEntry[] = [
     cover: "/gallery/thumbnails/misty-night.webp",
     coverAlt: "Antique vehicle in a misty night scene",
     aspect: "landscape",
+    pinned: true,
     media: [
       { type: "image", src: "/gallery/artstation/misty-night/final.jpg", alt: "Antique vehicle in a misty night scene" },
       { type: "image", src: "/gallery/artstation/misty-night/viewport.webp", alt: "Antique vehicle viewport breakdown" },

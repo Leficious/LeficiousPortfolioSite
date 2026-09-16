@@ -166,6 +166,19 @@ export function AboutPage() {
           </div>
         </section>
 
+        <section className="mb-16 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2" aria-label="Languages and geographic availability">
+          <article className="bg-surface/55 p-6 md:p-8">
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">Languages</p>
+            <h2 className="mt-4 font-display text-xl font-semibold">English + Mandarin Chinese</h2>
+            <p className="mt-2 text-sm text-muted-foreground">Fluent</p>
+          </article>
+          <article className="bg-surface/55 p-6 md:p-8">
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">Geographic availability</p>
+            <h2 className="mt-4 font-display text-xl font-semibold">Open to select global regions</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">United States · Canada · Northern &amp; Western Europe · Japan · China</p>
+          </article>
+        </section>
+
         <section id="contact" className="relative scroll-mt-24 overflow-hidden rounded-xl border border-border bg-surface/35 p-6 sm:p-10 md:p-12">
           <div aria-hidden="true" className="absolute right-0 top-0 h-40 w-40 bg-[radial-gradient(circle_at_center,var(--color-accent)_1px,transparent_1.5px)] opacity-20 [background-size:12px_12px] [mask-image:linear-gradient(135deg,black,transparent_75%)]" />
           <div className="relative grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
