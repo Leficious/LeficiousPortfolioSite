@@ -176,8 +176,8 @@ export function AmbientBackdrop() {
         context.beginPath();
         context.moveTo(from.drawX, from.drawY);
         context.lineTo(to.drawX, to.drawY);
-        context.strokeStyle = `rgba(126, 166, 182, ${0.09 + wake * 0.28})`;
-        context.lineWidth = wake > 0.1 ? 1 : 0.65;
+        context.strokeStyle = `rgba(126, 166, 182, ${0.13 + wake * 0.26})`;
+        context.lineWidth = wake > 0.1 ? 1 : 0.72;
         context.stroke();
 
         if (wake > 0.08 && !reducedMotion.matches) {
@@ -197,7 +197,7 @@ export function AmbientBackdrop() {
         const radius = 1.4 + wake * 2.7;
         context.beginPath();
         context.arc(node.drawX, node.drawY, radius, 0, Math.PI * 2);
-        context.fillStyle = `rgba(148, 194, 207, ${0.22 + wake * 0.72})`;
+        context.fillStyle = `rgba(148, 194, 207, ${0.28 + wake * 0.66})`;
         context.fill();
 
         if (wake > 0.04) {
@@ -211,7 +211,7 @@ export function AmbientBackdrop() {
         if (node.label) {
           context.font = '8px "JetBrains Mono", monospace';
           context.textAlign = node.side === "left" ? "left" : "right";
-          context.fillStyle = `rgba(148, 176, 188, ${0.22 + wake * 0.56})`;
+          context.fillStyle = `rgba(148, 176, 188, ${0.28 + wake * 0.5})`;
           context.fillText(node.label, node.drawX + (node.side === "left" ? 9 : -9), node.drawY - 8);
         }
       });

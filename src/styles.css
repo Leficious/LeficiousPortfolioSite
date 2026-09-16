@@ -367,6 +367,10 @@
   .suppress-initial-route-reveal .route-reveal-list > * {
     animation: none;
   }
+
+  .suppress-initial-route-reveal:not(.signal-intro-running) .ambient-backdrop__map {
+    animation: none;
+  }
 }
 
 ::view-transition-old(root),
