@@ -183,7 +183,7 @@ export function AboutPage() {
           </div>
         </section>
 
-        <section id="contact" className="relative overflow-hidden rounded-xl border border-border bg-surface/35 p-6 sm:p-10 md:p-12">
+        <section id="contact" className="relative scroll-mt-24 overflow-hidden rounded-xl border border-border bg-surface/35 p-6 sm:p-10 md:p-12">
           <div aria-hidden="true" className="absolute right-0 top-0 h-40 w-40 bg-[radial-gradient(circle_at_center,var(--color-accent)_1px,transparent_1.5px)] opacity-20 [background-size:12px_12px] [mask-image:linear-gradient(135deg,black,transparent_75%)]" />
           <div className="relative grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
             <div>

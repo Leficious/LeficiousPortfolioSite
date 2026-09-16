@@ -1,7 +1,8 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 export function SiteNav() {
-  const navClass = ({ isActive }: { isActive: boolean }) =>
+  const { pathname, hash } = useLocation();
+  const navClass = (isActive: boolean) =>
     `transition-colors hover:text-foreground ${isActive ? "text-foreground" : ""}`;
 
   return (
@@ -16,10 +17,17 @@ export function SiteNav() {
         <Link to="/" className="site-mark-enter font-display text-lg font-semibold tracking-tight">
           leficious<span className="text-accent">.</span>
         </Link>
-        <nav aria-label="Primary" className="flex items-center gap-6 text-sm text-muted-foreground">
-          <NavLink to="/" end className={navClass}>Work</NavLink>
-          <NavLink to="/gallery" className={navClass}>Gallery</NavLink>
-          <NavLink to="/about" className={navClass}>About</NavLink>
+        <nav aria-label="Primary" className="flex items-center gap-3 text-xs text-muted-foreground sm:gap-6 sm:text-sm">
+          <NavLink to="/" end className={({ isActive }) => navClass(isActive)}>Work</NavLink>
+          <NavLink to="/gallery" className={({ isActive }) => navClass(isActive)}>Gallery</NavLink>
+          <NavLink to="/about" className={({ isActive }) => navClass(isActive && hash !== "#contact")}>About</NavLink>
+          <Link
+            to="/about#contact"
+            className={navClass(pathname === "/about" && hash === "#contact")}
+            onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+          >
+            Contact
+          </Link>
         </nav>
       </div>
     </header>
