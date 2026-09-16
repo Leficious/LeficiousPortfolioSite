@@ -28,6 +28,8 @@ export type GalleryEntry = {
   coverAlt: string;
   aspect: "portrait" | "landscape" | "square";
   media: GalleryMedia[];
+  projectUrl?: string;
+  projectLabel?: string;
 };
 
 export const galleryEntries: GalleryEntry[] = [
@@ -97,6 +99,29 @@ export const galleryEntries: GalleryEntry[] = [
       { type: "image", src: "/gallery/artstation/stylized-shrine/zbrush-sculpt.jpg", alt: "Stylized shrine high-poly sculpt" },
       { type: "image", src: "/gallery/artstation/stylized-shrine/rgb-mask.jpg", alt: "Stylized shrine RGB mask and UV breakdown" },
       { type: "image", src: "/gallery/artstation/stylized-shrine/shader.jpg", alt: "Stylized shrine material function setup" },
+    ],
+  },
+  {
+    id: "sacred-forest",
+    title: "Sacred Forest",
+    description: "A stylized forest environment based on an original concept by En Moroldo, covering modeling, materials, foliage, lighting, VFX, and engine assembly.",
+    year: "2025",
+    tags: ["3D", "Environment", "Realtime", "Tools"],
+    cover: "/gallery/artstation/sacred-forest/final-render.jpg",
+    coverAlt: "Sacred Forest final environment render",
+    aspect: "landscape",
+    projectUrl: "/projects/sacred-forest",
+    projectLabel: "View full project breakdown",
+    media: [
+      { type: "youtube", url: "https://www.youtube.com/watch?v=jdfmAHiv5ro", title: "Sacred Forest environment walkthrough" },
+      { type: "image", src: "/gallery/artstation/sacred-forest/final-render.jpg", alt: "Sacred Forest final environment render" },
+      { type: "image", src: "/gallery/artstation/sacred-forest/bark-material.jpg", alt: "Sacred Forest stylized bark material" },
+      { type: "image", src: "/gallery/artstation/sacred-forest/grass-material.jpg", alt: "Sacred Forest stylized grass material" },
+      { type: "image", src: "/gallery/artstation/sacred-forest/moss-material.jpg", alt: "Sacred Forest stylized moss material" },
+      { type: "image", src: "/gallery/artstation/sacred-forest/stone-material.jpg", alt: "Sacred Forest cracked stone material" },
+      { type: "image", src: "/gallery/artstation/sacred-forest/foliage-cards.jpg", alt: "Sacred Forest foliage card assets" },
+      { type: "image", src: "/gallery/artstation/sacred-forest/foliage-wireframe.jpg", alt: "Sacred Forest foliage wireframe view" },
+      { type: "image", src: "/gallery/artstation/sacred-forest/foliage-atlas.jpg", alt: "Sacred Forest foliage texture atlas" },
     ],
   },
   {
@@ -194,8 +219,8 @@ export const galleryEntries: GalleryEntry[] = [
     description: "A Python tool for smoothing complex foliage assets and reducing repetitive production work.",
     year: "2025",
     tags: ["Tools", "3D", "Environment"],
-    cover: "/gallery/artstation/stylized-shrine/shader.jpg",
-    coverAlt: "Material and foliage tooling setup",
+    cover: "https://i.ytimg.com/vi/ZX5VJnQhJQ4/maxresdefault.jpg",
+    coverAlt: "Vertex normals transfer tool demonstration",
     aspect: "landscape",
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=ZX5VJnQhJQ4", title: "Vertex normals transfer tool demonstration" },

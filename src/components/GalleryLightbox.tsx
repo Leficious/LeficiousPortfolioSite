@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
 import { type GalleryEntry, getYouTubeId } from "../lib/gallery";
 
 type GalleryLightboxProps = {
@@ -110,6 +111,16 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
           <div className="max-w-xl">
             <p className="text-sm text-muted-foreground">{entry.description}</p>
             <div className="mt-2 flex flex-wrap gap-2">{entry.tags.map((tag) => <span key={tag} className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/70">{tag}</span>)}</div>
+            {entry.projectUrl && (
+              <Link
+                to={entry.projectUrl}
+                viewTransition
+                onClick={onClose}
+                className="mt-4 inline-flex items-center gap-2 rounded-full border border-accent/60 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground"
+              >
+                {entry.projectLabel ?? "View project"} <span aria-hidden="true">→</span>
+              </Link>
+            )}
           </div>
           {total > 1 && (
             <div className="hidden gap-2 sm:flex" aria-label="Choose gallery image">
