@@ -53,7 +53,7 @@ export function GalleryPage() {
       <Seo title="Gallery — Leficious" description="A gallery of 3D, 2D, environment, character, animation, and technical art work by Leficious." path="/gallery" image="/gallery/thumbnails/water-blossoms.webp" />
       <div aria-hidden={selected ? "true" : undefined}>
         <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6">
-          <section className="grid gap-10 border-b border-border/60 py-16 md:grid-cols-12 md:py-24">
+          <section className="route-reveal grid gap-10 border-b border-border/60 py-16 md:grid-cols-12 md:py-24">
             <div className="md:col-span-3">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Gallery</p>
             </div>
@@ -67,7 +67,7 @@ export function GalleryPage() {
             </div>
           </section>
 
-          <section className="border-b border-border/60 py-10 md:py-14" aria-labelledby="environment-reel-title">
+          <section className="route-reveal border-b border-border/60 py-10 md:py-14" aria-labelledby="environment-reel-title">
             <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Featured reel</p>
@@ -83,7 +83,7 @@ export function GalleryPage() {
             />
           </section>
 
-          <section className="py-10 md:py-14" aria-labelledby="gallery-filter-title">
+          <section className="route-reveal py-10 md:py-14" aria-labelledby="gallery-filter-title">
             <div className="mb-10 border-b border-border/60 pb-8">
               <div className="flex items-center justify-between gap-4">
                 <h2 id="gallery-filter-title" className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Filter work</h2>
@@ -107,7 +107,7 @@ export function GalleryPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-flow-row-dense lg:grid-cols-12">
+            <div className="route-reveal-list grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-flow-row-dense lg:grid-cols-12">
               {visibleEntries.map((entry, index) => {
                 const layout = getCardLayout(index);
                 const mediaAspect = layout.wide ? layout.media : aspectClasses[entry.aspect];

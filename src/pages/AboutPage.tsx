@@ -42,8 +42,8 @@ function ContactIcon({ name }: { name: IconName }) {
 const systems = [
   { number: "01", title: "Combat Design", description: "Player actions, enemy behaviors, encounters, controls, feedback, and the pacing that connects them." },
   { number: "02", title: "Gameplay Systems", description: "Clear, scalable rules and data structures designed around iteration, tuning, and player readability." },
-  { number: "03", title: "Tools & Workflows", description: "Designer-facing utilities, editor interfaces, debug visualization, and production-minded pipelines." },
-  { number: "04", title: "Technical Production", description: "Animation systems, procedural workflows, art implementation, and the bridge between assets and gameplay." },
+  { number: "03", title: "Technical Animation", description: "State-driven animation logic, Control Rig, and runtime systems that connect character motion to gameplay." },
+  { number: "04", title: "Technical Production", description: "3D production, procedural workflows, art implementation, and the bridge between assets and gameplay." },
 ];
 
 const contactLinks: { label: string; detail: string; href: string; icon: IconName }[] = [
@@ -75,7 +75,7 @@ export function AboutPage() {
     <div className="min-h-screen bg-background text-foreground">
       <Seo title="About & Contact — Leficious" description="About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production." path="/about" image="/projects/fallen-valkyrie/cover.avif" />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
-        <section className="relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
+        <section className="route-reveal relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-35 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
           <div aria-hidden="true" className="absolute -right-28 -top-32 -z-10 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
 
@@ -108,14 +108,14 @@ export function AboutPage() {
           </div>
         </section>
 
-        <section className="py-16 md:py-24" aria-labelledby="systems-title">
+        <section className="route-reveal py-16 md:py-24" aria-labelledby="systems-title">
           <div className="grid gap-6 md:grid-cols-12">
             <div className="md:col-span-4">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Areas of practice</p>
               <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">From design intent to <span className="text-accent">implementation.</span></h2>
               <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">A broad working range, with technical and combat design at the center.</p>
             </div>
-            <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border md:col-span-8 sm:grid-cols-2">
+            <div className="route-reveal-list grid gap-px overflow-hidden rounded-lg border border-border bg-border md:col-span-8 sm:grid-cols-2">
               {systems.map((system) => (
                 <article key={system.number} className="group min-h-52 bg-surface p-6 transition-colors hover:bg-muted/55">
                   <div className="flex items-center justify-between"><span className="font-mono text-[9px] tracking-[0.18em] text-accent">SYS_{system.number}</span><span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-border transition-all group-hover:bg-accent group-hover:shadow-[0_0_12px_var(--color-accent)]" /></div>
@@ -127,18 +127,18 @@ export function AboutPage() {
           </div>
         </section>
 
-        <section className="grid gap-6 border-t border-border/60 py-16 md:grid-cols-12 md:py-24">
+        <section className="route-reveal grid gap-6 border-t border-border/60 py-16 md:grid-cols-12 md:py-24">
           <div className="md:col-span-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Capabilities</p>
             <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">A design focus with <span className="text-accent">production range.</span></h2>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">My environment and technical-art training supports the design work: I understand the assets, shaders, rigs, animation, and optimization constraints around a gameplay system.</p>
           </div>
-          <div className="grid gap-4 md:col-span-8 sm:grid-cols-2">
+          <div className="route-reveal-list grid gap-4 md:col-span-8 sm:grid-cols-2">
             <article className="relative overflow-hidden rounded-lg border border-border bg-surface/55 p-6">
               <span aria-hidden="true" className="absolute -right-3 -top-7 font-display text-8xl font-bold text-foreground/[0.025]">D</span>
               <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">Disciplines</p>
               <ul className="mt-6 space-y-4">
-                {["Combat & encounter design", "Gameplay systems", "AI systems", "Designer tools & debugging", "Level design & 3Cs"].map((item, index) => (
+                {["Combat design & 3Cs", "Technical animation", "Gameplay systems", "AI systems", "Level & world design"].map((item, index) => (
                   <li key={item} className="flex items-center gap-3 text-sm"><span className="font-mono text-[9px] text-muted-foreground">0{index + 1}</span><span className="h-px w-5 bg-border" />{item}</li>
                 ))}
               </ul>
@@ -147,7 +147,7 @@ export function AboutPage() {
               <span aria-hidden="true" className="absolute -right-3 -top-7 font-display text-8xl font-bold text-foreground/[0.025]">T</span>
               <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">Toolkit</p>
               <ul className="mt-6 space-y-4">
-                {["Unreal Engine · Unity", "Blueprint · C++ · C#", "Gameplay AI · Behavior Trees · State Machines", "Animation systems · UI · Debug tools", "Python · Git · Maya · Substance · Houdini · SpeedTree"].map((item, index) => (
+                {["Unreal Engine · Unity", "Blueprint · C++ · C#", "Gameplay AI · Behavior Trees · StateTrees", "Animation systems · UI · Realtime cinematics", "Maya · Substance · Git / Perforce · Python · SpeedTree / Gaea"].map((item, index) => (
                   <li key={item} className="flex items-center gap-3 text-sm"><span className="font-mono text-[9px] text-muted-foreground">0{index + 1}</span><span className="h-px w-5 bg-border" />{item}</li>
                 ))}
               </ul>
@@ -155,7 +155,7 @@ export function AboutPage() {
           </div>
         </section>
 
-        <section className="mb-16 grid overflow-hidden rounded-lg border border-border md:grid-cols-[0.32fr_0.68fr]" aria-labelledby="education-title">
+        <section className="route-reveal mb-16 grid overflow-hidden rounded-lg border border-border md:grid-cols-[0.32fr_0.68fr]" aria-labelledby="education-title">
           <div className="border-b border-border bg-surface/55 p-6 md:border-b-0 md:border-r md:p-8">
             <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Foundation</p>
             <h2 id="education-title" className="mt-3 font-display text-2xl font-semibold">Education</h2>
@@ -166,7 +166,7 @@ export function AboutPage() {
           </div>
         </section>
 
-        <section className="mb-16 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2" aria-label="Languages and geographic availability">
+        <section className="route-reveal route-reveal-list mb-16 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2" aria-label="Languages and geographic availability">
           <article className="bg-surface/55 p-6 md:p-8">
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">Languages</p>
             <h2 className="mt-4 font-display text-xl font-semibold">English + Mandarin Chinese</h2>
@@ -179,20 +179,20 @@ export function AboutPage() {
           </article>
         </section>
 
-        <section id="contact" className="relative scroll-mt-24 overflow-hidden rounded-xl border border-border bg-surface/35 p-6 sm:p-10 md:p-12">
+        <section id="contact" className="route-reveal relative scroll-mt-24 overflow-hidden rounded-xl border border-border bg-surface/35 p-6 sm:p-10 md:p-12">
           <div aria-hidden="true" className="absolute right-0 top-0 h-40 w-40 bg-[radial-gradient(circle_at_center,var(--color-accent)_1px,transparent_1.5px)] opacity-20 [background-size:12px_12px] [mask-image:linear-gradient(135deg,black,transparent_75%)]" />
           <div className="relative grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Contact / Open channel</p>
               <h2 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl">Let&apos;s make something <span className="text-accent">feel good</span> to play.</h2>
               <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">For technical design, combat design, gameplay systems, or interdisciplinary game-development work.</p>
-              <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />Open to technical game design, combat design, and gameplay design opportunities</div>
+              <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />Focused on technical, combat, and gameplay design · open to adjacent opportunities</div>
               <a href="/resume/Leficious_Technical_Game_Designer_Resume.pdf" download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
                 Download technical design résumé <span aria-hidden="true">↓</span>
               </a>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="route-reveal-list grid gap-3 sm:grid-cols-2">
               <button type="button" onClick={copyEmail} className="group flex min-h-32 flex-col justify-between rounded-lg border border-border bg-background/55 p-5 text-left transition-all hover:-translate-y-1 hover:border-accent hover:bg-background">
                 <div className="flex items-start justify-between text-muted-foreground transition-colors group-hover:text-accent"><ContactIcon name="email" /><span className="font-mono text-[9px] uppercase tracking-[0.16em]">{copied ? "Copied" : "Copy"}</span></div>
                 <div><p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">Email</p><span ref={emailRef} className="mt-1 block font-mono text-xs sm:text-sm">leficious@gmail.com</span></div>

@@ -164,6 +164,16 @@
     to { opacity: 1; transform: translateY(0); filter: blur(0); }
   }
 
+  @keyframes route-section-enter {
+    from { opacity: 0; transform: translateY(14px); filter: blur(1.5px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+
+  @keyframes route-item-enter {
+    from { opacity: 0; transform: translateY(10px) scale(0.995); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
   @keyframes route-ambient-exit {
     from { opacity: 1; }
     to { opacity: 0.35; }
@@ -328,6 +338,32 @@
 
   .route-stage-fallback {
     animation: route-fallback-enter 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .route-reveal {
+    animation: route-section-enter 390ms var(--route-reveal-delay, 70ms) cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .route-reveal:nth-child(2) { --route-reveal-delay: 105ms; }
+  .route-reveal:nth-child(3) { --route-reveal-delay: 140ms; }
+  .route-reveal:nth-child(4) { --route-reveal-delay: 175ms; }
+  .route-reveal:nth-child(5) { --route-reveal-delay: 210ms; }
+  .route-reveal:nth-child(6) { --route-reveal-delay: 245ms; }
+
+  .route-reveal-list > * {
+    animation: route-item-enter 340ms 150ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .route-reveal-list > :nth-child(2) { animation-delay: 175ms; }
+  .route-reveal-list > :nth-child(3) { animation-delay: 200ms; }
+  .route-reveal-list > :nth-child(4) { animation-delay: 225ms; }
+  .route-reveal-list > :nth-child(5) { animation-delay: 250ms; }
+  .route-reveal-list > :nth-child(6) { animation-delay: 275ms; }
+  .route-reveal-list > :nth-child(n + 7) { animation-delay: 300ms; }
+
+  .signal-intro-running .route-reveal,
+  .signal-intro-running .route-reveal-list > * {
+    animation: none;
   }
 }
 

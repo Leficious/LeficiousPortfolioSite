@@ -9,7 +9,7 @@ export function HomePage() {
     <div className="min-h-screen bg-background text-foreground">
       <Seo title="Leficious — Technical & Combat Design Portfolio" description="Selected work by Leficious — combat design, gameplay systems, AI, and interdisciplinary 3D production for games." image="/projects/fallen-valkyrie/cover.avif" />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
-        <section className="relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
+        <section className="route-reveal relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="work-grid-enter absolute inset-0 -z-10 opacity-30 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_88%)]" />
           <div aria-hidden="true" className="absolute -left-32 top-12 -z-10 h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
 
@@ -23,7 +23,7 @@ export function HomePage() {
                 Combat design and gameplay systems, from <span className="signal-headline-accent text-accent">prototype to playtest.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                I design and implement combat mechanics, player abilities, and enemy behavior, then refine them through prototyping, playtesting, and iteration. My focus is on how systems feel, communicate, and work together in play.
+                I design and implement combat mechanics, player abilities, and enemy behavior, then refine them through prototyping, playtesting, and iteration. My systems are created with focus on cohesiveness of their formal and dramatic elements.
               </p>
             </div>
 
@@ -45,10 +45,10 @@ export function HomePage() {
           </div>
         </section>
 
-        <div className="work-meta-enter grid border-x border-b border-border/60 sm:grid-cols-3">
+        <div className="route-reveal work-meta-enter grid border-x border-b border-border/60 sm:grid-cols-3">
           {[
             ["01", "Primary discipline", "Combat + gameplay design"],
-            ["02", "Systems", "Player mechanics · enemy behavior · encounters"],
+            ["02", "Systems", "Player mechanics · enemy behavior · technical animation"],
             ["03", "Process", "Prototype · playtest · refine"],
           ].map(([number, label, value]) => (
             <div key={number} className="group relative min-h-32 overflow-hidden border-b border-border/60 p-6 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
@@ -59,7 +59,7 @@ export function HomePage() {
           ))}
         </div>
 
-        <section className="border-x border-b border-border/60 px-6 py-12 sm:px-10 md:py-16 lg:px-14" aria-labelledby="technical-reel-title">
+        <section className="route-reveal border-x border-b border-border/60 px-6 py-12 sm:px-10 md:py-16 lg:px-14" aria-labelledby="technical-reel-title">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Featured reel</p>
@@ -75,7 +75,7 @@ export function HomePage() {
           />
         </section>
 
-        <section className="py-16 md:py-24">
+        <section className="route-reveal py-16 md:py-24">
           <div className="mb-12 grid gap-6 border-b border-border/60 pb-10 md:grid-cols-12 md:items-end">
             <div className="md:col-span-8">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Selected work</p>
@@ -86,7 +86,7 @@ export function HomePage() {
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{String(projects.length).padStart(2, "0")} case studies</p>
             </div>
           </div>
-          <ul className="space-y-5">
+          <ul className="route-reveal-list space-y-5">
             {projects.map((project, index) => (
               <li key={project.slug}>
                 <Link to={`/projects/${project.slug}`} viewTransition className="group grid overflow-hidden rounded-lg border border-border bg-surface/45 transition-all hover:-translate-y-0.5 hover:border-accent/70 hover:bg-surface md:grid-cols-[0.42fr_0.58fr]">
