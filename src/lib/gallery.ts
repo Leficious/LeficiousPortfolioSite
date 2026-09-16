@@ -48,6 +48,20 @@ export const galleryEntries: GalleryEntry[] = [
     ],
   },
   {
+    id: "stylized-classroom",
+    title: "Stylized Classroom — Illustration Match",
+    description: "A 3D environment implementation based on an original illustration by ArseniXC, translating its composition, materials, and lighting into a complete scene.",
+    year: "2026",
+    tags: ["3D", "Environment", "Digital"],
+    cover: "/gallery/artstation/stylized-classroom/finished.png",
+    coverAlt: "Finished stylized classroom environment",
+    aspect: "landscape",
+    media: [
+      { type: "image", src: "/gallery/artstation/stylized-classroom/finished.png", alt: "Finished stylized classroom environment" },
+      { type: "image", src: "/gallery/artstation/stylized-classroom/grayscale-implementation.png", alt: "Grayscale 3D implementation view of the classroom scene" },
+    ],
+  },
+  {
     id: "flintlock-pistol",
     title: "Flintlock Pistol",
     description: "A hard-surface prop study presented through finished renders and material breakdowns.",
