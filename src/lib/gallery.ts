@@ -14,6 +14,23 @@ export const galleryTags = [
 
 export type GalleryTag = (typeof galleryTags)[number];
 
+export type SoftwareName =
+  | "Maya"
+  | "Substance 3D Designer"
+  | "Substance 3D Painter"
+  | "SpeedTree"
+  | "Unreal Engine"
+  | "Gaea"
+  | "ZBrush"
+  | "Photoshop"
+  | "Python"
+  | "Marmoset Toolbag"
+  | "Clip Studio Paint"
+  | "V-Ray"
+  | "Houdini"
+  | "Redshift"
+  | "Traditional Media";
+
 export type GalleryMedia =
   | { type: "image"; src: string; alt: string }
   | { type: "youtube"; url: string; title: string };
@@ -23,6 +40,7 @@ export type GalleryEntry = {
   title: string;
   description: string;
   contribution: string;
+  software: SoftwareName[];
   year: string;
   tags: GalleryTag[];
   cover: string;
@@ -40,6 +58,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Water Blossoms",
     description: "A realtime character scene featuring a character by Idafaber, developed into a complete environment presentation.",
     contribution: "Set dressing, lighting, vegetation, landscape, and bridge modeling / texturing",
+    software: ["Maya", "Substance 3D Designer", "Substance 3D Painter", "SpeedTree", "Unreal Engine", "Gaea"],
     year: "2026",
     tags: ["3D", "Environment", "Realtime"],
     cover: "/gallery/thumbnails/water-blossoms.webp",
@@ -58,6 +77,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Stylized Classroom — Illustration Match",
     description: "A 3D environment implementation based on an original illustration by ArseniXC, translating its composition, materials, and lighting into a complete scene.",
     contribution: "3D environment implementation, materials, lighting, and final presentation",
+    software: ["Maya"],
     year: "2026",
     tags: ["3D", "Environment", "Digital"],
     cover: "/gallery/thumbnails/stylized-classroom.webp",
@@ -74,6 +94,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Flintlock Pistol",
     description: "A hard-surface prop study presented through finished renders and material breakdowns.",
     contribution: "Modeling, texturing, material development, and presentation",
+    software: ["Maya", "Substance 3D Designer", "Substance 3D Painter", "Unreal Engine"],
     year: "2026",
     tags: ["3D", "Props/Vehicles", "Digital"],
     cover: "/gallery/thumbnails/flintlock-pistol.webp",
@@ -96,6 +117,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Stylized Shrine",
     description: "A game-ready hero prop modeled, sculpted, baked, textured, and assembled with reusable material controls.",
     contribution: "Modeling, sculpting, baking, texturing, shader setup, and presentation",
+    software: ["Maya", "ZBrush", "Substance 3D Painter", "Substance 3D Designer", "Photoshop", "Unreal Engine"],
     year: "2024",
     tags: ["3D", "Environment", "Realtime", "Props/Vehicles"],
     cover: "/gallery/thumbnails/stylized-shrine.webp",
@@ -117,6 +139,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Sacred Forest",
     description: "A stylized forest environment based on an original concept by En Moroldo, covering modeling, materials, foliage, lighting, VFX, and engine assembly.",
     contribution: "Modeling, materials, foliage, lighting, VFX, engine assembly, and Python tooling",
+    software: ["Maya", "ZBrush", "Substance 3D Designer", "Substance 3D Painter", "Photoshop", "Unreal Engine", "Python"],
     year: "2025",
     tags: ["3D", "Environment", "Realtime", "Tools"],
     cover: "/gallery/thumbnails/sacred-forest.webp",
@@ -142,6 +165,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Tenebria Character & Rig",
     description: "A game-ready character developed through modeling, sculpting, baking, texturing, presentation, and rigging.",
     contribution: "Modeling, sculpting, baking, texturing, rigging, and presentation",
+    software: ["Maya", "ZBrush", "Substance 3D Painter", "Marmoset Toolbag", "Python"],
     year: "2025",
     tags: ["3D", "Character", "Rigging", "Animations"],
     cover: "/gallery/thumbnails/tenebria-character-rig.webp",
@@ -159,6 +183,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Character Animation Studies",
     description: "A combined set of parkour, gymnastics, and seated character animation exercises using a rig by Christoph Schoch.",
     contribution: "Character animation",
+    software: ["Maya"],
     year: "2025",
     tags: ["3D", "Character", "Animations"],
     cover: "https://i.ytimg.com/vi/C7mkxqtJXvQ/maxresdefault.jpg",
@@ -174,6 +199,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "T-14 Armata Model",
     description: "A hard-surface vehicle model shown through matcap and wireframe views.",
     contribution: "Hard-surface modeling and topology",
+    software: ["Maya"],
     year: "2026",
     tags: ["3D", "Props/Vehicles"],
     cover: "/gallery/thumbnails/t14-armata.webp",
@@ -190,6 +216,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Fantasy Vehicle Model",
     description: "A stylized vehicle design explored through clean hard-surface modeling and topology views.",
     contribution: "Hard-surface modeling and topology",
+    software: ["Maya"],
     year: "2026",
     tags: ["3D", "Props/Vehicles"],
     cover: "/gallery/thumbnails/fantasy-vehicle.webp",
@@ -206,6 +233,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Hazy City",
     description: "A digital environment concept developed from thumbnail exploration through linework and atmosphere.",
     contribution: "Concept development, thumbnails, linework, and digital painting",
+    software: ["Clip Studio Paint", "Photoshop"],
     year: "2025",
     tags: ["2D", "Environment", "Digital"],
     cover: "/gallery/thumbnails/hazy-city.webp",
@@ -222,6 +250,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Perspective & Form Studies",
     description: "Traditional ballpoint, ink, and graphite studies focused on perspective, structure, and visual ideation.",
     contribution: "Traditional drawing and visual development",
+    software: ["Traditional Media"],
     year: "2025",
     tags: ["2D", "Traditional", "Environment", "Props/Vehicles"],
     cover: "/gallery/thumbnails/sketchbook-studies.webp",
@@ -239,6 +268,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Vertex Normals Transfer Tool",
     description: "A Python tool for smoothing complex foliage assets and reducing repetitive production work.",
     contribution: "Python scripting, workflow design, and Maya implementation",
+    software: ["Maya", "Python"],
     year: "2025",
     tags: ["Tools", "3D", "Environment"],
     cover: "https://i.ytimg.com/vi/ZX5VJnQhJQ4/maxresdefault.jpg",
@@ -255,6 +285,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Photomatch Hotel Room",
     description: "A photomatch environment modeled in Maya and rendered in V-Ray.",
     contribution: "Modeling, lighting, look development, and rendering",
+    software: ["Maya", "V-Ray"],
     year: "2025",
     tags: ["3D", "Environment", "Digital"],
     cover: "/gallery/thumbnails/hotel-room.webp",
@@ -267,14 +298,15 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Alien Landscape",
     description: "An environment built from individually modeled assets, procedurally instanced in Houdini, and rendered in Redshift.",
     contribution: "Asset modeling, procedural instancing, look development, and rendering",
+    software: ["Maya", "Houdini", "Redshift"],
     year: "2025",
     tags: ["3D", "Environment", "Digital"],
     cover: "/gallery/thumbnails/alien-landscape.webp",
     coverAlt: "Alien landscape final render",
     aspect: "landscape",
     media: [
-      { type: "image", src: "/gallery/artstation/alien-landscape/final.jpg", alt: "Alien landscape final render" },
-      { type: "image", src: "/gallery/artstation/alien-landscape/breakdown.jpg", alt: "Alien landscape production breakdown" },
+      { type: "image", src: "/gallery/artstation/alien-landscape/breakdown.jpg", alt: "Alien landscape final render" },
+      { type: "image", src: "/gallery/artstation/alien-landscape/final.jpg", alt: "Alien landscape Houdini viewport breakdown" },
     ],
   },
   {
@@ -282,6 +314,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Antique Tabletop",
     description: "A modeling, texturing, lighting, and rendering study composed around a collection of antique props.",
     contribution: "Modeling, texturing, lighting, composition, and rendering",
+    software: ["Maya", "Substance 3D Painter", "Photoshop", "Redshift"],
     year: "2024",
     tags: ["3D", "Props/Vehicles", "Digital"],
     cover: "/gallery/thumbnails/antique-tabletop.webp",
@@ -294,6 +327,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Misty Night",
     description: "An antique vehicle lighting and surfacing study built around a provided car model.",
     contribution: "Scene organization, texturing, lighting, rendering, and post-processing",
+    software: ["Maya", "Substance 3D Painter", "Photoshop", "Redshift"],
     year: "2023",
     tags: ["3D", "Props/Vehicles", "Digital"],
     cover: "/gallery/thumbnails/misty-night.webp",
@@ -312,6 +346,7 @@ export const galleryEntries: GalleryEntry[] = [
     title: "Dunes — City in Sand",
     description: "A surfacing and rendering study built from a provided environment scene.",
     contribution: "Texturing, look development, scene organization, and rendering",
+    software: ["Maya", "V-Ray", "Substance 3D Painter", "Photoshop"],
     year: "2023",
     tags: ["3D", "Environment", "Digital"],
     cover: "/gallery/thumbnails/dunes.webp",

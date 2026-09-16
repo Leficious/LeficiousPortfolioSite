@@ -4,6 +4,7 @@ import { FeaturedReel } from "../components/FeaturedReel";
 import { GalleryLightbox } from "../components/GalleryLightbox";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
+import { SoftwareStack } from "../components/SoftwareStack";
 import { galleryEntries, galleryTags, type GalleryEntry, type GalleryTag } from "../lib/gallery";
 
 const aspectClasses = {
@@ -116,6 +117,7 @@ export function GalleryPage() {
                     </div>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{entry.description}</p>
                     <p className="mt-4 border-t border-border/60 pt-3 text-xs leading-relaxed text-muted-foreground"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">Contribution · </span>{entry.contribution}</p>
+                    <div className="mt-4"><SoftwareStack software={entry.software} /></div>
                     <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1">
                       {entry.tags.map((tag) => <span key={tag} className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/75">{tag}</span>)}
                     </div>

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { type GalleryEntry, getYouTubeId } from "../lib/gallery";
+import { SoftwareStack } from "./SoftwareStack";
 
 type GalleryLightboxProps = {
   entry: GalleryEntry;
@@ -111,6 +112,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
           <div className="max-w-xl">
             <p className="text-sm text-muted-foreground">{entry.description}</p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">Contribution · </span>{entry.contribution}</p>
+            <div className="mt-3"><SoftwareStack software={entry.software} showLabels /></div>
             <div className="mt-2 flex flex-wrap gap-2">{entry.tags.map((tag) => <span key={tag} className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/70">{tag}</span>)}</div>
             {entry.projectUrl && (
               <Link
