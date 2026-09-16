@@ -80,8 +80,8 @@ export function HomePage() {
           <div className="mb-12 grid gap-6 border-b border-border/60 pb-10 md:grid-cols-12 md:items-end">
             <div className="md:col-span-8">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Selected work</p>
-              <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl">Systems and tools built for <span className="text-accent">iteration.</span></h2>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">Case studies covering combat, gameplay AI, modular systems, and design tooling.</p>
+              <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl">Systems and designs built for <span className="text-accent">iteration.</span></h2>
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">Case studies covering combat, gameplay AI, modular systems, and 3D production.</p>
             </div>
             <div className="md:col-span-4 md:text-right">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{String(projects.length).padStart(2, "0")} case studies</p>
