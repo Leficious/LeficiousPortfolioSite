@@ -7,30 +7,35 @@ const routes = [
     title: "Gallery — Leficious",
     description:
       "A gallery of 3D, 2D, environment, character, animation, and technical art work by Leficious.",
+    image: "/gallery/thumbnails/water-blossoms.webp",
   },
   {
     path: "/about",
     title: "About & Contact — Leficious",
     description:
-      "About Leficious — technical and combat designer focused on combat systems, AI, and tooling. Contact and portfolio links.",
+      "About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production.",
+    image: "/projects/fallen-valkyrie/cover.avif",
   },
   {
     path: "/projects/starshore",
     title: "Starshore — Leficious",
     description:
       "A 15-week gameplay prototype connecting character movement, abilities, targeting, inventory, shops, and data-driven pickups.",
+    image: "/projects/starshore/design-layout-01.avif",
   },
   {
     path: "/projects/fallen-valkyrie",
     title: "Fallen Valkyrie — Leficious",
     description:
       "A 10-week action-combat prototype centered on weapon-dependent movesets, directional hit reactions, lock-on targeting, and a multiphase boss encounter.",
+    image: "/projects/fallen-valkyrie/cover.avif",
   },
   {
     path: "/projects/sacred-forest",
     title: "Sacred Forest — Leficious",
     description:
       "A stylized forest shrine developed end to end through modeling, procedural materials, foliage, lighting, effects, and engine assembly.",
+    image: "/projects/sacred-forest/cover.avif",
   },
 ];
 
@@ -45,6 +50,7 @@ const shell = await readFile("dist/index.html", "utf8");
 
 for (const route of routes) {
   const canonical = `https://leficious.com${route.path}`;
+  const socialImage = `https://leficious.com${route.image}`;
   const html = shell
     .replace(/<title>.*?<\/title>/, `<title>${route.title}</title>`)
     .replace(
@@ -64,12 +70,20 @@ for (const route of routes) {
       `<meta property="og:url" content="${canonical}" />`,
     )
     .replace(
+      /<meta property="og:image" content=".*?"\s*\/?>/,
+      `<meta property="og:image" content="${socialImage}" />`,
+    )
+    .replace(
       /<meta name="twitter:title" content=".*?"\s*\/?>/,
       `<meta name="twitter:title" content="${escapeAttribute(route.title)}" />`,
     )
     .replace(
       /<meta name="twitter:description" content=".*?"\s*\/?>/,
       `<meta name="twitter:description" content="${escapeAttribute(route.description)}" />`,
+    )
+    .replace(
+      /<meta name="twitter:image" content=".*?"\s*\/?>/,
+      `<meta name="twitter:image" content="${socialImage}" />`,
     )
     .replace(
       /<link rel="canonical" href=".*?"\s*\/?>/,

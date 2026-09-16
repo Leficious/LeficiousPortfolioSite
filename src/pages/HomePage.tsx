@@ -7,7 +7,7 @@ import { projects } from "../lib/projects";
 export function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title="Leficious — Technical & Combat Design Portfolio" description="Selected work by Leficious — combat systems, AI, weapon frameworks, and design tooling for games." />
+      <Seo title="Leficious — Technical & Combat Design Portfolio" description="Selected work by Leficious — combat design, gameplay systems, AI, and interdisciplinary 3D production for games." image="/projects/fallen-valkyrie/cover.avif" />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="work-grid-enter absolute inset-0 -z-10 opacity-30 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_88%)]" />
@@ -47,9 +47,9 @@ export function HomePage() {
 
         <div className="work-meta-enter grid border-x border-b border-border/60 sm:grid-cols-3">
           {[
-            ["01", "Focus", "Technical + combat design"],
-            ["02", "Engines", "Unreal Engine · Unity"],
-            ["03", "Method", "Prototype / test / iterate"],
+            ["01", "Primary focus", "Combat design · gameplay systems"],
+            ["02", "Supporting strengths", "AI · animation · technical art · 3D production"],
+            ["03", "Commercial engines", "Unreal Engine · Unity"],
           ].map(([number, label, value]) => (
             <div key={number} className="group relative min-h-32 overflow-hidden border-b border-border/60 p-6 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
               <span className="absolute right-4 top-2 font-display text-5xl font-semibold text-foreground/[0.035] transition-colors group-hover:text-accent/10">{number}</span>

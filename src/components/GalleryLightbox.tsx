@@ -65,7 +65,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
       onClick={onClose}
     >
       <div ref={dialogRef} className="mx-auto flex min-h-0 w-full max-w-[1600px] flex-col px-4 py-4 md:px-8 md:py-6" onClick={(event) => event.stopPropagation()}>
-        <header className="flex shrink-0 items-start justify-between gap-4 border-b border-border/60 pb-4">
+        <header className="relative z-10 flex shrink-0 items-start justify-between gap-4 border-b border-border/60 bg-background/95 pb-4">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{String(slide + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</p>
             <h2 id="gallery-dialog-title" className="mt-1 font-display text-xl font-semibold md:text-2xl">{entry.title}</h2>
@@ -76,7 +76,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
         </header>
 
         <div
-          className="relative flex min-h-0 flex-1 touch-pan-y items-center justify-center py-4 md:py-6"
+          className="relative flex min-h-0 flex-1 touch-pan-y items-center justify-center overflow-hidden py-4 md:py-6"
           onPointerDown={(event) => { pointerStart.current = event.clientX; }}
           onPointerUp={(event) => {
             if (pointerStart.current === null) return;
@@ -88,7 +88,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
           {media.type === "image" ? (
             <img src={media.src} alt={media.alt} className="max-h-[70vh] max-w-full rounded-lg object-contain shadow-2xl" decoding="async" />
           ) : (
-            <div className="aspect-video w-full max-w-5xl overflow-hidden rounded-lg border border-border bg-black">
+            <div className="aspect-video h-full max-h-[70vh] w-auto max-w-full overflow-hidden rounded-lg border border-border bg-black">
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/${getYouTubeId(media.url)}`}
                 title={media.title}
@@ -107,9 +107,10 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
           )}
         </div>
 
-        <footer className="flex items-end justify-between gap-6 border-t border-border/60 pt-4">
+        <footer className="relative z-10 flex shrink-0 items-end justify-between gap-6 border-t border-border/60 bg-background/95 pt-4">
           <div className="max-w-xl">
             <p className="text-sm text-muted-foreground">{entry.description}</p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">Contribution · </span>{entry.contribution}</p>
             <div className="mt-2 flex flex-wrap gap-2">{entry.tags.map((tag) => <span key={tag} className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/70">{tag}</span>)}</div>
             {entry.projectUrl && (
               <Link

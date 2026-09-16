@@ -22,6 +22,7 @@ export type GalleryEntry = {
   id: string;
   title: string;
   description: string;
+  contribution: string;
   year: string;
   tags: GalleryTag[];
   cover: string;
@@ -30,18 +31,21 @@ export type GalleryEntry = {
   media: GalleryMedia[];
   projectUrl?: string;
   projectLabel?: string;
+  pinned?: boolean;
 };
 
 export const galleryEntries: GalleryEntry[] = [
   {
     id: "water-blossoms",
     title: "Water Blossoms",
-    description: "Set dressing, lighting, vegetation, landscape work, and bridge production for a realtime character scene.",
+    description: "A realtime character scene featuring a character by Idafaber, developed into a complete environment presentation.",
+    contribution: "Set dressing, lighting, vegetation, landscape, and bridge modeling / texturing",
     year: "2026",
     tags: ["3D", "Environment", "Realtime"],
-    cover: "/gallery/artstation/water-blossoms/beauty.webp",
+    cover: "/gallery/thumbnails/water-blossoms.webp",
     coverAlt: "Water Blossoms environment beauty frame",
     aspect: "landscape",
+    pinned: true,
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=qozSZL4RGJo", title: "Water Blossoms cinematic" },
       { type: "image", src: "/gallery/artstation/water-blossoms/beauty.webp", alt: "Water Blossoms environment beauty frame" },
@@ -53,11 +57,13 @@ export const galleryEntries: GalleryEntry[] = [
     id: "stylized-classroom",
     title: "Stylized Classroom — Illustration Match",
     description: "A 3D environment implementation based on an original illustration by ArseniXC, translating its composition, materials, and lighting into a complete scene.",
+    contribution: "3D environment implementation, materials, lighting, and final presentation",
     year: "2026",
     tags: ["3D", "Environment", "Digital"],
-    cover: "/gallery/artstation/stylized-classroom/finished.png",
+    cover: "/gallery/thumbnails/stylized-classroom.webp",
     coverAlt: "Finished stylized classroom environment",
     aspect: "landscape",
+    pinned: true,
     media: [
       { type: "image", src: "/gallery/artstation/stylized-classroom/finished.png", alt: "Finished stylized classroom environment" },
       { type: "image", src: "/gallery/artstation/stylized-classroom/grayscale-implementation.png", alt: "Grayscale 3D implementation view of the classroom scene" },
@@ -67,11 +73,13 @@ export const galleryEntries: GalleryEntry[] = [
     id: "flintlock-pistol",
     title: "Flintlock Pistol",
     description: "A hard-surface prop study presented through finished renders and material breakdowns.",
+    contribution: "Modeling, texturing, material development, and presentation",
     year: "2026",
     tags: ["3D", "Props/Vehicles", "Digital"],
-    cover: "/gallery/artstation/flintlock-pistol/render-01.webp",
+    cover: "/gallery/thumbnails/flintlock-pistol.webp",
     coverAlt: "Flintlock pistol render",
     aspect: "landscape",
+    pinned: true,
     media: [
       { type: "image", src: "/gallery/artstation/flintlock-pistol/render-01.webp", alt: "Flintlock pistol render one" },
       { type: "image", src: "/gallery/artstation/flintlock-pistol/render-02.webp", alt: "Flintlock pistol render two" },
@@ -87,11 +95,14 @@ export const galleryEntries: GalleryEntry[] = [
     id: "stylized-shrine",
     title: "Stylized Shrine",
     description: "A game-ready hero prop modeled, sculpted, baked, textured, and assembled with reusable material controls.",
+    contribution: "Modeling, sculpting, baking, texturing, shader setup, and presentation",
     year: "2024",
     tags: ["3D", "Environment", "Realtime", "Props/Vehicles"],
-    cover: "/gallery/artstation/stylized-shrine/hero-render.jpg",
+    cover: "/gallery/thumbnails/stylized-shrine.webp",
     coverAlt: "Stylized shrine hero render",
     aspect: "landscape",
+    projectUrl: "/projects/sacred-forest",
+    projectLabel: "View environment breakdown",
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=mkx379N-2n4", title: "Stylized shrine turntable" },
       { type: "image", src: "/gallery/artstation/stylized-shrine/hero-render.jpg", alt: "Stylized shrine hero render" },
@@ -105,13 +116,15 @@ export const galleryEntries: GalleryEntry[] = [
     id: "sacred-forest",
     title: "Sacred Forest",
     description: "A stylized forest environment based on an original concept by En Moroldo, covering modeling, materials, foliage, lighting, VFX, and engine assembly.",
+    contribution: "Modeling, materials, foliage, lighting, VFX, engine assembly, and Python tooling",
     year: "2025",
     tags: ["3D", "Environment", "Realtime", "Tools"],
-    cover: "/gallery/artstation/sacred-forest/final-render.jpg",
+    cover: "/gallery/thumbnails/sacred-forest.webp",
     coverAlt: "Sacred Forest final environment render",
     aspect: "landscape",
     projectUrl: "/projects/sacred-forest",
     projectLabel: "View full project breakdown",
+    pinned: true,
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=jdfmAHiv5ro", title: "Sacred Forest environment walkthrough" },
       { type: "image", src: "/gallery/artstation/sacred-forest/final-render.jpg", alt: "Sacred Forest final environment render" },
@@ -128,11 +141,13 @@ export const galleryEntries: GalleryEntry[] = [
     id: "tenebria-character-rig",
     title: "Tenebria Character & Rig",
     description: "A game-ready character developed through modeling, sculpting, baking, texturing, presentation, and rigging.",
+    contribution: "Modeling, sculpting, baking, texturing, rigging, and presentation",
     year: "2025",
     tags: ["3D", "Character", "Rigging", "Animations"],
-    cover: "/gallery/artstation/tenebria/stills-composite.jpg",
+    cover: "/gallery/thumbnails/tenebria-character-rig.webp",
     coverAlt: "Tenebria character presentation renders",
     aspect: "landscape",
+    pinned: true,
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=B1evXz2PDeI", title: "Tenebria character turntable" },
       { type: "image", src: "/gallery/artstation/tenebria/stills-composite.jpg", alt: "Tenebria character presentation renders" },
@@ -142,12 +157,14 @@ export const galleryEntries: GalleryEntry[] = [
   {
     id: "zelda-animation-studies",
     title: "Character Animation Studies",
-    description: "A combined set of parkour, gymnastics, and seated character animation exercises.",
+    description: "A combined set of parkour, gymnastics, and seated character animation exercises using a rig by Christoph Schoch.",
+    contribution: "Character animation",
     year: "2025",
     tags: ["3D", "Character", "Animations"],
     cover: "https://i.ytimg.com/vi/C7mkxqtJXvQ/maxresdefault.jpg",
     coverAlt: "Zelda character animation studies",
     aspect: "landscape",
+    pinned: true,
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=C7mkxqtJXvQ", title: "Zelda animation studies" },
     ],
@@ -156,9 +173,10 @@ export const galleryEntries: GalleryEntry[] = [
     id: "t14-armata",
     title: "T-14 Armata Model",
     description: "A hard-surface vehicle model shown through matcap and wireframe views.",
+    contribution: "Hard-surface modeling and topology",
     year: "2026",
     tags: ["3D", "Props/Vehicles"],
-    cover: "/gallery/artstation/t14-armata/matcap-01.webp",
+    cover: "/gallery/thumbnails/t14-armata.webp",
     coverAlt: "T-14 Armata matcap view",
     aspect: "landscape",
     media: [
@@ -171,9 +189,10 @@ export const galleryEntries: GalleryEntry[] = [
     id: "fantasy-vehicle",
     title: "Fantasy Vehicle Model",
     description: "A stylized vehicle design explored through clean hard-surface modeling and topology views.",
+    contribution: "Hard-surface modeling and topology",
     year: "2026",
     tags: ["3D", "Props/Vehicles"],
-    cover: "/gallery/artstation/fantasy-vehicle/matcap-01.webp",
+    cover: "/gallery/thumbnails/fantasy-vehicle.webp",
     coverAlt: "Fantasy vehicle matcap view",
     aspect: "landscape",
     media: [
@@ -186,9 +205,10 @@ export const galleryEntries: GalleryEntry[] = [
     id: "hazy-city",
     title: "Hazy City",
     description: "A digital environment concept developed from thumbnail exploration through linework and atmosphere.",
+    contribution: "Concept development, thumbnails, linework, and digital painting",
     year: "2025",
     tags: ["2D", "Environment", "Digital"],
-    cover: "/gallery/artstation/hazy-city/watercolor.jpg",
+    cover: "/gallery/thumbnails/hazy-city.webp",
     coverAlt: "Hazy City environment concept",
     aspect: "landscape",
     media: [
@@ -201,9 +221,10 @@ export const galleryEntries: GalleryEntry[] = [
     id: "sketchbook-studies",
     title: "Perspective & Form Studies",
     description: "Traditional ballpoint, ink, and graphite studies focused on perspective, structure, and visual ideation.",
+    contribution: "Traditional drawing and visual development",
     year: "2025",
     tags: ["2D", "Traditional", "Environment", "Props/Vehicles"],
-    cover: "/gallery/artstation/sketchbook-studies/skyward-island.jpg",
+    cover: "/gallery/thumbnails/sketchbook-studies.webp",
     coverAlt: "Skyward Island ballpoint concept sketch",
     aspect: "portrait",
     media: [
@@ -217,11 +238,14 @@ export const galleryEntries: GalleryEntry[] = [
     id: "vertex-normals-tool",
     title: "Vertex Normals Transfer Tool",
     description: "A Python tool for smoothing complex foliage assets and reducing repetitive production work.",
+    contribution: "Python scripting, workflow design, and Maya implementation",
     year: "2025",
     tags: ["Tools", "3D", "Environment"],
     cover: "https://i.ytimg.com/vi/ZX5VJnQhJQ4/maxresdefault.jpg",
     coverAlt: "Vertex normals transfer tool demonstration",
     aspect: "landscape",
+    projectUrl: "/projects/sacred-forest",
+    projectLabel: "See the tool in context",
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=ZX5VJnQhJQ4", title: "Vertex normals transfer tool demonstration" },
     ],
@@ -230,9 +254,10 @@ export const galleryEntries: GalleryEntry[] = [
     id: "hotel-room",
     title: "Photomatch Hotel Room",
     description: "A photomatch environment modeled in Maya and rendered in V-Ray.",
+    contribution: "Modeling, lighting, look development, and rendering",
     year: "2025",
     tags: ["3D", "Environment", "Digital"],
-    cover: "/gallery/artstation/hotel-room/final.jpg",
+    cover: "/gallery/thumbnails/hotel-room.webp",
     coverAlt: "Photomatch hotel room environment",
     aspect: "landscape",
     media: [{ type: "image", src: "/gallery/artstation/hotel-room/final.jpg", alt: "Photomatch hotel room environment" }],
@@ -241,9 +266,10 @@ export const galleryEntries: GalleryEntry[] = [
     id: "alien-landscape",
     title: "Alien Landscape",
     description: "An environment built from individually modeled assets, procedurally instanced in Houdini, and rendered in Redshift.",
+    contribution: "Asset modeling, procedural instancing, look development, and rendering",
     year: "2025",
     tags: ["3D", "Environment", "Digital"],
-    cover: "/gallery/artstation/alien-landscape/final.jpg",
+    cover: "/gallery/thumbnails/alien-landscape.webp",
     coverAlt: "Alien landscape final render",
     aspect: "landscape",
     media: [
@@ -255,9 +281,10 @@ export const galleryEntries: GalleryEntry[] = [
     id: "antique-tabletop",
     title: "Antique Tabletop",
     description: "A modeling, texturing, lighting, and rendering study composed around a collection of antique props.",
+    contribution: "Modeling, texturing, lighting, composition, and rendering",
     year: "2024",
     tags: ["3D", "Props/Vehicles", "Digital"],
-    cover: "/gallery/artstation/antique-tabletop/final.jpg",
+    cover: "/gallery/thumbnails/antique-tabletop.webp",
     coverAlt: "Antique tabletop still life render",
     aspect: "landscape",
     media: [{ type: "image", src: "/gallery/artstation/antique-tabletop/final.jpg", alt: "Antique tabletop still life render" }],
@@ -265,10 +292,11 @@ export const galleryEntries: GalleryEntry[] = [
   {
     id: "misty-night",
     title: "Misty Night",
-    description: "An antique vehicle lighting and surfacing study organized in Maya, textured in Substance, and rendered in Redshift.",
+    description: "An antique vehicle lighting and surfacing study built around a provided car model.",
+    contribution: "Scene organization, texturing, lighting, rendering, and post-processing",
     year: "2023",
     tags: ["3D", "Props/Vehicles", "Digital"],
-    cover: "/gallery/artstation/misty-night/final.jpg",
+    cover: "/gallery/thumbnails/misty-night.webp",
     coverAlt: "Antique vehicle in a misty night scene",
     aspect: "landscape",
     media: [
@@ -282,10 +310,11 @@ export const galleryEntries: GalleryEntry[] = [
   {
     id: "dunes",
     title: "Dunes — City in Sand",
-    description: "A surfacing and rendering study textured in Substance Painter and Photoshop, then rendered with V-Ray in Maya.",
+    description: "A surfacing and rendering study built from a provided environment scene.",
+    contribution: "Texturing, look development, scene organization, and rendering",
     year: "2023",
     tags: ["3D", "Environment", "Digital"],
-    cover: "/gallery/artstation/dunes/final.jpg",
+    cover: "/gallery/thumbnails/dunes.webp",
     coverAlt: "City in Sand environment render",
     aspect: "landscape",
     media: [{ type: "image", src: "/gallery/artstation/dunes/final.jpg", alt: "City in Sand environment render" }],

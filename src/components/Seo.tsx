@@ -20,6 +20,7 @@ const setMeta = (selector: string, attribute: "name" | "property", value: string
 export function Seo({ title, description, path = "/", image }: SeoProps) {
   useEffect(() => {
     const url = new URL(path, "https://leficious.com").toString();
+    const resolvedImage = image ? new URL(image, "https://leficious.com").toString() : undefined;
     document.title = title;
     setMeta('meta[name="description"]', "name", "description", description);
     setMeta('meta[property="og:title"]', "property", "og:title", title);
@@ -27,9 +28,9 @@ export function Seo({ title, description, path = "/", image }: SeoProps) {
     setMeta('meta[property="og:url"]', "property", "og:url", url);
     setMeta('meta[name="twitter:title"]', "name", "twitter:title", title);
     setMeta('meta[name="twitter:description"]', "name", "twitter:description", description);
-    if (image) {
-      setMeta('meta[property="og:image"]', "property", "og:image", image);
-      setMeta('meta[name="twitter:image"]', "name", "twitter:image", image);
+    if (resolvedImage) {
+      setMeta('meta[property="og:image"]', "property", "og:image", resolvedImage);
+      setMeta('meta[name="twitter:image"]', "name", "twitter:image", resolvedImage);
       setMeta('meta[name="twitter:card"]', "name", "twitter:card", "summary_large_image");
     } else {
       document.head.querySelector('meta[property="og:image"]')?.remove();

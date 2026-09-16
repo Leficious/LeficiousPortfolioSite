@@ -79,7 +79,7 @@ export function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title="About & Contact — Leficious" description="About Leficious — technical and combat designer focused on combat systems, AI, and tooling. Contact and portfolio links." path="/about" />
+      <Seo title="About & Contact — Leficious" description="About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production." path="/about" image="/projects/fallen-valkyrie/cover.avif" />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-35 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
@@ -189,6 +189,10 @@ export function AboutPage() {
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Contact / Open channel</p>
               <h2 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl">Let&apos;s make something <span className="text-accent">feel good</span> to play.</h2>
               <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">For technical design, combat design, gameplay systems, or interdisciplinary game-development work.</p>
+              <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />Open to technical game design, combat design, and gameplay design opportunities</div>
+              <a href="/resume/Leficious_Technical_Game_Designer_Resume.pdf" download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
+                Download technical design résumé <span aria-hidden="true">↓</span>
+              </a>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">

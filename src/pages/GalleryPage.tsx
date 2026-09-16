@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { FeaturedReel } from "../components/FeaturedReel";
 import { GalleryLightbox } from "../components/GalleryLightbox";
 import { Seo } from "../components/Seo";
@@ -13,24 +14,28 @@ const aspectClasses = {
 
 export function GalleryPage() {
   const [activeTag, setActiveTag] = useState<GalleryTag | "All">("All");
-  const [selected, setSelected] = useState<GalleryEntry | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [slide, setSlide] = useState(0);
+  const selected = galleryEntries.find((entry) => entry.id === searchParams.get("entry")) ?? null;
 
   const visibleEntries = useMemo(
-    () => activeTag === "All" ? galleryEntries : galleryEntries.filter((entry) => entry.tags.includes(activeTag)),
+    () => {
+      const filtered = activeTag === "All" ? galleryEntries : galleryEntries.filter((entry) => entry.tags.includes(activeTag));
+      return [...filtered].sort((a, b) => Number(Boolean(b.pinned)) - Number(Boolean(a.pinned)));
+    },
     [activeTag],
   );
 
   const openEntry = useCallback((entry: GalleryEntry) => {
-    setSelected(entry);
     setSlide(0);
-  }, []);
+    setSearchParams({ entry: entry.id }, { replace: true });
+  }, [setSearchParams]);
 
-  const closeEntry = useCallback(() => setSelected(null), []);
+  const closeEntry = useCallback(() => setSearchParams({}, { replace: true }), [setSearchParams]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title="Gallery — Leficious" description="A gallery of 3D, 2D, environment, character, animation, and technical art work by Leficious." path="/gallery" />
+      <Seo title="Gallery — Leficious" description="A gallery of 3D, 2D, environment, character, animation, and technical art work by Leficious." path="/gallery" image="/gallery/thumbnails/water-blossoms.webp" />
       <div aria-hidden={selected ? "true" : undefined}>
         <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6">
           <section className="grid gap-10 border-b border-border/60 py-16 md:grid-cols-12 md:py-24">
@@ -98,6 +103,7 @@ export function GalleryPage() {
                 >
                   <div className={`relative overflow-hidden bg-muted ${aspectClasses[entry.aspect]}`}>
                     <img src={entry.cover} alt={entry.coverAlt} width="1200" height="900" loading={index < 3 ? "eager" : "lazy"} decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]" />
+                    {entry.pinned && <span className="absolute right-3 top-3 rounded-full border border-accent/60 bg-background/80 px-2.5 py-1 font-mono text-[8px] uppercase tracking-[0.16em] text-foreground shadow-lg backdrop-blur"><span aria-hidden="true" className="mr-1 text-accent">✦</span>Pinned</span>}
                     <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-background/90 to-transparent p-4 pt-14">
                       <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-foreground">View set</span>
                       <span className="font-mono text-[10px] text-muted-foreground">{String(entry.media.length).padStart(2, "0")}</span>
@@ -109,6 +115,7 @@ export function GalleryPage() {
                       <span className="font-mono text-[10px] text-muted-foreground">{entry.year}</span>
                     </div>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{entry.description}</p>
+                    <p className="mt-4 border-t border-border/60 pt-3 text-xs leading-relaxed text-muted-foreground"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">Contribution · </span>{entry.contribution}</p>
                     <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1">
                       {entry.tags.map((tag) => <span key={tag} className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/75">{tag}</span>)}
                     </div>

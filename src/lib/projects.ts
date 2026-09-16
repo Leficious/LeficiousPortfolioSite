@@ -24,6 +24,11 @@ export type Project = {
   summary: string;
   tags: string[];
   cover: string;
+  designGoal: string;
+  ownership: string;
+  scope: string;
+  outcomes: string[];
+  relatedGalleryIds?: string[];
   overview: string;
   responsibilities: string[];
   media: MediaItem[];
@@ -41,6 +46,13 @@ export const projects: Project[] = [
       "A 15-week gameplay prototype connecting character movement, abilities, targeting, inventory, shops, and data-driven pickups.",
     tags: ["Unreal Engine", "Blueprints", "Gameplay Systems", "UI"],
     cover: "/projects/starshore/design-layout-01.avif",
+    designGoal: "Build a complete playable loop around traversal, combat, items, and vendors without isolating each system into a separate test.",
+    ownership: "Solo technical game design, gameplay implementation, level design, UI, animation integration, and scene assembly.",
+    scope: "15-week solo prototype using third-party character and environment assets.",
+    outcomes: [
+      "Connected movement, abilities, targeting, inventory, shops, and loot through shared gameplay data.",
+      "Built reusable pickup and vendor workflows that can expand without one-off actors or manually authored interface screens.",
+    ],
     overview:
       "Starshore was a solo project built over 15 weeks to explore how a small set of interconnected gameplay systems could support a complete playable loop. I handled the gameplay logic, character and animation Blueprints, level design, scene assembly, interface work, and system integration. Third-party character and environment assets were used to keep the focus on design and implementation.",
     responsibilities: [
@@ -152,6 +164,13 @@ export const projects: Project[] = [
       "A 10-week action-combat prototype centered on weapon-dependent movesets, directional hit reactions, lock-on targeting, and a multiphase boss encounter.",
     tags: ["Unreal Engine", "Blueprints", "Combat Design", "Enemy AI"],
     cover: "/projects/fallen-valkyrie/cover.avif",
+    designGoal: "Create a readable action-combat encounter whose weapon states, hit reactions, enemy behavior, and arena progression reinforce one another.",
+    ownership: "Solo technical and combat design, Blueprint implementation, boss AI, level scripting, animation systems, cinematics, and scene assembly.",
+    scope: "10-week solo prototype using third-party environment, character, and source animation assets.",
+    outcomes: [
+      "Delivered spear and bow combat modes with weapon-aware targeting, resources, and directional reactions.",
+      "Built an event-driven multiphase boss encounter with reusable StateTree tasks and phase-specific behavior.",
+    ],
     overview:
       "Fallen Valkyrie was built as a focused study of combat design, character animation, and encounter AI. I handled the gameplay logic, character and animation Blueprints, level design, cinematics, and scene assembly. Third-party environment, character, and animation assets were used for production support, while the gameplay systems, animation logic, blendspaces, and encounter behavior were implemented specifically for the prototype.",
     responsibilities: [
@@ -263,6 +282,14 @@ export const projects: Project[] = [
       "A stylized forest shrine developed end to end through modeling, procedural materials, foliage, lighting, effects, and engine assembly.",
     tags: ["Unreal Engine", "Environment Art", "Substance", "Maya / Python"],
     cover: "/projects/sacred-forest/cover.avif",
+    designGoal: "Translate a stylized concept into a cohesive realtime environment supported by consistent materials, foliage, lighting, and effects.",
+    ownership: "Environment production and technical art: modeling, sculpting, texturing, foliage, lighting, VFX, shader integration, and Python tooling.",
+    scope: "Individual environment project based on an original concept by En Moroldo.",
+    outcomes: [
+      "Completed the scene end to end, from its hero shrine and procedural materials through foliage, atmosphere, and final assembly.",
+      "Automated sphere-based vertex-normal transfers to keep stylized foliage lighting consistent across the asset set.",
+    ],
+    relatedGalleryIds: ["sacred-forest", "stylized-shrine", "vertex-normals-tool"],
     overview:
       "Sacred Forest is a stylized environment built to carry a consistent visual language from individual assets through the final scene. I handled the modeling, sculpting, texturing, lighting, visual effects, foliage, and engine assembly, using a compact production pipeline across Maya, ZBrush, Substance Painter, Substance Designer, Photoshop, and Unreal Engine.",
     responsibilities: [
