@@ -10,6 +10,8 @@ const abbreviations: Record<SoftwareName, string> = {
   "ZBrush": "ZB",
   "Photoshop": "PS",
   "Python": "PY",
+  "MEL": "MEL",
+  "Yeti": "YT",
   "Marmoset Toolbag": "MT",
   "Clip Studio Paint": "CS",
   "V-Ray": "VR",

@@ -300,7 +300,7 @@ export const projects: Project[] = [
     media: [
       {
         type: "youtube",
-        id: "jdfmAHiv5ro",
+        id: "XUKIeKSg3Ko",
         caption: "Full walkthrough of the Sacred Forest environment.",
       },
     ],

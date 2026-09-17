@@ -24,6 +24,8 @@ export type SoftwareName =
   | "ZBrush"
   | "Photoshop"
   | "Python"
+  | "MEL"
+  | "Yeti"
   | "Marmoset Toolbag"
   | "Clip Studio Paint"
   | "V-Ray"
@@ -202,7 +204,7 @@ export const galleryEntries: GalleryEntry[] = [
     projectLabel: "View full project breakdown",
     pinned: true,
     media: [
-      { type: "youtube", url: "https://www.youtube.com/watch?v=jdfmAHiv5ro", title: "Sacred Forest environment walkthrough" },
+      { type: "youtube", url: "https://www.youtube.com/watch?v=XUKIeKSg3Ko", title: "Sacred Forest environment walkthrough" },
       { type: "image", src: "/gallery/artstation/sacred-forest/final-render.jpg", alt: "Sacred Forest final environment render" },
       { type: "image", src: "/gallery/artstation/sacred-forest/lighting-only.webp", alt: "Sacred Forest lighting-only scene view" },
       { type: "image", src: "/gallery/artstation/sacred-forest/bark-material.jpg", alt: "Sacred Forest stylized bark material" },
@@ -217,9 +219,9 @@ export const galleryEntries: GalleryEntry[] = [
   {
     id: "tenebria-character-rig",
     title: "Tenebria Character & Rig",
-    description: "A game-ready character developed through modeling, sculpting, baking, texturing, presentation, and rigging.",
-    contribution: "Modeling, sculpting, baking, texturing, rigging, and presentation",
-    software: ["Maya", "ZBrush", "Substance 3D Painter", "Marmoset Toolbag", "Python"],
+    description: "A game-ready character developed through modeling, sculpting, baking, texturing, rigging, and a Yeti workflow for procedurally generated hair cards.",
+    contribution: "Modeling, sculpting, baking, texturing, rigging, procedural hair-card generation, and presentation",
+    software: ["Maya", "Yeti", "ZBrush", "Substance 3D Painter", "Marmoset Toolbag", "Python"],
     year: "2025",
     tags: ["3D", "Character", "Rigging"],
     cover: "/gallery/thumbnails/tenebria-character-rig.webp",
@@ -230,6 +232,10 @@ export const galleryEntries: GalleryEntry[] = [
       { type: "youtube", url: "https://www.youtube.com/watch?v=B1evXz2PDeI", title: "Tenebria character turntable" },
       { type: "image", src: "/gallery/artstation/tenebria/stills-composite.jpg", alt: "Tenebria character presentation renders" },
       { type: "youtube", url: "https://www.youtube.com/watch?v=BHnwLswAteg", title: "Tenebria rig demonstration" },
+      { type: "image", src: "/gallery/artstation/tenebria/yeti-node-setup.avif", alt: "Yeti node graph used to generate Tenebria's hair" },
+      { type: "image", src: "/gallery/artstation/tenebria/hair-viewport.avif", alt: "Maya viewport preview of Tenebria's hair-card placement" },
+      { type: "image", src: "/gallery/artstation/tenebria/procedural-hair-cards.avif", alt: "Procedurally generated hair-card texture sheet for Tenebria" },
+      { type: "image", src: "/gallery/artstation/tenebria/braids-back-render.avif", alt: "Back-view render of Tenebria's braided hairstyle" },
     ],
   },
   {
@@ -260,6 +266,21 @@ export const galleryEntries: GalleryEntry[] = [
     aspect: "landscape",
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=C7mkxqtJXvQ", title: "Zelda animation studies" },
+    ],
+  },
+  {
+    id: "mel-clockwork-platform",
+    title: "MEL-Driven Clockwork Platform",
+    description: "A mechanical clockwork platform rigged and animated entirely through MEL scripting in Maya.",
+    contribution: "MEL scripting, mechanical rigging, and procedural animation",
+    software: ["Maya", "MEL"],
+    year: "2026",
+    tags: ["3D", "Rigging", "Tools", "Animations"],
+    cover: "https://i.ytimg.com/vi/AF57O_aq47g/maxresdefault.jpg",
+    coverAlt: "MEL-driven mechanical clockwork platform animation",
+    aspect: "landscape",
+    media: [
+      { type: "youtube", url: "https://www.youtube.com/watch?v=AF57O_aq47g", title: "MEL-driven clockwork platform animation" },
     ],
   },
   {
@@ -299,7 +320,7 @@ export const galleryEntries: GalleryEntry[] = [
   {
     id: "hazy-city",
     title: "Hazy City",
-    description: "A digital environment concept developed from thumbnail exploration through linework and atmosphere.",
+    description: "A digital environment concept developed from thumbnail exploration through linework and atmosphere, then revisited through AI upscaling and experimental Photoshop filter effects.",
     contribution: "Concept development, thumbnails, linework, and digital painting",
     software: ["Clip Studio Paint", "Photoshop"],
     year: "2025",
@@ -308,6 +329,7 @@ export const galleryEntries: GalleryEntry[] = [
     coverAlt: "Hazy City environment concept",
     aspect: "landscape",
     media: [
+      { type: "image", src: "/gallery/artstation/hazy-city/watercolor-detail-2x.avif", alt: "Upscaled Hazy City environment concept with experimental Photoshop filter effects" },
       { type: "image", src: "/gallery/artstation/hazy-city/watercolor.jpg", alt: "Hazy City final environment concept" },
       { type: "image", src: "/gallery/artstation/hazy-city/thumbnails.webp", alt: "Hazy City thumbnail studies" },
       { type: "image", src: "/gallery/artstation/hazy-city/linework.webp", alt: "Hazy City linework" },
