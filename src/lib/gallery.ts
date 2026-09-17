@@ -325,8 +325,8 @@ export const galleryEntries: GalleryEntry[] = [
     software: ["Clip Studio Paint", "Photoshop"],
     year: "2025",
     tags: ["2D", "Environment"],
-    cover: "/gallery/thumbnails/hazy-city.webp",
-    coverAlt: "Hazy City environment concept",
+    cover: "/gallery/artstation/hazy-city/watercolor-detail-2x.avif",
+    coverAlt: "Upscaled Hazy City environment concept with experimental Photoshop filter effects",
     aspect: "landscape",
     media: [
       { type: "image", src: "/gallery/artstation/hazy-city/watercolor-detail-2x.avif", alt: "Upscaled Hazy City environment concept with experimental Photoshop filter effects" },
