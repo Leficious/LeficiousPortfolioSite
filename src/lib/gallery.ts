@@ -353,6 +353,22 @@ export const galleryEntries: GalleryEntry[] = [
     ],
   },
   {
+    id: "storyboard-master-studies",
+    title: "Storyboard Master Studies",
+    description: "Storyboard master studies analyzing shot progression, staging, composition, and value through sequences from The Terminator and Spirited Away.",
+    contribution: "Storyboard reconstruction, shot composition, and sequence analysis",
+    software: ["Clip Studio Paint"],
+    year: "2026",
+    tags: ["2D"],
+    cover: "/gallery/artstation/storyboard-master-studies/terminator.avif",
+    coverAlt: "Storyboard master study of a sequence from The Terminator",
+    aspect: "landscape",
+    media: [
+      { type: "image", src: "/gallery/artstation/storyboard-master-studies/terminator.avif", alt: "Storyboard master study of a sequence from The Terminator" },
+      { type: "image", src: "/gallery/artstation/storyboard-master-studies/spirited-away.avif", alt: "Storyboard master study of a sequence from Spirited Away" },
+    ],
+  },
+  {
     id: "skyward-island-concept",
     title: "Skyward Island Concept",
     description: "A ballpoint environment concept exploring a suspended landscape through dramatic perspective, scale, and organic forms.",
