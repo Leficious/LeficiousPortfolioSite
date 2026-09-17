@@ -5,6 +5,7 @@ type FeaturedReelProps = {
   title: string;
   description: string;
   eyebrow: string;
+  thumbnailSrc?: string;
 };
 
 function PlayIcon() {
@@ -15,7 +16,7 @@ function PlayIcon() {
   );
 }
 
-export function FeaturedReel({ id, title, description, eyebrow }: FeaturedReelProps) {
+export function FeaturedReel({ id, title, description, eyebrow, thumbnailSrc }: FeaturedReelProps) {
   const [active, setActive] = useState(false);
 
   return (
@@ -37,7 +38,7 @@ export function FeaturedReel({ id, title, description, eyebrow }: FeaturedReelPr
             aria-label={`Play ${title}`}
           >
             <img
-              src={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}
+              src={thumbnailSrc ?? `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}
               alt=""
               width="1280"
               height="720"

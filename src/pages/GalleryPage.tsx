@@ -77,6 +77,7 @@ export function GalleryPage() {
             </div>
             <FeaturedReel
               id="t5MchABcd3c"
+              thumbnailSrc="/reels/environment-props-reel-2026.jpg"
               title="Environment & Props Reel 2026"
               description="Environment art, props, material work, foliage, and realtime scene assembly across game-focused projects."
               eyebrow="Environment + props · 2026"

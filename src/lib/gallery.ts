@@ -231,6 +231,7 @@ export const galleryEntries: GalleryEntry[] = [
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=B1evXz2PDeI", title: "Tenebria character turntable" },
       { type: "image", src: "/gallery/artstation/tenebria/stills-composite.jpg", alt: "Tenebria character presentation renders" },
+      { type: "image", src: "/gallery/artstation/tenebria/matcap-composite.avif", alt: "Tenebria character matcap turnaround showing front, side, and back views" },
       { type: "youtube", url: "https://www.youtube.com/watch?v=BHnwLswAteg", title: "Tenebria rig demonstration" },
       { type: "image", src: "/gallery/artstation/tenebria/yeti-node-setup.avif", alt: "Yeti node graph used to generate Tenebria's hair" },
       { type: "image", src: "/gallery/artstation/tenebria/hair-viewport.avif", alt: "Maya viewport preview of Tenebria's hair-card placement" },
