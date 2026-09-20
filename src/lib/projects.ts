@@ -339,7 +339,7 @@ export const projects: Project[] = [
         ],
         media: [
           { type: "image", src: "/projects/sacred-forest/foliage-01.avif", alt: "Wireframe view of stylized flowers, clover, and foliage cards", caption: "The foliage set combines modeled stems and leaves with lightweight flower and ground-cover cards." },
-          { type: "image", src: "/projects/sacred-forest/vertex-normals-tool.jpg", alt: "Maya Python vertex-normal transfer tool demonstrated on stylized trees", caption: "The Maya utility previews and applies sphere-based vertex-normal transfers across selected foliage assets." },
+          { type: "image", src: "/projects/sacred-forest/stylize-normals-toolkit.avif", alt: "Stylize Normals Toolkit demonstrated on stylized foliage in Maya", caption: "The Stylize Normals Toolkit previews and applies controlled vertex normals across selected foliage assets." },
         ],
       },
     ],
