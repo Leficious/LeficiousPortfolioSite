@@ -25,6 +25,14 @@ export function HomePage() {
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
                 I design and implement combat mechanics, player abilities, and enemy behavior, then refine them through prototyping, playtesting, and iteration. My systems are created with focus on cohesiveness of their formal and dramatic elements.
               </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a href="#selected-work" className="inline-flex items-center rounded-full border border-accent bg-accent px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-accent-foreground transition-colors hover:bg-accent/85">
+                  View case studies ↓
+                </a>
+                <a href="/resume/Leficious_Technical_Game_Designer_Resume.pdf" download className="inline-flex items-center rounded-full border border-border bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:text-accent">
+                  Download résumé
+                </a>
+              </div>
             </div>
 
             <div id="hero-system-diagram" aria-hidden="true" className="work-diagram-enter relative mx-auto aspect-square w-full max-w-[320px] overflow-hidden rounded-xl border border-border bg-background/65 shadow-[0_0_80px_rgba(91,154,172,0.08)]">
@@ -75,7 +83,7 @@ export function HomePage() {
           />
         </section>
 
-        <section className="route-reveal py-16 md:py-24">
+        <section id="selected-work" className="route-reveal scroll-mt-20 py-16 md:py-24">
           <div className="mb-12 grid gap-6 border-b border-border/60 pb-10 md:grid-cols-12 md:items-end">
             <div className="md:col-span-8">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Selected work</p>

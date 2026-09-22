@@ -6,8 +6,11 @@ const routes = [
     path: "/gallery",
     title: "Gallery — Leficious",
     description:
-      "A gallery of 3D, 2D, environment, character, animation, and technical art work by Leficious.",
+      "A gallery of technical design, 3D, 2D, environment, character, animation, and technical art work by Leficious.",
     image: "/gallery/thumbnails/water-blossoms.webp",
+    imageWidth: 1000,
+    imageHeight: 563,
+    schemaType: "CollectionPage",
   },
   {
     path: "/about",
@@ -15,6 +18,9 @@ const routes = [
     description:
       "About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production.",
     image: "/social/leficious-site-preview.png",
+    imageWidth: 1584,
+    imageHeight: 396,
+    schemaType: "ProfilePage",
   },
   {
     path: "/projects/starshore",
@@ -22,6 +28,9 @@ const routes = [
     description:
       "A 15-week gameplay prototype connecting character movement, abilities, targeting, inventory, shops, and data-driven pickups.",
     image: "/projects/starshore/design-layout-01.avif",
+    imageWidth: 1589,
+    imageHeight: 920,
+    schemaType: "CreativeWork",
   },
   {
     path: "/projects/fallen-valkyrie",
@@ -29,6 +38,9 @@ const routes = [
     description:
       "A 10-week action-combat prototype centered on weapon-dependent movesets, directional hit reactions, lock-on targeting, and a multiphase boss encounter.",
     image: "/projects/fallen-valkyrie/cover.avif",
+    imageWidth: 1715,
+    imageHeight: 963,
+    schemaType: "CreativeWork",
   },
   {
     path: "/projects/sacred-forest",
@@ -36,6 +48,9 @@ const routes = [
     description:
       "A stylized forest shrine developed end to end through modeling, procedural materials, foliage, lighting, effects, and engine assembly.",
     image: "/projects/sacred-forest/cover.avif",
+    imageWidth: 1715,
+    imageHeight: 963,
+    schemaType: "CreativeWork",
   },
 ];
 
@@ -48,9 +63,17 @@ const escapeAttribute = (value) =>
 
 const shell = await readFile("dist/index.html", "utf8");
 
+const personId = "https://leficious.com/#person";
+const person = { "@type": "Person", "@id": personId, name: "Lefi (Kevin) Shan", alternateName: "Leficious", url: "https://leficious.com/", jobTitle: "Technical Game Designer", sameAs: ["https://www.linkedin.com/in/leficious/", "https://github.com/Leficious"] };
+const imageType = (path) => path.endsWith(".png") ? "image/png" : path.endsWith(".webp") ? "image/webp" : "image/avif";
+
 for (const route of routes) {
   const canonical = `https://leficious.com${route.path}`;
   const socialImage = `https://leficious.com${route.image}`;
+  const pageData = route.schemaType === "CreativeWork"
+    ? { "@type": "CreativeWork", name: route.title.replace(" — Leficious", ""), description: route.description, url: canonical, image: socialImage, creator: { "@id": personId } }
+    : { "@type": route.schemaType, name: route.title, description: route.description, url: canonical, image: socialImage, author: { "@id": personId } };
+  const structuredData = { "@context": "https://schema.org", "@graph": [person, pageData] };
   const html = shell
     .replace(/<title>.*?<\/title>/, `<title>${route.title}</title>`)
     .replace(
@@ -74,6 +97,18 @@ for (const route of routes) {
       `<meta property="og:image" content="${socialImage}" />`,
     )
     .replace(
+      /<meta property="og:image:width" content=".*?"\s*\/?>/,
+      `<meta property="og:image:width" content="${route.imageWidth}" />`,
+    )
+    .replace(
+      /<meta property="og:image:height" content=".*?"\s*\/?>/,
+      `<meta property="og:image:height" content="${route.imageHeight}" />`,
+    )
+    .replace(
+      /<meta property="og:image:type" content=".*?"\s*\/?>/,
+      `<meta property="og:image:type" content="${imageType(route.image)}" />`,
+    )
+    .replace(
       /<meta name="twitter:title" content=".*?"\s*\/?>/,
       `<meta name="twitter:title" content="${escapeAttribute(route.title)}" />`,
     )
@@ -88,6 +123,10 @@ for (const route of routes) {
     .replace(
       /<link rel="canonical" href=".*?"\s*\/?>/,
       `<link rel="canonical" href="${canonical}" />`,
+    )
+    .replace(
+      /<script type="application\/ld\+json" data-portfolio-structured-data>.*?<\/script>/,
+      `<script type="application/ld+json" data-portfolio-structured-data>${JSON.stringify(structuredData).replaceAll("<", "\\u003c")}</script>`,
     );
 
   const output = join("dist", route.path.slice(1), "index.html");

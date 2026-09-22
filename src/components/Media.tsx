@@ -22,6 +22,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
   const [expanded, setExpanded] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!expanded) return;
@@ -31,14 +32,30 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
     document.body.style.overflow = "hidden";
     closeRef.current?.focus();
 
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setExpanded(false);
+    const handleDialogKeys = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setExpanded(false);
+        return;
+      }
+
+      if (event.key !== "Tab" || !dialogRef.current) return;
+      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>("button, a[href], [tabindex]:not([tabindex='-1'])"));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
-    window.addEventListener("keydown", closeOnEscape);
+    window.addEventListener("keydown", handleDialogKeys);
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", closeOnEscape);
+      window.removeEventListener("keydown", handleDialogKeys);
       trigger?.focus();
     };
   }, [expanded]);
@@ -55,8 +72,8 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
         <img
           src={item.src}
           alt={item.alt}
-          width="1600"
-          height="900"
+          width={item.width ?? 1600}
+          height={item.height ?? 900}
           loading="lazy"
           decoding="async"
           className="aspect-video h-auto w-full bg-black/20 object-contain transition-[filter,transform] duration-300 group-hover:scale-[1.01] group-hover:brightness-110"
@@ -79,7 +96,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
               if (event.target === event.currentTarget) setExpanded(false);
             }}
           >
-            <div className="relative flex max-h-full w-full max-w-[min(96vw,1600px)] cursor-default flex-col items-center gap-3">
+            <div ref={dialogRef} className="relative flex max-h-full w-full max-w-[min(96vw,1600px)] cursor-default flex-col items-center gap-3">
               <div className="absolute -top-1 left-0 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:-top-2">
                 Image inspection
               </div>
@@ -109,6 +126,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
 
 function YouTubeEmbed({ id, title }: { id: string; title: string }) {
   const [active, setActive] = useState(false);
+  const [thumbnail, setThumbnail] = useState(`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`);
 
   if (active) {
     return (
@@ -130,12 +148,13 @@ function YouTubeEmbed({ id, title }: { id: string; title: string }) {
       aria-label={`Play ${title}`}
     >
       <img
-        src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+        src={thumbnail}
         alt=""
-        width="480"
-        height="360"
+        width="1280"
+        height="720"
         loading="lazy"
         decoding="async"
+        onError={() => setThumbnail(`https://i.ytimg.com/vi/${id}/hqdefault.jpg`)}
         className="h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-90"
       />
       <span className="absolute rounded-full border border-foreground/30 bg-background/85 px-5 py-3 font-mono text-xs uppercase tracking-[0.18em] text-foreground backdrop-blur">

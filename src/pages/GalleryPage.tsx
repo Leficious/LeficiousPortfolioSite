@@ -50,7 +50,7 @@ export function GalleryPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title="Gallery — Leficious" description="A gallery of 3D, 2D, environment, character, animation, and technical art work by Leficious." path="/gallery" image="/gallery/thumbnails/water-blossoms.webp" />
+      <Seo title="Gallery — Leficious" description="A gallery of technical design, 3D, 2D, environment, character, animation, and technical art work by Leficious." path="/gallery" image="/gallery/thumbnails/water-blossoms.webp" imageWidth={1000} imageHeight={563} />
       <div aria-hidden={selected ? "true" : undefined}>
         <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6">
           <section className="route-reveal grid gap-10 border-b border-border/60 py-16 md:grid-cols-12 md:py-24">

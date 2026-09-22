@@ -1,5 +1,5 @@
 export type MediaItem =
-  | { type: "image"; src: string; alt: string; caption?: string }
+  | { type: "image"; src: string; alt: string; caption?: string; width?: number; height?: number }
   | { type: "video"; src: string; poster?: string; caption?: string }
   | { type: "youtube"; id: string; caption?: string };
 
@@ -24,6 +24,8 @@ export type Project = {
   summary: string;
   tags: string[];
   cover: string;
+  coverWidth: number;
+  coverHeight: number;
   designGoal: string;
   ownership: string;
   scope: string;
@@ -46,6 +48,8 @@ export const projects: Project[] = [
       "A 15-week gameplay prototype connecting character movement, abilities, targeting, inventory, shops, and data-driven pickups.",
     tags: ["Unreal Engine", "Blueprints", "Gameplay Systems", "UI"],
     cover: "/projects/starshore/design-layout-01.avif",
+    coverWidth: 1589,
+    coverHeight: 920,
     designGoal: "Build a complete playable loop around traversal, combat, items, and vendors without isolating each system into a separate test.",
     ownership: "Solo technical game design, gameplay implementation, level design, UI, animation integration, and scene assembly.",
     scope: "15-week solo prototype using third-party character and environment assets.",
@@ -164,6 +168,8 @@ export const projects: Project[] = [
       "A 10-week action-combat prototype centered on weapon-dependent movesets, directional hit reactions, lock-on targeting, and a multiphase boss encounter.",
     tags: ["Unreal Engine", "Blueprints", "Combat Design", "Enemy AI"],
     cover: "/projects/fallen-valkyrie/cover.avif",
+    coverWidth: 1715,
+    coverHeight: 963,
     designGoal: "Create a readable action-combat encounter whose weapon states, hit reactions, enemy behavior, and arena progression reinforce one another.",
     ownership: "Solo technical and combat design, Blueprint implementation, boss AI, level scripting, animation systems, cinematics, and scene assembly.",
     scope: "10-week solo prototype using third-party environment, character, and source animation assets.",
@@ -282,6 +288,8 @@ export const projects: Project[] = [
       "A stylized forest shrine developed end to end through modeling, procedural materials, foliage, lighting, effects, and engine assembly.",
     tags: ["Unreal Engine", "Environment Art", "Substance", "Maya / Python"],
     cover: "/projects/sacred-forest/cover.avif",
+    coverWidth: 1715,
+    coverHeight: 963,
     designGoal: "Translate a stylized concept into a cohesive realtime environment supported by consistent materials, foliage, lighting, and effects.",
     ownership: "Environment production and technical art: modeling, sculpting, texturing, foliage, lighting, VFX, shader integration, and Python tooling.",
     scope: "Individual environment project based on an original concept by En Moroldo.",

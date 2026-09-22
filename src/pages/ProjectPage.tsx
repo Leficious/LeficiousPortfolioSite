@@ -18,7 +18,7 @@ export function ProjectPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title={`${project.title} — Leficious`} description={project.summary} path={`/projects/${project.slug}`} image={project.cover} />
+      <Seo title={`${project.title} — Leficious`} description={project.summary} path={`/projects/${project.slug}`} image={project.cover} imageWidth={project.coverWidth} imageHeight={project.coverHeight} />
       <article id="main-content" tabIndex={-1} className="mx-auto max-w-5xl px-6 py-16 md:py-24">
         <Link to="/" viewTransition className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-accent">← All projects</Link>
         <header className="mt-8 grid gap-6 md:grid-cols-12">

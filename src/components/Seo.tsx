@@ -5,6 +5,8 @@ type SeoProps = {
   description: string;
   path?: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
 };
 
 const defaultImage = "/social/leficious-site-preview.png";
@@ -19,7 +21,36 @@ const setMeta = (selector: string, attribute: "name" | "property", value: string
   element.content = content;
 };
 
-export function Seo({ title, description, path = "/", image }: SeoProps) {
+const buildStructuredData = (title: string, description: string, path: string, image: string) => {
+  const url = new URL(path, "https://leficious.com").toString();
+  const person = {
+    "@type": "Person",
+    "@id": "https://leficious.com/#person",
+    name: "Lefi (Kevin) Shan",
+    alternateName: "Leficious",
+    url: "https://leficious.com/",
+    jobTitle: "Technical Game Designer",
+    sameAs: ["https://www.linkedin.com/in/leficious/", "https://github.com/Leficious"],
+  };
+
+  if (path.startsWith("/projects/")) {
+    return { "@context": "https://schema.org", "@graph": [person, { "@type": "CreativeWork", name: title.replace(" — Leficious", ""), description, url, image, creator: { "@id": person["@id"] } }] };
+  }
+
+  if (path === "/gallery") {
+    return { "@context": "https://schema.org", "@graph": [person, { "@type": "CollectionPage", name: title, description, url, image, author: { "@id": person["@id"] } }] };
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      person,
+      { "@type": path === "/about" ? "ProfilePage" : "WebSite", "@id": `${url}#page`, name: title, description, url, image, author: { "@id": person["@id"] } },
+    ],
+  };
+};
+
+export function Seo({ title, description, path = "/", image, imageWidth = 1584, imageHeight = 396 }: SeoProps) {
   useEffect(() => {
     const url = new URL(path, "https://leficious.com").toString();
     const resolvedImage = new URL(image ?? defaultImage, "https://leficious.com").toString();
@@ -31,6 +62,9 @@ export function Seo({ title, description, path = "/", image }: SeoProps) {
     setMeta('meta[name="twitter:title"]', "name", "twitter:title", title);
     setMeta('meta[name="twitter:description"]', "name", "twitter:description", description);
     setMeta('meta[property="og:image"]', "property", "og:image", resolvedImage);
+    setMeta('meta[property="og:image:width"]', "property", "og:image:width", String(imageWidth));
+    setMeta('meta[property="og:image:height"]', "property", "og:image:height", String(imageHeight));
+    setMeta('meta[property="og:image:type"]', "property", "og:image:type", resolvedImage.endsWith(".png") ? "image/png" : resolvedImage.endsWith(".webp") ? "image/webp" : "image/avif");
     setMeta('meta[name="twitter:image"]', "name", "twitter:image", resolvedImage);
     setMeta('meta[name="twitter:card"]', "name", "twitter:card", "summary_large_image");
 
@@ -41,7 +75,16 @@ export function Seo({ title, description, path = "/", image }: SeoProps) {
       document.head.appendChild(canonical);
     }
     canonical.href = url;
-  }, [title, description, path, image]);
+
+    let structuredData = document.head.querySelector<HTMLScriptElement>('script[data-portfolio-structured-data]');
+    if (!structuredData) {
+      structuredData = document.createElement("script");
+      structuredData.type = "application/ld+json";
+      structuredData.dataset.portfolioStructuredData = "true";
+      document.head.appendChild(structuredData);
+    }
+    structuredData.textContent = JSON.stringify(buildStructuredData(title, description, path, resolvedImage));
+  }, [title, description, path, image, imageWidth, imageHeight]);
 
   return null;
 }
