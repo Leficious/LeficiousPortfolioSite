@@ -41,10 +41,10 @@ function ContactIcon({ name }: { name: IconName }) {
 }
 
 const systems = [
-  { number: "01", title: "Combat Design", description: "I care about readable intent, decisive feedback, and the pacing between anticipation, action, and recovery." },
-  { number: "02", title: "Gameplay Systems", description: "I build rules and data structures that are easy to tune, extend, and understand while the design is still changing." },
-  { number: "03", title: "Technical Animation", description: "I connect character motion to gameplay through state-driven logic, Control Rig, and runtime animation systems." },
-  { number: "04", title: "Technical Production", description: "My 3D background helps me carry ideas through art implementation, procedural workflows, and final integration." },
+  { number: "01", title: "Combat Design", description: "Player actions, enemy behaviors, encounters, controls, feedback, and the pacing that connects them." },
+  { number: "02", title: "Gameplay Systems", description: "Clear, scalable rules and data structures designed around iteration, tuning, and player readability." },
+  { number: "03", title: "Technical Animation", description: "State-driven animation logic, Control Rig, and runtime systems that connect character motion to gameplay." },
+  { number: "04", title: "Technical Production", description: "3D production, procedural workflows, art implementation, and the bridge between assets and gameplay." },
 ];
 
 const contactLinks: { label: string; detail: string; href: string; icon: IconName }[] = [
@@ -76,33 +76,67 @@ export function AboutPage() {
     <div className="min-h-screen bg-background text-foreground">
       <Seo title="About & Contact — Leficious" description="About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production." path="/about" />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
-        <section className="route-reveal relative isolate overflow-hidden border-b border-border/45 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
-          <div aria-hidden="true" className="absolute -right-28 -top-32 -z-10 h-96 w-96 rounded-full bg-warm/[0.055] blur-3xl" />
+        <section className="route-reveal relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
+          <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-35 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
+          <div aria-hidden="true" className="absolute -right-28 -top-32 -z-10 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
 
           <div className="grid items-center gap-14 lg:grid-cols-[1.35fr_0.65fr]">
             <div>
-              <div className="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                <span className="h-px w-8 bg-warm" />
-                Technical game designer
+              <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
+                <span className="h-px w-8 bg-accent" />
+                Technical / Game designer
               </div>
               <h1 className="mt-7 max-w-3xl font-display text-5xl font-semibold leading-[0.95] text-balance sm:text-6xl lg:text-7xl">
                 Technical design, gameplay systems, <span className="text-accent">3D production.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                I came to technical design through making environments, characters, animation, and tools. That production background still shapes how I work: I want the logic underneath a mechanic and the experience on screen to feel like parts of the same idea.
+                I&apos;m a technical game designer with a focus on combat and gameplay systems. My background spans 3D environments, technical art, animation, and tools, helping me communicate across disciplines and carry ideas from an early concept into a playable form.
               </p>
             </div>
 
-            <div className="relative mx-auto w-full max-w-[350px] pb-12 pt-3">
-              <figure className="relative ml-auto w-[82%] overflow-hidden shadow-[0_18px_55px_rgba(0,0,0,0.28)]">
-                <img src="/projects/sacred-forest/cover.avif" alt="Sacred Forest environment" width="800" height="600" className="aspect-[4/5] w-full object-cover" />
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/90 to-transparent px-4 pb-4 pt-12 text-xs text-foreground/70">Environment, lighting, and material work</figcaption>
-              </figure>
-              <figure className="absolute -left-1 bottom-2 w-[54%] overflow-hidden border-4 border-background shadow-2xl">
-                <img src="/gallery/tools/stylize-normals-toolkit/menus.avif" alt="Stylize Normals Toolkit interface" width="600" height="420" className="aspect-[4/3] w-full object-cover" />
-                <figcaption className="bg-surface px-3 py-2 text-[11px] text-muted-foreground">Tools built around production needs</figcaption>
-              </figure>
-              <span aria-hidden="true" className="absolute -right-3 top-16 h-20 w-1 bg-warm/70" />
+            <div aria-hidden="true" className="relative mx-auto aspect-square w-full max-w-[330px]">
+              <div className="absolute inset-[20%] rounded-full bg-accent/[0.055] blur-2xl" />
+              <svg viewBox="0 0 320 320" className="relative h-full w-full overflow-visible" fill="none">
+                <circle cx="160" cy="160" r="124" className="stroke-border/45" strokeDasharray="2 8" />
+
+                <g className="stroke-border/80" strokeWidth="1">
+                  <path d="M160 105V64" />
+                  <path d="M215 160H256" />
+                  <path d="M160 215V256" />
+                  <path d="M105 160H64" />
+                </g>
+
+                <g className="fill-accent">
+                  <circle cx="160" cy="84" r="3.5" className="motion-safe:animate-pulse" />
+                  <circle cx="236" cy="160" r="3.5" className="motion-safe:animate-pulse [animation-delay:400ms]" />
+                  <circle cx="160" cy="236" r="3.5" className="motion-safe:animate-pulse [animation-delay:800ms]" />
+                  <circle cx="84" cy="160" r="3.5" className="motion-safe:animate-pulse [animation-delay:1200ms]" />
+                </g>
+
+                <g className="fill-surface/90 stroke-border/80">
+                  <rect x="113" y="22" width="94" height="42" rx="7" />
+                  <rect x="256" y="139" width="64" height="42" rx="7" />
+                  <rect x="112" y="256" width="96" height="42" rx="7" />
+                  <rect x="0" y="139" width="64" height="42" rx="7" />
+                </g>
+
+                <g className="fill-muted-foreground font-mono text-[8px] uppercase tracking-[0.16em]">
+                  <text x="160" y="48" textAnchor="middle">Combat</text>
+                  <text x="288" y="163" textAnchor="middle">Systems</text>
+                  <text x="160" y="281" textAnchor="middle">Animation</text>
+                  <text x="32" y="158" textAnchor="middle">
+                    <tspan x="32" dy="0">3D</tspan>
+                    <tspan x="32" dy="11">Production</tspan>
+                  </text>
+                </g>
+
+                <circle cx="160" cy="160" r="55" className="fill-background/90 stroke-accent/70" />
+                <circle cx="160" cy="160" r="47" className="stroke-border/70" strokeDasharray="3 5" />
+                <path d="M160 119v82M119 160h82" className="stroke-border/35" strokeWidth="1" />
+                <circle cx="160" cy="160" r="4" className="fill-accent drop-shadow-[0_0_8px_var(--color-accent)]" />
+                <text x="160" y="153" textAnchor="middle" className="fill-foreground font-mono text-[9px] uppercase tracking-[0.19em]">Technical</text>
+                <text x="160" y="170" textAnchor="middle" className="fill-accent font-mono text-[9px] uppercase tracking-[0.19em]">Design</text>
+              </svg>
             </div>
           </div>
         </section>
@@ -110,33 +144,27 @@ export function AboutPage() {
         <section className="route-reveal py-16 md:py-24" aria-labelledby="systems-title">
           <div className="grid gap-6 md:grid-cols-12">
             <div className="md:col-span-4">
-              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">Areas of practice</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Areas of practice</p>
               <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">From design intent to <span className="text-accent">implementation.</span></h2>
-              <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">I work across several disciplines, but the goal stays consistent: make the player&apos;s experience clear, responsive, and worth mastering.</p>
+              <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">A broad working range, with technical and combat design at the center.</p>
             </div>
-            <div className="route-reveal-list divide-y divide-border/55 border-y border-border/55 md:col-span-8">
-              {systems.map((system, index) => (
-                <article key={system.number} className={`group grid gap-4 py-7 transition-colors sm:grid-cols-[52px_1fr] ${index % 2 ? "sm:pl-10" : "sm:pr-10"}`}>
-                  <span className="font-display text-2xl text-warm/70">{system.number}</span>
-                  <div>
-                    <h3 className="font-display text-xl font-semibold transition-colors group-hover:text-accent">{system.title}</h3>
-                    <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">{system.description}</p>
-                  </div>
+            <div className="route-reveal-list grid gap-px overflow-hidden rounded-lg border border-border bg-border md:col-span-8 sm:grid-cols-2">
+              {systems.map((system) => (
+                <article key={system.number} className="group min-h-52 bg-surface p-6 transition-colors hover:bg-muted/55">
+                  <div className="flex items-center justify-between"><span className="font-mono text-[9px] tracking-[0.18em] text-accent">SYS_{system.number}</span><span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-border transition-all group-hover:bg-accent group-hover:shadow-[0_0_12px_var(--color-accent)]" /></div>
+                  <h3 className="mt-9 font-display text-xl font-semibold">{system.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{system.description}</p>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <blockquote className="route-reveal mb-16 max-w-4xl border-l-2 border-warm py-2 pl-6 font-display text-2xl leading-snug text-foreground/85 sm:text-3xl">
-          I&apos;m most interested in the point where a system stops feeling like a collection of rules and starts feeling like part of the world.
-        </blockquote>
-
         <section className="route-reveal grid gap-6 border-t border-border/60 py-16 md:grid-cols-12 md:py-24">
           <div className="md:col-span-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Capabilities</p>
             <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">A design focus with <span className="text-accent">production range.</span></h2>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">Because I have built the assets, shaders, rigs, and animation around gameplay systems, I can usually speak to both the design intention and the production cost of an idea.</p>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">My environment and technical-art training supports the design work: I understand the assets, shaders, rigs, animation, and optimization constraints around a gameplay system.</p>
           </div>
           <div className="route-reveal-list grid gap-4 md:col-span-8 sm:grid-cols-2">
             <article className="relative overflow-hidden rounded-lg border border-border bg-surface/55 p-6">
@@ -190,7 +218,7 @@ export function AboutPage() {
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Contact / Open channel</p>
               <h2 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl">Let&apos;s make something <span className="text-accent">feel good</span> to play.</h2>
-              <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">If you&apos;re building expressive combat, a tricky gameplay system, or something that needs design and production to meet in the middle, I&apos;d like to hear about it.</p>
+              <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">For technical design, combat design, gameplay systems, or interdisciplinary game-development work.</p>
               <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />Focused on technical, combat, and gameplay design · open to adjacent opportunities</div>
               <a href="/resume/Leficious_Technical_Game_Designer_Resume.pdf" download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
                 Download technical design résumé <span aria-hidden="true">↓</span>
