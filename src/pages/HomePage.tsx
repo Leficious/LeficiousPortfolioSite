@@ -55,7 +55,7 @@ export function HomePage() {
 
         <div className="route-reveal work-meta-enter grid border-x border-b border-border/60 sm:grid-cols-3">
           {[
-            ["01", "Primary discipline", "Combat + gameplay design"],
+            ["01", "Primary discipline", "Combat · gameplay design"],
             ["02", "Systems", "Player mechanics · enemy behavior · technical animation"],
             ["03", "Process", "Prototype · playtest · refine"],
           ].map(([number, label, value]) => (

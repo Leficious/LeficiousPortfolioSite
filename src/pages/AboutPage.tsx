@@ -5,36 +5,37 @@ import { SiteFooter } from "../components/SiteNav";
 type IconName = "email" | "linkedin" | "linktree" | "artstation";
 
 function ContactIcon({ name }: { name: IconName }) {
-  const paths: Record<IconName, ReactNode> = {
-    email: (
-      <>
+  if (name === "email") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6 fill-none stroke-current stroke-[1.5]" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="5" width="18" height="14" rx="2" />
         <path d="m4 7 8 6 8-6" />
-      </>
-    ),
-    linkedin: (
-      <>
-        <path d="M6.5 9v9M6.5 6.3v.2" />
-        <path d="M10.5 18v-5.1c0-2.2 1.3-4 3.7-4 2.8 0 3.8 1.8 3.8 4.5V18M10.5 9v9" />
-      </>
-    ),
-    linktree: (
-      <>
-        <path d="M12 3v18M7.5 21h9" />
-        <path d="m12 3-4 5h2.5L6 13h4.2L7 17h10l-3.2-4H18l-4.5-5H16z" />
-      </>
-    ),
-    artstation: (
-      <>
-        <path d="M4 17.5 10.8 5h2.4L20 17.5" />
-        <path d="M6.5 14h10.9M5 19h14" />
-      </>
-    ),
+      </svg>
+    );
+  }
+
+  const brands: Record<Exclude<IconName, "email">, { viewBox: string; color: string; path: ReactNode }> = {
+    linkedin: {
+      viewBox: "0 0 16 16",
+      color: "text-[#0A66C2]",
+      path: <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708C16 15.487 15.474 16 14.825 16H1.175C.526 16 0 15.487 0 14.854V1.146Zm4.943 12.248V6.169H2.542v7.225h2.401Zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248h.016Zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4Z" />,
+    },
+    linktree: {
+      viewBox: "0 0 24 24",
+      color: "text-[#43E55E]",
+      path: <path d="m13.736 5.853 4.005-4.117 2.325 2.381-4.201 4.004h5.909v3.305h-5.937l4.229 4.108-2.325 2.334L12 12.099l-5.74 5.769-2.325-2.325 4.229-4.108H2.226V8.121h5.909L3.934 4.117l2.325-2.381 4.005 4.117V0h3.472v5.853Zm-3.472 10.306h3.472V24h-3.472v-7.841Z" />,
+    },
+    artstation: {
+      viewBox: "0 0 24 24",
+      color: "text-[#13AFF0]",
+      path: <path d="m0 17.723 2.027 3.505h.001a2.424 2.424 0 0 0 2.164 1.333h13.457l-2.792-4.838H0Zm24 .025c0-.484-.143-.935-.388-1.314L15.728 2.728a2.424 2.424 0 0 0-2.142-1.289H9.419L21.598 22.54l1.92-3.325c.378-.637.482-.919.482-1.467Zm-11.129-3.462L7.428 4.858l-5.444 9.428h10.887Z" />,
+    },
   };
+  const brand = brands[name];
 
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6 fill-none stroke-current stroke-[1.5]" strokeLinecap="round" strokeLinejoin="round">
-      {paths[name]}
+    <svg viewBox={brand.viewBox} aria-hidden="true" className={`h-6 w-6 fill-current ${brand.color}`}>
+      {brand.path}
     </svg>
   );
 }
@@ -89,21 +90,53 @@ export function AboutPage() {
                 Technical design, gameplay systems, <span className="text-accent">3D production.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                I&apos;m a technical game designer with a focus on combat and gameplay systems. My interdisciplinary background spans 3D environments, technical art, animation, and tools, helping me communicate across disciplines and carry ideas from an early concept into a playable form.
+                I&apos;m a technical game designer with a focus on combat and gameplay systems. My background spans 3D environments, technical art, animation, and tools, helping me communicate across disciplines and carry ideas from an early concept into a playable form.
               </p>
             </div>
 
-            <div aria-hidden="true" className="relative mx-auto aspect-square w-full max-w-[310px]">
-              <div className="absolute inset-0 rounded-full border border-border/70 motion-safe:animate-[spin_28s_linear_infinite]">
-                <span className="absolute left-1/2 top-0 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent shadow-[0_0_20px_var(--color-accent)]" />
-                <span className="absolute bottom-[12%] left-[9%] h-1.5 w-1.5 rounded-full bg-foreground/60" />
-              </div>
-              <div className="absolute inset-[14%] rounded-full border border-dashed border-accent/55 motion-safe:animate-[spin_20s_linear_infinite_reverse]" />
-              <div className="absolute inset-x-0 top-1/2 h-px bg-border/70" />
-              <div className="absolute inset-y-0 left-1/2 w-px bg-border/70" />
-              <div className="absolute inset-[31%] grid place-items-center rotate-45 border border-accent/60 bg-background/80 shadow-[0_0_60px_rgba(91,154,172,0.14)]">
-                <span className="-rotate-45 font-mono text-[9px] uppercase leading-loose tracking-[0.2em] text-muted-foreground">Design<br />Implement<br />Iterate</span>
-              </div>
+            <div aria-hidden="true" className="relative mx-auto aspect-square w-full max-w-[330px]">
+              <div className="absolute inset-[20%] rounded-full bg-accent/[0.055] blur-2xl" />
+              <svg viewBox="0 0 320 320" className="relative h-full w-full overflow-visible" fill="none">
+                <circle cx="160" cy="160" r="124" className="stroke-border/45" strokeDasharray="2 8" />
+
+                <g className="stroke-border/80" strokeWidth="1">
+                  <path d="M160 105V64" />
+                  <path d="M215 160H256" />
+                  <path d="M160 215V256" />
+                  <path d="M105 160H64" />
+                </g>
+
+                <g className="fill-accent">
+                  <circle cx="160" cy="84" r="3.5" className="motion-safe:animate-pulse" />
+                  <circle cx="236" cy="160" r="3.5" className="motion-safe:animate-pulse [animation-delay:400ms]" />
+                  <circle cx="160" cy="236" r="3.5" className="motion-safe:animate-pulse [animation-delay:800ms]" />
+                  <circle cx="84" cy="160" r="3.5" className="motion-safe:animate-pulse [animation-delay:1200ms]" />
+                </g>
+
+                <g className="fill-surface/90 stroke-border/80">
+                  <rect x="113" y="22" width="94" height="42" rx="7" />
+                  <rect x="256" y="139" width="64" height="42" rx="7" />
+                  <rect x="112" y="256" width="96" height="42" rx="7" />
+                  <rect x="0" y="139" width="64" height="42" rx="7" />
+                </g>
+
+                <g className="fill-muted-foreground font-mono text-[8px] uppercase tracking-[0.16em]">
+                  <text x="160" y="48" textAnchor="middle">Combat</text>
+                  <text x="288" y="163" textAnchor="middle">Systems</text>
+                  <text x="160" y="281" textAnchor="middle">Animation</text>
+                  <text x="32" y="158" textAnchor="middle">
+                    <tspan x="32" dy="0">3D</tspan>
+                    <tspan x="32" dy="11">Production</tspan>
+                  </text>
+                </g>
+
+                <circle cx="160" cy="160" r="55" className="fill-background/90 stroke-accent/70" />
+                <circle cx="160" cy="160" r="47" className="stroke-border/70" strokeDasharray="3 5" />
+                <path d="M160 119v82M119 160h82" className="stroke-border/35" strokeWidth="1" />
+                <circle cx="160" cy="160" r="4" className="fill-accent drop-shadow-[0_0_8px_var(--color-accent)]" />
+                <text x="160" y="153" textAnchor="middle" className="fill-foreground font-mono text-[9px] uppercase tracking-[0.19em]">Technical</text>
+                <text x="160" y="170" textAnchor="middle" className="fill-accent font-mono text-[9px] uppercase tracking-[0.19em]">Design</text>
+              </svg>
             </div>
           </div>
         </section>
