@@ -55,7 +55,7 @@ export function GalleryPage() {
         <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6">
           <section className="route-reveal grid gap-10 border-b border-border/60 py-16 md:grid-cols-12 md:py-24">
             <div className="md:col-span-3">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Gallery</p>
+              <p className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">Gallery</p>
             </div>
             <div className="md:col-span-9">
               <h1 className="font-display text-4xl font-semibold leading-[1.05] text-balance md:text-6xl">
@@ -87,8 +87,8 @@ export function GalleryPage() {
           <section className="route-reveal py-10 md:py-14" aria-labelledby="gallery-filter-title">
             <div className="mb-10 border-b border-border/60 pb-8">
               <div className="flex items-center justify-between gap-4">
-                <h2 id="gallery-filter-title" className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Filter work</h2>
-                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground" aria-live="polite">{visibleEntries.length} {visibleEntries.length === 1 ? "entry" : "entries"}</p>
+                <h2 id="gallery-filter-title" className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">Filter work</h2>
+                <p className="text-xs text-muted-foreground" aria-live="polite">{visibleEntries.length} {visibleEntries.length === 1 ? "entry" : "entries"}</p>
               </div>
               <div className="mt-5 flex flex-wrap gap-2">
                 {["All", ...galleryTags].map((tag) => {
@@ -99,7 +99,7 @@ export function GalleryPage() {
                       type="button"
                       aria-pressed={active}
                       onClick={() => setActiveTag(tag as GalleryTag | "All")}
-                      className={`rounded-full border px-3 py-2 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors ${active ? "border-accent bg-accent text-accent-foreground" : "border-border bg-surface/40 text-muted-foreground hover:border-accent hover:text-foreground"}`}
+                      className={`border-b px-1 py-2 text-xs transition-colors ${active ? "border-warm text-foreground" : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"}`}
                     >
                       {tag}
                     </button>
@@ -118,14 +118,14 @@ export function GalleryPage() {
                     key={entry.id}
                     type="button"
                     onClick={() => openEntry(entry)}
-                    className={`group w-full overflow-hidden rounded-lg border border-border bg-surface text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/70 hover:shadow-[0_18px_60px_rgba(0,0,0,0.2)] ${layout.card}`}
+                    className={`group w-full overflow-hidden border-b border-border/60 bg-transparent pb-2 text-left transition-all duration-300 hover:border-accent/70 ${layout.card}`}
                     aria-label={`Open ${entry.title}, ${entry.media.length} ${entry.media.length === 1 ? "item" : "items"}`}
                   >
                     <div className={`relative overflow-hidden bg-muted ${mediaAspect}`}>
                       <img src={entry.cover} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-30 blur-xl" />
                       <div aria-hidden="true" className="absolute inset-0 bg-background/35" />
                       <img src={entry.cover} alt={entry.coverAlt} width="1200" height="900" loading={index < 3 ? "eager" : "lazy"} decoding="async" className="relative h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.015]" />
-                      {entry.pinned && <span title="Pinned work" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full border border-accent/60 bg-background/80 text-sm text-accent shadow-lg backdrop-blur"><span className="sr-only">Pinned work</span><span aria-hidden="true">✦</span></span>}
+                      {entry.pinned && <span title="Pinned work" className="absolute right-3 top-3 grid h-8 w-8 place-items-center bg-background/85 text-sm text-warm shadow-lg backdrop-blur"><span className="sr-only">Pinned work</span><span aria-hidden="true">✦</span></span>}
                     </div>
                     <div className={`flex flex-col p-4 ${layout.wide ? "lg:justify-between lg:p-6" : ""}`}>
                       <div>
@@ -136,7 +136,7 @@ export function GalleryPage() {
                         {layout.wide && <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{entry.description}</p>}
                       </div>
                       <div>
-                        <p className="mt-4 overflow-hidden border-t border-border/60 pt-3 text-xs leading-relaxed text-muted-foreground [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">Contribution · </span>{entry.contribution}</p>
+                        <p className="mt-4 overflow-hidden border-t border-border/40 pt-3 text-xs leading-relaxed text-muted-foreground [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"><span className="font-medium text-warm">My contribution · </span>{entry.contribution}</p>
                         <div className="mt-3"><SoftwareSummary software={entry.software} /></div>
                       </div>
                     </div>
