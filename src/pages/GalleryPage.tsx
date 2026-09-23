@@ -125,7 +125,7 @@ export function GalleryPage() {
                       <img src={entry.cover} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-30 blur-xl" />
                       <div aria-hidden="true" className="absolute inset-0 bg-background/35" />
                       <img src={entry.cover} alt={entry.coverAlt} width="1200" height="900" loading={index < 3 ? "eager" : "lazy"} decoding="async" className="relative h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.015]" />
-                      {entry.pinned && <span title="Pinned work" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full border border-accent/60 bg-background/80 text-sm text-accent shadow-lg backdrop-blur"><span className="sr-only">Pinned work</span><span aria-hidden="true">✦</span></span>}
+                      {entry.pinned && <span title="Pinned work" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full border border-warm/65 bg-background/80 text-sm text-warm shadow-lg backdrop-blur"><span className="sr-only">Pinned work</span><span aria-hidden="true">✦</span></span>}
                     </div>
                     <div className={`flex flex-col p-4 ${layout.wide ? "lg:justify-between lg:p-6" : ""}`}>
                       <div>

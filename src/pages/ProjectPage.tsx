@@ -32,7 +32,7 @@ export function ProjectPage() {
         <div className="mt-12 aspect-video overflow-hidden rounded-lg border border-border bg-surface"><img src={project.cover} alt={`${project.title} cover`} width="1600" height="900" decoding="async" fetchPriority="high" className="h-full w-full object-cover" /></div>
         <section className="mt-10 overflow-hidden rounded-lg border border-border bg-surface/45" aria-labelledby="project-brief-title">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 px-5 py-4 sm:px-6">
-            <h2 id="project-brief-title" className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">Project brief</h2>
+            <h2 id="project-brief-title" className="font-mono text-[10px] uppercase tracking-[0.22em] text-warm">Project brief</h2>
             <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">Recruiter summary</span>
           </div>
           <dl className="grid md:grid-cols-3">

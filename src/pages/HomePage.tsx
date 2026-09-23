@@ -7,7 +7,7 @@ import { projects } from "../lib/projects";
 export function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title="Leficious — Technical & Combat Design Portfolio" description="Selected work by Leficious — combat design, gameplay systems, AI, and interdisciplinary 3D production for games." />
+      <Seo title="Leficious — Technical & Combat Design Portfolio" description="Selected work by Leficious across combat design, gameplay systems, technical animation, AI, and 3D production for games." />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="route-reveal relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="work-grid-enter absolute inset-0 -z-10 opacity-30 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_88%)]" />
@@ -16,14 +16,14 @@ export function HomePage() {
           <div className="grid items-center gap-14 lg:grid-cols-[1.35fr_0.65fr]">
             <div className="work-copy-enter">
               <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-                <span className="h-px w-8 bg-accent" />
+                <span className="h-px w-8 bg-warm" />
                 Portfolio · {new Date().getFullYear()}
               </div>
               <h1 className="mt-7 max-w-4xl font-display text-5xl font-semibold leading-[0.95] text-balance sm:text-6xl lg:text-7xl">
                 Combat design and gameplay systems, from <span className="signal-headline-accent text-accent">prototype to playtest.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                I design and implement combat mechanics, player abilities, and enemy behavior, then refine them through prototyping, playtesting, and iteration. My systems are created with focus on cohesiveness of their formal and dramatic elements.
+                I like turning an idea into something I can put in a player&apos;s hands: a combat mechanic, an ability, an enemy, or a whole gameplay loop. I prototype early, play it often, and keep refining until the rules, animation, feedback, and dramatic intent all feel like parts of the same system.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href="#selected-work" className="inline-flex items-center rounded-full border border-accent bg-accent px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-accent-foreground transition-colors hover:bg-accent/85">
@@ -78,7 +78,7 @@ export function HomePage() {
           <FeaturedReel
             id="rVIavxdutJE"
             title="Technical Game Design Reel 2026"
-            description="Combat systems, gameplay prototypes, enemy behavior, and design-focused implementation across recent projects."
+            description="A quick look at the combat systems, gameplay prototypes, enemies, and technical problem-solving behind my recent work."
             eyebrow="Primary reel · 2026"
           />
         </section>
@@ -88,7 +88,7 @@ export function HomePage() {
             <div className="md:col-span-8">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Selected work</p>
               <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl">Systems and designs built for <span className="text-accent">iteration.</span></h2>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">Case studies covering combat, gameplay AI, modular systems, and 3D production.</p>
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">A closer look at how I approached combat, gameplay AI, modular systems, and the production work needed to make them real.</p>
             </div>
             <div className="md:col-span-4 md:text-right">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{String(projects.length).padStart(2, "0")} case studies</p>
@@ -106,7 +106,7 @@ export function HomePage() {
                   <div className="flex min-h-64 flex-col justify-between p-6 sm:p-8 md:min-h-72">
                     <div>
                       <div className="flex items-center justify-between gap-5">
-                        <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent">Case study {String(index + 1).padStart(2, "0")}</p>
+                        <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-warm">Case study {String(index + 1).padStart(2, "0")}</p>
                         <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">{project.year}</span>
                       </div>
                       <h3 className="mt-6 font-display text-2xl font-semibold tracking-tight transition-colors group-hover:text-accent sm:text-3xl">{project.title}</h3>
