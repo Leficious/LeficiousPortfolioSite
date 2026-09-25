@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { MediaItem } from "../lib/projects";
+import { useLanguage } from "../lib/language";
 
 function ExpandIcon({ close = false }: { close?: boolean }) {
   if (close) {
@@ -19,6 +20,7 @@ function ExpandIcon({ close = false }: { close?: boolean }) {
 }
 
 function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }> }) {
+  const { text } = useLanguage();
   const [expanded, setExpanded] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -67,7 +69,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
         type="button"
         onClick={() => setExpanded(true)}
         className="group relative block w-full cursor-zoom-in overflow-hidden text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
-        aria-label={`Expand image: ${item.alt}`}
+        aria-label={`${text("Expand image", "放大图片")}: ${item.alt}`}
       >
         <img
           src={item.src}
@@ -80,7 +82,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
         />
         <span className="absolute bottom-3 right-3 flex items-center gap-2 rounded-sm border border-foreground/20 bg-background/85 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground opacity-0 shadow-lg backdrop-blur transition-all duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
           <ExpandIcon />
-          View full size
+          {text("View full size", "查看原图")}
         </span>
         <span aria-hidden="true" className="pointer-events-none absolute inset-3 border border-accent/0 transition-colors duration-200 group-hover:border-accent/35 group-focus-visible:border-accent/35" />
       </button>
@@ -91,21 +93,21 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
             className="fixed inset-0 z-[120] flex cursor-zoom-out items-center justify-center bg-background/95 p-4 backdrop-blur-xl sm:p-8"
             role="dialog"
             aria-modal="true"
-            aria-label={`Expanded image: ${item.alt}`}
+            aria-label={`${text("Expanded image", "放大图片")}: ${item.alt}`}
             onMouseDown={(event) => {
               if (event.target === event.currentTarget) setExpanded(false);
             }}
           >
             <div ref={dialogRef} className="relative flex max-h-full w-full max-w-[min(96vw,1600px)] cursor-default flex-col items-center gap-3">
               <div className="absolute -top-1 left-0 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:-top-2">
-                Image inspection
+                {text("Image inspection", "图片查看")}
               </div>
               <button
                 ref={closeRef}
                 type="button"
                 onClick={() => setExpanded(false)}
                 className="absolute -top-2 right-0 z-10 grid h-10 w-10 place-items-center rounded-full border border-foreground/20 bg-background/90 text-foreground transition-colors hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:-top-3"
-                aria-label="Close expanded image"
+                aria-label={text("Close expanded image", "关闭大图")}
               >
                 <ExpandIcon close />
               </button>
@@ -115,7 +117,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
                 className="mt-10 max-h-[calc(100vh-8rem)] max-w-full rounded-sm border border-border bg-black/20 object-contain shadow-2xl"
               />
               {item.caption && <p className="max-w-4xl text-center text-sm text-muted-foreground">{item.caption}</p>}
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground/70">Click outside or press Esc to close</p>
+              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground/70">{text("Click outside or press Esc to close", "点击外部或按 Esc 关闭")}</p>
             </div>
           </div>,
           document.body,
@@ -125,6 +127,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
 }
 
 function YouTubeEmbed({ id, title }: { id: string; title: string }) {
+  const { text } = useLanguage();
   const [active, setActive] = useState(false);
   const [thumbnail, setThumbnail] = useState(`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`);
 
@@ -145,7 +148,7 @@ function YouTubeEmbed({ id, title }: { id: string; title: string }) {
       type="button"
       onClick={() => setActive(true)}
       className="group absolute inset-0 flex items-center justify-center bg-background"
-      aria-label={`Play ${title}`}
+      aria-label={`${text("Play", "播放")} ${title}`}
     >
       <img
         src={thumbnail}
@@ -158,7 +161,7 @@ function YouTubeEmbed({ id, title }: { id: string; title: string }) {
         className="h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-90"
       />
       <span className="absolute rounded-full border border-foreground/30 bg-background/85 px-5 py-3 font-mono text-xs uppercase tracking-[0.18em] text-foreground backdrop-blur">
-        Play video
+        {text("Play video", "播放视频")}
       </span>
     </button>
   );

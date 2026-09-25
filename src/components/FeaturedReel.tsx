@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLanguage } from "../lib/language";
 
 type FeaturedReelProps = {
   id: string;
@@ -18,6 +19,7 @@ function PlayIcon() {
 
 export function FeaturedReel({ id, title, description, eyebrow, thumbnailSrc }: FeaturedReelProps) {
   const [active, setActive] = useState(false);
+  const { text } = useLanguage();
 
   return (
     <article className="group grid overflow-hidden rounded-xl border border-border bg-surface/45 shadow-[0_24px_80px_rgba(0,0,0,0.14)] lg:grid-cols-[minmax(0,1.55fr)_minmax(260px,0.45fr)]">
@@ -35,7 +37,7 @@ export function FeaturedReel({ id, title, description, eyebrow, thumbnailSrc }: 
             type="button"
             onClick={() => setActive(true)}
             className="absolute inset-0 w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
-            aria-label={`Play ${title}`}
+            aria-label={`${text("Play", "播放")} ${title}`}
           >
             <img
               src={thumbnailSrc ?? `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}
@@ -59,7 +61,7 @@ export function FeaturedReel({ id, title, description, eyebrow, thumbnailSrc }: 
                 <PlayIcon />
               </span>
             </span>
-            <span className="absolute bottom-4 left-4 font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/80">Play reel</span>
+            <span className="absolute bottom-4 left-4 font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/80">{text("Play reel", "播放作品集锦")}</span>
           </button>
         )}
       </div>
@@ -77,7 +79,7 @@ export function FeaturedReel({ id, title, description, eyebrow, thumbnailSrc }: 
           rel="noreferrer"
           className="relative mt-10 border-t border-border/60 pt-5 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-accent"
         >
-          Open on YouTube ↗
+          {text("Open on YouTube", "在 YouTube 打开")} ↗
         </a>
       </div>
     </article>

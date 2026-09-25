@@ -1,10 +1,12 @@
 import { useLayoutEffect, useRef } from "react";
+import { useLanguage } from "../lib/language";
 
 type SignalAcquisitionProps = {
   active: boolean;
 };
 
 export function SignalAcquisition({ active }: SignalAcquisitionProps) {
+  const { text } = useLanguage();
   const layerRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -38,7 +40,7 @@ export function SignalAcquisition({ active }: SignalAcquisitionProps) {
       </div>
       <p className="signal-acquisition__status">
         <span className="signal-acquisition__status-light" />
-        Signal acquired <span aria-hidden="true">//</span> Portfolio {new Date().getFullYear()}
+        {text("Signal acquired", "信号已捕获")} <span aria-hidden="true">//</span> {text("Portfolio", "作品集")} {new Date().getFullYear()}
       </p>
     </div>
   );

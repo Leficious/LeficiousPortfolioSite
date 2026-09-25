@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { type GalleryEntry, getYouTubeId } from "../lib/gallery";
+import { useLanguage } from "../lib/language";
+import { galleryTagZh } from "../lib/localizedContent";
 import { SoftwareStack } from "./SoftwareStack";
 
 type GalleryLightboxProps = {
@@ -12,6 +14,7 @@ type GalleryLightboxProps = {
 };
 
 export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: GalleryLightboxProps) {
+  const { isChinese, text } = useLanguage();
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const pointerStart = useRef<number | null>(null);
@@ -72,7 +75,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
             <h2 id="gallery-dialog-title" className="mt-1 font-display text-xl font-semibold md:text-2xl">{entry.title}</h2>
           </div>
           <button ref={closeRef} type="button" onClick={onClose} className="shrink-0 rounded-full border border-accent/70 bg-surface/80 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground shadow-lg backdrop-blur transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground sm:px-5">
-            <span aria-hidden="true">←</span> Back to gallery <span aria-hidden="true">×</span>
+            <span aria-hidden="true">←</span> {text("Back to gallery", "返回画廊")} <span aria-hidden="true">×</span>
           </button>
         </header>
 
@@ -104,24 +107,24 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
 
             {total > 1 && (
               <>
-                <button type="button" onClick={() => go(-1)} aria-label="Previous image" className="absolute left-1 top-1/2 -translate-y-1/2 rounded-full border border-border bg-background/80 p-3 text-xl text-muted-foreground backdrop-blur transition-colors hover:border-accent hover:text-foreground md:left-2">←</button>
-                <button type="button" onClick={() => go(1)} aria-label="Next image" className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full border border-border bg-background/80 p-3 text-xl text-muted-foreground backdrop-blur transition-colors hover:border-accent hover:text-foreground md:right-2">→</button>
+                <button type="button" onClick={() => go(-1)} aria-label={text("Previous image", "上一张图片")} className="absolute left-1 top-1/2 -translate-y-1/2 rounded-full border border-border bg-background/80 p-3 text-xl text-muted-foreground backdrop-blur transition-colors hover:border-accent hover:text-foreground md:left-2">←</button>
+                <button type="button" onClick={() => go(1)} aria-label={text("Next image", "下一张图片")} className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full border border-border bg-background/80 p-3 text-xl text-muted-foreground backdrop-blur transition-colors hover:border-accent hover:text-foreground md:right-2">→</button>
               </>
             )}
           </section>
 
-          <aside className="shrink-0 border-t border-border/60 py-6 lg:min-h-0 lg:overflow-y-auto lg:border-l lg:border-t-0 lg:py-6 lg:pl-6 lg:pr-2" aria-label="Project details">
+          <aside className="shrink-0 border-t border-border/60 py-6 lg:min-h-0 lg:overflow-y-auto lg:border-l lg:border-t-0 lg:py-6 lg:pl-6 lg:pr-2" aria-label={text("Project details", "项目详情")}>
             <div className="flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.17em] text-muted-foreground">
               <span>{entry.year}</span>
               <span aria-hidden="true">·</span>
-              <span>{total} {total === 1 ? "item" : "items"}</span>
-              {entry.pinned && <><span aria-hidden="true">·</span><span className="text-accent">✦ Pinned</span></>}
+              <span>{total} {text(total === 1 ? "item" : "items", "项内容")}</span>
+              {entry.pinned && <><span aria-hidden="true">·</span><span className="text-accent">✦ {text("Pinned", "置顶")}</span></>}
             </div>
 
             <p className="mt-5 text-[15px] leading-7 text-foreground/85">{entry.description}</p>
 
             <div className="mt-6 border-t border-border/60 pt-5">
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">Contribution</p>
+              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">{text("Contribution", "个人贡献")}</p>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{entry.contribution}</p>
             </div>
 
@@ -130,9 +133,9 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
             </div>
 
             <div className="mt-6 border-t border-border/60 pt-5">
-              <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-accent">Disciplines</p>
+              <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-accent">{text("Disciplines", "方向")}</p>
               <div className="flex flex-wrap gap-2">
-                {entry.tags.map((tag) => <span key={tag} className="rounded-full border border-border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.13em] text-muted-foreground">{tag}</span>)}
+                {entry.tags.map((tag) => <span key={tag} className="rounded-full border border-border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.13em] text-muted-foreground">{isChinese ? galleryTagZh[tag] : tag}</span>)}
               </div>
             </div>
 
@@ -143,16 +146,16 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
                 onClick={onClose}
                 className="mt-6 inline-flex items-center gap-2 rounded-full border border-accent/60 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground"
               >
-                {entry.projectLabel ?? "View project"} <span aria-hidden="true">→</span>
+                {isChinese ? "查看完整项目" : entry.projectLabel ?? "View project"} <span aria-hidden="true">→</span>
               </Link>
             )}
 
             {total > 1 && (
               <div className="mt-7 border-t border-border/60 pt-5">
-                <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-accent">Sequence</p>
-                <div className="grid grid-cols-4 gap-2" aria-label="Choose gallery item">
+                <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-accent">{text("Sequence", "序列")}</p>
+                <div className="grid grid-cols-4 gap-2" aria-label={text("Choose gallery item", "选择画廊内容")}>
                   {entry.media.map((item, index) => (
-                    <button key={`${item.type}-${index}`} type="button" onClick={() => onSlideChange(index)} aria-label={`View item ${index + 1}`} aria-current={index === slide ? "true" : undefined} className={`aspect-[4/3] overflow-hidden rounded border bg-muted transition-all ${index === slide ? "border-accent opacity-100" : "border-border opacity-50 hover:border-accent/60 hover:opacity-100"}`}>
+                    <button key={`${item.type}-${index}`} type="button" onClick={() => onSlideChange(index)} aria-label={`${text("View item", "查看第")} ${index + 1}`} aria-current={index === slide ? "true" : undefined} className={`aspect-[4/3] overflow-hidden rounded border bg-muted transition-all ${index === slide ? "border-accent opacity-100" : "border-border opacity-50 hover:border-accent/60 hover:opacity-100"}`}>
                       {item.type === "image" ? <img src={item.src} alt="" className="h-full w-full object-cover" loading="lazy" /> : <span className="flex h-full items-center justify-center font-mono text-[8px] tracking-[0.12em]">VIDEO</span>}
                     </button>
                   ))}

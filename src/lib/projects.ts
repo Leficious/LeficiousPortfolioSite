@@ -32,6 +32,7 @@ export type Project = {
   outcomes: string[];
   relatedGalleryIds?: string[];
   overview: string;
+  authorNote?: string;
   responsibilities: string[];
   media: MediaItem[];
   snippets: CodeSnippet[];
@@ -59,6 +60,8 @@ export const projects: Project[] = [
     ],
     overview:
       "Starshore was a solo project built over 15 weeks to explore how a small set of interconnected gameplay systems could support a complete playable loop. I handled the gameplay logic, character and animation Blueprints, level design, scene assembly, interface work, and system integration. Third-party character and environment assets were used to keep the focus on design and implementation.",
+    authorNote:
+      "Starshore started as my attempt to understand why certain anime action RPGs feel so fluid. I wanted to build more than a controller demo, so I kept following the design into targeting, abilities, items, shops, and the smaller systems that make a playable loop hold together.",
     responsibilities: [
       "Built the character movement, ability, targeting, inventory, shop, and loot systems.",
       "Connected gameplay states, animation behavior, UI, and reusable item data.",
@@ -179,6 +182,8 @@ export const projects: Project[] = [
     ],
     overview:
       "Fallen Valkyrie was built as a focused study of combat design, character animation, and encounter AI. I handled the gameplay logic, character and animation Blueprints, level design, cinematics, and scene assembly. Third-party environment, character, and animation assets were used for production support, while the gameplay systems, animation logic, blendspaces, and encounter behavior were implemented specifically for the prototype.",
+    authorNote:
+      "I made Fallen Valkyrie because I wanted to work on the part of action games I enjoy most: how animation, enemy behavior, timing, and player feedback work together. The boss fight gave me one place to test all of those pieces.",
     responsibilities: [
       "Designed and implemented the spear, bow, targeting, resource, damage, and directional reaction systems.",
       "Built modular enemy behavior and a multiphase boss encounter with distinct combat states and transitions.",
@@ -300,6 +305,8 @@ export const projects: Project[] = [
     relatedGalleryIds: ["sacred-forest", "stylized-shrine", "vertex-normals-tool"],
     overview:
       "Sacred Forest is a stylized environment built to carry a consistent visual language from individual assets through the final scene. I handled the modeling, sculpting, texturing, lighting, visual effects, foliage, and engine assembly, using a compact production pipeline across Maya, ZBrush, Substance Painter, Substance Designer, Photoshop, and Unreal Engine.",
+    authorNote:
+      "Before I focused on technical design, most of my training was in 3D art. Sacred Forest is the clearest example of that background. I built the scene from the main shrine outward, then wrote a tool when the foliage workflow became repetitive.",
     responsibilities: [
       "Modeled, sculpted, baked, and textured the shrine as the environment's primary focal point.",
       "Created procedural and hand-painted materials, modular foliage, lighting, and atmospheric effects.",

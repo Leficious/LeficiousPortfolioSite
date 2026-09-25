@@ -1,4 +1,5 @@
 import type { SoftwareName } from "../lib/gallery";
+import { useLanguage } from "../lib/language";
 
 const abbreviations: Record<SoftwareName, string> = {
   "Maya": "MY",
@@ -33,9 +34,10 @@ type SoftwareStackProps = {
 };
 
 export function SoftwareStack({ software, showLabels = false }: SoftwareStackProps) {
+  const { text } = useLanguage();
   return (
-    <div aria-label={`Software and tools: ${software.join(", ")}`}>
-      <p className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">Software / tools</p>
+    <div aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`}>
+      <p className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">{text("Software / tools", "软件 / 工具")}</p>
       <div className="mt-2 flex flex-wrap gap-1.5">
         {software.map((name) => (
           <span
@@ -53,13 +55,14 @@ export function SoftwareStack({ software, showLabels = false }: SoftwareStackPro
 }
 
 export function SoftwareSummary({ software }: Pick<SoftwareStackProps, "software">) {
+  const { text } = useLanguage();
   const visible = software.slice(0, 2).map((name) => compactNames[name] ?? name);
   const remaining = software.length - visible.length;
   const summary = `${visible.join(" · ")}${remaining > 0 ? ` · +${remaining}` : ""}`;
 
   return (
-    <p aria-label={`Software and tools: ${software.join(", ")}`} className="flex items-baseline gap-2 font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
-      <span className="shrink-0 text-accent/80">Toolkit</span>
+    <p aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`} className="flex items-baseline gap-2 font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
+      <span className="shrink-0 text-accent/80">{text("Toolkit", "工具")}</span>
       <span className="min-w-0 truncate">{summary}</span>
     </p>
   );

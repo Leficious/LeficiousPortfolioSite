@@ -1,6 +1,7 @@
 import { useRef, useState, type ReactNode } from "react";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
+import { useLanguage } from "../lib/language";
 
 type IconName = "email" | "linkedin" | "linktree" | "artstation";
 
@@ -41,19 +42,44 @@ function ContactIcon({ name }: { name: IconName }) {
 }
 
 const systems = [
-  { number: "01", title: "Combat Design", description: "I shape player actions, enemies, controls, feedback, and encounter pacing around how the fight should feel." },
-  { number: "02", title: "Gameplay Systems", description: "I build rules that are easy to read, quick to tune, and sturdy enough to grow as the game changes." },
-  { number: "03", title: "Technical Animation", description: "I connect animation to gameplay through state logic, Control Rig, and responsive runtime systems." },
-  { number: "04", title: "Technical Production", description: "I'm comfortable crossing into 3D production, procedural workflows, and art implementation when a system needs it." },
+  { number: "01", title: "Combat Design", titleZh: "战斗设计", description: "I shape player actions, enemies, controls, feedback, and encounter pacing around how the fight should feel.", descriptionZh: "我围绕战斗应有的体验，设计玩家动作、敌人、操控、反馈与遭遇节奏。" },
+  { number: "02", title: "Gameplay Systems", titleZh: "玩法系统", description: "I build rules that are easy to read, quick to tune, and sturdy enough to grow as the game changes.", descriptionZh: "我构建易于理解、便于调整，并能随项目变化继续扩展的玩法规则。" },
+  { number: "03", title: "Technical Animation", titleZh: "技术动画", description: "I connect animation to gameplay through state logic, Control Rig, and responsive runtime systems.", descriptionZh: "我通过状态逻辑、Control Rig 与响应式运行时系统，将动画连接到玩法。" },
+  { number: "04", title: "Technical Production", titleZh: "技术制作", description: "I'm comfortable crossing into 3D production, procedural workflows, and art implementation when a system needs it.", descriptionZh: "当系统需要时，我也能进入 3D 制作、程序化工作流与美术落地环节。" },
 ];
 
-const contactLinks: { label: string; detail: string; href: string; icon: IconName }[] = [
-  { label: "LinkedIn", detail: "Connect professionally", href: "https://www.linkedin.com/in/leficious/", icon: "linkedin" },
-  { label: "Linktree", detail: "Everything in one place", href: "https://linktr.ee/leficious", icon: "linktree" },
-  { label: "ArtStation", detail: "More visual work", href: "https://www.artstation.com/leficious", icon: "artstation" },
+const contactLinks: { label: string; detail: string; detailZh: string; href: string; icon: IconName }[] = [
+  { label: "LinkedIn", detail: "Connect professionally", detailZh: "职业联系", href: "https://www.linkedin.com/in/leficious/", icon: "linkedin" },
+  { label: "Linktree", detail: "Everything in one place", detailZh: "所有链接汇总", href: "https://linktr.ee/leficious", icon: "linktree" },
+  { label: "ArtStation", detail: "More visual work", detailZh: "更多视觉作品", href: "https://www.artstation.com/leficious", icon: "artstation" },
+];
+
+const outsideEditor = [
+  {
+    number: "01",
+    title: "Music",
+    titleZh: "音乐",
+    description: "I have played piano and cello for about 15 years, including orchestra and chamber performances. It taught me a lot about timing, rehearsal, and how individual parts fit together.",
+    descriptionZh: "我学习钢琴和大提琴约 15 年，也参加过管弦乐团与室内乐演出。这些经历让我更理解节奏、排练，以及不同部分如何配合成一个整体。",
+  },
+  {
+    number: "02",
+    title: "Movement",
+    titleZh: "运动",
+    description: "I trained seriously in figure skating, along with ballet and ballroom dance. I still draw on that experience when I think about weight, balance, anticipation, and motion.",
+    descriptionZh: "我曾长期接受花样滑冰训练，也学习过芭蕾和标准舞。现在思考重量感、平衡、预备动作与运动表现时，我仍会参考这些身体经验。",
+  },
+  {
+    number: "03",
+    title: "Stories and ideas",
+    titleZh: "故事与思考",
+    description: "I spend a lot of time with games, anime, novels, history, and social analysis. I tend to like work that rewards close attention to structure, symbolism, and character perspective.",
+    descriptionZh: "我平时会花很多时间接触游戏、动画、小说、历史与社会分析。我尤其喜欢那些值得仔细观察结构、象征和人物视角的作品。",
+  },
 ];
 
 export function AboutPage() {
+  const { isChinese, text } = useLanguage();
   const [copied, setCopied] = useState(false);
   const emailRef = useRef<HTMLSpanElement>(null);
 
@@ -74,7 +100,7 @@ export function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title="About & Contact — Leficious" description="About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production." path="/about" />
+      <Seo title={text("About & Contact — Leficious", "关于与联系 — Leficious")} description={text("About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production.", "关于 Leficious：专注战斗设计与玩法系统的技术游戏设计师，具备 AI、动画、技术美术与 3D 制作经验。")} path="/about" />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="route-reveal relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-35 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
@@ -84,25 +110,25 @@ export function AboutPage() {
             <div>
               <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
                 <span className="h-px w-8 bg-warm" />
-                Technical / Game designer
+                {text("Technical / Game designer", "技术 / 游戏设计师")}
               </div>
               <h1 className="mt-7 max-w-3xl font-display text-5xl font-semibold leading-[0.95] text-balance sm:text-6xl lg:text-7xl">
-                Technical design, gameplay systems, <span className="text-accent">3D production.</span>
+                {text("Technical design, gameplay systems, ", "技术设计、玩法系统与")}<span className="text-accent">{text("3D production.", "3D 制作。")}</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                I&apos;m a Canadian technical game designer who likes working where design and implementation meet. Combat is my favorite problem space, but I&apos;m just as happy untangling animation logic, building a tool, or jumping into the 3D side when that&apos;s what gets an idea into the game.
+                {text("I'm a Canadian technical game designer who likes figuring out how things work and then making them feel better to play. Combat is usually where I start, but I often end up in animation logic, tools, UI, or 3D production if that is what the project needs. I care about both the rules under the hood and what the player actually sees and feels.", "我是一名加拿大技术游戏设计师，喜欢先弄清楚一个东西如何运作，再让它玩起来更好。战斗通常是我的起点，但如果项目需要，我也会进入动画逻辑、工具、界面或 3D 制作。我既在意底层规则，也在意玩家真正看到和感受到的东西。")}
               </p>
             </div>
 
             <figure className="relative mx-auto w-full max-w-[390px] lg:translate-y-3">
               <span aria-hidden="true" className="absolute -bottom-3 -left-3 h-[72%] w-[72%] border-b border-l border-warm/70" />
               <div className="relative overflow-hidden border border-border/70 bg-surface shadow-[0_24px_70px_rgba(0,0,0,0.28)]">
-                <img src="/about/lefi-shan-portrait.webp" alt="Portrait of Lefi (Kevin) Shan" width="1000" height="1000" className="aspect-[4/5] w-full object-cover object-center" />
+                <img src="/about/lefi-shan-portrait.webp" alt={text("Portrait of Kevin Shan", "单凯飞（Kevin Shan）肖像")} width="1000" height="1000" className="aspect-[4/5] w-full object-cover object-center" />
                 <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent" />
               </div>
               <figcaption className="mt-4 flex flex-col items-start gap-1 pl-1 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                <span>Lefi (Kevin) Shan</span>
-                <span className="font-mono text-[9px] uppercase tracking-[0.16em]">Los Angeles · California</span>
+                <span>{text("Kevin Shan", "单凯飞（Kevin Shan）")}</span>
+                <span className="font-mono text-[9px] uppercase tracking-[0.16em]">{text("Los Angeles · California", "美国 · 加利福尼亚州 · 洛杉矶")}</span>
               </figcaption>
             </figure>
           </div>
@@ -111,16 +137,16 @@ export function AboutPage() {
         <section className="route-reveal py-16 md:py-24" aria-labelledby="systems-title">
           <div className="grid gap-6 md:grid-cols-12">
             <div className="md:col-span-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Areas of practice</p>
-              <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">From design intent to <span className="text-accent">implementation.</span></h2>
-              <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">I tend to follow a problem wherever it leads, with combat and technical design as the through line.</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Areas of practice", "实践领域")}</p>
+              <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("From design intent to ", "从设计意图走向")}<span className="text-accent">{text("implementation.", "实际实现。")}</span></h2>
+              <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("I tend to follow a problem wherever it leads, with combat and technical design as the through line.", "我会沿着问题一路深入，而战斗与技术设计始终是贯穿其中的主线。")}</p>
             </div>
             <div className="route-reveal-list grid gap-px overflow-hidden rounded-lg border border-border bg-border md:col-span-8 sm:grid-cols-2">
               {systems.map((system) => (
                 <article key={system.number} className="group min-h-52 bg-surface p-6 transition-colors hover:bg-muted/55">
                   <div className="flex items-center justify-between"><span className="font-mono text-[9px] tracking-[0.18em] text-accent">SYS_{system.number}</span><span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-border transition-all group-hover:bg-accent group-hover:shadow-[0_0_12px_var(--color-accent)]" /></div>
-                  <h3 className="mt-9 font-display text-xl font-semibold">{system.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{system.description}</p>
+                  <h3 className="mt-9 font-display text-xl font-semibold">{isChinese ? system.titleZh : system.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{isChinese ? system.descriptionZh : system.description}</p>
                 </article>
               ))}
             </div>
@@ -129,25 +155,25 @@ export function AboutPage() {
 
         <section className="route-reveal grid gap-6 border-t border-border/60 py-16 md:grid-cols-12 md:py-24">
           <div className="md:col-span-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Capabilities</p>
-            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">A design focus with <span className="text-accent">production range.</span></h2>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">I came to design through 3D art and technical production. That background helps me think about the rigs, animation, shaders, assets, and performance costs surrounding a gameplay idea—not only the logic at its center.</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Capabilities", "能力范围")}</p>
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">{text("A design focus with ", "以设计为核心，兼具")}<span className="text-accent">{text("production range.", "制作广度。")}</span></h2>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("I came to design through 3D art and technical production. That background helps me think about the rigs, animation, shaders, assets, and performance costs around a gameplay idea, not only the logic at its center.", "我从 3D 美术与技术制作走向设计。这段背景让我不仅考虑玩法逻辑本身，也会同时思考围绕它的绑定、动画、着色器、资产与性能成本。")}</p>
           </div>
           <div className="route-reveal-list grid gap-4 md:col-span-8 sm:grid-cols-2">
             <article className="relative overflow-hidden rounded-lg border border-border bg-surface/55 p-6">
               <span aria-hidden="true" className="absolute -right-3 -top-7 font-display text-8xl font-bold text-foreground/[0.025]">D</span>
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">Disciplines</p>
+              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("Disciplines", "专业方向")}</p>
               <ul className="mt-6 space-y-4">
-                {["Combat design & 3Cs", "Technical animation", "Gameplay systems", "AI systems", "Level & world design"].map((item, index) => (
+                {(isChinese ? ["战斗设计与 3Cs", "技术动画", "玩法系统", "AI 系统", "关卡与世界设计"] : ["Combat design & 3Cs", "Technical animation", "Gameplay systems", "AI systems", "Level & world design"]).map((item, index) => (
                   <li key={item} className="flex items-center gap-3 text-sm"><span className="font-mono text-[9px] text-muted-foreground">0{index + 1}</span><span className="h-px w-5 bg-border" />{item}</li>
                 ))}
               </ul>
             </article>
             <article className="relative overflow-hidden rounded-lg border border-border bg-surface/55 p-6 sm:translate-y-8">
               <span aria-hidden="true" className="absolute -right-3 -top-7 font-display text-8xl font-bold text-foreground/[0.025]">T</span>
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">Toolkit</p>
+              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("Toolkit", "工具集")}</p>
               <ul className="mt-6 space-y-4">
-                {["Unreal Engine · Unity", "Blueprint · C++ · C#", "Gameplay AI · Behavior Trees · StateTrees", "Animation systems · UI · Realtime cinematics", "Maya · Substance · Git / Perforce · Python · SpeedTree / Gaea"].map((item, index) => (
+                {(isChinese ? ["Unreal Engine · Unity", "Blueprint · C++ · C#", "玩法 AI · Behavior Tree · StateTree", "动画系统 · UI · 实时过场", "Maya · Substance · Git / Perforce · Python · SpeedTree / Gaea"] : ["Unreal Engine · Unity", "Blueprint · C++ · C#", "Gameplay AI · Behavior Trees · StateTrees", "Animation systems · UI · Realtime cinematics", "Maya · Substance · Git / Perforce · Python · SpeedTree / Gaea"]).map((item, index) => (
                   <li key={item} className="flex items-center gap-3 text-sm"><span className="font-mono text-[9px] text-muted-foreground">0{index + 1}</span><span className="h-px w-5 bg-border" />{item}</li>
                 ))}
               </ul>
@@ -155,27 +181,52 @@ export function AboutPage() {
           </div>
         </section>
 
-        <section className="route-reveal mb-16 grid overflow-hidden rounded-lg border border-border md:grid-cols-[0.32fr_0.68fr]" aria-labelledby="education-title">
-          <div className="border-b border-border bg-surface/55 p-6 md:border-b-0 md:border-r md:p-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Foundation</p>
-            <h2 id="education-title" className="mt-3 font-display text-2xl font-semibold">Education</h2>
+        <section className="route-reveal border-t border-border/60 py-16 md:py-24" aria-labelledby="personal-title">
+          <div className="grid gap-8 md:grid-cols-12">
+            <div className="md:col-span-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Outside the editor", "编辑器之外")}</p>
+              <h2 id="personal-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("A little more ", "关于我的")}<span className="text-warm">{text("about me.", "一些其他事。")}</span></h2>
+              <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("I like technically solid work, but I do not want the result to feel sterile. I try to make sure the mechanics and presentation are working toward the same thing.", "我喜欢技术上扎实的作品，但不希望结果显得生硬。我会尽量让机制与表现朝着同一个方向配合。")}</p>
+            </div>
+            <div className="route-reveal-list grid gap-4 md:col-span-8">
+              {outsideEditor.map((item) => (
+                <article key={item.number} className="grid gap-3 rounded-lg border border-border bg-surface/45 p-5 sm:grid-cols-[auto_1fr] sm:gap-5 sm:p-6">
+                  <span className="font-mono text-[9px] tracking-[0.18em] text-warm">{item.number}</span>
+                  <div>
+                    <h3 className="font-display text-lg font-semibold">{isChinese ? item.titleZh : item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{isChinese ? item.descriptionZh : item.description}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
-          <div className="divide-y divide-border/60">
-            <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">MS, Game Design and Development</p><p className="mt-1 text-sm text-muted-foreground">USC School of Cinematic Arts</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">Expected 2028</p></div>
-            <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">BFA, Digital Production - Games</p><p className="mt-1 text-sm text-muted-foreground">Gnomon School of Visual Effects · Featured in Gnomon&apos;s student reel</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">2025</p></div>
+          <div className="mt-8 grid gap-4 rounded-lg border border-border/70 bg-background/45 p-6 md:grid-cols-[0.28fr_0.72fr] md:p-8">
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("A few influences", "一些影响")}</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">{text("Zenless Zone Zero is a reference for expressive animation, VFX, and graphic design. Fire Emblem keeps me thinking about tactical clarity and how interconnected systems create different kinds of decisions. Outside games, Monogatari and From the New World are two stories I return to for their structure, visual language, and character perspective.", "《绝区零》的动画、特效与平面设计一直给我很多启发。《火焰之纹章》则让我不断思考战术信息如何清晰呈现，以及互相关联的系统如何带来不同选择。游戏之外，《物语系列》和《来自新世界》是我会反复回看的作品，我很喜欢它们的结构、视觉语言和人物视角。")}</p>
           </div>
         </section>
 
-        <section className="route-reveal route-reveal-list mb-16 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2" aria-label="Languages and geographic availability">
+        <section className="route-reveal mb-16 grid overflow-hidden rounded-lg border border-border md:grid-cols-[0.32fr_0.68fr]" aria-labelledby="education-title">
+          <div className="border-b border-border bg-surface/55 p-6 md:border-b-0 md:border-r md:p-8">
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Foundation", "基础")}</p>
+            <h2 id="education-title" className="mt-3 font-display text-2xl font-semibold">{text("Education", "教育背景")}</h2>
+          </div>
+          <div className="divide-y divide-border/60">
+            <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">{text("MS, Game Design and Development", "游戏设计与开发 理学硕士")}</p><p className="mt-1 text-sm text-muted-foreground">{text("USC School of Cinematic Arts", "南加州大学电影艺术学院")}</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">{text("Expected 2028", "预计 2028 年毕业")}</p></div>
+            <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">{text("BFA, Digital Production - Games", "数字制作（游戏方向）艺术学士")}</p><p className="mt-1 text-sm text-muted-foreground">{text("Gnomon School of Visual Effects · Featured in Gnomon's student reel", "Gnomon School of Visual Effects · 作品入选 Gnomon 学生作品集锦")}</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">2025</p></div>
+          </div>
+        </section>
+
+        <section className="route-reveal route-reveal-list mb-16 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2" aria-label={text("Languages and geographic availability", "语言与地区可用性")}>
           <article className="bg-surface/55 p-6 md:p-8">
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">Languages</p>
-            <h2 className="mt-4 font-display text-xl font-semibold">English + Mandarin Chinese</h2>
-            <p className="mt-2 text-sm text-muted-foreground">Fluent</p>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("Languages", "语言")}</p>
+            <h2 className="mt-4 font-display text-xl font-semibold">{text("English + Mandarin Chinese", "英语 + 普通话")}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">{text("Fluent", "流利")}</p>
           </article>
           <article className="bg-surface/55 p-6 md:p-8">
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">Geographic availability</p>
-            <h2 className="mt-4 font-display text-xl font-semibold">Open to select global regions</h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">United States · Canada · Northern &amp; Western Europe · Japan · China</p>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("Geographic availability", "工作地区")}</p>
+            <h2 className="mt-4 font-display text-xl font-semibold">{text("Open to select global regions", "接受多个地区机会")}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text("United States · Canada · Northern & Western Europe · Japan · China", "美国 · 加拿大 · 北欧与西欧 · 日本 · 中国")}</p>
           </article>
         </section>
 
@@ -183,24 +234,24 @@ export function AboutPage() {
           <div aria-hidden="true" className="absolute right-0 top-0 h-40 w-40 bg-[radial-gradient(circle_at_center,var(--color-accent)_1px,transparent_1.5px)] opacity-20 [background-size:12px_12px] [mask-image:linear-gradient(135deg,black,transparent_75%)]" />
           <div className="relative grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Contact / Open channel</p>
-              <h2 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl">Let&apos;s make something <span className="text-accent">feel good</span> to play.</h2>
-              <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">If you&apos;re building an interesting combat system, gameplay prototype, or anything that needs a designer who can get under the hood, I&apos;d be glad to hear about it.</p>
-              <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />Focused on technical, combat, and gameplay design · open to adjacent opportunities</div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Contact / Open channel", "联系 / 开放沟通")}</p>
+              <h2 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl">{text("Let's make something ", "一起做出真正")}<span className="text-accent">{text("feel good", "好玩")}</span>{text(" to play.", "的东西。")}</h2>
+              <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">{text("If you're building an interesting combat system, gameplay prototype, or anything that needs a designer who can get under the hood, I'd be glad to hear about it.", "如果你正在制作有意思的战斗系统、玩法原型，或任何需要设计师深入实现层的问题，欢迎联系我。")}</p>
+              <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />{text("Focused on technical, combat, and gameplay design · open to adjacent opportunities", "重点方向：技术、战斗与玩法设计 · 也接受相关岗位机会")}</div>
               <a href="/resume/Leficious_Technical_Game_Designer_Resume.pdf" download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
-                Download technical design résumé <span aria-hidden="true">↓</span>
+                {text("Download technical design résumé", "下载技术设计简历")} <span aria-hidden="true">↓</span>
               </a>
             </div>
 
             <div className="route-reveal-list grid gap-3 sm:grid-cols-2">
               <button type="button" onClick={copyEmail} className="group flex min-h-32 flex-col justify-between rounded-lg border border-border bg-background/55 p-5 text-left transition-all hover:-translate-y-1 hover:border-accent hover:bg-background">
-                <div className="flex items-start justify-between text-muted-foreground transition-colors group-hover:text-accent"><ContactIcon name="email" /><span className="font-mono text-[9px] uppercase tracking-[0.16em]">{copied ? "Copied" : "Copy"}</span></div>
+                <div className="flex items-start justify-between text-muted-foreground transition-colors group-hover:text-accent"><ContactIcon name="email" /><span className="font-mono text-[9px] uppercase tracking-[0.16em]">{copied ? text("Copied", "已复制") : text("Copy", "复制")}</span></div>
                 <div><p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">Email</p><span ref={emailRef} className="mt-1 block font-mono text-xs sm:text-sm">leficious@gmail.com</span></div>
               </button>
               {contactLinks.map((link) => (
                 <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="group flex min-h-32 flex-col justify-between rounded-lg border border-border bg-background/55 p-5 transition-all hover:-translate-y-1 hover:border-accent hover:bg-background">
                   <div className="flex items-start justify-between text-muted-foreground transition-colors group-hover:text-accent"><ContactIcon name={link.icon} /><span aria-hidden="true" className="font-mono text-xs transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">↗</span></div>
-                  <div><p className="font-display text-lg font-semibold">{link.label}</p><p className="mt-1 text-xs text-muted-foreground">{link.detail}</p></div>
+                  <div><p className="font-display text-lg font-semibold">{link.label}</p><p className="mt-1 text-xs text-muted-foreground">{isChinese ? link.detailZh : link.detail}</p></div>
                 </a>
               ))}
             </div>

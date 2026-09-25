@@ -1,7 +1,9 @@
 import { useState } from "react";
 import type { CodeSnippet } from "../lib/projects";
+import { useLanguage } from "../lib/language";
 
 export function CodeBlock({ language, title, code }: CodeSnippet) {
+  const { text } = useLanguage();
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
@@ -18,7 +20,7 @@ export function CodeBlock({ language, title, code }: CodeSnippet) {
           {title && <span className="font-mono text-muted-foreground">{title}</span>}
         </div>
         <button type="button" onClick={copy} className="font-mono text-muted-foreground transition-colors hover:text-foreground">
-          {copied ? "copied" : "copy"}
+          {copied ? text("copied", "已复制") : text("copy", "复制")}
         </button>
       </div>
       <pre className="overflow-x-auto p-5 text-[0.85rem] leading-relaxed text-foreground"><code>{code}</code></pre>

@@ -4,6 +4,7 @@ import { AmbientBackdrop } from "./components/AmbientBackdrop";
 import { SignalAcquisition } from "./components/SignalAcquisition";
 import { SiteNav } from "./components/SiteNav";
 import { HomePage } from "./pages/HomePage";
+import { useLanguage } from "./lib/language";
 
 const AboutPage = lazy(() => import("./pages/AboutPage").then((module) => ({ default: module.AboutPage })));
 const GalleryPage = lazy(() => import("./pages/GalleryPage").then((module) => ({ default: module.GalleryPage })));
@@ -11,6 +12,7 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage").then((module) => 
 const ProjectPage = lazy(() => import("./pages/ProjectPage").then((module) => ({ default: module.ProjectPage })));
 
 export function App() {
+  const { text } = useLanguage();
   const { pathname, hash } = useLocation();
   const supportsViewTransitions = typeof document !== "undefined" && "startViewTransition" in document;
   const [signalActive, setSignalActive] = useState(() => {
@@ -69,7 +71,7 @@ export function App() {
       <div className="relative z-10">
         <SiteNav />
         <div key={pathname} className={`route-stage ${supportsViewTransitions ? "" : "route-stage-fallback"}`}>
-          <Suspense fallback={<div className="mx-auto min-h-[70vh] max-w-6xl px-6 py-24" aria-live="polite"><span className="sr-only">Loading page</span></div>}>
+          <Suspense fallback={<div className="mx-auto min-h-[70vh] max-w-6xl px-6 py-24" aria-live="polite"><span className="sr-only">{text("Loading page", "页面加载中")}</span></div>}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/gallery" element={<GalleryPage />} />
