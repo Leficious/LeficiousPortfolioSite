@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { flushSync } from "react-dom";
 
 /* eslint-disable react-refresh/only-export-components -- provider and hook form one small, shared language boundary. */
 
@@ -16,7 +17,7 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 const storageKey = "leficious-language";
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>(() => {
+  const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window === "undefined") return "en";
     try {
       return localStorage.getItem(storageKey) === "zh" ? "zh" : "en";
@@ -33,6 +34,35 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       // Storage can be unavailable in privacy-restricted contexts.
     }
   }, [language]);
+
+  const setLanguage = (nextLanguage: Language) => {
+    if (nextLanguage === language) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const transitionDocument = document as Document & {
+      startViewTransition?: (update: () => void) => { finished: Promise<void> };
+    };
+
+    if (reduceMotion) {
+      setLanguageState(nextLanguage);
+      return;
+    }
+
+    document.documentElement.classList.add("language-switching");
+
+    if (transitionDocument.startViewTransition) {
+      const transition = transitionDocument.startViewTransition(() => {
+        flushSync(() => setLanguageState(nextLanguage));
+      });
+      void transition.finished.finally(() => {
+        document.documentElement.classList.remove("language-switching");
+      });
+      return;
+    }
+
+    flushSync(() => setLanguageState(nextLanguage));
+    window.setTimeout(() => document.documentElement.classList.remove("language-switching"), 260);
+  };
 
   const value = useMemo<LanguageContextValue>(() => ({
     language,

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { type GalleryEntry, getYouTubeId } from "../lib/gallery";
 import { useLanguage } from "../lib/language";
 import { galleryTagZh } from "../lib/localizedContent";
+import { FormattedText } from "./FormattedText";
 import { SoftwareStack } from "./SoftwareStack";
 
 type GalleryLightboxProps = {
@@ -121,7 +122,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
               {entry.pinned && <><span aria-hidden="true">·</span><span className="text-accent">✦ {text("Pinned", "置顶")}</span></>}
             </div>
 
-            <p className="mt-5 text-[15px] leading-7 text-foreground/85">{entry.description}</p>
+            <p className="mt-5 text-[15px] leading-7 text-foreground/85"><FormattedText>{entry.description}</FormattedText></p>
 
             <div className="mt-6 border-t border-border/60 pt-5">
               <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">{text("Contribution", "个人贡献")}</p>

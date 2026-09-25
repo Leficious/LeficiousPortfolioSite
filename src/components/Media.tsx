@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { MediaItem } from "../lib/projects";
 import { useLanguage } from "../lib/language";
+import { FormattedText } from "./FormattedText";
 
 function ExpandIcon({ close = false }: { close?: boolean }) {
   if (close) {
@@ -116,7 +117,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
                 alt={item.alt}
                 className="mt-10 max-h-[calc(100vh-8rem)] max-w-full rounded-sm border border-border bg-black/20 object-contain shadow-2xl"
               />
-              {item.caption && <p className="max-w-4xl text-center text-sm text-muted-foreground">{item.caption}</p>}
+              {item.caption && <p className="max-w-4xl text-center text-sm text-muted-foreground"><FormattedText>{item.caption}</FormattedText></p>}
               <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground/70">{text("Click outside or press Esc to close", "点击外部或按 Esc 关闭")}</p>
             </div>
           </div>,
@@ -179,7 +180,7 @@ export function Media({ item }: { item: MediaItem }) {
           </div>
         )}
       </div>
-      {item.caption && <figcaption className="text-sm text-muted-foreground">{item.caption}</figcaption>}
+      {item.caption && <figcaption className="text-sm text-muted-foreground"><FormattedText>{item.caption}</FormattedText></figcaption>}
     </figure>
   );
 }

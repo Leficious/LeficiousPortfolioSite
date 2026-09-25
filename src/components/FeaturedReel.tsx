@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLanguage } from "../lib/language";
+import { FormattedText } from "./FormattedText";
 
 type FeaturedReelProps = {
   id: string;
@@ -70,8 +71,8 @@ export function FeaturedReel({ id, title, description, eyebrow, thumbnailSrc }: 
         <span aria-hidden="true" className="absolute right-5 top-1 font-display text-7xl font-semibold text-foreground/[0.035]">▶</span>
         <div className="relative">
           <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{eyebrow}</p>
-          <h3 className="mt-5 font-display text-2xl font-semibold leading-tight">{title}</h3>
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{description}</p>
+          <h3 className="mt-5 font-display text-2xl font-semibold leading-tight"><FormattedText>{title}</FormattedText></h3>
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground"><FormattedText>{description}</FormattedText></p>
         </div>
         <a
           href={`https://youtu.be/${id}`}

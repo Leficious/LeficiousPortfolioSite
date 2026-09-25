@@ -1,6 +1,7 @@
 import { useRef, useState, type ReactNode } from "react";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
+import { FormattedText } from "../components/FormattedText";
 import { useLanguage } from "../lib/language";
 
 type IconName = "email" | "linkedin" | "linktree" | "artstation";
@@ -73,8 +74,8 @@ const outsideEditor = [
     number: "03",
     title: "Stories and ideas",
     titleZh: "故事与思考",
-    description: "I spend a lot of time with games, anime, novels, history, and social analysis. I tend to like work that rewards close attention to structure, symbolism, and character perspective.",
-    descriptionZh: "我平时会花很多时间接触游戏、动画、小说、历史与社会分析。我尤其喜欢那些值得仔细观察结构、象征和人物视角的作品。",
+    description: "I like moving between technical and human questions: why a mechanic changes player behavior, how media shapes the communities around it, or why a story stays with someone. Games are part of that, but so are anime, novels, history, sociology, and the occasional political rabbit hole.",
+    descriptionZh: "我喜欢在技术问题和人的问题之间来回思考：一个机制为什么会改变玩家行为，媒介如何塑造围绕它形成的社群，或一个故事为什么会在人心里留下很久。游戏是其中一部分，动画、小说、历史、社会学，以及偶尔一路查下去的政治话题也是。",
   },
 ];
 
@@ -116,7 +117,7 @@ export function AboutPage() {
                 {text("Technical design, gameplay systems, ", "技术设计、玩法系统与")}<span className="text-accent">{text("3D production.", "3D 制作。")}</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                {text("I'm a Canadian technical game designer who likes figuring out how things work and then making them feel better to play. Combat is usually where I start, but I often end up in animation logic, tools, UI, or 3D production if that is what the project needs. I care about both the rules under the hood and what the player actually sees and feels.", "我是一名加拿大技术游戏设计师，喜欢先弄清楚一个东西如何运作，再让它玩起来更好。战斗通常是我的起点，但如果项目需要，我也会进入动画逻辑、工具、界面或 3D 制作。我既在意底层规则，也在意玩家真正看到和感受到的东西。")}
+                {text("I'm Kevin. I came to game design through 3D art, so I tend to think about both the player's experience and the work needed to build it. I usually start by asking how something should feel in the player's hands, then work backward into the logic, animation, tools, or assets needed to make it happen. Combat is my favorite part, but I like being able to follow a problem wherever it goes.", "我是 Kevin，最初从 3D 美术走进游戏设计，所以思考问题时，我常常会同时考虑玩家体验与实际制作。我通常先想清楚一个东西在玩家手中应该是什么感觉，再倒推需要怎样的逻辑、动画、工具或资产来实现。战斗是我最喜欢的部分，但我也喜欢顺着问题一直做下去。")}
               </p>
             </div>
 
@@ -202,7 +203,7 @@ export function AboutPage() {
           </div>
           <div className="mt-8 grid gap-4 rounded-lg border border-border/70 bg-background/45 p-6 md:grid-cols-[0.28fr_0.72fr] md:p-8">
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("A few influences", "一些影响")}</p>
-            <p className="text-sm leading-relaxed text-muted-foreground">{text("Zenless Zone Zero is a reference for expressive animation, VFX, and graphic design. Fire Emblem keeps me thinking about tactical clarity and how interconnected systems create different kinds of decisions. Outside games, Monogatari and From the New World are two stories I return to for their structure, visual language, and character perspective.", "《绝区零》的动画、特效与平面设计一直给我很多启发。《火焰之纹章》则让我不断思考战术信息如何清晰呈现，以及互相关联的系统如何带来不同选择。游戏之外，《物语系列》和《来自新世界》是我会反复回看的作品，我很喜欢它们的结构、视觉语言和人物视角。")}</p>
+            <p className="text-sm leading-relaxed text-muted-foreground"><FormattedText>{text("Zenless Zone Zero is one of my references for how animation, VFX, UI, and graphic design can all push the same attitude. Fire Emblem interests me for a different reason: class abilities, map geometry, turn order, and imperfect information can turn a compact ruleset into decisions that feel personal, especially in Fire Emblem Fates and Fire Emblem Engage. Monogatari Series keeps me coming back for its wordplay, nonlinear storytelling, and how Nadeko's story handles creativity and insecurity. Shin Sekai Yori stayed with me enough that I wrote a sociology paper about surveillance, social conditioning, and the systems holding its society together.", "《绝区零》让我看到动画、VFX、UI 与平面设计如何一起塑造同一种性格。《火焰之纹章》吸引我的则是另一面：职业技能、地图结构、行动顺序和不完整信息，如何从一套不算庞大的规则里产生非常个人化的选择，尤其是《火焰之纹章 if》和《火焰之纹章 Engage》。《物语系列》的文字游戏、非线性叙事，以及千石抚子故事中关于创作与自我怀疑的部分一直让我反复回看。《来自新世界》则让我专门写过一篇社会学论文，讨论监视、社会规训和维系其社会的制度。")}</FormattedText></p>
           </div>
         </section>
 
@@ -238,8 +239,8 @@ export function AboutPage() {
               <h2 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl">{text("Let's make something ", "一起做出真正")}<span className="text-accent">{text("feel good", "好玩")}</span>{text(" to play.", "的东西。")}</h2>
               <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">{text("If you're building an interesting combat system, gameplay prototype, or anything that needs a designer who can get under the hood, I'd be glad to hear about it.", "如果你正在制作有意思的战斗系统、玩法原型，或任何需要设计师深入实现层的问题，欢迎联系我。")}</p>
               <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />{text("Focused on technical, combat, and gameplay design · open to adjacent opportunities", "重点方向：技术、战斗与玩法设计 · 也接受相关岗位机会")}</div>
-              <a href="/resume/Leficious_Technical_Game_Designer_Resume.pdf" download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
-                {text("Download technical design résumé", "下载技术设计简历")} <span aria-hidden="true">↓</span>
+              <a href={isChinese ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"} download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
+                {text("Download technical design résumé", "下载中文游戏开发简历")} <span aria-hidden="true">↓</span>
               </a>
             </div>
 

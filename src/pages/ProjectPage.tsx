@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { CodeBlock } from "../components/CodeBlock";
+import { FormattedText } from "../components/FormattedText";
 import { Media } from "../components/Media";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
@@ -26,7 +27,7 @@ export function ProjectPage() {
       <article id="main-content" tabIndex={-1} className="mx-auto max-w-5xl px-6 py-16 md:py-24">
         <Link to="/" viewTransition className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-accent">← {text("All projects", "全部项目")}</Link>
         <header className="mt-8 grid gap-6 md:grid-cols-12">
-          <div className="md:col-span-8"><h1 className="font-display text-3xl font-semibold leading-tight md:text-5xl">{project.title}</h1><p className="mt-4 text-pretty text-lg text-muted-foreground">{project.summary}</p></div>
+          <div className="md:col-span-8"><h1 className="font-display text-3xl font-semibold leading-tight md:text-5xl">{project.title}</h1><p className="mt-4 text-pretty text-lg text-muted-foreground"><FormattedText>{project.summary}</FormattedText></p></div>
           <dl className="space-y-4 md:col-span-4 md:border-l md:border-border md:pl-6">
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Role", "职责")}</dt><dd className="text-sm">{project.role}</dd></div>
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Year", "年份")}</dt><dd className="text-sm">{project.year}</dd></div>
@@ -61,12 +62,12 @@ export function ProjectPage() {
         <section className="mt-16 grid gap-10 md:grid-cols-12">
           <div className="md:col-span-3"><h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">{text("Overview", "项目说明")}</h2></div>
           <div className="space-y-4 text-pretty leading-relaxed md:col-span-9">
-            <p>{project.overview}</p>
+            <p><FormattedText>{project.overview}</FormattedText></p>
             <ul className="mt-4 space-y-2 text-muted-foreground">{project.responsibilities.map((item) => <li key={item} className="flex gap-3"><span className="mt-2 inline-block h-1 w-3 shrink-0 bg-accent" /><span>{item}</span></li>)}</ul>
             {project.authorNote && (
               <aside className="mt-8 border-l-2 border-warm/70 bg-surface/45 px-5 py-4">
                 <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-warm">{text("Why I made this", "我为什么做这个项目")}</p>
-                <p className="mt-3 text-sm leading-relaxed text-foreground/90">{project.authorNote}</p>
+                <p className="mt-3 text-sm leading-relaxed text-foreground/90"><FormattedText>{project.authorNote}</FormattedText></p>
               </aside>
             )}
           </div>
@@ -81,7 +82,7 @@ export function ProjectPage() {
                 <h2 className="mt-3 font-display text-2xl font-semibold leading-tight">{section.title}</h2>
               </div>
               <div className="space-y-4 text-pretty leading-relaxed text-muted-foreground md:col-span-9">
-                {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                {section.body.map((paragraph) => <p key={paragraph}><FormattedText>{paragraph}</FormattedText></p>)}
               </div>
             </div>
             {section.media && section.media.length > 0 && (

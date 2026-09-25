@@ -15,12 +15,12 @@ export function SiteNav() {
       >
         {text("Skip to content", "跳至主要内容")}
       </a>
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link to="/" viewTransition className="site-mark-enter font-display text-lg font-semibold tracking-tight">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-3 py-3 sm:px-6 sm:py-4">
+        <Link to="/" viewTransition className="site-mark-enter font-display text-base font-semibold tracking-tight sm:text-lg">
           leficious<span className="site-mark-dot text-accent">.</span>
         </Link>
-        <div className="signal-nav-enter flex items-center gap-3 sm:gap-6">
-        <nav aria-label={text("Primary", "主导航")} className="flex items-center gap-3 text-xs text-muted-foreground sm:gap-6 sm:text-sm">
+        <div className="signal-nav-enter flex items-center gap-2 sm:gap-6">
+        <nav aria-label={text("Primary", "主导航")} className="flex items-center gap-2 text-[11px] text-muted-foreground sm:gap-6 sm:text-sm">
           <NavLink to="/" end viewTransition className={({ isActive }) => navClass(isActive)}>{text("Work", "作品")}</NavLink>
           <NavLink to="/gallery" viewTransition className={({ isActive }) => navClass(isActive)}>{text("Gallery", "画廊")}</NavLink>
           <NavLink to="/about" viewTransition className={({ isActive }) => navClass(isActive && hash !== "#contact")}>{text("About", "关于")}</NavLink>
@@ -33,16 +33,16 @@ export function SiteNav() {
           </Link>
         </nav>
         <div className="hidden h-4 w-px bg-border sm:block" aria-hidden="true" />
-        <div className="flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.12em]" aria-label={text("Choose language", "选择语言")}>
+        <div className="flex items-center rounded-full border border-border/80 bg-surface/65 p-0.5 text-[10px] font-semibold tracking-[0.04em] shadow-sm sm:text-[11px]" aria-label={text("Choose language", "选择语言")}>
           {(["en", "zh"] as Language[]).map((option, index) => (
-            <span key={option} className="flex items-center gap-1">
-              {index > 0 && <span aria-hidden="true" className="text-border">|</span>}
+            <span key={option} className="flex items-center">
+              {index > 0 && <span aria-hidden="true" className="h-4 w-px bg-border/80" />}
               <button
                 type="button"
                 onClick={() => setLanguage(option)}
                 aria-pressed={language === option}
                 lang={option === "zh" ? "zh-CN" : "en"}
-                className={`rounded px-1.5 py-1 transition-colors hover:text-foreground ${language === option ? "text-accent" : "text-muted-foreground"}`}
+                className={`min-w-8 rounded-full px-1.5 py-1.5 antialiased transition-colors hover:text-foreground sm:min-w-10 sm:px-2.5 ${language === option ? "bg-accent/12 text-accent" : "text-muted-foreground"}`}
               >
                 {option === "en" ? "EN" : "中文"}
               </button>

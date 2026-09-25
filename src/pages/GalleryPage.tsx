@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FeaturedReel } from "../components/FeaturedReel";
+import { FormattedText } from "../components/FormattedText";
 import { GalleryLightbox } from "../components/GalleryLightbox";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
@@ -137,7 +138,7 @@ export function GalleryPage() {
                           <h3 className={`font-display font-semibold transition-colors group-hover:text-accent ${layout.wide ? "text-xl lg:text-2xl" : "text-lg"}`}>{entry.title}</h3>
                           <span className="font-mono text-[10px] text-muted-foreground">{entry.year}</span>
                         </div>
-                        {layout.wide && <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{entry.description}</p>}
+                        {layout.wide && <p className="mt-4 text-sm leading-relaxed text-muted-foreground"><FormattedText>{entry.description}</FormattedText></p>}
                       </div>
                       <div>
                         <p className="mt-4 overflow-hidden border-t border-border/60 pt-3 text-xs leading-relaxed text-muted-foreground [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">{text("Contribution", "个人贡献")} · </span>{entry.contribution}</p>

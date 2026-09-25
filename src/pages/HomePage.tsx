@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FeaturedReel } from "../components/FeaturedReel";
+import { FormattedText } from "../components/FormattedText";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
 import { projects } from "../lib/projects";
@@ -24,16 +25,16 @@ export function HomePage() {
                 {text("Portfolio", "作品集")} · {new Date().getFullYear()}
               </div>
               <h1 className="mt-7 max-w-4xl font-display text-5xl font-semibold leading-[0.95] text-balance sm:text-6xl lg:text-7xl">
-                {text("Combat design and gameplay systems, from ", "战斗设计与玩法系统，从")}<span className="signal-headline-accent text-accent">{text("prototype to playtest.", "原型走向实机测试。")}</span>
+                {text("Combat, movement, and the systems that make them ", "战斗、移动，以及让它们真正")}<span className="signal-headline-accent text-accent">{text("click.", "好玩的系统。")}</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                {text("I like turning an idea into something I can put in a player's hands: a combat mechanic, an ability, an enemy, or a whole gameplay loop. I prototype early, play it often, and keep refining until the rules, animation, feedback, and dramatic intent all feel like parts of the same system.", "我喜欢把想法变成玩家真正能上手的东西：一套战斗机制、一个技能、一名敌人，或完整的玩法循环。我会尽早做原型、反复试玩，并持续调整，直到规则、动画、反馈与戏剧意图像同一个系统的不同部分一样彼此配合。")}
+                {text("I'm happiest when I can get an idea out of my head and into a playable build. I usually start with combat or movement, then work outward into animation, AI, UI, and whatever else the mechanic needs. I playtest early because I would rather find out what actually feels good than get attached to how something sounded on paper.", "我最喜欢的过程，是把脑中的想法尽快做成真正能玩的版本。我通常从战斗或移动开始，再根据需要做到动画、AI、界面，以及这个机制缺少的其他部分。我会很早开始试玩，因为比起一直相信纸面上的设想，我更想尽快知道什么东西玩起来真的好。")}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href="#selected-work" className="inline-flex items-center rounded-full border border-accent bg-accent px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-accent-foreground transition-colors hover:bg-accent/85">
                   {text("View case studies", "查看项目拆解")} ↓
                 </a>
-                <a href="/resume/Leficious_Technical_Game_Designer_Resume.pdf" download className="inline-flex items-center rounded-full border border-border bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:text-accent">
+                <a href={isChinese ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"} download className="inline-flex items-center rounded-full border border-border bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:text-accent">
                   {text("Download résumé", "下载简历")}
                 </a>
               </div>
@@ -114,7 +115,7 @@ export function HomePage() {
                         <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">{project.year}</span>
                       </div>
                       <h3 className="mt-6 font-display text-2xl font-semibold tracking-tight transition-colors group-hover:text-accent sm:text-3xl">{project.title}</h3>
-                      <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">{project.summary}</p>
+                      <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base"><FormattedText>{project.summary}</FormattedText></p>
                     </div>
                     <div className="mt-8 flex flex-wrap items-end justify-between gap-5 border-t border-border/60 pt-5">
                       <div>
