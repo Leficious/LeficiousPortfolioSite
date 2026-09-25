@@ -117,18 +117,18 @@ export function AboutPage() {
                 {text("Technical design, gameplay systems, ", "技术设计、玩法系统与")}<span className="text-accent">{text("3D production.", "3D 制作。")}</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                {text("I'm Kevin. I came to game design through 3D art, so I tend to think about both the player's experience and the work needed to build it. I usually start by asking how something should feel in the player's hands, then work backward into the logic, animation, tools, or assets needed to make it happen. Combat is my favorite part, but I like being able to follow a problem wherever it goes.", "我是 Kevin，最初从 3D 美术走进游戏设计，所以思考问题时，我常常会同时考虑玩家体验与实际制作。我通常先想清楚一个东西在玩家手中应该是什么感觉，再倒推需要怎样的逻辑、动画、工具或资产来实现。战斗是我最喜欢的部分，但我也喜欢顺着问题一直做下去。")}
+                {text("I'm Lefi. Kevin Shan is my legal name, but Lefi is the name I use for my work. I came to game design through 3D art, so I tend to think about both the player's experience and the work needed to build it. I usually start by asking how something should feel in the player's hands, then work backward into the logic, animation, tools, or assets needed to make it happen. Combat is my favorite part, but I like being able to follow a problem wherever it goes.", "我是 Kevin，最初从 3D 美术走进游戏设计，所以思考问题时，我常常会同时考虑玩家体验与实际制作。我通常先想清楚一个东西在玩家手中应该是什么感觉，再倒推需要怎样的逻辑、动画、工具或资产来实现。战斗是我最喜欢的部分，但我也喜欢顺着问题一直做下去。")}
               </p>
             </div>
 
             <figure className="relative mx-auto w-full max-w-[390px] lg:translate-y-3">
               <span aria-hidden="true" className="absolute -bottom-3 -left-3 h-[72%] w-[72%] border-b border-l border-warm/70" />
               <div className="relative overflow-hidden border border-border/70 bg-surface shadow-[0_24px_70px_rgba(0,0,0,0.28)]">
-                <img src="/about/lefi-shan-portrait.webp" alt={text("Portrait of Kevin Shan", "单凯飞（Kevin Shan）肖像")} width="1000" height="1000" className="aspect-[4/5] w-full object-cover object-center" />
+                <img src="/about/lefi-shan-portrait.webp" alt={text("Portrait of Lefi Shan", "单凯飞（Kevin Shan）肖像")} width="1000" height="1000" className="aspect-[4/5] w-full object-cover object-center" />
                 <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent" />
               </div>
               <figcaption className="mt-4 flex flex-col items-start gap-1 pl-1 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                <span>{text("Kevin Shan", "单凯飞（Kevin Shan）")}</span>
+                <span>{text("Lefi Shan (legal name Kevin Shan)", "单凯飞（Kevin Shan）")}</span>
                 <span className="font-mono text-[9px] uppercase tracking-[0.16em]">{text("Los Angeles · California", "美国 · 加利福尼亚州 · 洛杉矶")}</span>
               </figcaption>
             </figure>
