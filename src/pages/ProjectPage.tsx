@@ -48,13 +48,13 @@ export function ProjectPage() {
             ].map(([label, value], briefIndex) => (
               <div key={label} className="border-b border-border/60 p-5 last:border-b-0 md:border-b-0 md:border-r md:p-6 md:last:border-r-0">
                 <dt className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground"><span className="text-accent">0{briefIndex + 1}</span>{label}</dt>
-                <dd className="mt-4 text-sm leading-relaxed text-foreground/90">{value}</dd>
+                <dd className={`mt-4 text-sm leading-relaxed text-foreground/90 ${isChinese ? "zh-readable" : ""}`}>{value}</dd>
               </div>
             ))}
           </dl>
           <div className="border-t border-border/60 px-5 py-5 sm:px-6">
             <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">{text("Delivered", "交付成果")}</p>
-            <ul className="mt-3 grid gap-3 text-sm text-muted-foreground md:grid-cols-2">
+            <ul className={`mt-3 grid gap-3 text-sm text-muted-foreground md:grid-cols-2 ${isChinese ? "zh-readable" : ""}`}>
               {project.outcomes.map((outcome) => <li key={outcome} className="flex gap-3"><span className="mt-2 h-1 w-3 shrink-0 bg-accent" /><span>{outcome}</span></li>)}
             </ul>
           </div>
@@ -67,7 +67,7 @@ export function ProjectPage() {
             {project.authorNote && (
               <aside className="mt-8 border-l-2 border-warm/70 bg-surface/45 px-5 py-4">
                 <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-warm">{text("Why I made this", "我为什么做这个项目")}</p>
-                <p className="mt-3 text-sm leading-relaxed text-foreground/90"><FormattedText>{project.authorNote}</FormattedText></p>
+                <p className={`mt-3 text-sm leading-relaxed text-foreground/90 ${isChinese ? "zh-readable" : ""}`}><FormattedText>{project.authorNote}</FormattedText></p>
               </aside>
             )}
           </div>

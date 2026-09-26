@@ -302,7 +302,7 @@ export const galleryEntries: GalleryEntry[] = [
     tags: ["3D", "Character"],
     cover: "https://i.ytimg.com/vi/R-CV2KwTSoo/maxresdefault.jpg",
     coverAlt: "Abigail Williams character sculpt",
-    aspect: "portrait",
+    aspect: "landscape",
     media: [
       { type: "youtube", url: "https://youtube.com/shorts/R-CV2KwTSoo", title: "Abigail Williams ZBrush sculpt" },
     ],

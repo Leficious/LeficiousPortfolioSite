@@ -20,7 +20,7 @@ function PlayIcon() {
 
 export function FeaturedReel({ id, title, description, eyebrow, thumbnailSrc }: FeaturedReelProps) {
   const [active, setActive] = useState(false);
-  const { text } = useLanguage();
+  const { isChinese, text } = useLanguage();
 
   return (
     <article className="group grid overflow-hidden rounded-xl border border-border bg-surface/45 shadow-[0_24px_80px_rgba(0,0,0,0.14)] lg:grid-cols-[minmax(0,1.55fr)_minmax(260px,0.45fr)]">
@@ -72,7 +72,7 @@ export function FeaturedReel({ id, title, description, eyebrow, thumbnailSrc }: 
         <div className="relative">
           <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{eyebrow}</p>
           <h3 className="mt-5 font-display text-2xl font-semibold leading-tight"><FormattedText>{title}</FormattedText></h3>
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground"><FormattedText>{description}</FormattedText></p>
+          <p className={`mt-4 text-sm leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}><FormattedText>{description}</FormattedText></p>
         </div>
         <a
           href={`https://youtu.be/${id}`}

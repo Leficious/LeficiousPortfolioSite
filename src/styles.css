@@ -636,53 +636,13 @@ html.language-switching::view-transition-new(ambient-system) {
   }
 }
 
-/* Chinese copy needs a little more physical size and less tracking than the
-   Latin typography. Keep this scoped to /zh so the English layout is unchanged. */
+/* Use native CJK rendering for Chinese prose. Size increases are opt-in so
+   logos, metadata, tags, software names, and other display UI stay unchanged. */
 html[lang="zh-CN"] body {
   font-family: "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", system-ui, sans-serif;
 }
 
-html[lang="zh-CN"] .font-display {
-  font-family: "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", system-ui, sans-serif;
-}
-
-html[lang="zh-CN"] .font-mono {
-  font-family: "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", ui-monospace, monospace;
-  letter-spacing: 0.08em;
-}
-
-html[lang="zh-CN"] .text-\[8px\] {
-  font-size: 0.6875rem;
-}
-
-html[lang="zh-CN"] .text-\[9px\] {
-  font-size: 0.75rem;
-}
-
-html[lang="zh-CN"] .text-\[10px\] {
-  font-size: 0.8125rem;
-}
-
-html[lang="zh-CN"] .text-xs {
-  font-size: 0.875rem;
-  line-height: 1.6;
-}
-
-html[lang="zh-CN"] .text-sm {
+html[lang="zh-CN"] .zh-readable {
   font-size: 1rem;
-  line-height: 1.8;
-}
-
-html[lang="zh-CN"] .text-base {
-  font-size: 1.0625rem;
-  line-height: 1.8;
-}
-
-html[lang="zh-CN"] .text-lg {
-  font-size: 1.1875rem;
-  line-height: 1.75;
-}
-
-html[lang="zh-CN"] .leading-relaxed {
   line-height: 1.85;
 }

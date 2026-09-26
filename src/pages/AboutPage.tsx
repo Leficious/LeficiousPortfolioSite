@@ -143,14 +143,14 @@ export function AboutPage() {
             <div className="md:col-span-4">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Areas of practice", "实践领域")}</p>
               <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("From design intent to ", "从设计想法到")}<span className="text-accent">{text("implementation.", "实际落地。")}</span></h2>
-              <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My main interests are combat, gameplay systems, and technical animation. I work on both the design of these systems and their implementation.", "我主要关注战斗、玩法系统与技术动画，既参与设计，也负责把它们做进游戏里。")}</p>
+              <p className="zh-readable mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My main interests are combat, gameplay systems, and technical animation. I work on both the design of these systems and their implementation.", "我主要关注战斗、玩法系统与技术动画，既参与设计，也负责把它们做进游戏里。")}</p>
             </div>
             <div className="route-reveal-list grid gap-px overflow-hidden rounded-lg border border-border bg-border md:col-span-8 sm:grid-cols-2">
               {systems.map((system) => (
                 <article key={system.number} className="group min-h-52 bg-surface p-6 transition-colors hover:bg-muted/55">
                   <div className="flex items-center justify-between"><span className="font-mono text-[9px] tracking-[0.18em] text-accent">SYS_{system.number}</span><span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-border transition-all group-hover:bg-accent group-hover:shadow-[0_0_12px_var(--color-accent)]" /></div>
                   <h3 className="mt-9 font-display text-xl font-semibold">{isChinese ? system.titleZh : system.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{isChinese ? system.descriptionZh : system.description}</p>
+                  <p className="zh-readable mt-3 text-sm leading-relaxed text-muted-foreground">{isChinese ? system.descriptionZh : system.description}</p>
                 </article>
               ))}
             </div>
@@ -161,7 +161,7 @@ export function AboutPage() {
           <div className="md:col-span-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Capabilities", "能力范围")}</p>
             <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">{text("A design focus with ", "以设计为主，")}<span className="text-accent">{text("production range.", "也能动手制作。")}</span></h2>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My 3D production background lets me work directly with rigs, animation, shaders, and assets. It also means I account for performance and production constraints early, while an idea is still easy to change.", "我的 3D 制作背景让我能直接处理绑定、动画、着色器与美术资源，也会在方案还容易调整时，尽早考虑性能和制作成本。")}</p>
+            <p className="zh-readable mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My 3D production background lets me work directly with rigs, animation, shaders, and assets. It also means I account for performance and production constraints early, while an idea is still easy to change.", "我的 3D 制作背景让我能直接处理绑定、动画、着色器与美术资源，也会在方案还容易调整时，尽早考虑性能和制作成本。")}</p>
           </div>
           <div className="route-reveal-list grid gap-4 md:col-span-8 sm:grid-cols-2">
             <article className="relative overflow-hidden rounded-lg border border-border bg-surface/55 p-6">
@@ -190,7 +190,7 @@ export function AboutPage() {
             <div className="md:col-span-4">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Outside the editor", "编辑器之外")}</p>
               <h2 id="personal-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("A little more ", "工作之外的")}<span className="text-warm">{text("about me.", "一些事。")}</span></h2>
-              <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("I like technically solid work, but I do not want the result to feel sterile. I try to make sure the mechanics and presentation are working toward the same thing.", "我喜欢技术上扎实的作品，但不希望结果显得生硬。我会尽量让机制与表现朝着同一个方向配合。")}</p>
+              <p className="zh-readable mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("I like technically solid work, but I do not want the result to feel sterile. I try to make sure the mechanics and presentation are working toward the same thing.", "我喜欢技术上扎实的作品，但不希望结果显得生硬。我会尽量让机制与表现朝着同一个方向配合。")}</p>
             </div>
             <div className="route-reveal-list grid gap-4 md:col-span-8">
               {outsideEditor.map((item) => (
@@ -198,7 +198,7 @@ export function AboutPage() {
                   <span className="font-mono text-[9px] tracking-[0.18em] text-warm">{item.number}</span>
                   <div>
                     <h3 className="font-display text-lg font-semibold">{isChinese ? item.titleZh : item.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{isChinese ? item.descriptionZh : item.description}</p>
+                    <p className="zh-readable mt-2 text-sm leading-relaxed text-muted-foreground">{isChinese ? item.descriptionZh : item.description}</p>
                   </div>
                 </article>
               ))}
@@ -206,7 +206,7 @@ export function AboutPage() {
           </div>
           <div className="mt-8 grid gap-4 rounded-lg border border-border/70 bg-background/45 p-6 md:grid-cols-[0.28fr_0.72fr] md:p-8">
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("A few influences", "一些影响")}</p>
-            <p className="text-sm leading-relaxed text-muted-foreground"><FormattedText>{text("Zenless Zone Zero is one of my references for how animation, VFX, UI, and graphic design can all push the same attitude. Fire Emblem interests me for a different reason: class abilities, map geometry, turn order, and imperfect information can turn a compact ruleset into decisions that feel personal, especially in Fire Emblem Fates and Fire Emblem Engage. Monogatari Series keeps me coming back for its wordplay, nonlinear storytelling, and how Nadeko's story handles creativity and insecurity. Shin Sekai Yori stayed with me enough that I wrote a sociology paper about surveillance, social conditioning, and the systems holding its society together.", "《绝区零》让我看到动画、VFX、UI 与平面设计如何一起塑造同一种性格。《火焰之纹章》吸引我的则是另一面：职业技能、地图结构、行动顺序和不完整信息，如何从一套不算庞大的规则里产生非常个人化的选择，尤其是《火焰之纹章 if》和《火焰之纹章 Engage》。《物语系列》的文字游戏、非线性叙事，以及千石抚子故事中关于创作与自我怀疑的部分一直让我反复回看。《来自新世界》则让我专门写过一篇社会学论文，讨论监视、社会规训和维系其社会的制度。")}</FormattedText></p>
+            <p className="zh-readable text-sm leading-relaxed text-muted-foreground"><FormattedText>{text("Zenless Zone Zero is one of my references for how animation, VFX, UI, and graphic design can all push the same attitude. Fire Emblem interests me for a different reason: class abilities, map geometry, turn order, and imperfect information can turn a compact ruleset into decisions that feel personal, especially in Fire Emblem Fates and Fire Emblem Engage. Monogatari Series keeps me coming back for its wordplay, nonlinear storytelling, and how Nadeko's story handles creativity and insecurity. Shin Sekai Yori stayed with me enough that I wrote a sociology paper about surveillance, social conditioning, and the systems holding its society together.", "《绝区零》让我看到动画、VFX、UI 与平面设计如何一起塑造同一种性格。《火焰之纹章》吸引我的则是另一面：职业技能、地图结构、行动顺序和不完整信息，如何从一套不算庞大的规则里产生非常个人化的选择，尤其是《火焰之纹章 if》和《火焰之纹章 Engage》。《物语系列》的文字游戏、非线性叙事，以及千石抚子故事中关于创作与自我怀疑的部分一直让我反复回看。《来自新世界》则让我专门写过一篇社会学论文，讨论监视、社会规训和维系其社会的制度。")}</FormattedText></p>
           </div>
         </section>
 
@@ -240,7 +240,7 @@ export function AboutPage() {
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Contact / Open channel", "联系我 / 合作机会")}</p>
               <h2 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl">{text("Let's make something ", "一起做出真正")}<span className="text-accent">{text("feel good", "好玩")}</span>{text(" to play.", "的东西。")}</h2>
-              <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">{text("If you're building an interesting combat system, gameplay prototype, or anything that needs a designer who can get under the hood, I'd be glad to hear about it.", "如果你正在制作有意思的战斗系统或玩法原型，需要一位愿意亲自参与实现的设计师，欢迎联系我。")}</p>
+              <p className="zh-readable mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">{text("If you're building an interesting combat system, gameplay prototype, or anything that needs a designer who can get under the hood, I'd be glad to hear about it.", "如果你正在制作有意思的战斗系统或玩法原型，需要一位愿意亲自参与实现的设计师，欢迎联系我。")}</p>
               <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />{text("Focused on technical, combat, and gameplay design · open to adjacent opportunities", "重点方向：技术、战斗与玩法设计 · 也接受相关岗位机会")}</div>
               <a href={isChinese ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"} download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
                 {text("Download technical design résumé", "下载中文游戏开发简历")} <span aria-hidden="true">↓</span>

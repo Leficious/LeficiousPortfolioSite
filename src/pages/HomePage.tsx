@@ -93,7 +93,7 @@ export function HomePage() {
             <div className="md:col-span-8">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Selected work", "精选项目")}</p>
               <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl">{text("Systems and designs built for ", "从原型到")}<span className="text-accent">{text("iteration.", "反复打磨。")}</span></h2>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{text("A closer look at how I approached combat, gameplay AI, modular systems, and the production work needed to make them real.", "这里记录了我如何设计战斗、玩法 AI 与模块化系统，以及如何把这些想法真正做进可玩的项目里。")}</p>
+              <p className="zh-readable mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{text("A closer look at how I approached combat, gameplay AI, modular systems, and the production work needed to make them real.", "这里记录了我如何设计战斗、玩法 AI 与模块化系统，以及如何把这些想法真正做进可玩的项目里。")}</p>
             </div>
             <div className="md:col-span-4 md:text-right">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{String(localizedProjects.length).padStart(2, "0")} {text("case studies", "个项目拆解")}</p>
