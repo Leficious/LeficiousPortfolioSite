@@ -34,9 +34,8 @@ export function SiteNav() {
         </nav>
         <div className="hidden h-4 w-px bg-border sm:block" aria-hidden="true" />
         <div className="flex items-center rounded-full border border-border/80 bg-surface/65 p-0.5 text-[10px] font-semibold tracking-[0.04em] shadow-sm sm:text-[11px]" aria-label={text("Choose language", "选择语言")}>
-          {(["en", "zh"] as Language[]).map((option, index) => (
+          {(["en", "zh"] as Language[]).map((option) => (
             <span key={option} className="flex items-center">
-              {index > 0 && <span aria-hidden="true" className="h-4 w-px bg-border/80" />}
               <button
                 type="button"
                 onClick={() => setLanguage(option)}

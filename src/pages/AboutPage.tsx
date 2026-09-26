@@ -9,9 +9,12 @@ type IconName = "email" | "linkedin" | "linktree" | "artstation";
 function ContactIcon({ name }: { name: IconName }) {
   if (name === "email") {
     return (
-      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6 fill-none stroke-current stroke-[1.5]" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="5" width="18" height="14" rx="2" />
-        <path d="m4 7 8 6 8-6" />
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6">
+        <path fill="#4285F4" d="M1.636 20.182h3.819v-9.273L0 6.818v11.728c0 .903.733 1.636 1.636 1.636Z" />
+        <path fill="#34A853" d="M18.545 20.182h3.819c.903 0 1.636-.733 1.636-1.636V6.818l-5.455 4.091v9.273Z" />
+        <path fill="#EA4335" d="M18.545 3.818v7.091L24 6.818V4.636c0-2.023-2.31-3.178-3.927-1.964l-1.528 1.146Z" />
+        <path fill="#FBBC04" d="M0 4.636v2.182l5.455 4.091V3.818L3.927 2.672C2.31 1.459 0 2.613 0 4.636Z" />
+        <path fill="#C5221F" d="M5.455 10.909V3.818L12 8.727l6.545-4.909v7.091L12 15.818l-6.545-4.909Z" />
       </svg>
     );
   }
@@ -117,7 +120,7 @@ export function AboutPage() {
                 {text("Technical design, gameplay systems, ", "技术设计、玩法系统与")}<span className="text-accent">{text("3D production.", "3D 制作。")}</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                {text("I'm Lefi. Kevin Shan is my legal name, but Lefi is the name I use for my work. I came to game design through 3D art, so I tend to think about both the player's experience and the work needed to build it. I usually start by asking how something should feel in the player's hands, then work backward into the logic, animation, tools, or assets needed to make it happen. Combat is my favorite part, but I like being able to follow a problem wherever it goes.", "我是 Kevin，最初从 3D 美术走进游戏设计，所以思考问题时，我常常会同时考虑玩家体验与实际制作。我通常先想清楚一个东西在玩家手中应该是什么感觉，再倒推需要怎样的逻辑、动画、工具或资产来实现。战斗是我最喜欢的部分，但我也喜欢顺着问题一直做下去。")}
+                {text("I came to game design through 3D art, so I tend to think about both the player's experience and the work needed to build it. I usually start by asking how something should feel from the player's point of view, then work backward into the logic, animation, tools, or assets needed to make it happen. Combat is my favorite part, but I like being able to follow a problem wherever it goes.", "我是 Kevin，最初从 3D 美术走进游戏设计，所以思考问题时，我常常会同时考虑玩家体验与实际制作。我通常先想清楚一个东西在玩家手中应该是什么感觉，再倒推需要怎样的逻辑、动画、工具或资产来实现。战斗是我最喜欢的部分，但我也喜欢顺着问题一直做下去。")}
               </p>
             </div>
 
