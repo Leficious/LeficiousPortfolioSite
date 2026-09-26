@@ -1,5 +1,6 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, type ReactNode } from "react";
 import { flushSync } from "react-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 /* eslint-disable react-refresh/only-export-components -- provider and hook form one small, shared language boundary. */
 
@@ -10,33 +11,39 @@ type LanguageContextValue = {
   setLanguage: (language: Language) => void;
   isChinese: boolean;
   text: (english: string, chinese: string) => string;
+  localizedPath: (path: string) => string;
 };
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-const storageKey = "leficious-language";
-
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(() => {
-    if (typeof window === "undefined") return "en";
-    try {
-      return localStorage.getItem(storageKey) === "zh" ? "zh" : "en";
-    } catch {
-      return "en";
-    }
-  });
+  const location = useLocation();
+  const navigate = useNavigate();
+  const language: Language = location.pathname === "/zh" || location.pathname.startsWith("/zh/") ? "zh" : "en";
 
   useEffect(() => {
     document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
-    try {
-      localStorage.setItem(storageKey, language);
-    } catch {
-      // Storage can be unavailable in privacy-restricted contexts.
-    }
   }, [language]);
 
-  const setLanguage = (nextLanguage: Language) => {
+  const localizedPath = useCallback((path: string) => {
+    if (!path.startsWith("/") || path.startsWith("/zh")) return path;
+    if (language === "en") return path;
+    return path === "/" ? "/zh" : `/zh${path}`;
+  }, [language]);
+
+  const setLanguage = useCallback((nextLanguage: Language) => {
     if (nextLanguage === language) return;
+
+    const basePath = language === "zh"
+      ? location.pathname.replace(/^\/zh(?=\/|$)/, "") || "/"
+      : location.pathname;
+    const nextPath = nextLanguage === "zh"
+      ? basePath === "/" ? "/zh" : `/zh${basePath}`
+      : basePath;
+    const updateRoute = () => navigate(
+      { pathname: nextPath, search: location.search, hash: location.hash },
+      { replace: true },
+    );
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const transitionDocument = document as Document & {
@@ -44,7 +51,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     };
 
     if (reduceMotion) {
-      setLanguageState(nextLanguage);
+      updateRoute();
       return;
     }
 
@@ -52,7 +59,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
     if (transitionDocument.startViewTransition) {
       const transition = transitionDocument.startViewTransition(() => {
-        flushSync(() => setLanguageState(nextLanguage));
+        flushSync(updateRoute);
       });
       void transition.finished.finally(() => {
         document.documentElement.classList.remove("language-switching");
@@ -60,16 +67,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    flushSync(() => setLanguageState(nextLanguage));
+    flushSync(updateRoute);
     window.setTimeout(() => document.documentElement.classList.remove("language-switching"), 260);
-  };
+  }, [language, location.hash, location.pathname, location.search, navigate]);
 
   const value = useMemo<LanguageContextValue>(() => ({
     language,
     setLanguage,
     isChinese: language === "zh",
     text: (english, chinese) => language === "zh" ? chinese : english,
-  }), [language]);
+    localizedPath,
+  }), [language, localizedPath, setLanguage]);
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }

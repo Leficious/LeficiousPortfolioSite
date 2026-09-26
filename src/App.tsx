@@ -15,8 +15,9 @@ export function App() {
   const { text } = useLanguage();
   const { pathname, hash } = useLocation();
   const supportsViewTransitions = typeof document !== "undefined" && "startViewTransition" in document;
+  const isHome = pathname === "/" || pathname === "/zh";
   const [signalActive, setSignalActive] = useState(() => {
-    if (typeof window === "undefined" || pathname !== "/") return false;
+    if (typeof window === "undefined" || !isHome) return false;
 
     try {
       return (
@@ -44,8 +45,8 @@ export function App() {
   }, [signalActive]);
 
   useEffect(() => {
-    if (pathname !== "/") setSuppressInitialRouteReveal(false);
-  }, [pathname]);
+    if (!isHome) setSuppressInitialRouteReveal(false);
+  }, [isHome]);
 
   useLayoutEffect(() => {
     const previous = previousLocation.current;
@@ -65,7 +66,7 @@ export function App() {
   }, [pathname, hash]);
 
   return (
-    <div className={`relative min-h-screen ${signalActive ? "signal-intro-running" : ""} ${suppressInitialRouteReveal && pathname === "/" ? "suppress-initial-route-reveal" : ""}`}>
+    <div className={`relative min-h-screen ${signalActive ? "signal-intro-running" : ""} ${suppressInitialRouteReveal && isHome ? "suppress-initial-route-reveal" : ""}`}>
       <AmbientBackdrop />
       <SignalAcquisition active={signalActive} />
       <div className="relative z-10">
@@ -77,6 +78,10 @@ export function App() {
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/projects/:slug" element={<ProjectPage />} />
+              <Route path="/zh" element={<HomePage />} />
+              <Route path="/zh/gallery" element={<GalleryPage />} />
+              <Route path="/zh/about" element={<AboutPage />} />
+              <Route path="/zh/projects/:slug" element={<ProjectPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>

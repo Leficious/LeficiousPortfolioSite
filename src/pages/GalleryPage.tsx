@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FeaturedReel } from "../components/FeaturedReel";
 import { FormattedText } from "../components/FormattedText";
@@ -31,10 +31,11 @@ function getCardLayout(index: number) {
 }
 
 export function GalleryPage() {
-  const { isChinese, text } = useLanguage();
+  const { isChinese, text, localizedPath } = useLanguage();
   const [activeTag, setActiveTag] = useState<GalleryTag | "All">("All");
   const [searchParams, setSearchParams] = useSearchParams();
   const [slide, setSlide] = useState(0);
+  const triggerRef = useRef<HTMLElement | null>(null);
   const selectedSource = galleryEntries.find((entry) => entry.id === searchParams.get("entry")) ?? null;
   const selected = selectedSource ? localizeGalleryEntry(selectedSource, isChinese) : null;
 
@@ -47,16 +48,20 @@ export function GalleryPage() {
   );
 
   const openEntry = useCallback((entry: GalleryEntry) => {
+    triggerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setSlide(0);
     setSearchParams({ entry: entry.id }, { replace: true });
   }, [setSearchParams]);
 
-  const closeEntry = useCallback(() => setSearchParams({}, { replace: true }), [setSearchParams]);
+  const closeEntry = useCallback(() => {
+    setSearchParams({}, { replace: true });
+    window.requestAnimationFrame(() => triggerRef.current?.focus());
+  }, [setSearchParams]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title={text("Gallery — Leficious", "作品画廊 — Leficious")} description={text("A gallery of technical design, 3D, 2D, environment, character, animation, and technical art work by Leficious.", "Leficious 的技术设计、3D、2D、环境、角色、动画与技术美术作品画廊。")} path="/gallery" image="/gallery/thumbnails/water-blossoms.webp" imageWidth={1000} imageHeight={563} />
-      <div aria-hidden={selected ? "true" : undefined}>
+      <Seo title={text("Gallery — Leficious", "作品画廊 — Leficious")} description={text("A gallery of technical design, 3D, 2D, environment, character, animation, and technical art work by Leficious.", "Leficious 的技术设计、3D、2D、环境、角色、动画与技术美术作品画廊。")} path={localizedPath("/gallery")} image="/gallery/thumbnails/water-blossoms.webp" imageWidth={1000} imageHeight={563} />
+      <div aria-hidden={selected ? "true" : undefined} inert={selected ? true : undefined}>
         <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6">
           <section className="route-reveal grid gap-10 border-b border-border/60 py-16 md:grid-cols-12 md:py-24">
             <div className="md:col-span-3">
@@ -123,7 +128,7 @@ export function GalleryPage() {
                     key={entry.id}
                     type="button"
                     onClick={() => openEntry(entry)}
-                    className={`group w-full overflow-hidden rounded-lg border border-border bg-surface text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/70 hover:shadow-[0_18px_60px_rgba(0,0,0,0.2)] ${layout.card}`}
+                    className={`gallery-card group w-full overflow-hidden rounded-lg border border-border bg-surface text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/70 hover:shadow-[0_18px_60px_rgba(0,0,0,0.2)] ${layout.card}`}
                     aria-label={`${text("Open", "打开")} ${entry.title}，${entry.media.length} ${text(entry.media.length === 1 ? "item" : "items", "项内容")}`}
                   >
                     <div className={`relative overflow-hidden bg-muted ${mediaAspect}`}>

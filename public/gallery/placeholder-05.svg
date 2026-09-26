@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
-  <rect width="1000" height="1000" fill="#131a22"/>
-  <g fill="none" stroke="#6b9bac" stroke-width="3" opacity=".9"><path d="M140 500c120-260 240-260 360 0s240 260 360 0"/><path d="M140 610c120-260 240-260 360 0s240 260 360 0" opacity=".45"/><circle cx="260" cy="368" r="62"/><circle cx="500" cy="500" r="62"/><circle cx="740" cy="632" r="62"/></g>
-  <path d="M120 830h760" stroke="#bf8468" stroke-width="5"/>
-  <g fill="#dce5ec" font-family="monospace" font-size="18" opacity=".6"><text x="120" y="875">FRAME 001</text><text x="760" y="875">24 FPS</text></g>
-</svg>

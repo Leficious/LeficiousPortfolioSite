@@ -510,7 +510,6 @@ export const galleryEntries: GalleryEntry[] = [
     cover: "/gallery/thumbnails/misty-night.webp",
     coverAlt: "Antique vehicle in a misty night scene",
     aspect: "landscape",
-    pinned: true,
     media: [
       { type: "image", src: "/gallery/artstation/misty-night/final.jpg", alt: "Antique vehicle in a misty night scene" },
       { type: "image", src: "/gallery/artstation/misty-night/viewport.webp", alt: "Antique vehicle viewport breakdown" },

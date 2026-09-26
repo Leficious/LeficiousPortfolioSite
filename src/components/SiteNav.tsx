@@ -3,7 +3,7 @@ import { useLanguage, type Language } from "../lib/language";
 
 export function SiteNav() {
   const { pathname, hash } = useLocation();
-  const { language, setLanguage, text } = useLanguage();
+  const { language, setLanguage, text, localizedPath } = useLanguage();
   const navClass = (isActive: boolean) =>
     `transition-colors hover:text-foreground ${isActive ? "text-foreground" : ""}`;
 
@@ -15,25 +15,24 @@ export function SiteNav() {
       >
         {text("Skip to content", "跳至主要内容")}
       </a>
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-3 py-3 sm:px-6 sm:py-4">
-        <Link to="/" viewTransition className="site-mark-enter font-display text-base font-semibold tracking-tight sm:text-lg">
+      <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto] items-center gap-x-3 gap-y-2 px-3 py-3 sm:grid-cols-[auto_1fr_auto_auto] sm:gap-x-6 sm:px-6 sm:py-4">
+        <Link to={localizedPath("/")} viewTransition className="site-mark-enter font-display text-base font-semibold tracking-tight sm:text-lg">
           leficious<span className="site-mark-dot text-accent">.</span>
         </Link>
-        <div className="signal-nav-enter flex items-center gap-2 sm:gap-6">
-        <nav aria-label={text("Primary", "主导航")} className="flex items-center gap-2 text-[11px] text-muted-foreground sm:gap-6 sm:text-sm">
-          <NavLink to="/" end viewTransition className={({ isActive }) => navClass(isActive)}>{text("Work", "作品")}</NavLink>
-          <NavLink to="/gallery" viewTransition className={({ isActive }) => navClass(isActive)}>{text("Gallery", "画廊")}</NavLink>
-          <NavLink to="/about" viewTransition className={({ isActive }) => navClass(isActive && hash !== "#contact")}>{text("About", "关于")}</NavLink>
+        <nav aria-label={text("Primary", "主导航")} className="signal-nav-enter col-span-2 row-start-2 flex min-w-0 items-center justify-between gap-3 text-[11px] text-muted-foreground sm:col-span-1 sm:col-start-2 sm:row-start-1 sm:justify-self-end sm:gap-6 sm:text-sm">
+          <NavLink to={localizedPath("/")} end viewTransition className={({ isActive }) => navClass(isActive)}>{text("Work", "作品")}</NavLink>
+          <NavLink to={localizedPath("/gallery")} viewTransition className={({ isActive }) => navClass(isActive)}>{text("Gallery", "画廊")}</NavLink>
+          <NavLink to={localizedPath("/about")} viewTransition className={({ isActive }) => navClass(isActive && hash !== "#contact")}>{text("About", "关于")}</NavLink>
           <Link
-            to="/about#contact"
-            className={navClass(pathname === "/about" && hash === "#contact")}
+            to={`${localizedPath("/about")}#contact`}
+            className={navClass((pathname === "/about" || pathname === "/zh/about") && hash === "#contact")}
             onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" })}
           >
             {text("Contact", "联系")}
           </Link>
         </nav>
-        <div className="hidden h-4 w-px bg-border sm:block" aria-hidden="true" />
-        <div className="flex items-center rounded-full border border-border/80 bg-surface/65 p-0.5 text-[10px] font-semibold tracking-[0.04em] shadow-sm sm:text-[11px]" aria-label={text("Choose language", "选择语言")}>
+        <div className="hidden h-4 w-px bg-border sm:col-start-3 sm:row-start-1 sm:block" aria-hidden="true" />
+        <div className="signal-nav-enter col-start-2 row-start-1 flex items-center rounded-full border border-border/80 bg-surface/65 p-0.5 text-[10px] font-semibold tracking-[0.04em] shadow-sm sm:col-start-4 sm:row-start-1 sm:text-[11px]" aria-label={text("Choose language", "选择语言")}>
           {(["en", "zh"] as Language[]).map((option) => (
             <span key={option} className="flex items-center">
               <button
@@ -47,7 +46,6 @@ export function SiteNav() {
               </button>
             </span>
           ))}
-        </div>
         </div>
       </div>
     </header>

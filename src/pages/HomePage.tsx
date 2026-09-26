@@ -8,11 +8,11 @@ import { useLanguage } from "../lib/language";
 import { localizeProject } from "../lib/localizedContent";
 
 export function HomePage() {
-  const { isChinese, text } = useLanguage();
+  const { isChinese, text, localizedPath } = useLanguage();
   const localizedProjects = projects.map((project) => localizeProject(project, isChinese));
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title={text("Leficious — Technical & Combat Design Portfolio", "Leficious — 技术与战斗设计作品集")} description={text("Selected work by Leficious across combat design, gameplay systems, technical animation, AI, and 3D production for games.", "Leficious 的精选作品，涵盖战斗设计、玩法系统、技术动画、AI 与游戏 3D 制作。")} />
+      <Seo title={text("Leficious — Technical & Combat Design Portfolio", "Leficious — 技术与战斗设计作品集")} description={text("Selected work by Leficious across combat design, gameplay systems, technical animation, AI, and 3D production for games.", "Leficious 的精选作品，涵盖战斗设计、玩法系统、技术动画、AI 与游戏 3D 制作。")} path={localizedPath("/")} />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="route-reveal relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="work-grid-enter absolute inset-0 -z-10 opacity-30 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_88%)]" />
@@ -102,9 +102,9 @@ export function HomePage() {
           <ul className="route-reveal-list space-y-5">
             {localizedProjects.map((project, index) => (
               <li key={project.slug}>
-                <Link to={`/projects/${project.slug}`} viewTransition className="group grid overflow-hidden rounded-lg border border-border bg-surface/45 transition-all hover:-translate-y-0.5 hover:border-accent/70 hover:bg-surface md:grid-cols-[0.42fr_0.58fr]">
+                <Link to={localizedPath(`/projects/${project.slug}`)} viewTransition className="group grid overflow-hidden rounded-lg border border-border bg-surface/45 transition-all hover:-translate-y-0.5 hover:border-accent/70 hover:bg-surface md:grid-cols-[0.42fr_0.58fr]">
                   <div className="relative min-h-56 overflow-hidden bg-muted md:min-h-72">
-                    <img src={project.cover} alt="" width="800" height="500" loading={index < 2 ? "eager" : "lazy"} decoding="async" className="h-full w-full object-cover opacity-75 grayscale-[25%] transition duration-500 group-hover:scale-[1.025] group-hover:opacity-90 group-hover:grayscale-0" />
+                    <img src={project.cover} alt="" width="800" height="500" loading="lazy" decoding="async" className="h-full w-full object-cover opacity-75 grayscale-[25%] transition duration-500 group-hover:scale-[1.025] group-hover:opacity-90 group-hover:grayscale-0" />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-background/45" />
                     <span className="absolute left-4 top-4 rounded-full border border-foreground/20 bg-background/70 px-2.5 py-1 font-mono text-[9px] tracking-[0.16em] backdrop-blur-sm">{String(index + 1).padStart(2, "0")}</span>
                   </div>

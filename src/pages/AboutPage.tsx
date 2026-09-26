@@ -4,7 +4,7 @@ import { SiteFooter } from "../components/SiteNav";
 import { FormattedText } from "../components/FormattedText";
 import { useLanguage } from "../lib/language";
 
-type IconName = "email" | "linkedin" | "linktree" | "artstation";
+type IconName = "email" | "linkedin" | "linktree" | "github";
 
 function ContactIcon({ name }: { name: IconName }) {
   if (name === "email") {
@@ -30,10 +30,10 @@ function ContactIcon({ name }: { name: IconName }) {
       color: "text-[#43E55E]",
       path: <path d="m13.736 5.853 4.005-4.117 2.325 2.381-4.201 4.004h5.909v3.305h-5.937l4.229 4.108-2.325 2.334L12 12.099l-5.74 5.769-2.325-2.325 4.229-4.108H2.226V8.121h5.909L3.934 4.117l2.325-2.381 4.005 4.117V0h3.472v5.853Zm-3.472 10.306h3.472V24h-3.472v-7.841Z" />,
     },
-    artstation: {
+    github: {
       viewBox: "0 0 24 24",
-      color: "text-[#13AFF0]",
-      path: <path d="m0 17.723 2.027 3.505h.001a2.424 2.424 0 0 0 2.164 1.333h13.457l-2.792-4.838H0Zm24 .025c0-.484-.143-.935-.388-1.314L15.728 2.728a2.424 2.424 0 0 0-2.142-1.289H9.419L21.598 22.54l1.92-3.325c.378-.637.482-.919.482-1.467Zm-11.129-3.462L7.428 4.858l-5.444 9.428h10.887Z" />,
+      color: "text-foreground",
+      path: <path d="M12 .7a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2.02c-3.22.7-3.9-1.37-3.9-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.72 1.27 3.38.97.11-.75.41-1.27.74-1.56-2.57-.3-5.27-1.29-5.27-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.16 1.18a10.9 10.9 0 0 1 5.76 0c2.19-1.49 3.16-1.18 3.16-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.4-2.71 5.38-5.29 5.67.42.36.79 1.06.79 2.14v3.06c0 .31.21.67.79.56A11.5 11.5 0 0 0 12 .7Z" />,
     },
   };
   const brand = brands[name];
@@ -55,7 +55,7 @@ const systems = [
 const contactLinks: { label: string; detail: string; detailZh: string; href: string; icon: IconName }[] = [
   { label: "LinkedIn", detail: "Connect professionally", detailZh: "职业联系", href: "https://www.linkedin.com/in/leficious/", icon: "linkedin" },
   { label: "Linktree", detail: "Everything in one place", detailZh: "所有链接汇总", href: "https://linktr.ee/leficious", icon: "linktree" },
-  { label: "ArtStation", detail: "More visual work", detailZh: "更多视觉作品", href: "https://www.artstation.com/leficious", icon: "artstation" },
+  { label: "GitHub", detail: "Tools and code", detailZh: "工具与代码", href: "https://github.com/Leficious", icon: "github" },
 ];
 
 const outsideEditor = [
@@ -83,7 +83,7 @@ const outsideEditor = [
 ];
 
 export function AboutPage() {
-  const { isChinese, text } = useLanguage();
+  const { isChinese, text, localizedPath } = useLanguage();
   const [copied, setCopied] = useState(false);
   const emailRef = useRef<HTMLSpanElement>(null);
 
@@ -104,7 +104,7 @@ export function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title={text("About & Contact — Leficious", "关于与联系 — Leficious")} description={text("About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production.", "关于 Leficious：专注战斗设计与玩法系统的技术游戏设计师，具备 AI、动画、技术美术与 3D 制作经验。")} path="/about" />
+      <Seo title={text("About & Contact — Leficious", "关于与联系 — Leficious")} description={text("About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production.", "关于 Leficious：专注战斗设计与玩法系统的技术游戏设计师，具备 AI、动画、技术美术与 3D 制作经验。")} path={localizedPath("/about")} />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="route-reveal relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-35 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
@@ -120,7 +120,7 @@ export function AboutPage() {
                 {text("Technical design, gameplay systems, ", "技术设计、玩法系统与")}<span className="text-accent">{text("3D production.", "3D 制作。")}</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                {text("I like working where controls, animation, and game rules meet. Most of my prototypes begin with a simple question: what should the player be deciding, and what should those decisions feel like? Combat is where I enjoy answering that question most.", "我喜欢研究操控、动画与游戏规则相互交汇的部分。我的原型通常从一个简单的问题开始：玩家需要做出什么决定，而这些决定应该带来怎样的感受？战斗设计是我最喜欢探索这个问题的领域。")}
+                {text("I started out in 3D art. Over time I became more interested in what players could do with the things I was building, so I moved into game design. Combat ended up being the part I enjoyed most. Technical design also lets me stay involved in how the work is built, which suits me.", "我最初从事 3D 美术。随着时间推移，我越来越关注玩家能用我制作的内容做些什么，于是逐渐转向了游戏设计。战斗最终成了我最喜欢的部分，而技术设计也让我能够继续参与作品的实际制作，这很适合我。")}
               </p>
             </div>
 
@@ -225,7 +225,7 @@ export function AboutPage() {
           <article className="bg-surface/55 p-6 md:p-8">
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("Languages", "语言")}</p>
             <h2 className="mt-4 font-display text-xl font-semibold">{text("English + Mandarin Chinese", "英语 + 普通话")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">{text("Fluent", "流利")}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{text("English fluent · Mandarin fluent spoken, limited professional reading and writing", "英语流利 · 普通话口语流利，专业读写能力有限")}</p>
           </article>
           <article className="bg-surface/55 p-6 md:p-8">
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("Geographic availability", "工作地区")}</p>

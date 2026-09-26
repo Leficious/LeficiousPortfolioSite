@@ -288,7 +288,7 @@ export const projects: Project[] = [
     slug: "sacred-forest",
     title: "Sacred Forest",
     role: "Environment / Technical Artist",
-    year: "2025",
+    year: "2026",
     summary:
       "A stylized forest shrine developed end to end through modeling, procedural materials, foliage, lighting, effects, and engine assembly.",
     tags: ["Unreal Engine", "Environment Art", "Substance", "Maya / Python"],

@@ -15,7 +15,7 @@ type GalleryLightboxProps = {
 };
 
 export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: GalleryLightboxProps) {
-  const { isChinese, text } = useLanguage();
+  const { isChinese, text, localizedPath } = useLanguage();
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const pointerStart = useRef<number | null>(null);
@@ -142,7 +142,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
 
             {entry.projectUrl && (
               <Link
-                to={entry.projectUrl}
+                to={localizedPath(entry.projectUrl)}
                 viewTransition
                 onClick={onClose}
                 className="mt-6 inline-flex items-center gap-2 rounded-full border border-accent/60 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground"

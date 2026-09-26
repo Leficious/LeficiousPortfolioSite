@@ -9,7 +9,7 @@ type SeoProps = {
   imageHeight?: number;
 };
 
-const defaultImage = "/social/leficious-site-preview.png";
+const defaultImage = "/social/leficious-og-1200x630.png";
 
 const setMeta = (selector: string, attribute: "name" | "property", value: string, content: string) => {
   let element = document.head.querySelector<HTMLMetaElement>(selector);
@@ -23,6 +23,7 @@ const setMeta = (selector: string, attribute: "name" | "property", value: string
 
 const buildStructuredData = (title: string, description: string, path: string, image: string) => {
   const url = new URL(path, "https://leficious.com").toString();
+  const contentPath = path.replace(/^\/zh(?=\/|$)/, "") || "/";
   const person = {
     "@type": "Person",
     "@id": "https://leficious.com/#person",
@@ -33,11 +34,11 @@ const buildStructuredData = (title: string, description: string, path: string, i
     sameAs: ["https://www.linkedin.com/in/leficious/", "https://github.com/Leficious"],
   };
 
-  if (path.startsWith("/projects/")) {
+  if (contentPath.startsWith("/projects/")) {
     return { "@context": "https://schema.org", "@graph": [person, { "@type": "CreativeWork", name: title.replace(" — Leficious", ""), description, url, image, creator: { "@id": person["@id"] } }] };
   }
 
-  if (path === "/gallery") {
+  if (contentPath === "/gallery") {
     return { "@context": "https://schema.org", "@graph": [person, { "@type": "CollectionPage", name: title, description, url, image, author: { "@id": person["@id"] } }] };
   }
 
@@ -45,12 +46,12 @@ const buildStructuredData = (title: string, description: string, path: string, i
     "@context": "https://schema.org",
     "@graph": [
       person,
-      { "@type": path === "/about" ? "ProfilePage" : "WebSite", "@id": `${url}#page`, name: title, description, url, image, author: { "@id": person["@id"] } },
+      { "@type": contentPath === "/about" ? "ProfilePage" : "WebSite", "@id": `${url}#page`, name: title, description, url, image, author: { "@id": person["@id"] } },
     ],
   };
 };
 
-export function Seo({ title, description, path = "/", image, imageWidth = 1584, imageHeight = 396 }: SeoProps) {
+export function Seo({ title, description, path = "/", image, imageWidth = 1200, imageHeight = 630 }: SeoProps) {
   useEffect(() => {
     const url = new URL(path, "https://leficious.com").toString();
     const resolvedImage = new URL(image ?? defaultImage, "https://leficious.com").toString();
@@ -59,6 +60,7 @@ export function Seo({ title, description, path = "/", image, imageWidth = 1584, 
     setMeta('meta[property="og:title"]', "property", "og:title", title);
     setMeta('meta[property="og:description"]', "property", "og:description", description);
     setMeta('meta[property="og:url"]', "property", "og:url", url);
+    setMeta('meta[property="og:locale"]', "property", "og:locale", path === "/zh" || path.startsWith("/zh/") ? "zh_CN" : "en_US");
     setMeta('meta[name="twitter:title"]', "name", "twitter:title", title);
     setMeta('meta[name="twitter:description"]', "name", "twitter:description", description);
     setMeta('meta[property="og:image"]', "property", "og:image", resolvedImage);
@@ -75,6 +77,24 @@ export function Seo({ title, description, path = "/", image, imageWidth = 1584, 
       document.head.appendChild(canonical);
     }
     canonical.href = url;
+
+    const englishPath = path.replace(/^\/zh(?=\/|$)/, "") || "/";
+    const chinesePath = englishPath === "/" ? "/zh" : `/zh${englishPath}`;
+    const alternates = [
+      ["en", englishPath],
+      ["zh-CN", chinesePath],
+      ["x-default", englishPath],
+    ] as const;
+    alternates.forEach(([hreflang, alternatePath]) => {
+      let alternate = document.head.querySelector<HTMLLinkElement>(`link[rel="alternate"][hreflang="${hreflang}"]`);
+      if (!alternate) {
+        alternate = document.createElement("link");
+        alternate.rel = "alternate";
+        alternate.hreflang = hreflang;
+        document.head.appendChild(alternate);
+      }
+      alternate.href = new URL(alternatePath, "https://leficious.com").toString();
+    });
 
     let structuredData = document.head.querySelector<HTMLScriptElement>('script[data-portfolio-structured-data]');
     if (!structuredData) {

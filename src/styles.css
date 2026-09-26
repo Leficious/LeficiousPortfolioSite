@@ -426,6 +426,13 @@
   mix-blend-mode: normal;
 }
 
+@supports (content-visibility: auto) {
+  .gallery-card {
+    content-visibility: auto;
+    contain-intrinsic-size: 520px;
+  }
+}
+
 html.language-switching::view-transition-group(route-content),
 html.language-switching::view-transition-group(site-header) {
   animation-duration: 260ms;
