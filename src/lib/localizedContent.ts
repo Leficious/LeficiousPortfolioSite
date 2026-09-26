@@ -9,7 +9,7 @@ type ProjectTranslation = Pick<Project, "title" | "role" | "summary" | "designGo
 const projectTranslations: Record<string, ProjectTranslation> = {
   starshore: {
     title: "星岸",
-    role: "独立技术游戏设计师",
+    role: "独立技术设计师",
     summary: "一个历时 15 周的玩法原型，将角色移动、技能、自动索敌、背包、商店与数据驱动拾取物整合为完整可玩循环。",
     designGoal: "围绕移动、战斗、物品与商人构建完整可玩循环，而不是把每套系统拆成彼此孤立的测试。",
     ownership: "独立负责技术游戏设计、玩法实现、关卡设计、UI、动画整合与场景搭建。",
@@ -19,7 +19,7 @@ const projectTranslations: Record<string, ProjectTranslation> = {
       "搭建可复用的拾取物与商人流程，无需为每件物品制作一次性 Actor 或手工界面。",
     ],
     overview: "《星岸》是一个历时 15 周的个人项目，用来探索少量相互连接的玩法系统如何支撑完整循环。我负责玩法逻辑、角色与动画蓝图、关卡设计、场景搭建、界面和系统整合。项目使用第三方角色与环境资产，让制作重点保持在设计和实现上。",
-    authorNote: "《星岸》最初是我想弄明白为什么某些动漫风格动作 RPG 玩起来如此流畅。我不想只做一个角色控制器演示，于是继续做了索敌、技能、物品、商店，以及让整个玩法循环真正成立的各种小系统。",
+    authorNote: "《星岸》最初来自一个很直接的念头：为什么有些动漫风动作 RPG 操作起来特别顺？我不想只做一段角色控制器演示，于是继续加入索敌、技能、物品、商店，以及让整个玩法循环真正成立的各种小系统。",
     responsibilities: [
       "搭建角色移动、技能、索敌、背包、商店与战利品系统。",
       "连接玩法状态、动画行为、UI 与可复用物品数据。",
@@ -66,7 +66,7 @@ const projectTranslations: Record<string, ProjectTranslation> = {
     ownership: "环境制作与技术美术：建模、雕刻、纹理、植被、灯光、VFX、着色器整合及 Python 工具。",
     scope: "基于 En Moroldo 原创概念完成的个人环境项目。",
     outcomes: ["从主视觉神社和程序化材质，到植被、氛围与最终搭建，独立完成整个场景。", "自动化球面顶点法线传递，使风格化植被资产保持一致而柔和的受光。"],
-    overview: "《圣域森林》旨在让单个资产到最终场景保持统一视觉语言。我负责建模、雕刻、纹理、灯光、视觉特效、植被和引擎搭建，使用 Maya、ZBrush、Substance Painter、Substance Designer、Photoshop 与 Unreal Engine 构成紧凑制作流程。",
+    overview: "《圣域森林》的目标，是让单个资产与最终场景保持统一的视觉语言。我负责建模、雕刻、纹理、灯光、视觉特效、植被和引擎搭建，并使用 Maya、ZBrush、Substance Painter、Substance Designer、Photoshop 与 Unreal Engine 完成整套制作流程。",
     authorNote: "在转向技术设计之前，我的大部分训练都在 3D 美术。《圣域森林》最能体现这段背景。我从主神社开始向外搭建整个场景，并在植被流程变得重复时写了一个工具来处理它。",
     responsibilities: ["为场景主视觉神社完成建模、雕刻、烘焙与纹理。", "制作程序化及手绘材质、模块化植被、灯光和氛围效果。", "开发 Maya Python 工具，自动化风格化植被的顶点法线传递。"],
     mediaCaptions: ["《圣域森林》环境完整展示。"],

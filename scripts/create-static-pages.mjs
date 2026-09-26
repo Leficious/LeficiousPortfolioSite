@@ -59,8 +59,8 @@ const routes = [
   },
   {
     path: "/zh",
-    title: "Leficious — 技术与战斗设计作品集",
-    description: "Leficious 的精选作品，涵盖战斗设计、玩法系统、技术动画、AI 与游戏 3D 制作。",
+    title: "Leficious — 技术设计与战斗设计作品集",
+    description: "Leficious 的个人作品集，涵盖战斗设计、玩法系统、技术动画、游戏 AI 与 3D 制作。",
     image: "/social/leficious-og-1200x630.png",
     imageWidth: 1200,
     imageHeight: 630,
@@ -69,8 +69,8 @@ const routes = [
   },
   {
     path: "/zh/gallery",
-    title: "作品画廊 — Leficious",
-    description: "Leficious 的技术设计、3D、2D、环境、角色、动画与技术美术作品画廊。",
+    title: "作品集锦 — Leficious",
+    description: "收录 Leficious 的技术设计、3D、2D、环境、角色、动画与技术美术作品。",
     image: "/gallery/thumbnails/water-blossoms.webp",
     imageWidth: 1000,
     imageHeight: 563,
@@ -80,7 +80,7 @@ const routes = [
   {
     path: "/zh/about",
     title: "关于与联系 — Leficious",
-    description: "关于 Leficious：专注战斗设计与玩法系统的技术游戏设计师，具备 AI、动画、技术美术与 3D 制作经验。",
+    description: "Leficious 是一名专注战斗设计与玩法系统的技术设计师，具备游戏 AI、技术动画、技术美术与 3D 制作经验。",
     image: "/social/leficious-og-1200x630.png",
     imageWidth: 1200,
     imageHeight: 630,

@@ -46,10 +46,10 @@ function ContactIcon({ name }: { name: IconName }) {
 }
 
 const systems = [
-  { number: "01", title: "Combat Design", titleZh: "战斗设计", description: "I shape player actions, enemies, controls, feedback, and encounter pacing around how the fight should feel.", descriptionZh: "我围绕战斗应有的体验，设计玩家动作、敌人、操控、反馈与遭遇节奏。" },
-  { number: "02", title: "Gameplay Systems", titleZh: "玩法系统", description: "I build rules that are easy to read, quick to tune, and sturdy enough to grow as the game changes.", descriptionZh: "我构建易于理解、便于调整，并能随项目变化继续扩展的玩法规则。" },
+  { number: "01", title: "Combat Design", titleZh: "战斗设计", description: "I shape player actions, enemies, controls, feedback, and encounter pacing around how the fight should feel.", descriptionZh: "我会从整体手感出发，设计玩家动作、敌人行为、操作反馈与战斗节奏。" },
+  { number: "02", title: "Gameplay Systems", titleZh: "玩法系统", description: "I build rules that are easy to read, quick to tune, and sturdy enough to grow as the game changes.", descriptionZh: "我希望规则清楚、方便调试，也能随着项目需求继续扩展。" },
   { number: "03", title: "Technical Animation", titleZh: "技术动画", description: "I connect animation to gameplay through state logic, Control Rig, and responsive runtime systems.", descriptionZh: "我通过状态逻辑、Control Rig 与响应式运行时系统，将动画连接到玩法。" },
-  { number: "04", title: "Technical Production", titleZh: "技术制作", description: "I'm comfortable crossing into 3D production, procedural workflows, and art implementation when a system needs it.", descriptionZh: "当系统需要时，我也能进入 3D 制作、程序化工作流与美术落地环节。" },
+  { number: "04", title: "Technical Production", titleZh: "技术制作", description: "I'm comfortable crossing into 3D production, procedural workflows, and art implementation when a system needs it.", descriptionZh: "项目需要时，我也可以直接处理 3D 制作、程序化流程与美术资源落地。" },
 ];
 
 const contactLinks: { label: string; detail: string; detailZh: string; href: string; icon: IconName }[] = [
@@ -78,7 +78,7 @@ const outsideEditor = [
     title: "Stories and ideas",
     titleZh: "故事与思考",
     description: "I like moving between technical and human questions: why a mechanic changes player behavior, how media shapes the communities around it, or why a story stays with someone. Games are part of that, but so are anime, novels, history, sociology, and the occasional political rabbit hole.",
-    descriptionZh: "我喜欢在技术问题和人的问题之间来回思考：一个机制为什么会改变玩家行为，媒介如何塑造围绕它形成的社群，或一个故事为什么会在人心里留下很久。游戏是其中一部分，动画、小说、历史、社会学，以及偶尔一路查下去的政治话题也是。",
+    descriptionZh: "我常会琢磨游戏机制为什么会改变玩家行为，作品怎样影响围绕它形成的社群，又是什么让一个故事久久留在人的记忆里。除了游戏，我也会看动画、读小说、历史与社会学相关内容，偶尔顺着一个政治话题查很久。",
   },
 ];
 
@@ -104,27 +104,27 @@ export function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title={text("About & Contact — Leficious", "关于与联系 — Leficious")} description={text("About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production.", "关于 Leficious：专注战斗设计与玩法系统的技术游戏设计师，具备 AI、动画、技术美术与 3D 制作经验。")} path={localizedPath("/about")} />
+      <Seo title={text("About & Contact — Leficious", "关于与联系 — Leficious")} description={text("About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production.", "Leficious 是一名专注战斗设计与玩法系统的技术设计师，具备游戏 AI、技术动画、技术美术与 3D 制作经验。")} path={localizedPath("/about")} />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="route-reveal relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-35 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
           <div aria-hidden="true" className="absolute -right-28 -top-32 -z-10 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
 
-          <div className="grid items-center gap-14 lg:grid-cols-[1.2fr_0.8fr]">
-            <div>
+          <div className="grid min-w-0 grid-cols-1 items-center gap-14 lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="min-w-0">
               <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
                 <span className="h-px w-8 bg-warm" />
-                {text("Technical / Game designer", "技术 / 游戏设计师")}
+                {text("Technical / Game designer", "技术设计 / 游戏设计")}
               </div>
-              <h1 className="mt-7 max-w-3xl font-display text-5xl font-semibold leading-[0.95] text-balance sm:text-6xl lg:text-7xl">
+              <h1 className="mt-7 max-w-3xl break-words font-display text-5xl font-semibold leading-[0.95] text-balance sm:text-6xl lg:text-7xl">
                 {text("Technical design, gameplay systems, ", "技术设计、玩法系统与")}<span className="text-accent">{text("3D production.", "3D 制作。")}</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                {text("I started out in 3D art. Over time I became more interested in what players could do with the things I was building, so I moved into game design. Combat ended up being the part I enjoyed most. Technical design also lets me stay involved in how the work is built, which suits me.", "我最初从事 3D 美术。随着时间推移，我越来越关注玩家能用我制作的内容做些什么，于是逐渐转向了游戏设计。战斗最终成了我最喜欢的部分，而技术设计也让我能够继续参与作品的实际制作，这很适合我。")}
+                {text("I started out in 3D art. Over time I became more interested in what players could do with the things I was building, so I moved into game design. Combat ended up being the part I enjoyed most. Technical design also lets me stay involved in how the work is built, which suits me.", "我是从 3D 美术进入游戏开发的。后来，我越来越关心玩家能用这些内容做什么，也因此逐渐转向游戏设计。战斗设计是我最投入的方向；技术设计则让我仍能参与实际实现，这种工作方式很适合我。")}
               </p>
             </div>
 
-            <figure className="relative mx-auto w-full max-w-[390px] lg:translate-y-3">
+            <figure className="relative mx-auto min-w-0 w-full max-w-full sm:max-w-[390px] lg:translate-y-3">
               <span aria-hidden="true" className="absolute -bottom-3 -left-3 h-[72%] w-[72%] border-b border-l border-warm/70" />
               <div className="relative overflow-hidden border border-border/70 bg-surface shadow-[0_24px_70px_rgba(0,0,0,0.28)]">
                 <img src="/about/lefi-shan-portrait.webp" alt={text("Portrait of Lefi Shan", "单凯飞（Kevin Shan）肖像")} width="1000" height="1000" className="aspect-[4/5] w-full object-cover object-center" />
@@ -142,8 +142,8 @@ export function AboutPage() {
           <div className="grid gap-6 md:grid-cols-12">
             <div className="md:col-span-4">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Areas of practice", "实践领域")}</p>
-              <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("From design intent to ", "从设计意图走向")}<span className="text-accent">{text("implementation.", "实际实现。")}</span></h2>
-              <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My main interests are combat, gameplay systems, and technical animation. I work on both the design of these systems and their implementation.", "我主要关注战斗、玩法系统与技术动画，并同时参与这些系统的设计与实现。")}</p>
+              <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("From design intent to ", "从设计想法到")}<span className="text-accent">{text("implementation.", "实际落地。")}</span></h2>
+              <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My main interests are combat, gameplay systems, and technical animation. I work on both the design of these systems and their implementation.", "我主要关注战斗、玩法系统与技术动画，既参与设计，也负责把它们做进游戏里。")}</p>
             </div>
             <div className="route-reveal-list grid gap-px overflow-hidden rounded-lg border border-border bg-border md:col-span-8 sm:grid-cols-2">
               {systems.map((system) => (
@@ -160,8 +160,8 @@ export function AboutPage() {
         <section className="route-reveal grid gap-6 border-t border-border/60 py-16 md:grid-cols-12 md:py-24">
           <div className="md:col-span-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Capabilities", "能力范围")}</p>
-            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">{text("A design focus with ", "以设计为核心，兼具")}<span className="text-accent">{text("production range.", "制作广度。")}</span></h2>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My 3D production background lets me work directly with rigs, animation, shaders, and assets. It also means I account for performance and production constraints early, while an idea is still easy to change.", "我的 3D 制作背景让我能够直接处理绑定、动画、着色器与资产，也让我会在想法仍便于调整时，尽早考虑性能与制作限制。")}</p>
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">{text("A design focus with ", "以设计为主，")}<span className="text-accent">{text("production range.", "也能动手制作。")}</span></h2>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My 3D production background lets me work directly with rigs, animation, shaders, and assets. It also means I account for performance and production constraints early, while an idea is still easy to change.", "我的 3D 制作背景让我能直接处理绑定、动画、着色器与美术资源，也会在方案还容易调整时，尽早考虑性能和制作成本。")}</p>
           </div>
           <div className="route-reveal-list grid gap-4 md:col-span-8 sm:grid-cols-2">
             <article className="relative overflow-hidden rounded-lg border border-border bg-surface/55 p-6">
@@ -189,7 +189,7 @@ export function AboutPage() {
           <div className="grid gap-8 md:grid-cols-12">
             <div className="md:col-span-4">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Outside the editor", "编辑器之外")}</p>
-              <h2 id="personal-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("A little more ", "关于我的")}<span className="text-warm">{text("about me.", "一些其他事。")}</span></h2>
+              <h2 id="personal-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("A little more ", "工作之外的")}<span className="text-warm">{text("about me.", "一些事。")}</span></h2>
               <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("I like technically solid work, but I do not want the result to feel sterile. I try to make sure the mechanics and presentation are working toward the same thing.", "我喜欢技术上扎实的作品，但不希望结果显得生硬。我会尽量让机制与表现朝着同一个方向配合。")}</p>
             </div>
             <div className="route-reveal-list grid gap-4 md:col-span-8">
@@ -225,11 +225,11 @@ export function AboutPage() {
           <article className="bg-surface/55 p-6 md:p-8">
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("Languages", "语言")}</p>
             <h2 className="mt-4 font-display text-xl font-semibold">{text("English + Mandarin Chinese", "英语 + 普通话")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">{text("English fluent · Mandarin fluent spoken, limited professional reading and writing", "英语流利 · 普通话口语流利，专业读写能力有限")}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{text("English fluent · Mandarin fluent spoken, limited professional reading and writing", "英语流利 · 普通话口语流利；中文专业读写可借助翻译工具")}</p>
           </article>
           <article className="bg-surface/55 p-6 md:p-8">
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("Geographic availability", "工作地区")}</p>
-            <h2 className="mt-4 font-display text-xl font-semibold">{text("Open to select global regions", "接受多个地区机会")}</h2>
+            <h2 className="mt-4 font-display text-xl font-semibold">{text("Open to select global regions", "可考虑多个国家与地区")}</h2>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text("United States · Canada · Northern & Western Europe · Japan · China", "美国 · 加拿大 · 北欧与西欧 · 日本 · 中国")}</p>
           </article>
         </section>
@@ -238,9 +238,9 @@ export function AboutPage() {
           <div aria-hidden="true" className="absolute right-0 top-0 h-40 w-40 bg-[radial-gradient(circle_at_center,var(--color-accent)_1px,transparent_1.5px)] opacity-20 [background-size:12px_12px] [mask-image:linear-gradient(135deg,black,transparent_75%)]" />
           <div className="relative grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Contact / Open channel", "联系 / 开放沟通")}</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Contact / Open channel", "联系我 / 合作机会")}</p>
               <h2 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl">{text("Let's make something ", "一起做出真正")}<span className="text-accent">{text("feel good", "好玩")}</span>{text(" to play.", "的东西。")}</h2>
-              <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">{text("If you're building an interesting combat system, gameplay prototype, or anything that needs a designer who can get under the hood, I'd be glad to hear about it.", "如果你正在制作有意思的战斗系统、玩法原型，或任何需要设计师深入实现层的问题，欢迎联系我。")}</p>
+              <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">{text("If you're building an interesting combat system, gameplay prototype, or anything that needs a designer who can get under the hood, I'd be glad to hear about it.", "如果你正在制作有意思的战斗系统或玩法原型，需要一位愿意亲自参与实现的设计师，欢迎联系我。")}</p>
               <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />{text("Focused on technical, combat, and gameplay design · open to adjacent opportunities", "重点方向：技术、战斗与玩法设计 · 也接受相关岗位机会")}</div>
               <a href={isChinese ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"} download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
                 {text("Download technical design résumé", "下载中文游戏开发简历")} <span aria-hidden="true">↓</span>

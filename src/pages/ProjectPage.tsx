@@ -72,7 +72,7 @@ export function ProjectPage() {
             )}
           </div>
         </section>
-        {project.media.length > 0 && <section className="mt-16 grid gap-10 md:grid-cols-12"><div className="md:col-span-3"><h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">{text("Media", "媒体")}</h2></div><div className="space-y-8 md:col-span-9">{project.media.map((item, mediaIndex) => <Media key={mediaIndex} item={item} />)}</div></section>}
+        {project.media.length > 0 && <section className="mt-16 grid gap-10 md:grid-cols-12"><div className="md:col-span-3"><h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">{text("Media", "项目演示")}</h2></div><div className="space-y-8 md:col-span-9">{project.media.map((item, mediaIndex) => <Media key={mediaIndex} item={item} />)}</div></section>}
         {project.sections?.map((section, sectionIndex) => (
           <section key={section.title} className="relative mt-20 border-t border-border/60 pt-10 md:mt-28 md:pt-14">
             <span aria-hidden="true" className="absolute right-0 top-4 font-display text-7xl font-semibold text-foreground/[0.025] md:text-9xl">{String(sectionIndex + 1).padStart(2, "0")}</span>
@@ -96,14 +96,14 @@ export function ProjectPage() {
         {relatedGallery.length > 0 && (
           <section className="mt-20 border-t border-border/60 pt-10 md:mt-28 md:pt-14" aria-labelledby="related-gallery-title">
             <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
-              <div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">{text("Related gallery work", "相关画廊作品")}</p><h2 id="related-gallery-title" className="mt-3 font-display text-2xl font-semibold">{text("Visuals and production studies.", "视觉作品与制作练习。")}</h2></div>
-              <Link to={localizedPath("/gallery")} viewTransition className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-accent">{text("View gallery", "查看画廊")} →</Link>
+              <div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">{text("Related gallery work", "相关作品")}</p><h2 id="related-gallery-title" className="mt-3 font-display text-2xl font-semibold">{text("Visuals and production studies.", "更多视觉与制作过程。")}</h2></div>
+              <Link to={localizedPath("/gallery")} viewTransition className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-accent">{text("View gallery", "查看作品集锦")} →</Link>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
               {relatedGallery.map((entry) => (
                 <Link key={entry.id} to={localizedPath(`/gallery?entry=${entry.id}`)} viewTransition className="group overflow-hidden rounded-lg border border-border bg-surface/45 transition-colors hover:border-accent/70">
                   <div className="aspect-video overflow-hidden bg-muted"><img src={entry.cover} alt={entry.coverAlt} width="720" height="405" loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]" /></div>
-                  <div className="p-4"><p className="font-display font-semibold transition-colors group-hover:text-accent">{entry.title}</p><p className="mt-2 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">{text("Open gallery set", "打开画廊组图")} →</p></div>
+                  <div className="p-4"><p className="font-display font-semibold transition-colors group-hover:text-accent">{entry.title}</p><p className="mt-2 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">{text("Open gallery set", "查看完整组图")} →</p></div>
                 </Link>
               ))}
             </div>

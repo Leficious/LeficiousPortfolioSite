@@ -153,7 +153,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
 
             {total > 1 && (
               <div className="mt-7 border-t border-border/60 pt-5">
-                <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-accent">{text("Sequence", "序列")}</p>
+                <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-accent">{text("Sequence", "内容列表")}</p>
                 <div className="grid grid-cols-4 gap-2" aria-label={text("Choose gallery item", "选择画廊内容")}>
                   {entry.media.map((item, index) => (
                     <button key={`${item.type}-${index}`} type="button" onClick={() => onSlideChange(index)} aria-label={`${text("View item", "查看第")} ${index + 1}`} aria-current={index === slide ? "true" : undefined} className={`aspect-[4/3] overflow-hidden rounded border bg-muted transition-all ${index === slide ? "border-accent opacity-100" : "border-border opacity-50 hover:border-accent/60 hover:opacity-100"}`}>
