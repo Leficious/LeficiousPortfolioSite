@@ -120,7 +120,7 @@ export function AboutPage() {
                 {text("Technical design, gameplay systems, ", "技术设计、玩法系统与")}<span className="text-accent">{text("3D production.", "3D 制作。")}</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                {text("I came to game design through 3D art, so I tend to think about both the player's experience and the work needed to build it. I usually start by asking how something should feel from the player's point of view, then work backward into the logic, animation, tools, or assets needed to make it happen. Combat is my favorite part, but I like being able to follow a problem wherever it goes.", "我是 Kevin，最初从 3D 美术走进游戏设计，所以思考问题时，我常常会同时考虑玩家体验与实际制作。我通常先想清楚一个东西在玩家手中应该是什么感觉，再倒推需要怎样的逻辑、动画、工具或资产来实现。战斗是我最喜欢的部分，但我也喜欢顺着问题一直做下去。")}
+                {text("I like working where controls, animation, and game rules meet. Most of my prototypes begin with a simple question: what should the player be deciding, and what should those decisions feel like? Combat is where I enjoy answering that question most.", "我喜欢研究操控、动画与游戏规则相互交汇的部分。我的原型通常从一个简单的问题开始：玩家需要做出什么决定，而这些决定应该带来怎样的感受？战斗设计是我最喜欢探索这个问题的领域。")}
               </p>
             </div>
 
@@ -143,7 +143,7 @@ export function AboutPage() {
             <div className="md:col-span-4">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Areas of practice", "实践领域")}</p>
               <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("From design intent to ", "从设计意图走向")}<span className="text-accent">{text("implementation.", "实际实现。")}</span></h2>
-              <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("I tend to follow a problem wherever it leads, with combat and technical design as the through line.", "我会沿着问题一路深入，而战斗与技术设计始终是贯穿其中的主线。")}</p>
+              <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My main interests are combat, gameplay systems, and technical animation. I work on both the design of these systems and their implementation.", "我主要关注战斗、玩法系统与技术动画，并同时参与这些系统的设计与实现。")}</p>
             </div>
             <div className="route-reveal-list grid gap-px overflow-hidden rounded-lg border border-border bg-border md:col-span-8 sm:grid-cols-2">
               {systems.map((system) => (
@@ -161,7 +161,7 @@ export function AboutPage() {
           <div className="md:col-span-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Capabilities", "能力范围")}</p>
             <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">{text("A design focus with ", "以设计为核心，兼具")}<span className="text-accent">{text("production range.", "制作广度。")}</span></h2>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("I came to design through 3D art and technical production. That background helps me think about the rigs, animation, shaders, assets, and performance costs around a gameplay idea, not only the logic at its center.", "我从 3D 美术与技术制作走向设计。这段背景让我不仅考虑玩法逻辑本身，也会同时思考围绕它的绑定、动画、着色器、资产与性能成本。")}</p>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My 3D production background lets me work directly with rigs, animation, shaders, and assets. It also means I account for performance and production constraints early, while an idea is still easy to change.", "我的 3D 制作背景让我能够直接处理绑定、动画、着色器与资产，也让我会在想法仍便于调整时，尽早考虑性能与制作限制。")}</p>
           </div>
           <div className="route-reveal-list grid gap-4 md:col-span-8 sm:grid-cols-2">
             <article className="relative overflow-hidden rounded-lg border border-border bg-surface/55 p-6">
