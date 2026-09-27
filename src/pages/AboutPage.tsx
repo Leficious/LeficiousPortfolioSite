@@ -48,8 +48,8 @@ function ContactIcon({ name }: { name: IconName }) {
 const systems = [
   { number: "01", title: "Combat Design", titleZh: "战斗设计", description: "I shape player actions, enemies, controls, feedback, and encounter pacing around how the fight should feel.", descriptionZh: "我会从整体手感出发，设计玩家动作、敌人行为、操作反馈与战斗节奏。" },
   { number: "02", title: "Gameplay Systems", titleZh: "玩法系统", description: "I build rules that are easy to read, quick to tune, and sturdy enough to grow as the game changes.", descriptionZh: "我希望规则清楚、方便调试，也能随着项目需求继续扩展。" },
-  { number: "03", title: "Technical Animation", titleZh: "技术动画", description: "I connect animation to gameplay through state logic, Control Rig, and responsive runtime systems.", descriptionZh: "我通过状态逻辑、Control Rig 与响应式运行时系统，将动画连接到玩法。" },
-  { number: "04", title: "Technical Production", titleZh: "技术制作", description: "I'm comfortable crossing into 3D production, procedural workflows, and art implementation when a system needs it.", descriptionZh: "项目需要时，我也可以直接处理 3D 制作、程序化流程与美术资源落地。" },
+  { number: "03", title: "Technical Animation", titleZh: "技术动画", description: "I connect animation to gameplay through state logic, Control Rig, and responsive runtime systems.", descriptionZh: "我用状态逻辑、Control Rig 和运行时系统，把动画接入角色操作与玩法反馈。" },
+  { number: "04", title: "Technical Production", titleZh: "技术制作", description: "I'm comfortable crossing into 3D production, procedural workflows, and art implementation when a system needs it.", descriptionZh: "项目需要时，我也能直接处理 3D 制作、程序化流程和美术资源接入。" },
 ];
 
 const contactLinks: { label: string; detail: string; detailZh: string; href: string; icon: IconName }[] = [
@@ -64,21 +64,21 @@ const outsideEditor = [
     title: "Music",
     titleZh: "音乐",
     description: "I have played piano and cello for about 15 years, including orchestra and chamber performances. It taught me a lot about timing, rehearsal, and how individual parts fit together.",
-    descriptionZh: "我学习钢琴和大提琴约 15 年，也参加过管弦乐团与室内乐演出。这些经历让我更理解节奏、排练，以及不同部分如何配合成一个整体。",
+    descriptionZh: "我学了约 15 年钢琴和大提琴，也参加过管弦乐团与室内乐演出。长期排练让我对节奏、配合和细节变化一直很敏感。",
   },
   {
     number: "02",
     title: "Movement",
     titleZh: "运动",
     description: "I trained seriously in figure skating, along with ballet and ballroom dance. I still draw on that experience when I think about weight, balance, anticipation, and motion.",
-    descriptionZh: "我曾长期接受花样滑冰训练，也学习过芭蕾和标准舞。现在思考重量感、平衡、预备动作与运动表现时，我仍会参考这些身体经验。",
+    descriptionZh: "我曾长期训练花样滑冰，也学过芭蕾和标准舞。现在做角色动作时，我仍会想到训练里对重心、平衡和预备动作的要求。",
   },
   {
     number: "03",
     title: "Stories and ideas",
     titleZh: "故事与思考",
     description: "I like moving between technical and human questions: why a mechanic changes player behavior, how media shapes the communities around it, or why a story stays with someone. Games are part of that, but so are anime, novels, history, sociology, and the occasional political rabbit hole.",
-    descriptionZh: "我常会琢磨游戏机制为什么会改变玩家行为，作品怎样影响围绕它形成的社群，又是什么让一个故事久久留在人的记忆里。除了游戏，我也会看动画、读小说、历史与社会学相关内容，偶尔顺着一个政治话题查很久。",
+    descriptionZh: "我会关注游戏规则如何影响玩家行为，以及一部作品怎样形成自己的社群。平时也喜欢动画、小说、历史和社会学，有时会顺着一个政治话题查很久。",
   },
 ];
 
@@ -120,7 +120,7 @@ export function AboutPage() {
                 {text("Technical design, gameplay systems, ", "技术设计、玩法系统与")}<span className="text-accent">{text("3D production.", "3D 制作。")}</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                {text("I started out in 3D art. Over time I became more interested in what players could do with the things I was building, so I moved into game design. Combat ended up being the part I enjoyed most. Technical design also lets me stay involved in how the work is built, which suits me.", "我是从 3D 美术进入游戏开发的。后来，我越来越关心玩家能用这些内容做什么，也因此逐渐转向游戏设计。战斗设计是我最投入的方向；技术设计则让我仍能参与实际实现，这种工作方式很适合我。")}
+                {text("I started out in 3D art. Over time I became more interested in what players could do with the things I was building, so I moved into game design. Combat ended up being the part I enjoyed most. Technical design also lets me stay involved in how the work is built, which suits me.", "我最早做的是 3D 美术，后来逐渐把重心转向游戏设计。比起只完成一个资产，我更想知道玩家能拿它做什么。现在我主要做战斗与技术设计，也会继续参与动画、工具和玩法实现。")}
               </p>
             </div>
 
@@ -141,9 +141,9 @@ export function AboutPage() {
         <section className="route-reveal py-16 md:py-24" aria-labelledby="systems-title">
           <div className="grid gap-6 md:grid-cols-12">
             <div className="md:col-span-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Areas of practice", "实践领域")}</p>
-              <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("From design intent to ", "从设计想法到")}<span className="text-accent">{text("implementation.", "实际落地。")}</span></h2>
-              <p className="zh-readable mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My main interests are combat, gameplay systems, and technical animation. I work on both the design of these systems and their implementation.", "我主要关注战斗、玩法系统与技术动画，既参与设计，也负责把它们做进游戏里。")}</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Areas of practice", "工作方向")}</p>
+              <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("From design intent to ", "从玩法设计到")}<span className="text-accent">{text("implementation.", "实机实现。")}</span></h2>
+              <p className="zh-readable mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My main interests are combat, gameplay systems, and technical animation. I work on both the design of these systems and their implementation.", "我主要做战斗、玩法系统和技术动画，也会亲自完成蓝图、动画逻辑与相关工具。")}</p>
             </div>
             <div className="route-reveal-list grid gap-px overflow-hidden rounded-lg border border-border bg-border md:col-span-8 sm:grid-cols-2">
               {systems.map((system) => (
@@ -190,7 +190,7 @@ export function AboutPage() {
             <div className="md:col-span-4">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Outside the editor", "编辑器之外")}</p>
               <h2 id="personal-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("A little more ", "工作之外的")}<span className="text-warm">{text("about me.", "一些事。")}</span></h2>
-              <p className="zh-readable mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("I like technically solid work, but I do not want the result to feel sterile. I try to make sure the mechanics and presentation are working toward the same thing.", "我喜欢技术上扎实的作品，但不希望结果显得生硬。我会尽量让机制与表现朝着同一个方向配合。")}</p>
+              <p className="zh-readable mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("I like technically solid work, but I do not want the result to feel sterile. I try to make sure the mechanics and presentation are working toward the same thing.", "我喜欢技术和表现都经得起推敲的作品。做项目时，我也会留意机制、动画和视觉是不是在表达同一件事。")}</p>
             </div>
             <div className="route-reveal-list grid gap-4 md:col-span-8">
               {outsideEditor.map((item) => (
@@ -206,7 +206,7 @@ export function AboutPage() {
           </div>
           <div className="mt-8 grid gap-4 rounded-lg border border-border/70 bg-background/45 p-6 md:grid-cols-[0.28fr_0.72fr] md:p-8">
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("A few influences", "一些影响")}</p>
-            <p className="zh-readable text-sm leading-relaxed text-muted-foreground"><FormattedText>{text("Zenless Zone Zero is one of my references for how animation, VFX, UI, and graphic design can all push the same attitude. Fire Emblem interests me for a different reason: class abilities, map geometry, turn order, and imperfect information can turn a compact ruleset into decisions that feel personal, especially in Fire Emblem Fates and Fire Emblem Engage. Monogatari Series keeps me coming back for its wordplay, nonlinear storytelling, and how Nadeko's story handles creativity and insecurity. Shin Sekai Yori stayed with me enough that I wrote a sociology paper about surveillance, social conditioning, and the systems holding its society together.", "《绝区零》让我看到动画、VFX、UI 与平面设计如何一起塑造同一种性格。《火焰之纹章》吸引我的则是另一面：职业技能、地图结构、行动顺序和不完整信息，如何从一套不算庞大的规则里产生非常个人化的选择，尤其是《火焰之纹章 if》和《火焰之纹章 Engage》。《物语系列》的文字游戏、非线性叙事，以及千石抚子故事中关于创作与自我怀疑的部分一直让我反复回看。《来自新世界》则让我专门写过一篇社会学论文，讨论监视、社会规训和维系其社会的制度。")}</FormattedText></p>
+            <p className="zh-readable text-sm leading-relaxed text-muted-foreground"><FormattedText>{text("Zenless Zone Zero is one of my references for how animation, VFX, UI, and graphic design can all push the same attitude. Fire Emblem interests me for a different reason: class abilities, map geometry, turn order, and imperfect information can turn a compact ruleset into decisions that feel personal, especially in Fire Emblem Fates and Fire Emblem Engage. Monogatari Series keeps me coming back for its wordplay, nonlinear storytelling, and how Nadeko's story handles creativity and insecurity. Shin Sekai Yori stayed with me enough that I wrote a sociology paper about surveillance, social conditioning, and the systems holding its society together.", "我很喜欢《绝区零》里动画、VFX、UI 和平面设计之间高度统一的风格。《火焰之纹章》吸引我的则是职业、地图、行动顺序与信息差共同形成的战术选择，尤其是《火焰之纹章 if》和《火焰之纹章 Engage》。《物语系列》的文字游戏、非线性叙事，以及千石抚子关于创作与自我怀疑的故事，我也经常重看。我还曾围绕《来自新世界》写过一篇社会学论文，讨论其中的监视、社会规训和制度结构。")}</FormattedText></p>
           </div>
         </section>
 
@@ -216,8 +216,8 @@ export function AboutPage() {
             <h2 id="education-title" className="mt-3 font-display text-2xl font-semibold">{text("Education", "教育背景")}</h2>
           </div>
           <div className="divide-y divide-border/60">
-            <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">{text("MS, Game Design and Development", "游戏设计与开发 理学硕士")}</p><p className="mt-1 text-sm text-muted-foreground">{text("USC School of Cinematic Arts", "南加州大学电影艺术学院")}</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">{text("Expected 2028", "预计 2028 年毕业")}</p></div>
-            <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">{text("BFA, Digital Production - Games", "数字制作（游戏方向）艺术学士")}</p><p className="mt-1 text-sm text-muted-foreground">{text("Gnomon School of Visual Effects · Featured in Gnomon's student reel", "Gnomon School of Visual Effects · 作品入选 Gnomon 学生作品集锦")}</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">2025</p></div>
+            <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">{text("MS, Game Design and Development", "游戏设计与开发硕士（在读）")}</p><p className="mt-1 text-sm text-muted-foreground">{text("USC School of Cinematic Arts", "南加州大学电影艺术学院")}</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">{text("Expected 2028", "预计 2028 年毕业")}</p></div>
+            <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">{text("BFA, Digital Production - Games", "数字制作艺术学士（游戏方向）")}</p><p className="mt-1 text-sm text-muted-foreground">{text("Gnomon School of Visual Effects · Featured in Gnomon's student reel", "Gnomon School of Visual Effects · 作品入选 Gnomon 学生作品集锦")}</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">2025</p></div>
           </div>
         </section>
 
@@ -241,7 +241,7 @@ export function AboutPage() {
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Contact / Open channel", "联系我 / 合作机会")}</p>
               <h2 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl">{text("Let's make something ", "一起做出真正")}<span className="text-accent">{text("feel good", "好玩")}</span>{text(" to play.", "的东西。")}</h2>
               <p className="zh-readable mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">{text("If you're building an interesting combat system, gameplay prototype, or anything that needs a designer who can get under the hood, I'd be glad to hear about it.", "如果你正在制作有意思的战斗系统或玩法原型，需要一位愿意亲自参与实现的设计师，欢迎联系我。")}</p>
-              <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />{text("Focused on technical, combat, and gameplay design · open to adjacent opportunities", "重点方向：技术、战斗与玩法设计 · 也接受相关岗位机会")}</div>
+              <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />{text("Focused on technical, combat, and gameplay design · open to adjacent opportunities", "求职方向：技术设计 / 战斗策划 / 玩法策划 · 也欢迎相关岗位")}</div>
               <a href={isChinese ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"} download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
                 {text("Download technical design résumé", "下载中文游戏开发简历")} <span aria-hidden="true">↓</span>
               </a>

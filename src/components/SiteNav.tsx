@@ -19,9 +19,9 @@ export function SiteNav() {
         <Link to={localizedPath("/")} viewTransition className="site-mark-enter font-display text-base font-semibold tracking-tight sm:text-lg">
           leficious<span className="site-mark-dot text-accent">.</span>
         </Link>
-        <nav aria-label={text("Primary", "主导航")} className="signal-nav-enter col-span-2 row-start-2 flex min-w-0 items-center justify-between gap-3 text-[11px] text-muted-foreground sm:col-span-1 sm:col-start-2 sm:row-start-1 sm:justify-self-end sm:gap-6 sm:text-sm">
-          <NavLink to={localizedPath("/")} end viewTransition className={({ isActive }) => navClass(isActive)}>{text("Work", "作品")}</NavLink>
-          <NavLink to={localizedPath("/gallery")} viewTransition className={({ isActive }) => navClass(isActive)}>{text("Gallery", "画廊")}</NavLink>
+        <nav aria-label={text("Primary", "主导航")} className="signal-nav-enter col-span-2 row-start-2 flex min-w-0 items-center justify-start gap-7 text-[11px] text-muted-foreground sm:col-span-1 sm:col-start-2 sm:row-start-1 sm:justify-self-end sm:gap-6 sm:text-sm">
+          <NavLink to={localizedPath("/")} end viewTransition className={({ isActive }) => navClass(isActive)}>{text("Work", "项目")}</NavLink>
+          <NavLink to={localizedPath("/gallery")} viewTransition className={({ isActive }) => navClass(isActive)}>{text("Gallery", "作品集")}</NavLink>
           <NavLink to={localizedPath("/about")} viewTransition className={({ isActive }) => navClass(isActive && hash !== "#contact")}>{text("About", "关于")}</NavLink>
           <Link
             to={`${localizedPath("/about")}#contact`}

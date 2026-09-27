@@ -62,7 +62,7 @@ export function FeaturedReel({ id, title, description, eyebrow, thumbnailSrc }: 
                 <PlayIcon />
               </span>
             </span>
-            <span className="absolute bottom-4 left-4 font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/80">{text("Play reel", "播放作品集锦")}</span>
+            <span className="absolute bottom-4 left-4 font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/80">{text("Play reel", "播放视频")}</span>
           </button>
         )}
       </div>

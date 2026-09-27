@@ -69,7 +69,7 @@ const routes = [
   },
   {
     path: "/zh/gallery",
-    title: "作品集锦 — Leficious",
+    title: "作品集 — Leficious",
     description: "收录 Leficious 的技术设计、3D、2D、环境、角色、动画与技术美术作品。",
     image: "/gallery/thumbnails/water-blossoms.webp",
     imageWidth: 1000,
@@ -89,8 +89,8 @@ const routes = [
   },
   {
     path: "/zh/projects/starshore",
-    title: "Starshore — Leficious",
-    description: "一个为期 15 周的玩法原型，将角色移动、能力、瞄准、背包、商店与数据驱动拾取系统连接起来。",
+    title: "星岸 — Leficious",
+    description: "历时 15 周完成的玩法原型，将移动、技能、自动索敌、背包、商店与数据驱动拾取物串成一套完整循环。",
     image: "/projects/starshore/design-layout-01.avif",
     imageWidth: 1589,
     imageHeight: 920,
@@ -99,8 +99,8 @@ const routes = [
   },
   {
     path: "/zh/projects/fallen-valkyrie",
-    title: "Fallen Valkyrie — Leficious",
-    description: "一个为期 10 周的动作战斗原型，围绕武器相关招式、方向性受击反馈、锁定目标与多阶段 Boss 战展开。",
+    title: "堕落女武神 — Leficious",
+    description: "历时 10 周完成的动作战斗原型，包含武器差异化招式、方向受击、锁定系统与多阶段 Boss 战。",
     image: "/projects/fallen-valkyrie/cover.avif",
     imageWidth: 1715,
     imageHeight: 963,
@@ -109,8 +109,8 @@ const routes = [
   },
   {
     path: "/zh/projects/sacred-forest",
-    title: "Sacred Forest — Leficious",
-    description: "一个从建模、程序化材质、植被、灯光、特效到引擎搭建完整制作的风格化森林神社。",
+    title: "圣域森林 — Leficious",
+    description: "从建模、程序化材质和植被，到灯光、特效与 Unreal 场景搭建均由我完成的风格化森林神社环境。",
     image: "/projects/sacred-forest/cover.avif",
     imageWidth: 1715,
     imageHeight: 963,

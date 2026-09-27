@@ -25,10 +25,10 @@ export function HomePage() {
                 {text("Portfolio", "作品集")} · {new Date().getFullYear()}
               </div>
               <h1 className="mt-7 max-w-4xl font-display text-5xl font-semibold leading-[0.95] text-balance sm:text-6xl lg:text-7xl">
-                {text("Combat, movement, and the systems that make them ", "战斗、移动，以及支撑它们")}<span className="signal-headline-accent text-accent">{text("click.", "手感的系统。")}</span>
+                {text("Combat, movement, and the systems that make them ", "战斗、移动，以及决定")}<span className="signal-headline-accent text-accent">{text("click.", "手感的系统。")}</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                {text("I'm happiest when I can get an idea out of my head and into a playable build. I usually start with combat or movement, then work outward into animation, AI, UI, and whatever else the mechanic needs. I playtest early because I would rather find out what actually feels good than get attached to how something sounded on paper.", "我最喜欢把想法尽快做成能玩的版本。我通常从战斗或移动入手，再逐步补上动画、AI、UI，以及机制真正需要的其他部分。我会尽早试玩，先看实际手感，再决定接下来怎么调整。")}
+                {text("I'm happiest when I can get an idea out of my head and into a playable build. I usually start with combat or movement, then work outward into animation, AI, UI, and whatever else the mechanic needs. I playtest early because I would rather find out what actually feels good than get attached to how something sounded on paper.", "我习惯先把想法做成能玩的原型，再边玩边调。通常会先做战斗或移动，之后根据需要补上动画、AI 和 UI。这样可以更快看出哪里顺手，哪里还需要改。")}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href="#selected-work" className="inline-flex items-center rounded-full border border-accent bg-accent px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-accent-foreground transition-colors hover:bg-accent/85">
@@ -75,7 +75,7 @@ export function HomePage() {
         <section className="route-reveal border-x border-b border-border/60 px-6 py-12 sm:px-10 md:py-16 lg:px-14" aria-labelledby="technical-reel-title">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Featured reel", "精选作品集锦")}</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Featured reel", "精选视频")}</p>
               <h2 id="technical-reel-title" className="mt-3 font-display text-2xl font-semibold sm:text-3xl">{text("Technical game design.", "游戏技术设计。")}</h2>
             </div>
             <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">{text("Selected work", "精选作品")} · 2026</span>
@@ -84,7 +84,7 @@ export function HomePage() {
             id="rVIavxdutJE"
             title={text("Technical Game Design Reel 2026", "2026 游戏技术设计作品集")}
             description={text("A quick look at the combat systems, gameplay prototypes, enemies, and technical problem-solving behind my recent work.", "快速展示近期项目中的战斗系统、玩法原型、敌人设计与技术实现。")}
-            eyebrow={text("Primary reel · 2026", "主要作品集锦 · 2026")}
+            eyebrow={text("Primary reel · 2026", "技术设计 · 2026")}
           />
         </section>
 
@@ -93,10 +93,10 @@ export function HomePage() {
             <div className="md:col-span-8">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Selected work", "精选项目")}</p>
               <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl">{text("Systems and designs built for ", "从原型到")}<span className="text-accent">{text("iteration.", "反复打磨。")}</span></h2>
-              <p className="zh-readable mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{text("A closer look at how I approached combat, gameplay AI, modular systems, and the production work needed to make them real.", "这里记录了我如何设计战斗、玩法 AI 与模块化系统，以及如何把这些想法真正做进可玩的项目里。")}</p>
+              <p className="zh-readable mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{text("A closer look at how I approached combat, gameplay AI, modular systems, and the production work needed to make them real.", "这些项目记录了战斗、玩法 AI 和模块化系统从原型到实机的制作过程。")}</p>
             </div>
             <div className="md:col-span-4 md:text-right">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{String(localizedProjects.length).padStart(2, "0")} {text("case studies", "个项目拆解")}</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{String(localizedProjects.length).padStart(2, "0")} {text("case studies", "个完整项目")}</p>
             </div>
           </div>
           <ul className="route-reveal-list space-y-5">

@@ -60,19 +60,19 @@ export function GalleryPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title={text("Gallery — Leficious", "作品集锦 — Leficious")} description={text("A gallery of technical design, 3D, 2D, environment, character, animation, and technical art work by Leficious.", "收录 Leficious 的技术设计、3D、2D、环境、角色、动画与技术美术作品。")} path={localizedPath("/gallery")} image="/gallery/thumbnails/water-blossoms.webp" imageWidth={1000} imageHeight={563} />
+      <Seo title={text("Gallery — Leficious", "作品集 — Leficious")} description={text("A gallery of technical design, 3D, 2D, environment, character, animation, and technical art work by Leficious.", "收录 Leficious 的技术设计、3D、2D、环境、角色、动画与技术美术作品。")} path={localizedPath("/gallery")} image="/gallery/thumbnails/water-blossoms.webp" imageWidth={1000} imageHeight={563} />
       <div aria-hidden={selected ? "true" : undefined} inert={selected ? true : undefined}>
         <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6">
           <section className="route-reveal grid gap-10 border-b border-border/60 py-16 md:grid-cols-12 md:py-24">
             <div className="md:col-span-3">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">{text("Gallery", "作品集锦")}</p>
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">{text("Gallery", "作品集")}</p>
             </div>
             <div className="md:col-span-9">
               <h1 className="font-display text-4xl font-semibold leading-[1.05] text-balance md:text-6xl">
                 {text("Process, studies, and ", "过程、习作与")}<span className="text-accent">{text("finished frames.", "成品。")}</span>
               </h1>
               <p className="mt-6 max-w-2xl text-pretty text-base text-muted-foreground md:text-lg">
-                {text("A visual archive featuring realtime work, characters, game-ready environments, tools, and other experiments.", "这里收录实时项目、角色、游戏环境、工具开发，以及一些阶段性练习。")}
+                {text("A visual archive featuring realtime work, characters, game-ready environments, tools, and other experiments.", "这里收录实机项目、角色与场景制作、工具开发，以及一些阶段性练习。")}
               </p>
             </div>
           </section>
@@ -80,7 +80,7 @@ export function GalleryPage() {
           <section className="route-reveal border-b border-border/60 py-10 md:py-14" aria-labelledby="environment-reel-title">
             <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Featured reel", "精选作品集锦")}</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Featured reel", "精选作品")}</p>
                 <h2 id="environment-reel-title" className="mt-3 font-display text-2xl font-semibold sm:text-3xl">{text("Environments and props.", "环境与道具。")}</h2>
               </div>
               <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">3D · {text("Environment", "环境")} · {text("Realtime", "实时")} · {text("Props", "道具")}</span>
@@ -88,7 +88,7 @@ export function GalleryPage() {
             <FeaturedReel
               id="t5MchABcd3c"
               thumbnailSrc="/reels/environment-props-reel-2026.jpg"
-              title={text("Environment & Props Reel 2026", "2026 环境与道具作品集锦")}
+              title={text("Environment & Props Reel 2026", "2026 环境与道具作品集")}
               description={text("Environment art, props, material work, foliage, and realtime scene assembly across game-focused projects.", "展示游戏项目中的环境美术、道具、材质、植被与实时场景搭建。")}
               eyebrow={text("Environment + props · 2026", "环境 · 道具 · 2026")}
             />
@@ -146,7 +146,7 @@ export function GalleryPage() {
                         {layout.wide && <p className="mt-4 text-sm leading-relaxed text-muted-foreground"><FormattedText>{entry.description}</FormattedText></p>}
                       </div>
                       <div>
-                        <p className="mt-4 overflow-hidden border-t border-border/60 pt-3 text-xs leading-relaxed text-muted-foreground [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">{text("Contribution", "个人贡献")} · </span>{entry.contribution}</p>
+                        <p className="mt-4 overflow-hidden border-t border-border/60 pt-3 text-xs leading-relaxed text-muted-foreground [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">{text("Contribution", "我的工作")} · </span>{entry.contribution}</p>
                         <div className="mt-3"><SoftwareSummary software={entry.software} /></div>
                       </div>
                     </div>

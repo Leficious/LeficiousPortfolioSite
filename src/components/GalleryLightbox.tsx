@@ -76,7 +76,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
             <h2 id="gallery-dialog-title" className="mt-1 font-display text-xl font-semibold md:text-2xl">{entry.title}</h2>
           </div>
           <button ref={closeRef} type="button" onClick={onClose} className="shrink-0 rounded-full border border-accent/70 bg-surface/80 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground shadow-lg backdrop-blur transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground sm:px-5">
-            <span aria-hidden="true">←</span> {text("Back to gallery", "返回画廊")} <span aria-hidden="true">×</span>
+            <span aria-hidden="true">←</span> {text("Back to gallery", "返回作品集")} <span aria-hidden="true">×</span>
           </button>
         </header>
 
@@ -125,7 +125,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
             <p className="mt-5 text-[15px] leading-7 text-foreground/85"><FormattedText>{entry.description}</FormattedText></p>
 
             <div className="mt-6 border-t border-border/60 pt-5">
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">{text("Contribution", "个人贡献")}</p>
+              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">{text("Contribution", "我的工作")}</p>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{entry.contribution}</p>
             </div>
 
@@ -134,7 +134,7 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
             </div>
 
             <div className="mt-6 border-t border-border/60 pt-5">
-              <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-accent">{text("Disciplines", "方向")}</p>
+              <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-accent">{text("Disciplines", "类型")}</p>
               <div className="flex flex-wrap gap-2">
                 {entry.tags.map((tag) => <span key={tag} className="rounded-full border border-border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.13em] text-muted-foreground">{isChinese ? galleryTagZh[tag] : tag}</span>)}
               </div>
@@ -153,8 +153,8 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
 
             {total > 1 && (
               <div className="mt-7 border-t border-border/60 pt-5">
-                <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-accent">{text("Sequence", "内容列表")}</p>
-                <div className="grid grid-cols-4 gap-2" aria-label={text("Choose gallery item", "选择画廊内容")}>
+                <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-accent">{text("Sequence", "全部内容")}</p>
+                <div className="grid grid-cols-4 gap-2" aria-label={text("Choose gallery item", "选择作品内容")}>
                   {entry.media.map((item, index) => (
                     <button key={`${item.type}-${index}`} type="button" onClick={() => onSlideChange(index)} aria-label={`${text("View item", "查看第")} ${index + 1}`} aria-current={index === slide ? "true" : undefined} className={`aspect-[4/3] overflow-hidden rounded border bg-muted transition-all ${index === slide ? "border-accent opacity-100" : "border-border opacity-50 hover:border-accent/60 hover:opacity-100"}`}>
                       {item.type === "image" ? <img src={item.src} alt="" className="h-full w-full object-cover" loading="lazy" /> : <span className="flex h-full items-center justify-center font-mono text-[8px] tracking-[0.12em]">VIDEO</span>}

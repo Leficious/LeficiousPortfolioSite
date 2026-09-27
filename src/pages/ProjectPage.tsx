@@ -38,13 +38,13 @@ export function ProjectPage() {
         <section className="mt-10 overflow-hidden rounded-lg border border-border bg-surface/45" aria-labelledby="project-brief-title">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 px-5 py-4 sm:px-6">
             <h2 id="project-brief-title" className="font-mono text-[10px] uppercase tracking-[0.22em] text-warm">{text("Project brief", "项目概览")}</h2>
-            <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">{text("At a glance", "快速概览")}</span>
+            <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">{text("At a glance", "项目一览")}</span>
           </div>
           <dl className="grid md:grid-cols-3">
             {[
               [text("Design goal", "设计目标"), project.designGoal],
-              [text("What I owned", "个人职责"), project.ownership],
-              [text("Scope", "项目范围"), project.scope],
+              [text("What I owned", "我的职责"), project.ownership],
+              [text("Scope", "周期与范围"), project.scope],
             ].map(([label, value], briefIndex) => (
               <div key={label} className="border-b border-border/60 p-5 last:border-b-0 md:border-b-0 md:border-r md:p-6 md:last:border-r-0">
                 <dt className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground"><span className="text-accent">0{briefIndex + 1}</span>{label}</dt>
@@ -53,7 +53,7 @@ export function ProjectPage() {
             ))}
           </dl>
           <div className="border-t border-border/60 px-5 py-5 sm:px-6">
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">{text("Delivered", "交付成果")}</p>
+            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">{text("Delivered", "核心成果")}</p>
             <ul className={`mt-3 grid gap-3 text-sm text-muted-foreground md:grid-cols-2 ${isChinese ? "zh-readable" : ""}`}>
               {project.outcomes.map((outcome) => <li key={outcome} className="flex gap-3"><span className="mt-2 h-1 w-3 shrink-0 bg-accent" /><span>{outcome}</span></li>)}
             </ul>
@@ -66,13 +66,13 @@ export function ProjectPage() {
             <ul className="mt-4 space-y-2 text-muted-foreground">{project.responsibilities.map((item) => <li key={item} className="flex gap-3"><span className="mt-2 inline-block h-1 w-3 shrink-0 bg-accent" /><span>{item}</span></li>)}</ul>
             {project.authorNote && (
               <aside className="mt-8 border-l-2 border-warm/70 bg-surface/45 px-5 py-4">
-                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-warm">{text("Why I made this", "我为什么做这个项目")}</p>
+                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-warm">{text("Why I made this", "制作动机")}</p>
                 <p className={`mt-3 text-sm leading-relaxed text-foreground/90 ${isChinese ? "zh-readable" : ""}`}><FormattedText>{project.authorNote}</FormattedText></p>
               </aside>
             )}
           </div>
         </section>
-        {project.media.length > 0 && <section className="mt-16 grid gap-10 md:grid-cols-12"><div className="md:col-span-3"><h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">{text("Media", "项目演示")}</h2></div><div className="space-y-8 md:col-span-9">{project.media.map((item, mediaIndex) => <Media key={mediaIndex} item={item} />)}</div></section>}
+        {project.media.length > 0 && <section className="mt-16 grid gap-10 md:grid-cols-12"><div className="md:col-span-3"><h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">{text("Media", "实机演示")}</h2></div><div className="space-y-8 md:col-span-9">{project.media.map((item, mediaIndex) => <Media key={mediaIndex} item={item} />)}</div></section>}
         {project.sections?.map((section, sectionIndex) => (
           <section key={section.title} className="relative mt-20 border-t border-border/60 pt-10 md:mt-28 md:pt-14">
             <span aria-hidden="true" className="absolute right-0 top-4 font-display text-7xl font-semibold text-foreground/[0.025] md:text-9xl">{String(sectionIndex + 1).padStart(2, "0")}</span>
@@ -96,8 +96,8 @@ export function ProjectPage() {
         {relatedGallery.length > 0 && (
           <section className="mt-20 border-t border-border/60 pt-10 md:mt-28 md:pt-14" aria-labelledby="related-gallery-title">
             <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
-              <div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">{text("Related gallery work", "相关作品")}</p><h2 id="related-gallery-title" className="mt-3 font-display text-2xl font-semibold">{text("Visuals and production studies.", "更多视觉与制作过程。")}</h2></div>
-              <Link to={localizedPath("/gallery")} viewTransition className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-accent">{text("View gallery", "查看作品集锦")} →</Link>
+              <div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">{text("Related gallery work", "相关作品")}</p><h2 id="related-gallery-title" className="mt-3 font-display text-2xl font-semibold">{text("Visuals and production studies.", "更多画面与制作过程。")}</h2></div>
+              <Link to={localizedPath("/gallery")} viewTransition className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-accent">{text("View gallery", "查看作品集")} →</Link>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
               {relatedGallery.map((entry) => (
