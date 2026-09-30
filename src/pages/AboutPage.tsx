@@ -1,5 +1,4 @@
 import { useRef, useState, type ReactNode } from "react";
-import { Link } from "react-router-dom";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
 import { FormattedText } from "../components/FormattedText";
@@ -45,45 +44,6 @@ function ContactIcon({ name }: { name: IconName }) {
     </svg>
   );
 }
-
-const systems = [
-  {
-    number: "01",
-    title: "Combat Design",
-    titleZh: "战斗设计",
-    description: "Player actions, enemies, hit reactions, and encounter pacing.",
-    descriptionZh: "玩家动作、敌人行为、受击反馈与战斗节奏。",
-    image: "/projects/fallen-valkyrie/cover.avif",
-    href: "/projects/fallen-valkyrie",
-  },
-  {
-    number: "02",
-    title: "Gameplay Systems",
-    titleZh: "玩法系统",
-    description: "Abilities, targeting, inventory, shops, and reusable gameplay logic.",
-    descriptionZh: "技能、索敌、背包、商店与可复用玩法逻辑。",
-    image: "/projects/starshore/shop-02.avif",
-    href: "/projects/starshore",
-  },
-  {
-    number: "03",
-    title: "Technical Animation",
-    titleZh: "技术动画",
-    description: "State machines, animation Blueprints, retargeting, and runtime rigs.",
-    descriptionZh: "状态机、动画蓝图、重定向与运行时绑定。",
-    image: "/projects/fallen-valkyrie/character-animation-01.avif",
-    href: "/projects/fallen-valkyrie",
-  },
-  {
-    number: "04",
-    title: "Tools & Technical Art",
-    titleZh: "工具与技术美术",
-    description: "Maya tools, procedural workflows, shaders, and asset implementation.",
-    descriptionZh: "Maya 工具、程序化流程、着色器与资产接入。",
-    image: "/gallery/tools/stylize-normals-toolkit/menus.avif",
-    href: "/gallery?entry=vertex-normals-tool",
-  },
-];
 
 const contactLinks: { label: string; detail: string; detailZh: string; href: string; icon: IconName }[] = [
   { label: "LinkedIn", detail: "Connect professionally", detailZh: "职业联系", href: "https://www.linkedin.com/in/leficious/", icon: "linkedin" },
@@ -168,39 +128,6 @@ export function AboutPage() {
                 <span className="font-mono text-[9px] uppercase tracking-[0.16em]">{text("Los Angeles · California", "美国 · 加利福尼亚州 · 洛杉矶")}</span>
               </figcaption>
             </figure>
-          </div>
-        </section>
-
-        <section className="route-reveal border-b border-border/60 py-16 md:py-24" aria-labelledby="systems-title">
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-4 md:mb-10">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Selected disciplines", "主要方向")}</p>
-              <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("What I work on.", "我通常做的工作。")}</h2>
-            </div>
-            <p className="max-w-md text-sm leading-relaxed text-muted-foreground">{text("Four parts of development I return to across projects.", "这些方向经常在我的项目里交叉出现。")}</p>
-          </div>
-
-          <div className="route-reveal-list grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {systems.map((system) => (
-              <Link
-                key={system.number}
-                to={localizedPath(system.href)}
-                viewTransition
-                className="group flex min-h-full flex-col overflow-hidden rounded-lg border border-border bg-surface/50 transition-all duration-300 hover:-translate-y-1 hover:border-accent/70 hover:shadow-[0_16px_45px_rgba(0,0,0,0.18)]"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                  <img src={system.image} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025] group-hover:brightness-110" />
-                  <span className="absolute left-3 top-3 rounded-full border border-foreground/15 bg-background/80 px-2.5 py-1 font-mono text-[9px] tracking-[0.18em] text-foreground backdrop-blur">{system.number}</span>
-                </div>
-                <div className="flex flex-1 flex-col p-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="font-display text-lg font-semibold transition-colors group-hover:text-accent">{isChinese ? system.titleZh : system.title}</h3>
-                    <span aria-hidden="true" className="text-sm text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-accent">→</span>
-                  </div>
-                  <p className="zh-readable mt-3 text-sm leading-relaxed text-muted-foreground">{isChinese ? system.descriptionZh : system.description}</p>
-                </div>
-              </Link>
-            ))}
           </div>
         </section>
 
