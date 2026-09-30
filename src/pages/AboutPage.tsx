@@ -1,4 +1,5 @@
 import { useRef, useState, type ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
 import { FormattedText } from "../components/FormattedText";
@@ -46,10 +47,42 @@ function ContactIcon({ name }: { name: IconName }) {
 }
 
 const systems = [
-  { number: "01", title: "Combat Design", titleZh: "战斗设计", description: "I shape player actions, enemies, controls, feedback, and encounter pacing around how the fight should feel.", descriptionZh: "我会从整体手感出发，设计玩家动作、敌人行为、操作反馈与战斗节奏。" },
-  { number: "02", title: "Gameplay Systems", titleZh: "玩法系统", description: "I build rules that are easy to read, quick to tune, and sturdy enough to grow as the game changes.", descriptionZh: "我希望规则清楚、方便调试，也能随着项目需求继续扩展。" },
-  { number: "03", title: "Technical Animation", titleZh: "技术动画", description: "I connect animation to gameplay through state logic, Control Rig, and responsive runtime systems.", descriptionZh: "我用状态逻辑、Control Rig 和运行时系统，把动画接入角色操作与玩法反馈。" },
-  { number: "04", title: "Technical Production", titleZh: "技术制作", description: "I'm comfortable crossing into 3D production, procedural workflows, and art implementation when a system needs it.", descriptionZh: "项目需要时，我也能直接处理 3D 制作、程序化流程和美术资源接入。" },
+  {
+    number: "01",
+    title: "Combat Design",
+    titleZh: "战斗设计",
+    description: "Player actions, enemies, hit reactions, and encounter pacing.",
+    descriptionZh: "玩家动作、敌人行为、受击反馈与战斗节奏。",
+    image: "/projects/fallen-valkyrie/cover.avif",
+    href: "/projects/fallen-valkyrie",
+  },
+  {
+    number: "02",
+    title: "Gameplay Systems",
+    titleZh: "玩法系统",
+    description: "Abilities, targeting, inventory, shops, and reusable gameplay logic.",
+    descriptionZh: "技能、索敌、背包、商店与可复用玩法逻辑。",
+    image: "/projects/starshore/shop-02.avif",
+    href: "/projects/starshore",
+  },
+  {
+    number: "03",
+    title: "Technical Animation",
+    titleZh: "技术动画",
+    description: "State machines, animation Blueprints, retargeting, and runtime rigs.",
+    descriptionZh: "状态机、动画蓝图、重定向与运行时绑定。",
+    image: "/projects/fallen-valkyrie/character-animation-01.avif",
+    href: "/projects/fallen-valkyrie",
+  },
+  {
+    number: "04",
+    title: "Tools & Technical Art",
+    titleZh: "工具与技术美术",
+    description: "Maya tools, procedural workflows, shaders, and asset implementation.",
+    descriptionZh: "Maya 工具、程序化流程、着色器与资产接入。",
+    image: "/gallery/tools/stylize-normals-toolkit/menus.avif",
+    href: "/gallery?entry=vertex-normals-tool",
+  },
 ];
 
 const contactLinks: { label: string; detail: string; detailZh: string; href: string; icon: IconName }[] = [
@@ -138,50 +171,36 @@ export function AboutPage() {
           </div>
         </section>
 
-        <section className="route-reveal py-16 md:py-24" aria-labelledby="systems-title">
-          <div className="grid gap-6 md:grid-cols-12">
-            <div className="md:col-span-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Areas of practice", "工作方向")}</p>
-              <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("From design intent to ", "从玩法设计到")}<span className="text-accent">{text("implementation.", "实机实现。")}</span></h2>
-              <p className="zh-readable mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My main interests are combat, gameplay systems, and technical animation. I work on both the design of these systems and their implementation.", "我主要做战斗、玩法系统和技术动画，也会亲自完成蓝图、动画逻辑与相关工具。")}</p>
+        <section className="route-reveal border-b border-border/60 py-16 md:py-24" aria-labelledby="systems-title">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4 md:mb-10">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Selected disciplines", "主要方向")}</p>
+              <h2 id="systems-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("What I work on.", "我通常做的工作。")}</h2>
             </div>
-            <div className="route-reveal-list grid gap-px overflow-hidden rounded-lg border border-border bg-border md:col-span-8 sm:grid-cols-2">
-              {systems.map((system) => (
-                <article key={system.number} className="group min-h-52 bg-surface p-6 transition-colors hover:bg-muted/55">
-                  <div className="flex items-center justify-between"><span className="font-mono text-[9px] tracking-[0.18em] text-accent">SYS_{system.number}</span><span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-border transition-all group-hover:bg-accent group-hover:shadow-[0_0_12px_var(--color-accent)]" /></div>
-                  <h3 className="mt-9 font-display text-xl font-semibold">{isChinese ? system.titleZh : system.title}</h3>
-                  <p className="zh-readable mt-3 text-sm leading-relaxed text-muted-foreground">{isChinese ? system.descriptionZh : system.description}</p>
-                </article>
-              ))}
-            </div>
+            <p className="max-w-md text-sm leading-relaxed text-muted-foreground">{text("Four parts of development I return to across projects.", "这些方向经常在我的项目里交叉出现。")}</p>
           </div>
-        </section>
 
-        <section className="route-reveal grid gap-6 border-t border-border/60 py-16 md:grid-cols-12 md:py-24">
-          <div className="md:col-span-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Capabilities", "能力范围")}</p>
-            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">{text("A design focus with ", "以设计为主，")}<span className="text-accent">{text("production range.", "也能动手制作。")}</span></h2>
-            <p className="zh-readable mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("My 3D production background lets me work directly with rigs, animation, shaders, and assets. It also means I account for performance and production constraints early, while an idea is still easy to change.", "我的 3D 制作背景让我能直接处理绑定、动画、着色器与美术资源，也会在方案还容易调整时，尽早考虑性能和制作成本。")}</p>
-          </div>
-          <div className="route-reveal-list grid gap-4 md:col-span-8 sm:grid-cols-2">
-            <article className="relative overflow-hidden rounded-lg border border-border bg-surface/55 p-6">
-              <span aria-hidden="true" className="absolute -right-3 -top-7 font-display text-8xl font-bold text-foreground/[0.025]">D</span>
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("Disciplines", "专业方向")}</p>
-              <ul className="mt-6 space-y-4">
-                {(isChinese ? ["战斗设计与 3Cs", "技术动画", "玩法系统", "AI 系统", "关卡与世界设计"] : ["Combat design & 3Cs", "Technical animation", "Gameplay systems", "AI systems", "Level & world design"]).map((item, index) => (
-                  <li key={item} className="flex items-center gap-3 text-sm"><span className="font-mono text-[9px] text-muted-foreground">0{index + 1}</span><span className="h-px w-5 bg-border" />{item}</li>
-                ))}
-              </ul>
-            </article>
-            <article className="relative overflow-hidden rounded-lg border border-border bg-surface/55 p-6 sm:translate-y-8">
-              <span aria-hidden="true" className="absolute -right-3 -top-7 font-display text-8xl font-bold text-foreground/[0.025]">T</span>
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("Toolkit", "工具集")}</p>
-              <ul className="mt-6 space-y-4">
-                {(isChinese ? ["Unreal Engine · Unity", "Blueprint · C++ · C#", "玩法 AI · Behavior Tree · StateTree", "动画系统 · UI · 实时过场", "Maya · Substance · Git / Perforce · Python · SpeedTree / Gaea"] : ["Unreal Engine · Unity", "Blueprint · C++ · C#", "Gameplay AI · Behavior Trees · StateTrees", "Animation systems · UI · Realtime cinematics", "Maya · Substance · Git / Perforce · Python · SpeedTree / Gaea"]).map((item, index) => (
-                  <li key={item} className="flex items-center gap-3 text-sm"><span className="font-mono text-[9px] text-muted-foreground">0{index + 1}</span><span className="h-px w-5 bg-border" />{item}</li>
-                ))}
-              </ul>
-            </article>
+          <div className="route-reveal-list grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {systems.map((system) => (
+              <Link
+                key={system.number}
+                to={localizedPath(system.href)}
+                viewTransition
+                className="group flex min-h-full flex-col overflow-hidden rounded-lg border border-border bg-surface/50 transition-all duration-300 hover:-translate-y-1 hover:border-accent/70 hover:shadow-[0_16px_45px_rgba(0,0,0,0.18)]"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                  <img src={system.image} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025] group-hover:brightness-110" />
+                  <span className="absolute left-3 top-3 rounded-full border border-foreground/15 bg-background/80 px-2.5 py-1 font-mono text-[9px] tracking-[0.18em] text-foreground backdrop-blur">{system.number}</span>
+                </div>
+                <div className="flex flex-1 flex-col p-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="font-display text-lg font-semibold transition-colors group-hover:text-accent">{isChinese ? system.titleZh : system.title}</h3>
+                    <span aria-hidden="true" className="text-sm text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-accent">→</span>
+                  </div>
+                  <p className="zh-readable mt-3 text-sm leading-relaxed text-muted-foreground">{isChinese ? system.descriptionZh : system.description}</p>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
 

@@ -28,7 +28,7 @@ export function HomePage() {
                 {text("Combat, movement, and the systems that make them ", "战斗、移动，以及决定")}<span className="signal-headline-accent text-accent">{text("click.", "手感的系统。")}</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                {text("When I have an idea, I try to get it out of my head and into a playable build as soon as possible. I usually start with combat or movement, then work outward into animation, AI, UI, and whatever else the mechanic needs. I playtest early because I would rather find out what actually feels good than get attached to how something sounded on paper.", "有了想法，我会尽快把它做成能玩的原型。通常先从战斗或移动入手，再根据机制需要补上动画、AI、UI 等部分。我会尽早试玩，因为实际手感比纸面设想更重要。")}
+                {text("When I have an idea, I try to get it out of my head and into a playable build as soon as possible. I usually start with combat or movement, then work outward into animation, AI, UI, and whatever else the mechanic needs. I playtest early because I would rather find out what actually feels good than get attached to how something sounded on paper.", "一旦有了新点子，我会尽快将其落地，做出可运行的游戏原型。我通常从战斗或移动机制切入，再逐步完善动画、AI、UI等配套系统。我非常看重早期测试，因为比起执着于纸面上的完美设想，我更相信实际游玩中打磨出的真实手感。")}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href="#selected-work" className="inline-flex items-center rounded-full border border-accent bg-accent px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-accent-foreground transition-colors hover:bg-accent/85">
