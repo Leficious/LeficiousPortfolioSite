@@ -63,20 +63,6 @@ export function GalleryPage() {
       <Seo title={text("Gallery — Leficious", "作品集 — Leficious")} description={text("A gallery of technical design, 3D, 2D, environment, character, animation, and technical art work by Leficious.", "收录 Leficious 的技术设计、3D、2D、环境、角色、动画与技术美术作品。")} path={localizedPath("/gallery")} image="/gallery/thumbnails/water-blossoms.webp" imageWidth={1000} imageHeight={563} />
       <div aria-hidden={selected ? "true" : undefined} inert={selected ? true : undefined}>
         <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6">
-          <section className="route-reveal grid gap-10 border-b border-border/60 py-16 md:grid-cols-12 md:py-24">
-            <div className="md:col-span-3">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">{text("Gallery", "作品集")}</p>
-            </div>
-            <div className="md:col-span-9">
-              <h1 className="font-display text-4xl font-semibold leading-[1.05] text-balance md:text-6xl">
-                {text("Process, studies, and ", "过程、习作与")}<span className="text-accent">{text("finished frames.", "成品。")}</span>
-              </h1>
-              <p className="mt-6 max-w-2xl text-pretty text-base text-muted-foreground md:text-lg">
-                {text("A visual archive featuring realtime work, characters, game-ready environments, tools, and other experiments.", "这里收录实机项目、角色与场景制作、工具开发，以及一些阶段性练习。")}
-              </p>
-            </div>
-          </section>
-
           <section className="route-reveal border-b border-border/60 py-10 md:py-14" aria-labelledby="environment-reel-title">
             <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
               <div>
