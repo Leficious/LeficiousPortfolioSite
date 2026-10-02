@@ -14,65 +14,7 @@ export function HomePage() {
     <div className="min-h-screen bg-background text-foreground">
       <Seo title={text("Leficious — Technical & Combat Design Portfolio", "Leficious — 技术设计与战斗设计作品集")} description={text("Selected work by Leficious across combat design, gameplay systems, technical animation, AI, and 3D production for games.", "Leficious 的个人作品集，涵盖战斗设计、玩法系统、技术动画、游戏 AI 与 3D 制作。")} path={localizedPath("/")} />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
-        <section className="route-reveal relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
-          <div aria-hidden="true" className="work-grid-enter absolute inset-0 -z-10 opacity-30 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_88%)]" />
-          <div aria-hidden="true" className="absolute -left-32 top-12 -z-10 h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
-
-          <div className="grid items-center gap-14 lg:grid-cols-[1.35fr_0.65fr]">
-            <div className="work-copy-enter">
-              <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-                <span className="h-px w-8 bg-warm" />
-                {text("Portfolio", "作品集")} · {new Date().getFullYear()}
-              </div>
-              <h1 className="mt-7 max-w-4xl font-display text-5xl font-semibold leading-[0.95] text-balance sm:text-6xl lg:text-7xl">
-                {text("Combat, movement, and the systems that make them ", "战斗、移动，以及决定")}<span className="signal-headline-accent text-accent">{text("click.", "手感的系统。")}</span>
-              </h1>
-              <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-                {text("When I have an idea, I try to get it out of my head and into a playable build as soon as possible. I usually start with combat or movement, then work outward into animation, AI, UI, and whatever else the mechanic needs. I playtest early because I would rather find out what actually feels good than get attached to how something sounded on paper.", "一旦有了新点子，我会尽快将其落地，做出可运行的游戏原型。我通常从战斗或移动机制切入，再逐步完善动画、AI、UI等配套系统。我非常看重早期测试，因为比起执着于纸面上的完美设想，我更相信实际游玩中打磨出的真实手感。")}
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a href="#selected-work" className="inline-flex items-center rounded-full border border-accent bg-accent px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-accent-foreground transition-colors hover:bg-accent/85">
-                  {text("View case studies", "查看项目拆解")} ↓
-                </a>
-                <a href={isChinese ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"} download className="inline-flex items-center rounded-full border border-border bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:text-accent">
-                  {text("Download résumé", "下载简历")}
-                </a>
-              </div>
-            </div>
-
-            <div id="hero-system-diagram" aria-hidden="true" className="work-diagram-enter relative mx-auto aspect-square w-full max-w-[320px] overflow-hidden rounded-xl border border-border bg-background/65 shadow-[0_0_80px_rgba(91,154,172,0.08)]">
-              <div className="absolute inset-5 border border-border/70" />
-              <div className="absolute inset-10 border border-dashed border-accent/40" />
-              <div className="absolute left-1/2 top-5 h-[calc(100%-2.5rem)] w-px bg-border/60" />
-              <div className="absolute left-5 top-1/2 h-px w-[calc(100%-2.5rem)] bg-border/60" />
-              <div className="signal-diagram-core absolute inset-[29%] grid place-items-center rounded-full border border-accent/70 bg-surface/90 shadow-[0_0_35px_rgba(91,154,172,0.15)]">
-                <span className="text-center font-mono text-[9px] uppercase leading-loose tracking-[0.2em] text-foreground">{isChinese ? <>设计<br />构建<br />测试</> : <>Design<br />Build<br />Test</>}</span>
-              </div>
-              <span className="absolute left-7 top-7 font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">{text("Input", "输入")}</span>
-              <span className="absolute right-7 top-7 font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">{text("Rules", "规则")}</span>
-              <span className="absolute bottom-7 left-7 font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">{text("Response", "响应")}</span>
-              <span className="absolute bottom-7 right-7 font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">{text("Feedback", "反馈")}</span>
-              <span className="absolute left-[18%] top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-accent shadow-[0_0_16px_var(--color-accent)] motion-safe:animate-pulse" />
-              <span className="absolute right-[18%] top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-foreground/60" />
-            </div>
-          </div>
-        </section>
-
-        <div className="route-reveal work-meta-enter grid border-x border-b border-border/60 sm:grid-cols-3">
-          {[
-            ["01", text("Primary discipline", "主要方向"), text("Combat · gameplay design", "战斗 · 玩法设计")],
-            ["02", text("Systems", "系统"), text("Player mechanics · enemy behavior · technical animation", "玩家系统 · 敌人行为 · 技术动画")],
-            ["03", text("Process", "流程"), text("Prototype · playtest · refine", "原型 · 测试 · 迭代")],
-          ].map(([number, label, value]) => (
-            <div key={number} className="group relative min-h-32 overflow-hidden border-b border-border/60 p-6 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
-              <span className="absolute right-4 top-2 font-display text-5xl font-semibold text-foreground/[0.035] transition-colors group-hover:text-accent/10">{number}</span>
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">{label}</p>
-              <p className="mt-5 font-display text-lg font-medium">{value}</p>
-            </div>
-          ))}
-        </div>
-
-        <section className="route-reveal border-x border-b border-border/60 px-6 py-12 sm:px-10 md:py-16 lg:px-14" aria-labelledby="technical-reel-title">
+        <section className="route-reveal border-x border-b border-border/60 px-6 py-10 sm:px-10 md:py-14 lg:px-14" aria-labelledby="technical-reel-title">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Featured reel", "精选视频")}</p>

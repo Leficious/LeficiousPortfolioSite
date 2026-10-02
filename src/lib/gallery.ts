@@ -66,6 +66,7 @@ export const galleryEntries: GalleryEntry[] = [
     cover: "/projects/fallen-valkyrie/cover.avif",
     coverAlt: "Fallen Valkyrie boss encounter gameplay",
     aspect: "landscape",
+    pinned: true,
     projectUrl: "/projects/fallen-valkyrie",
     projectLabel: "View full project breakdown",
     media: [
@@ -85,6 +86,7 @@ export const galleryEntries: GalleryEntry[] = [
     cover: "/projects/starshore/design-layout-01.avif",
     coverAlt: "Starshore playable environment and gameplay systems",
     aspect: "landscape",
+    pinned: true,
     projectUrl: "/projects/starshore",
     projectLabel: "View full project breakdown",
     media: [
@@ -104,6 +106,7 @@ export const galleryEntries: GalleryEntry[] = [
     cover: "https://i.ytimg.com/vi/NSQPGYR9W7g/maxresdefault.jpg",
     coverAlt: "Grid-based tactical RPG framework running in Unreal Engine",
     aspect: "landscape",
+    pinned: true,
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=NSQPGYR9W7g", title: "Grid-Based Tactical RPG Template demonstration" },
     ],
@@ -138,7 +141,6 @@ export const galleryEntries: GalleryEntry[] = [
     cover: "/gallery/thumbnails/stylized-classroom.webp",
     coverAlt: "Finished stylized classroom environment",
     aspect: "landscape",
-    pinned: true,
     media: [
       { type: "image", src: "/gallery/artstation/stylized-classroom/finished.avif", alt: "Finished stylized classroom environment" },
       { type: "image", src: "/gallery/artstation/stylized-classroom/grayscale-implementation.avif", alt: "Grayscale 3D implementation view of the classroom scene" },
@@ -155,7 +157,6 @@ export const galleryEntries: GalleryEntry[] = [
     cover: "/gallery/thumbnails/flintlock-pistol.webp",
     coverAlt: "Flintlock pistol render",
     aspect: "landscape",
-    pinned: true,
     media: [
       { type: "image", src: "/gallery/artstation/flintlock-pistol/render-01.webp", alt: "Flintlock pistol render one" },
       { type: "image", src: "/gallery/artstation/flintlock-pistol/render-02.webp", alt: "Flintlock pistol render two" },
@@ -232,7 +233,6 @@ export const galleryEntries: GalleryEntry[] = [
     aspect: "landscape",
     projectUrl: "/projects/sacred-forest",
     projectLabel: "View environment breakdown",
-    pinned: true,
     media: [
       { type: "youtube", url: "https://www.youtube.com/watch?v=mkx379N-2n4", title: "Stylized shrine turntable" },
       { type: "image", src: "/gallery/artstation/stylized-shrine/hero-render.jpg", alt: "Stylized shrine hero render" },
