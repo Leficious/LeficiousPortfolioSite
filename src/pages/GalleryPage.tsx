@@ -4,7 +4,8 @@ import { FeaturedReel } from "../components/FeaturedReel";
 import { GalleryLightbox } from "../components/GalleryLightbox";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
-import { SoftwareSummary } from "../components/SoftwareStack";
+import { GalleryLayout } from "../components/GalleryLayout";
+import { galleryCaptions, wideGalleryEntries } from "../lib/galleryPresentation";
 import { galleryEntries, galleryTags, type GalleryEntry, type GalleryTag } from "../lib/gallery";
 import { useLanguage } from "../lib/language";
 import { galleryTagZh, localizeGalleryEntry } from "../lib/localizedContent";
@@ -99,21 +100,23 @@ export function GalleryPage() {
               </div>
             </div>
 
-            <div className="route-reveal-list grid grid-cols-1 items-start gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <GalleryLayout>
               {visibleEntries.map((entry, index) => {
 
                 return (
                   <button
                     key={entry.id}
+                    data-wide={wideGalleryEntries.has(entry.id)}
                     type="button"
                     onClick={() => openEntry(entry)}
-                    className="gallery-card group flex w-full flex-col overflow-hidden rounded-lg border border-border bg-surface text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/70 hover:shadow-[0_18px_60px_rgba(0,0,0,0.2)]"
+                    className="gallery-card group flex w-full flex-col overflow-hidden rounded-lg border border-border bg-surface text-left transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-accent/70 hover:shadow-[0_18px_60px_rgba(0,0,0,0.2)]"
                     aria-label={`${text("Open", "打开")} ${entry.title}，${entry.media.length} ${text(entry.media.length === 1 ? "item" : "items", "项内容")}`}
                   >
-                    <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-muted">
+                    <div className="relative w-full shrink-0 overflow-hidden bg-muted">
                       <img src={entry.cover} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-30 blur-xl" />
                       <div aria-hidden="true" className="absolute inset-0 bg-background/35" />
-                      <img src={entry.cover} alt={entry.coverAlt} width="1200" height="900" loading={index < 3 ? "eager" : "lazy"} decoding="async" className="relative h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.015]" />
+                      <img src={entry.cover} alt={entry.coverAlt} width="1200" height="675" loading={index < 3 ? "eager" : "lazy"} decoding="async" className="relative block h-auto w-full transition-transform duration-500 group-hover:scale-[1.015]" />
+                      {entry.id === "tenebria-character-rig" && <img src="/gallery/artstation/tenebria/braids-back-render.avif" alt={text("Tenebria braid detail", "Tenebria 编发细节")} width="2160" height="3840" loading="lazy" className="relative block max-h-[360px] w-full object-cover object-top" />}
                       {entry.pinned && <span title={text("Pinned work", "置顶作品")} className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full border border-warm/65 bg-background/80 text-sm text-warm shadow-lg backdrop-blur"><span className="sr-only">{text("Pinned work", "置顶作品")}</span><span aria-hidden="true">✦</span></span>}
                     </div>
                     <div className="flex w-full flex-col p-4">
@@ -124,14 +127,13 @@ export function GalleryPage() {
                         </div>
                       </div>
                       <div>
-                        <p className="mt-4 border-t border-border/60 pt-3 text-sm leading-relaxed text-muted-foreground"><span className="text-xs text-accent">{text("Contribution", "我的工作")} · </span>{entry.contribution}</p>
-                        <div className="mt-3"><SoftwareSummary software={entry.software} /></div>
+                        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{galleryCaptions[entry.id]?.[isChinese ? 1 : 0] ?? entry.contribution}</p>
                       </div>
                     </div>
                   </button>
                 );
               })}
-            </div>
+            </GalleryLayout>
 
             {!visibleEntries.length && <p className="py-20 text-center text-muted-foreground">{text("No entries use this tag yet.", "暂时没有使用该标签的作品。")}</p>}
           </section>
