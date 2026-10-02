@@ -135,7 +135,7 @@ export function AboutPage() {
           <div className="grid gap-8 md:grid-cols-12">
             <div className="md:col-span-4">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Outside the editor", "编辑器之外")}</p>
-              <h2 id="personal-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("A little more ", "工作之外的")}<span className="text-warm">{text("about me.", "一些事。")}</span></h2>
+              <h2 id="personal-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("Outside ", "游戏开发")}<span className="text-warm">{text("game development", "之外")}</span></h2>
               <p className="zh-readable mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("I like technically solid work, but I do not want the result to feel sterile. I try to make sure the mechanics and presentation are working toward the same thing.", "我喜欢技术和表现都经得起推敲的作品。做项目时，我也会留意机制、动画和视觉是不是在表达同一件事。")}</p>
             </div>
             <div className="route-reveal-list grid gap-4 md:col-span-8">

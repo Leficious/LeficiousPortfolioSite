@@ -9,26 +9,6 @@ import { galleryEntries, galleryTags, type GalleryEntry, type GalleryTag } from 
 import { useLanguage } from "../lib/language";
 import { galleryTagZh, localizeGalleryEntry } from "../lib/localizedContent";
 
-const aspectClasses = {
-  portrait: "aspect-[4/5]",
-  landscape: "aspect-[16/10]",
-  square: "aspect-square",
-};
-
-function getCardLayout(index: number) {
-  const wide = index === 0 || index % 6 === 5;
-
-  return {
-    wide,
-    card: wide
-      ? "sm:col-span-2 lg:col-span-8"
-      : "lg:col-span-4",
-    media: wide
-      ? "aspect-[16/9]"
-      : aspectClasses.landscape,
-  };
-}
-
 export function GalleryPage() {
   const { isChinese, text, localizedPath } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -119,29 +99,27 @@ export function GalleryPage() {
               </div>
             </div>
 
-            <div className="route-reveal-list grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-flow-row-dense lg:grid-cols-12">
+            <div className="route-reveal-list grid grid-cols-1 items-start gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {visibleEntries.map((entry, index) => {
-                const layout = getCardLayout(index);
-                const mediaAspect = layout.wide ? layout.media : aspectClasses[entry.aspect];
 
                 return (
                   <button
                     key={entry.id}
                     type="button"
                     onClick={() => openEntry(entry)}
-                    className={`gallery-card group w-full overflow-hidden rounded-lg border border-border bg-surface text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/70 hover:shadow-[0_18px_60px_rgba(0,0,0,0.2)] ${layout.card}`}
+                    className="gallery-card group flex w-full flex-col overflow-hidden rounded-lg border border-border bg-surface text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/70 hover:shadow-[0_18px_60px_rgba(0,0,0,0.2)]"
                     aria-label={`${text("Open", "打开")} ${entry.title}，${entry.media.length} ${text(entry.media.length === 1 ? "item" : "items", "项内容")}`}
                   >
-                    <div className={`relative overflow-hidden bg-muted ${mediaAspect}`}>
+                    <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-muted">
                       <img src={entry.cover} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-30 blur-xl" />
                       <div aria-hidden="true" className="absolute inset-0 bg-background/35" />
                       <img src={entry.cover} alt={entry.coverAlt} width="1200" height="900" loading={index < 3 ? "eager" : "lazy"} decoding="async" className="relative h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.015]" />
                       {entry.pinned && <span title={text("Pinned work", "置顶作品")} className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full border border-warm/65 bg-background/80 text-sm text-warm shadow-lg backdrop-blur"><span className="sr-only">{text("Pinned work", "置顶作品")}</span><span aria-hidden="true">✦</span></span>}
                     </div>
-                    <div className={`flex flex-col p-4 ${layout.wide ? "lg:justify-between lg:p-6" : ""}`}>
+                    <div className="flex w-full flex-col p-4">
                       <div>
                         <div className="flex items-baseline justify-between gap-4">
-                          <h3 className={`font-display font-semibold transition-colors group-hover:text-accent ${layout.wide ? "text-xl lg:text-2xl" : "text-lg"}`}>{entry.title}</h3>
+                          <h3 className="font-display text-lg font-semibold transition-colors group-hover:text-accent">{entry.title}</h3>
                           <span className="font-mono text-[10px] text-muted-foreground">{entry.year}</span>
                         </div>
                       </div>
