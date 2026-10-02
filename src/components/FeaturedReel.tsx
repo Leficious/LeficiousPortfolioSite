@@ -6,7 +6,7 @@ type FeaturedReelProps = {
   id: string;
   title: string;
   description: string;
-  eyebrow: string;
+  eyebrow?: string;
   thumbnailSrc?: string;
 };
 
@@ -18,12 +18,12 @@ function PlayIcon() {
   );
 }
 
-export function FeaturedReel({ id, title, description, eyebrow, thumbnailSrc }: FeaturedReelProps) {
+export function FeaturedReel({ id, title, description, thumbnailSrc }: FeaturedReelProps) {
   const [active, setActive] = useState(false);
   const { isChinese, text } = useLanguage();
 
   return (
-    <article className="group grid overflow-hidden rounded-xl border border-border bg-surface/45 shadow-[0_24px_80px_rgba(0,0,0,0.14)] lg:grid-cols-[minmax(0,1.55fr)_minmax(260px,0.45fr)]">
+    <article className="group overflow-hidden rounded-xl border border-border bg-surface/45">
       <div className="relative aspect-video overflow-hidden bg-black">
         {active ? (
           <iframe
@@ -45,7 +45,8 @@ export function FeaturedReel({ id, title, description, eyebrow, thumbnailSrc }: 
               alt=""
               width="1280"
               height="720"
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
               decoding="async"
               className="h-full w-full object-cover opacity-75 grayscale-[15%] transition duration-500 group-hover:scale-[1.015] group-hover:opacity-90 group-hover:grayscale-0"
               onError={(event) => {
@@ -67,18 +68,13 @@ export function FeaturedReel({ id, title, description, eyebrow, thumbnailSrc }: 
         )}
       </div>
 
-      <div className="relative flex flex-col justify-between border-t border-border/60 p-6 sm:p-8 lg:border-l lg:border-t-0">
-        <span aria-hidden="true" className="absolute right-5 top-1 font-display text-7xl font-semibold text-foreground/[0.035]">▶</span>
-        <div className="relative">
-          <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{eyebrow}</p>
-          <h3 className="mt-5 font-display text-2xl font-semibold leading-tight"><FormattedText>{title}</FormattedText></h3>
-          <p className={`mt-4 text-sm leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}><FormattedText>{description}</FormattedText></p>
-        </div>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border/60 p-4 sm:px-6">
+          <p className={`max-w-2xl text-sm leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}><FormattedText>{description}</FormattedText></p>
         <a
           href={`https://youtu.be/${id}`}
           target="_blank"
           rel="noreferrer"
-          className="relative mt-10 border-t border-border/60 pt-5 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-accent"
+          className="shrink-0 py-2 text-xs text-muted-foreground transition-colors hover:text-accent"
         >
           {text("Open on YouTube", "在 YouTube 打开")} ↗
         </a>

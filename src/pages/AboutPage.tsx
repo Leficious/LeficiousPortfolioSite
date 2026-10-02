@@ -110,7 +110,7 @@ export function AboutPage() {
                 {text("Technical / Game designer", "技术设计 / 游戏设计")}
               </div>
               <h1 className="mt-7 max-w-3xl break-words font-display text-5xl font-semibold leading-[0.95] text-balance sm:text-6xl lg:text-7xl">
-                {text("Technical design, gameplay systems, ", "技术设计、玩法系统与")}<span className="text-accent">{text("3D production.", "3D 制作。")}</span>
+                {text("About me", "关于我")}
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
                 {text("I started out in 3D art. Over time I became more interested in what players could do with the things I was building, so I moved into game design. Combat ended up being the part I enjoyed most. Technical design also lets me stay involved in how the work is built, which suits me.", "我最早做的是 3D 美术，后来逐渐把重心转向游戏设计。比起只完成一个资产，我更想知道玩家能拿它做什么。现在我主要做战斗与技术设计，也会继续参与动画、工具和玩法实现。")}

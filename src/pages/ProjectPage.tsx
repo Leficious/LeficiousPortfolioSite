@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { CodeBlock } from "../components/CodeBlock";
 import { FormattedText } from "../components/FormattedText";
 import { Media } from "../components/Media";
+import { FeaturedReel } from "../components/FeaturedReel";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
 import { galleryEntries } from "../lib/gallery";
@@ -16,6 +17,7 @@ export function ProjectPage() {
   const sourceProject = getProject(slug);
   if (!sourceProject) return <NotFoundPage message={text("Project not found", "未找到项目")} />;
   const project = localizeProject(sourceProject, isChinese);
+  const leadVideo = project.slug !== "sacred-forest" && project.media[0]?.type === "youtube" ? project.media[0] : null;
 
   const index = projects.findIndex((item) => item.slug === project.slug);
   const next = localizeProject(projects[(index + 1) % projects.length], isChinese);
@@ -34,7 +36,8 @@ export function ProjectPage() {
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Stack", "技术栈")}</dt><dd className="flex flex-wrap gap-1.5">{project.tags.map((tag) => <span key={tag} className="rounded-full border border-border bg-surface px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{tag}</span>)}</dd></div>
           </dl>
         </header>
-        <div className="mt-12 aspect-video overflow-hidden rounded-lg border border-border bg-surface"><img src={project.cover} alt={`${project.title}${text(" cover", "封面")}`} width="1600" height="900" decoding="async" fetchPriority="high" className="h-full w-full object-cover" /></div>
+        <div className="mt-8">{leadVideo ? <FeaturedReel id={leadVideo.id} title={project.title} description={leadVideo.caption ?? text("Gameplay walkthrough", "实机演示")} thumbnailSrc={project.cover} /> : <div className="aspect-video overflow-hidden rounded-lg border border-border bg-surface"><img src={project.cover} alt={`${project.title}${text(" cover", "封面")}`} width="1600" height="900" decoding="async" fetchPriority="high" className="h-full w-full object-cover" /></div>}</div>
+        {project.sections && <nav aria-label={text("Project sections", "项目章节")} className="mt-6 flex flex-wrap gap-2">{project.sections.map((section, sectionIndex) => <Link key={section.title} to={`#section-${sectionIndex + 1}`} className="rounded-full border border-border px-3 py-2 text-sm text-muted-foreground hover:text-accent">{section.title}</Link>)}</nav>}
         <section className="mt-10 overflow-hidden rounded-lg border border-border bg-surface/45" aria-labelledby="project-brief-title">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 px-5 py-4 sm:px-6">
             <h2 id="project-brief-title" className="font-mono text-[10px] uppercase tracking-[0.22em] text-warm">{text("Project brief", "项目概览")}</h2>
@@ -72,9 +75,9 @@ export function ProjectPage() {
             )}
           </div>
         </section>
-        {project.media.length > 0 && <section className="mt-16 grid gap-10 md:grid-cols-12"><div className="md:col-span-3"><h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">{text("Media", "实机演示")}</h2></div><div className="space-y-8 md:col-span-9">{project.media.map((item, mediaIndex) => <Media key={mediaIndex} item={item} />)}</div></section>}
+        {project.media.length > (leadVideo ? 1 : 0) && <section className="mt-16 grid gap-10 md:grid-cols-12"><div className="md:col-span-3"><h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">{text("Media", "实机演示")}</h2></div><div className="space-y-8 md:col-span-9">{project.media.slice(leadVideo ? 1 : 0).map((item, mediaIndex) => <Media key={mediaIndex} item={item} />)}</div></section>}
         {project.sections?.map((section, sectionIndex) => (
-          <section key={section.title} className="relative mt-20 border-t border-border/60 pt-10 md:mt-28 md:pt-14">
+          <section id={`section-${sectionIndex + 1}`} key={section.title} className="relative mt-20 scroll-mt-28 border-t border-border/60 pt-10 md:mt-28 md:pt-14">
             <span aria-hidden="true" className="absolute right-0 top-4 font-display text-7xl font-semibold text-foreground/[0.025] md:text-9xl">{String(sectionIndex + 1).padStart(2, "0")}</span>
             <div className="relative grid gap-8 md:grid-cols-12 md:gap-10">
               <div className="md:col-span-3">

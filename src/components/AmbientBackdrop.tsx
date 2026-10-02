@@ -209,7 +209,7 @@ export function AmbientBackdrop() {
         }
 
         if (node.label) {
-          context.font = '8px "JetBrains Mono", monospace';
+          context.font = '8px "JetBrains Mono Variable", monospace';
           context.textAlign = node.side === "left" ? "left" : "right";
           context.fillStyle = `rgba(148, 176, 188, ${0.28 + wake * 0.5})`;
           context.fillText(node.label, node.drawX + (node.side === "left" ? 9 : -9), node.drawY - 8);

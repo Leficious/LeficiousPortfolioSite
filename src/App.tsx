@@ -1,7 +1,6 @@
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AmbientBackdrop } from "./components/AmbientBackdrop";
-import { SignalAcquisition } from "./components/SignalAcquisition";
 import { SiteNav } from "./components/SiteNav";
 import { HomePage } from "./pages/HomePage";
 import { useLanguage } from "./lib/language";
@@ -14,41 +13,8 @@ const ProjectPage = lazy(() => import("./pages/ProjectPage").then((module) => ({
 export function App() {
   const { text } = useLanguage();
   const { pathname, hash } = useLocation();
-  const supportsViewTransitions = typeof document !== "undefined" && "startViewTransition" in document;
-  const isHome = pathname === "/" || pathname === "/zh";
-  const [signalActive, setSignalActive] = useState(() => {
-    if (typeof window === "undefined" || !isHome) return false;
-
-    try {
-      return (
-        sessionStorage.getItem("signal-acquisition-seen") !== "1" &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      );
-    } catch {
-      return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    }
-  });
-  const [suppressInitialRouteReveal, setSuppressInitialRouteReveal] = useState(signalActive);
   const previousLocation = useRef({ pathname, hash });
-
   useEffect(() => {
-    if (!signalActive) return;
-
-    try {
-      sessionStorage.setItem("signal-acquisition-seen", "1");
-    } catch {
-      // Session storage can be unavailable in privacy-restricted contexts.
-    }
-
-    const timer = window.setTimeout(() => setSignalActive(false), 1300);
-    return () => window.clearTimeout(timer);
-  }, [signalActive]);
-
-  useEffect(() => {
-    if (!isHome) setSuppressInitialRouteReveal(false);
-  }, [isHome]);
-
-  useLayoutEffect(() => {
     const previous = previousLocation.current;
     previousLocation.current = { pathname, hash };
 
@@ -58,20 +24,24 @@ export function App() {
       return;
     }
 
-    const frame = window.requestAnimationFrame(() => {
-      document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-
-    return () => window.cancelAnimationFrame(frame);
+    const scrollToTarget = () => {
+      const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (!target) return false;
+      target.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
+      return true;
+    };
+    if (scrollToTarget()) return;
+    const observer = new MutationObserver(() => { if (scrollToTarget()) observer.disconnect(); });
+    observer.observe(document.getElementById("root")!, { childList: true, subtree: true });
+    return () => observer.disconnect();
   }, [pathname, hash]);
 
   return (
-    <div className={`relative min-h-screen ${signalActive ? "signal-intro-running" : ""} ${suppressInitialRouteReveal && isHome ? "suppress-initial-route-reveal" : ""}`}>
+    <div className="relative min-h-screen">
       <AmbientBackdrop />
-      <SignalAcquisition active={signalActive} />
       <div className="relative z-10">
         <SiteNav />
-        <div key={pathname} className={`route-stage ${supportsViewTransitions ? "" : "route-stage-fallback"}`}>
+        <div key={pathname} className="route-stage">
           <Suspense fallback={<div className="mx-auto min-h-[70vh] max-w-6xl px-6 py-24" aria-live="polite"><span className="sr-only">{text("Loading page", "页面加载中")}</span></div>}>
             <Routes>
               <Route path="/" element={<HomePage />} />

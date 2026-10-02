@@ -61,7 +61,7 @@ export function SoftwareSummary({ software }: Pick<SoftwareStackProps, "software
   const summary = `${visible.join(" · ")}${remaining > 0 ? ` · +${remaining}` : ""}`;
 
   return (
-    <p aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`} className="flex items-baseline gap-2 font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
+    <p aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`} className="flex items-baseline gap-2 text-xs text-muted-foreground">
       <span className="shrink-0 text-accent/80">{text("Toolkit", "工具")}</span>
       <span className="min-w-0 truncate">{summary}</span>
     </p>

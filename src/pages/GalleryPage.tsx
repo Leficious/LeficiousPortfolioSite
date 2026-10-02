@@ -1,7 +1,6 @@
-import { useCallback, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { FeaturedReel } from "../components/FeaturedReel";
-import { FormattedText } from "../components/FormattedText";
 import { GalleryLightbox } from "../components/GalleryLightbox";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
@@ -22,22 +21,33 @@ function getCardLayout(index: number) {
   return {
     wide,
     card: wide
-      ? "sm:col-span-2 lg:col-span-8 lg:grid lg:grid-cols-[minmax(0,1.45fr)_minmax(220px,0.55fr)]"
+      ? "sm:col-span-2 lg:col-span-8"
       : "lg:col-span-4",
     media: wide
-      ? "aspect-[16/10] sm:aspect-[16/8] lg:aspect-auto lg:min-h-[320px]"
+      ? "aspect-[16/9]"
       : aspectClasses.landscape,
   };
 }
 
 export function GalleryPage() {
   const { isChinese, text, localizedPath } = useLanguage();
-  const [activeTag, setActiveTag] = useState<GalleryTag | "All">("All");
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const requestedTag = searchParams.get("tag");
+  const activeTag = galleryTags.includes(requestedTag as GalleryTag) ? requestedTag as GalleryTag : "All";
+  const setActiveTag = (tag: GalleryTag | "All") => {
+    const next = new URLSearchParams(searchParams);
+    if (tag === "All") next.delete("tag"); else next.set("tag", tag);
+    setSearchParams(next, { replace: true });
+  };
   const [slide, setSlide] = useState(0);
   const triggerRef = useRef<HTMLElement | null>(null);
   const selectedSource = galleryEntries.find((entry) => entry.id === searchParams.get("entry")) ?? null;
   const selected = selectedSource ? localizeGalleryEntry(selectedSource, isChinese) : null;
+  useEffect(() => {
+    if (!selectedSource) triggerRef.current?.focus({ preventScroll: true });
+  }, [selectedSource]);
 
   const visibleEntries = useMemo(
     () => {
@@ -50,13 +60,19 @@ export function GalleryPage() {
   const openEntry = useCallback((entry: GalleryEntry) => {
     triggerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setSlide(0);
-    setSearchParams({ entry: entry.id }, { replace: true });
-  }, [setSearchParams]);
+    const next = new URLSearchParams(searchParams);
+    next.set("entry", entry.id);
+    setSearchParams(next, { state: { galleryEntryOpened: true } });
+  }, [searchParams, setSearchParams]);
 
   const closeEntry = useCallback(() => {
-    setSearchParams({}, { replace: true });
-    window.requestAnimationFrame(() => triggerRef.current?.focus());
-  }, [setSearchParams]);
+    if (location.state?.galleryEntryOpened) navigate(-1);
+    else {
+      const next = new URLSearchParams(searchParams);
+      next.delete("entry");
+      setSearchParams(next, { replace: true });
+    }
+  }, [location.state, navigate, searchParams, setSearchParams]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -66,8 +82,7 @@ export function GalleryPage() {
           <section className="route-reveal border-b border-border/60 py-10 md:py-14" aria-labelledby="environment-reel-title">
             <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Featured reel", "精选作品")}</p>
-                <h2 id="environment-reel-title" className="mt-3 font-display text-2xl font-semibold sm:text-3xl">{text("Environments and props.", "环境与道具。")}</h2>
+                <h1 id="environment-reel-title" className="font-display text-2xl font-semibold sm:text-3xl">{text("Environment & Props Reel", "环境与道具作品集")}</h1>
               </div>
               <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">3D · {text("Environment", "环境")} · {text("Realtime", "实时")} · {text("Props", "道具")}</span>
             </div>
@@ -129,10 +144,9 @@ export function GalleryPage() {
                           <h3 className={`font-display font-semibold transition-colors group-hover:text-accent ${layout.wide ? "text-xl lg:text-2xl" : "text-lg"}`}>{entry.title}</h3>
                           <span className="font-mono text-[10px] text-muted-foreground">{entry.year}</span>
                         </div>
-                        {layout.wide && <p className="mt-4 text-sm leading-relaxed text-muted-foreground"><FormattedText>{entry.description}</FormattedText></p>}
                       </div>
                       <div>
-                        <p className="mt-4 overflow-hidden border-t border-border/60 pt-3 text-xs leading-relaxed text-muted-foreground [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"><span className="font-mono text-[8px] uppercase tracking-[0.16em] text-accent">{text("Contribution", "我的工作")} · </span>{entry.contribution}</p>
+                        <p className="mt-4 border-t border-border/60 pt-3 text-sm leading-relaxed text-muted-foreground"><span className="text-xs text-accent">{text("Contribution", "我的工作")} · </span>{entry.contribution}</p>
                         <div className="mt-3"><SoftwareSummary software={entry.software} /></div>
                       </div>
                     </div>

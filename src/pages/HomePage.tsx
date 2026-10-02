@@ -14,16 +14,16 @@ export function HomePage() {
     <div className="min-h-screen bg-background text-foreground">
       <Seo title={text("Leficious — Technical & Combat Design Portfolio", "Leficious — 技术设计与战斗设计作品集")} description={text("Selected work by Leficious across combat design, gameplay systems, technical animation, AI, and 3D production for games.", "Leficious 的个人作品集，涵盖战斗设计、玩法系统、技术动画、游戏 AI 与 3D 制作。")} path={localizedPath("/")} />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
-        <section className="route-reveal border-x border-b border-border/60 px-6 py-10 sm:px-10 md:py-14 lg:px-14" aria-labelledby="technical-reel-title">
+        <section className="route-reveal border-b border-border/60 py-8 md:py-12" aria-labelledby="technical-reel-title">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Featured reel", "精选视频")}</p>
-              <h2 id="technical-reel-title" className="mt-3 font-display text-2xl font-semibold sm:text-3xl">{text("Technical game design.", "游戏技术设计。")}</h2>
+              <h1 id="technical-reel-title" className="font-display text-2xl font-semibold sm:text-3xl">{text("Technical Game Design Reel", "游戏技术设计作品集")}</h1>
             </div>
-            <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">{text("Selected work", "精选作品")} · 2026</span>
+            <span className="text-xs text-muted-foreground">2026</span>
           </div>
           <FeaturedReel
             id="rVIavxdutJE"
+            thumbnailSrc="/reels/technical-design-reel-2026.jpg"
             title={text("Technical Game Design Reel 2026", "2026 游戏技术设计作品集")}
             description={text("A quick look at the combat systems, gameplay prototypes, enemies, and technical problem-solving behind my recent work.", "快速展示近期项目中的战斗系统、玩法原型、敌人设计与技术实现。")}
             eyebrow={text("Primary reel · 2026", "技术设计 · 2026")}
@@ -33,8 +33,7 @@ export function HomePage() {
         <section id="selected-work" className="route-reveal scroll-mt-20 py-16 md:py-24">
           <div className="mb-12 grid gap-6 border-b border-border/60 pb-10 md:grid-cols-12 md:items-end">
             <div className="md:col-span-8">
-              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Selected work", "精选项目")}</p>
-              <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl">{text("Systems and designs built for ", "从原型到")}<span className="text-accent">{text("iteration.", "反复打磨。")}</span></h2>
+              <h2 className="font-display text-3xl font-semibold leading-tight sm:text-4xl">{text("Selected projects", "精选项目")}</h2>
               <p className="zh-readable mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{text("A closer look at how I approached combat, gameplay AI, modular systems, and the production work needed to make them real.", "这些项目记录了战斗、玩法 AI 和模块化系统从原型到实机的制作过程。")}</p>
             </div>
             <div className="md:col-span-4 md:text-right">

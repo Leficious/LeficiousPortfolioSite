@@ -144,7 +144,6 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
               <Link
                 to={localizedPath(entry.projectUrl)}
                 viewTransition
-                onClick={onClose}
                 className="mt-6 inline-flex items-center gap-2 rounded-full border border-accent/60 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground"
               >
                 {isChinese ? "查看完整项目" : entry.projectLabel ?? "View project"} <span aria-hidden="true">→</span>

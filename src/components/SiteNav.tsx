@@ -30,6 +30,7 @@ export function SiteNav() {
           >
             {text("Contact", "联系")}
           </Link>
+          <a href={language === "zh" ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"} download className="text-accent hover:text-foreground">{text("Résumé", "简历")}</a>
         </nav>
         <div className="hidden h-4 w-px bg-border sm:col-start-3 sm:row-start-1 sm:block" aria-hidden="true" />
         <div className="signal-nav-enter col-start-2 row-start-1 flex items-center rounded-full border border-border/80 bg-surface/65 p-0.5 text-[10px] font-semibold tracking-[0.04em] shadow-sm sm:col-start-4 sm:row-start-1 sm:text-[11px]" aria-label={text("Choose language", "选择语言")}>
