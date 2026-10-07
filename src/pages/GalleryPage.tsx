@@ -74,6 +74,13 @@ export function GalleryPage() {
               description={text("Environment art, props, material work, foliage, and realtime scene assembly across game-focused projects.", "展示游戏项目中的环境美术、道具、材质、植被与实时场景搭建。")}
               eyebrow={text("Environment + props · 2026", "环境 · 道具 · 2026")}
             />
+            {!isChinese && (
+              <div className="mt-5 flex justify-end">
+                <a href="/resume/Leficious_3D_Environment_Artist_Resume.pdf" download className="inline-flex items-center gap-3 rounded-full border border-accent/60 bg-surface/55 px-5 py-3 text-sm font-medium text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+                  Download 3D environment art résumé <span aria-hidden="true">↓</span>
+                </a>
+              </div>
+            )}
           </section>
 
           <section className="route-reveal py-10 md:py-14" aria-labelledby="gallery-filter-title">

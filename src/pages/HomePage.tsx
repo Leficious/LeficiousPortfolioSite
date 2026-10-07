@@ -28,6 +28,13 @@ export function HomePage() {
             description={text("A quick look at the combat systems, gameplay prototypes, enemies, and technical problem-solving behind my recent work.", "快速展示近期项目中的战斗系统、玩法原型、敌人设计与技术实现。")}
             eyebrow={text("Primary reel · 2026", "技术设计 · 2026")}
           />
+          {!isChinese && (
+            <div className="mt-5 flex justify-end">
+              <a href="/resume/Leficious_Technical_Game_Designer_Resume.pdf" download className="inline-flex items-center gap-3 rounded-full border border-accent/60 bg-surface/55 px-5 py-3 text-sm font-medium text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+                Download technical game design résumé <span aria-hidden="true">↓</span>
+              </a>
+            </div>
+          )}
         </section>
 
         <section id="selected-work" className="route-reveal scroll-mt-20 py-16 md:py-24">

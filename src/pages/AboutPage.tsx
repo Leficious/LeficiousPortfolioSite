@@ -188,9 +188,9 @@ export function AboutPage() {
               <h2 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl">{text("Let's make something ", "一起做出真正")}<span className="text-accent">{text("feel good", "好玩")}</span>{text(" to play.", "的东西。")}</h2>
               <p className="zh-readable mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">{text("If you're building an interesting combat system, gameplay prototype, or anything that needs a designer who can get under the hood, I'd be glad to hear about it.", "如果你正在制作有意思的战斗系统或玩法原型，需要一位愿意亲自参与实现的设计师，欢迎联系我。")}</p>
               <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />{text("Focused on technical, combat, and gameplay design · open to adjacent opportunities", "求职方向：技术设计 / 战斗策划 / 玩法策划 · 也欢迎相关岗位")}</div>
-              <a href={isChinese ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"} download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
-                {text("Download technical design résumé", "下载中文游戏开发简历")} <span aria-hidden="true">↓</span>
-              </a>
+              {isChinese && <a href="/resume/Kevin_Shan_CN_Game_Resume.pdf" download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
+                下载中文游戏开发简历 <span aria-hidden="true">↓</span>
+              </a>}
             </div>
 
             <div className="route-reveal-list grid gap-3 sm:grid-cols-2">
