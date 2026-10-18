@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { render } from "../.prerender/entry-server.js";
 
-const paths = ["/", "/about", "/gallery", "/projects/starshore", "/projects/fallen-valkyrie", "/projects/sacred-forest"];
+const paths = ["/", "/about", "/gallery", "/projects/an-echo-has-no-shape", "/projects/starshore", "/projects/fallen-valkyrie", "/projects/sacred-forest"];
 for (const path of [...paths, ...paths.map(path => path === "/" ? "/zh" : `/zh${path}`)]) {
   const file = path === "/" ? "dist/index.html" : `dist${path}/index.html`;
   const template = await readFile(file, "utf8");

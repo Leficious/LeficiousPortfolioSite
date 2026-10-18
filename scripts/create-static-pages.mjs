@@ -25,6 +25,17 @@ const routes = [
     lang: "en",
   },
   {
+    path: "/projects/an-echo-has-no-shape",
+    title: "An Echo Has No Shape — Leficious",
+    description:
+      "A 4-week first-person acoustic exploration and puzzle labyrinth built around a single, unchanging echolocation verb across three regions that subvert how the world answers back.",
+    image: "/projects/an-echo-has-no-shape/hero-poster.webp",
+    imageWidth: 1920,
+    imageHeight: 1080,
+    schemaType: "CreativeWork",
+    lang: "en",
+  },
+  {
     path: "/projects/starshore",
     title: "Starshore — Leficious",
     description:
@@ -85,6 +96,17 @@ const routes = [
     imageWidth: 1200,
     imageHeight: 630,
     schemaType: "ProfilePage",
+    lang: "zh-CN",
+  },
+  {
+    path: "/zh/projects/an-echo-has-no-shape",
+    title: "回声无形 — Leficious",
+    description:
+      "历时 4 周独立完成的第一人称声学探索与解谜迷宫，仅凭单一不变的“释放回声”动词贯穿三大区域，通过颠覆世界回应玩家的认知规则来推进体验。",
+    image: "/projects/an-echo-has-no-shape/hero-poster.webp",
+    imageWidth: 1920,
+    imageHeight: 1080,
+    schemaType: "CreativeWork",
     lang: "zh-CN",
   },
   {

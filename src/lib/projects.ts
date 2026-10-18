@@ -1,7 +1,9 @@
+import type { EchoGddWidgetId } from "../components/EchoGddComponents";
+
 export type MediaItem =
-  | { type: "image"; src: string; alt: string; caption?: string; width?: number; height?: number }
+  | { type: "image"; src: string; alt: string; caption?: string; width?: number; height?: number; fullWidth?: boolean; naturalAspect?: boolean }
   | { type: "video"; src: string; poster?: string; caption?: string }
-  | { type: "youtube"; id: string; caption?: string };
+  | { type: "youtube"; id: string; caption?: string; thumbnailSrc?: string };
 
 export type CodeSnippet = {
   language: "cpp" | "python";
@@ -13,6 +15,7 @@ export type ProjectSection = {
   eyebrow?: string;
   title: string;
   body: string[];
+  widget?: EchoGddWidgetId;
   media?: MediaItem[];
 };
 
@@ -24,6 +27,7 @@ export type Project = {
   summary: string;
   tags: string[];
   cover: string;
+  heroImage?: string;
   coverWidth: number;
   coverHeight: number;
   designGoal: string;
@@ -33,6 +37,7 @@ export type Project = {
   relatedGalleryIds?: string[];
   overview: string;
   authorNote?: string;
+  externalLink?: { url: string; label: string };
   responsibilities: string[];
   media: MediaItem[];
   snippets: CodeSnippet[];
@@ -40,6 +45,278 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    slug: "an-echo-has-no-shape",
+    title: "An Echo Has No Shape",
+    role: "Solo Game Designer & Developer",
+    year: "2026",
+    summary:
+      "A 4-week first-person acoustic exploration and puzzle labyrinth built around a single, unchanging echolocation verb across three regions that subvert how the world answers back.",
+    tags: ["Unity", "C#", "Game Design", "Level Design"],
+    cover: "/projects/an-echo-has-no-shape/cover.webp",
+    heroImage: "/projects/an-echo-has-no-shape/hero-poster.webp",
+    coverWidth: 1920,
+    coverHeight: 1080,
+    designGoal:
+      "Sustain a multi-region first-person labyrinth on a single, unchanging echolocation input (Press E) without ability creep, combat, or non-diegetic UI.",
+    ownership:
+      "Solo game design, level and labyrinth layout, C# gameplay and regional echo-state systems, diegetic wayfinding, audio-fog crossfades, and world assembly.",
+    scope:
+      "4-week solo project in Unity 6 (URP) developed for Peter Brinson's course at USC around the Situated Player Role of The Traveler (World as Presence).",
+    outcomes: [
+      "Built a continuous ~550m × 550m sightless acoustic basin connecting a central hub and three regional labyrinths with zero HUD markers, minimaps, or loading screens.",
+      "Designed three distinct epistemic inversions of the same E input: adversarial signal cross-examination (Glacial Ocean), 3-stage memory synthesis (Unremembered City), and a 3.0s silence-and-reply cadence (Illusory Woods).",
+    ],
+    relatedGalleryIds: ["an-echo-has-no-shape"],
+    overview:
+      "An Echo Has No Shape is a solo 4-week project built in Unity 6 for Peter Brinson's class at USC around the Situated Player Role of The Traveler (World as Presence). To focus the entire month on level design and systemic puzzle variation, I kept the player's action set fixed to a single button (Cast Echo on E, plus Attune on F) across three regional labyrinths where progression comes from changing how the world answers back.",
+    authorNote:
+      "Most echolocation games treat sound as a binary flashlight in the dark: once the pulse reveals the room, the mechanic stops evolving. Here, the title is literal: an echo has no intrinsic shape of its own. Across the three regions, the player's relationship to their voice shifts from skeptical verification, to bearing witness, to relinquishing control.",
+    externalLink: {
+      url: "https://leficious.itch.io/an-echo-has-no-shape",
+      label: "Play on itch.io",
+    },
+    responsibilities: [
+      "Designed the core 1-verb loop and three regional rulesets (signal deception, multi-perspective synthesis, and silence-and-reply).",
+      "Assembled the ~550m × 550m continuous acoustic basin with a 4-tier sightless wayfinding stack.",
+      "Tuned the Illusory Woods 3.0s silence threshold and 0.35s active wave-overwrite feedback.",
+    ],
+    media: [
+      {
+        type: "youtube",
+        id: "AAVAfjhv6IA",
+        caption: "Official trailer for An Echo Has No Shape.",
+        thumbnailSrc: "/projects/an-echo-has-no-shape/hero-poster.webp",
+      },
+      {
+        type: "youtube",
+        id: "fQMKXwIIvok",
+        caption: "Full uncut playthrough across all three regions and the Golden Gate ending.",
+        thumbnailSrc: "/projects/an-echo-has-no-shape/cover.webp",
+      },
+    ],
+    snippets: [],
+    sections: [
+      {
+        eyebrow: "01 / Philosophy",
+        title: "Presence and one-verb restraint",
+        body: [
+          "In Peter Brinson's framework, narrative for the Traveler is constituted by presence: where the player walks, when they pause, and what they stop to hear determine what the world reveals. The brief called for a multicursal labyrinth that moves the player from feeling lost in wonder, to recognizing a pattern, to finding their way through interpretation.",
+          "Drawing on Samuel Beckett's sparse landscapes and Jorge Luis Borges's labyrinths, monumental ruins and stone tablets sit inside an open mist with no exposition dump. Every presence in the basin projects a voice into the void, mistaking what bounces back for the whole world.",
+        ],
+        widget: "traveler-arc",
+        media: [
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/banner-siren-clash.webp",
+            alt: "An Echo Has No Shape cinemascope key art showing white-gold player echo colliding with magenta Siren waves",
+            caption: "Key visual: the Traveler's ivory-gold echo pulse colliding with the Siren's magenta interference across the abyssal basin.",
+            width: 1920,
+            height: 420,
+            fullWidth: true,
+            naturalAspect: true,
+          },
+        ],
+      },
+      {
+        eyebrow: "02 / Epistemic Matrix",
+        title: "The Rule of Three matrix",
+        body: [
+          "Rather than unlocking new abilities, each region asks what assumption the player has formed about their echo and subverts it. Keeping the input identical meant every region had to recontextualize how the returning signal is read.",
+        ],
+        widget: "rule-of-three-matrix",
+      },
+      {
+        eyebrow: "03 / Glacial Ocean",
+        title: "Signal vs. deception",
+        body: [
+          "First-person platforming across ice floes becomes routine if the echo is always reliable, and frustrating if jumps demand tight dexterity. The Glacial Ocean places the tension in evaluating where to jump rather than in physical execution.",
+          "Across two true routes and a false shortcut branch, ice floes are split into permanent anchor islands, hidden solid stepping stones revealed in white by the player's echo, and non-solid decoy floes that submerge when stepped on. Three unseen Siren emitters broadcast a magenta wave every 7 seconds that overwrites 35% of revealed ice in pink, erases 40% back into fog, and falsely lights 70% of decoys in pink, forcing players to cross-examine the Siren's song with their own voice.",
+        ],
+        widget: "glacier-state-machine",
+        media: [
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/map-02-glacial-ocean.webp",
+            alt: "Region I Level Design Map: Glacial Ocean showing solid anchor floes, hidden stepping stones, decoy floes, and Siren emitters",
+            caption: "Architectural level design map of the Glacial Ocean: solid anchor floes (white), hidden solid stepping stones (cyan), non-solid Siren traps (magenta dashed), and 62m Siren emitter radii.",
+            width: 1600,
+            height: 1400,
+            fullWidth: true,
+            naturalAspect: true,
+          },
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/glacier-white-echo.webp",
+            alt: "Glacial Ocean in-game view of white player echo illuminating ice floes and twin ice spires",
+            caption: "A player-cast white echo revealing solid stepping stones in front of the twin ice spires.",
+            width: 1920,
+            height: 896,
+          },
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/glacier-gold-splines.webp",
+            alt: "Glacial Ocean completed golden route and acoustic guide spline ribbon",
+            caption: "Completed Glacial Ocean route illuminated in gold alongside the acoustic guide spline ribbon.",
+            width: 1920,
+            height: 897,
+          },
+        ],
+      },
+      {
+        eyebrow: "04 / Unremembered City",
+        title: "Subjective memory synthesis",
+        body: [
+          "The Unremembered City expresses its central theme (that history is a collection of biased, incomplete projections over a ruin) entirely through spatial layout and environmental state, with zero dialogue trees.",
+          "Attuning to the central plaza tablet reveals only the skeletal street grid (Stage 0). Three statues in separate quarters project partial historical lenses: The Muse (SW) restores sanctuary courtyards and flora, The Ruler (SE) layers imperial gates and citizen silhouettes, and The Architect (NE) restores load-bearing walls and arches. Attuning out of sequence or leaving the city collapses the chain back to fog; layering all three in sequence (0 → 1 → 2 → 3) synthesizes the city into a permanent golden state.",
+        ],
+        widget: "city-sequence",
+        media: [
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/map-03-unremembered-city.webp",
+            alt: "Region II Level Design Map: Unremembered City street layout, witness statue quarters, and 0-1-2-3 attunement sequence",
+            caption: "Architectural map of the Unremembered City showing the central plaza tablet (0) and the three witness quarters: The Muse (1, SW), The Ruler (2, SE), and The Architect (3, NE).",
+            width: 1600,
+            height: 1400,
+            fullWidth: true,
+            naturalAspect: true,
+          },
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/city-stage0-neutral.webp",
+            alt: "Stage 0 Neutral Wave revealing baseline skeletal ruins and central tablet beacon",
+            caption: "Stage 0 (Neutral Wave): Baseline skeletal ruins and the central plaza beacon.",
+            width: 1920,
+            height: 900,
+          },
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/city-stage1-muse.webp",
+            alt: "Stage 1 The Muse sky-blue wave materializing cerulean fog, courtyards, birds, and flora",
+            caption: "Stage 1 (The Muse): Sky-blue fog, sanctuary courtyards, birds, and living flora.",
+            width: 1920,
+            height: 893,
+          },
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/city-stage2-ruler-arch.webp",
+            alt: "Stage 2 The Ruler crimson wave materializing imperial archway and citizen silhouettes",
+            caption: "Stage 2 (The Ruler): Imperial crimson fog, monumental archway, and citizen silhouettes.",
+            width: 1920,
+            height: 895,
+          },
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/city-stage3-architect.webp",
+            alt: "Stage 3 The Architect emerald wave restoring structural geometry and buttresses",
+            caption: "Stage 3 (The Architect): Emerald fog and load-bearing structural geometry.",
+            width: 1920,
+            height: 891,
+          },
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/city-stage4-gold-panorama.webp",
+            alt: "Stage 4 Golden Synthesis showing all three perspective groups restored simultaneously across the city",
+            caption: "Stage 4 (Golden Synthesis): All three subjective perspective groups restored simultaneously.",
+            width: 1920,
+            height: 897,
+          },
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/city-stage4-gold-street.webp",
+            alt: "Eye-level street view inside the Unremembered City during Stage 4 Golden Synthesis",
+            caption: "Eye-level street perspective inside the synthesized golden city.",
+            width: 1920,
+            height: 892,
+          },
+        ],
+      },
+      {
+        eyebrow: "05 / Illusory Woods",
+        title: "Tuning the 3-second silence",
+        body: [
+          "In the Illusory Woods, the player's own echoes maintain the barrier. Casting a white echo illuminates pass-through illusory tree walls alongside real corridor walls, making direct junctions appear blocked. To dissolve those barriers, the player must cast an echo and wait in silence so the heart of the forest can answer back with a 400m green reply wave.",
+          "If the reply delay was too short (< 1.5s), players triggered the green reply by accident; if too long (> 5.0s), restless players pressed E again on cooldown and reset the timer. Setting the delay to 3.0s and adding a 0.35s active wave overwrite (where pressing E during the forest's 5.0s hold window carves through the green wave and snaps the illusory tree walls shut) taught the silence rule purely through systemic cause and effect.",
+        ],
+        widget: "woods-telemetry-and-cadence",
+        media: [
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/map-04-illusory-woods.webp",
+            alt: "Region III Level Design Map: Illusory Woods showing dirt-corridor labyrinth, green pass-through illusory barriers, outskirts tablets, and forest reply center",
+            caption: "Architectural level design map of the Illusory Woods: pass-through illusory barriers (bright green bars) block arterial junctions until dissolved by the 400m forest reply wave.",
+            width: 1600,
+            height: 1400,
+            fullWidth: true,
+            naturalAspect: true,
+          },
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/woods-shimmer-path.webp",
+            alt: "Illusory Woods pine corridor with acoustic guide ribbon",
+            caption: "Pine corridor inside the Illusory Woods illuminated by an acoustic guide ribbon.",
+            width: 1920,
+            height: 901,
+          },
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/woods-sentinel-tower.webp",
+            alt: "Illusory Woods southwest final clearing, ruined archway, and Sentinel Tower in emerald reply glow",
+            caption: "The southwest clearing and Sentinel Tower revealed after passing through the dissolved forest barriers.",
+            width: 1920,
+            height: 900,
+          },
+        ],
+      },
+      {
+        eyebrow: "06 / World Topology",
+        title: "Sightless wayfinding",
+        body: [
+          "To maintain zero HUD markers, minimaps, or loading screens, the entire ~550m × 550m acoustic basin lives inside one continuous scene around the central Stone Monument Hub.",
+          "Players orient themselves across four spatial scales: 450m golden world reverberations and sky beacons on regional completion, volumetric fog and music crossfades across regional outskirts, acoustic guide splines that shimmer when echoed, and a visibility hierarchy separating permanent landmark silhouettes from echo-revealed terrain.",
+        ],
+        widget: "world-topology-and-wayfinding",
+        media: [
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/map-01-world-overview.webp",
+            alt: "Master World Map: The Acoustic Basin showing the Stone Monument Hub, all three regional fog bounds, and connecting guide splines",
+            caption: "Master World Map (~550m × 550m): the central Stone Monument Hub, nested inner and outer regional fog bounds, outskirts tablets, and connecting acoustic guide splines.",
+            width: 1600,
+            height: 1600,
+            fullWidth: true,
+            naturalAspect: true,
+          },
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/monument-initial-echo.webp",
+            alt: "Stone Monument Hub in initial state with white player echo and glowing prophecy tablet",
+            caption: "Stone Monument Hub (Initial State): A player echo sweeps across the monoliths and prophecy tablet.",
+            width: 1920,
+            height: 1080,
+          },
+          {
+            type: "image",
+            src: "/projects/an-echo-has-no-shape/monument-goldengate.webp",
+            alt: "Stone Monument Hub at 3/3 completion with unlocked golden trilithon gate, guide splines, and sky beacons",
+            caption: "Stone Monument Hub (3/3 Completion): Breaking all three regional silences unlocks the golden trilithon gate and illuminates the basin's guide splines and sky beacons.",
+            width: 1920,
+            height: 901,
+          },
+        ],
+      },
+      {
+        eyebrow: "07 / Retrospective",
+        title: "Design takeaways",
+        body: [
+          "1. Mechanical Restraint vs. Epistemic Variety: Keeping the player on a single E input meant progression had to come from recontextualizing how signals are read rather than expanding the action set, shifting from verification (Glacial Ocean), to synthesis (Unremembered City), to restraint (Illusory Woods).",
+          "2. Diegetic Feedback Over Text: In the Illusory Woods, tablet poetry alone did not stop players from echoing on cooldown. Adding the active wave overwrite (where a new player pulse visibly erases the forest's green reply and snaps the illusory walls shut) let players infer the 3.0s silence rule from systemic cause and effect.",
+          "3. Aligning Topology With Acoustic Rules: Each region's physical layout reinforces its mechanic: decoy floes mimic convenient shortcuts in the Glacial Ocean, three witnesses sit in separate quarters of the Unremembered City, and pass-through barriers block arterial junctions in the Illusory Woods until the player pauses to listen.",
+        ],
+      },
+    ],
+  },
   {
     slug: "starshore",
     title: "Starshore",

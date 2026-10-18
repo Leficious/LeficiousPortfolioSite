@@ -7,6 +7,8 @@ const abbreviations: Record<SoftwareName, string> = {
   "Substance 3D Painter": "SP",
   "SpeedTree": "ST",
   "Unreal Engine": "UE",
+  "Unity": "UN",
+  "C#": "C#",
   "Gaea": "GA",
   "ZBrush": "ZB",
   "Photoshop": "PS",

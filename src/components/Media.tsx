@@ -79,7 +79,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
           height={item.height ?? 900}
           loading="lazy"
           decoding="async"
-          className="aspect-video h-auto w-full bg-black/20 object-contain transition-[filter,transform] duration-300 group-hover:scale-[1.01] group-hover:brightness-110"
+          className={`${item.naturalAspect ? "" : "aspect-video "}h-auto w-full bg-black/20 object-contain transition-[filter,transform] duration-300 group-hover:scale-[1.01] group-hover:brightness-110`}
         />
         <span className="absolute bottom-3 right-3 flex items-center gap-2 rounded-sm border border-foreground/20 bg-background/85 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground opacity-0 shadow-lg backdrop-blur transition-all duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
           <ExpandIcon />
@@ -127,10 +127,10 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
   );
 }
 
-function YouTubeEmbed({ id, title }: { id: string; title: string }) {
+function YouTubeEmbed({ id, title, thumbnailSrc }: { id: string; title: string; thumbnailSrc?: string }) {
   const { text } = useLanguage();
   const [active, setActive] = useState(false);
-  const [thumbnail, setThumbnail] = useState(`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`);
+  const [thumbnail, setThumbnail] = useState(thumbnailSrc ?? `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`);
 
   if (active) {
     return (
@@ -176,7 +176,7 @@ export function Media({ item }: { item: MediaItem }) {
         {item.type === "video" && <video src={item.src} poster={item.poster} controls playsInline preload="metadata" className="h-auto w-full" />}
         {item.type === "youtube" && (
           <div className="relative aspect-video w-full">
-            <YouTubeEmbed id={item.id} title={item.caption ?? "Project video"} />
+            <YouTubeEmbed id={item.id} title={item.caption ?? "Project video"} thumbnailSrc={item.thumbnailSrc} />
           </div>
         )}
       </div>

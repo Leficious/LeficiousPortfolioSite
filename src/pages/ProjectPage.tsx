@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { CodeBlock } from "../components/CodeBlock";
+import { EchoGddWidget } from "../components/EchoGddComponents";
 import { FormattedText } from "../components/FormattedText";
 import { Media } from "../components/Media";
 import { FeaturedReel } from "../components/FeaturedReel";
@@ -18,6 +19,7 @@ export function ProjectPage() {
   if (!sourceProject) return <NotFoundPage message={text("Project not found", "未找到项目")} />;
   const project = localizeProject(sourceProject, isChinese);
   const leadVideo = project.slug !== "sacred-forest" && project.media[0]?.type === "youtube" ? project.media[0] : null;
+  const heroVisual = project.heroImage ?? project.cover;
 
   const index = projects.findIndex((item) => item.slug === project.slug);
   const next = localizeProject(projects[(index + 1) % projects.length], isChinese);
@@ -34,9 +36,21 @@ export function ProjectPage() {
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Role", "职责")}</dt><dd className="text-sm">{project.role}</dd></div>
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Year", "年份")}</dt><dd className="text-sm">{project.year}</dd></div>
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Stack", "技术栈")}</dt><dd className="flex flex-wrap gap-1.5">{project.tags.map((tag) => <span key={tag} className="rounded-full border border-border bg-surface px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{tag}</span>)}</dd></div>
+            {project.externalLink && (
+              <div className="pt-1">
+                <a
+                  href={project.externalLink.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-accent/60 bg-surface/65 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground"
+                >
+                  {project.externalLink.label} <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            )}
           </dl>
         </header>
-        <div className="mt-8">{leadVideo ? <FeaturedReel id={leadVideo.id} title={project.title} description={leadVideo.caption ?? text("Gameplay walkthrough", "实机演示")} thumbnailSrc={project.cover} /> : <div className="aspect-video overflow-hidden rounded-lg border border-border bg-surface"><img src={project.cover} alt={`${project.title}${text(" cover", "封面")}`} width="1600" height="900" decoding="async" fetchPriority="high" className="h-full w-full object-cover" /></div>}</div>
+        <div className="mt-8">{leadVideo ? <FeaturedReel id={leadVideo.id} title={project.title} description={leadVideo.caption ?? text("Gameplay walkthrough", "实机演示")} thumbnailSrc={leadVideo.thumbnailSrc ?? heroVisual} /> : <div className="aspect-video overflow-hidden rounded-lg border border-border bg-surface"><img src={heroVisual} alt={`${project.title}${text(" cover", "封面")}`} width="1600" height="900" decoding="async" fetchPriority="high" className="h-full w-full object-cover" /></div>}</div>
         {project.sections && <nav aria-label={text("Project sections", "项目章节")} className="mt-6 flex flex-wrap gap-2">{project.sections.map((section, sectionIndex) => <Link key={section.title} to={`#section-${sectionIndex + 1}`} className="rounded-full border border-border px-3 py-2 text-sm text-muted-foreground hover:text-accent">{section.title}</Link>)}</nav>}
         <section className="mt-10 overflow-hidden rounded-lg border border-border bg-surface/45" aria-labelledby="project-brief-title">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 px-5 py-4 sm:px-6">
@@ -80,17 +94,22 @@ export function ProjectPage() {
           <section id={`section-${sectionIndex + 1}`} key={section.title} className="relative mt-20 scroll-mt-28 border-t border-border/60 pt-10 md:mt-28 md:pt-14">
             <span aria-hidden="true" className="absolute right-0 top-4 font-display text-7xl font-semibold text-foreground/[0.025] md:text-9xl">{String(sectionIndex + 1).padStart(2, "0")}</span>
             <div className="relative grid gap-8 md:grid-cols-12 md:gap-10">
-              <div className="md:col-span-3">
+              <div className="min-w-0 md:col-span-3">
                 <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">{section.eyebrow}</p>
-                <h2 className="mt-3 font-display text-2xl font-semibold leading-tight">{section.title}</h2>
+                <h2 className="mt-3 break-words font-display text-2xl font-semibold leading-tight">{section.title}</h2>
               </div>
-              <div className="space-y-4 text-pretty leading-relaxed text-muted-foreground md:col-span-9">
+              <div className="min-w-0 space-y-4 text-pretty leading-relaxed text-muted-foreground md:col-span-9">
                 {section.body.map((paragraph) => <p key={paragraph}><FormattedText>{paragraph}</FormattedText></p>)}
               </div>
             </div>
+            {section.widget && <EchoGddWidget id={section.widget} />}
             {section.media && section.media.length > 0 && (
               <div className="mt-8 grid gap-5 sm:grid-cols-2 md:mt-10">
-                {section.media.map((item, mediaIndex) => <Media key={mediaIndex} item={item} />)}
+                {section.media.map((item, mediaIndex) => (
+                  <div key={mediaIndex} className={item.type === "image" && item.fullWidth ? "sm:col-span-2" : undefined}>
+                    <Media item={item} />
+                  </div>
+                ))}
               </div>
             )}
           </section>

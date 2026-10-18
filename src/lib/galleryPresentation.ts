@@ -1,6 +1,7 @@
-export const wideGalleryEntries = new Set(["fallen-valkyrie-technical-design", "water-blossoms", "sacred-forest", "hazy-city", "alien-landscape"]);
+export const wideGalleryEntries = new Set(["an-echo-has-no-shape", "fallen-valkyrie-technical-design", "water-blossoms", "sacred-forest", "hazy-city", "alien-landscape"]);
 
 export const galleryCaptions: Record<string, [string, string]> = {
+  "an-echo-has-no-shape": ["Acoustic puzzle labyrinth, level design and C# systems", "声学解谜迷宫、关卡设计与 C# 玩法系统"],
   "fallen-valkyrie-technical-design": ["Combat systems, boss AI and technical animation", "战斗系统、Boss AI 与技术动画"],
   "starshore-technical-design": ["Movement, abilities and gameplay systems", "移动、技能与玩法系统"],
   "grid-based-tactical-rpg-template": ["Grid tools, pathfinding and tactical gameplay", "网格工具、寻路与战术玩法"],

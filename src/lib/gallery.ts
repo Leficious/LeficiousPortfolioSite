@@ -20,6 +20,8 @@ export type SoftwareName =
   | "Substance 3D Painter"
   | "SpeedTree"
   | "Unreal Engine"
+  | "Unity"
+  | "C#"
   | "Gaea"
   | "ZBrush"
   | "Photoshop"
@@ -55,6 +57,37 @@ export type GalleryEntry = {
 };
 
 export const galleryEntries: GalleryEntry[] = [
+  {
+    id: "an-echo-has-no-shape",
+    title: "An Echo Has No Shape",
+    description:
+      "A first-person acoustic exploration and puzzle labyrinth built around a single, unchanging echolocation verb across three regions that subvert how the world answers back.",
+    contribution:
+      "Solo game design, level and labyrinth layout, C# gameplay and regional echo-state systems, diegetic wayfinding architecture, and world assembly",
+    software: ["Unity", "C#"],
+    year: "2026",
+    tags: ["Technical Design", "Realtime", "Environment"],
+    cover: "/projects/an-echo-has-no-shape/hero-poster.webp",
+    coverAlt: "An Echo Has No Shape key art showing player echo colliding with Siren waves",
+    aspect: "landscape",
+    pinned: true,
+    projectUrl: "/projects/an-echo-has-no-shape",
+    projectLabel: "View full GDD & case study",
+    media: [
+      { type: "image", src: "/projects/an-echo-has-no-shape/hero-poster.webp", alt: "An Echo Has No Shape key art" },
+      { type: "youtube", url: "https://www.youtube.com/watch?v=AAVAfjhv6IA", title: "An Echo Has No Shape trailer" },
+      { type: "youtube", url: "https://www.youtube.com/watch?v=fQMKXwIIvok", title: "An Echo Has No Shape full playthrough" },
+      { type: "image", src: "/projects/an-echo-has-no-shape/map-01-world-overview.webp", alt: "Master World Map: The Acoustic Basin (~550m × 550m)" },
+      { type: "image", src: "/projects/an-echo-has-no-shape/glacier-white-echo.webp", alt: "Glacial Ocean: White player echo revealing ice floes" },
+      { type: "image", src: "/projects/an-echo-has-no-shape/map-02-glacial-ocean.webp", alt: "Region I Level Design Map: Glacial Ocean" },
+      { type: "image", src: "/projects/an-echo-has-no-shape/city-stage1-muse.webp", alt: "Unremembered City Stage 1: The Muse" },
+      { type: "image", src: "/projects/an-echo-has-no-shape/city-stage4-gold-panorama.webp", alt: "Unremembered City Stage 4: Golden Synthesis" },
+      { type: "image", src: "/projects/an-echo-has-no-shape/map-03-unremembered-city.webp", alt: "Region II Level Design Map: Unremembered City" },
+      { type: "image", src: "/projects/an-echo-has-no-shape/woods-shimmer-path.webp", alt: "Illusory Woods: Pine corridor and acoustic guide shimmer" },
+      { type: "image", src: "/projects/an-echo-has-no-shape/map-04-illusory-woods.webp", alt: "Region III Level Design Map: Illusory Woods" },
+      { type: "image", src: "/projects/an-echo-has-no-shape/monument-goldengate.webp", alt: "Stone Monument Hub at 3/3 completion with unlocked Golden Gate" },
+    ],
+  },
   {
     id: "fallen-valkyrie-technical-design",
     title: "Fallen Valkyrie",
