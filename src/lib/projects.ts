@@ -38,6 +38,7 @@ export type Project = {
   overview: string;
   authorNote?: string;
   externalLink?: { url: string; label: string };
+  downloads?: Array<{ url: string; label: string }>;
   responsibilities: string[];
   media: MediaItem[];
   snippets: CodeSnippet[];
@@ -76,6 +77,16 @@ export const projects: Project[] = [
       url: "https://leficious.itch.io/an-echo-has-no-shape",
       label: "Play on itch.io",
     },
+    downloads: [
+      {
+        url: "/projects/an-echo-has-no-shape/An_Echo_Has_No_Shape_GDD.pdf",
+        label: "Download GDD (PDF)",
+      },
+      {
+        url: "/projects/an-echo-has-no-shape/An_Echo_Has_No_Shape_GDD.md",
+        label: "Download GDD (MD)",
+      },
+    ],
     responsibilities: [
       "Designed the core 1-verb loop and three regional rulesets (signal deception, multi-perspective synthesis, and silence-and-reply).",
       "Assembled the ~550m × 550m continuous acoustic basin with a 4-tier sightless wayfinding stack.",

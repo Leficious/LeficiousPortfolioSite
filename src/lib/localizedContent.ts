@@ -1,7 +1,7 @@
 import type { GalleryEntry, GalleryTag } from "./gallery";
 import type { MediaItem, Project, ProjectSection } from "./projects";
 
-type ProjectTranslation = Pick<Project, "title" | "role" | "summary" | "designGoal" | "ownership" | "scope" | "outcomes" | "overview" | "authorNote" | "responsibilities" | "externalLink"> & {
+type ProjectTranslation = Pick<Project, "title" | "role" | "summary" | "designGoal" | "ownership" | "scope" | "outcomes" | "overview" | "authorNote" | "responsibilities" | "externalLink" | "downloads"> & {
   sections: Array<Pick<ProjectSection, "eyebrow" | "title" | "body"> & { captions?: string[] }>;
   mediaCaptions?: string[];
 };
@@ -30,6 +30,16 @@ const projectTranslations: Record<string, ProjectTranslation> = {
       url: "https://leficious.itch.io/an-echo-has-no-shape",
       label: "在 itch.io 上试玩",
     },
+    downloads: [
+      {
+        url: "/projects/an-echo-has-no-shape/An_Echo_Has_No_Shape_GDD.pdf",
+        label: "下载 GDD 设定文档 (PDF)",
+      },
+      {
+        url: "/projects/an-echo-has-no-shape/An_Echo_Has_No_Shape_GDD.md",
+        label: "下载 GDD 设定文档 (MD)",
+      },
+    ],
     responsibilities: [
       "设计核心单一动词循环及三大区域规则（信号欺瞒、多视角记忆合成、静默呼应）。",
       "搭建约 550m × 550m 的连续声学盆地与四层无视觉内生寻路体系。",

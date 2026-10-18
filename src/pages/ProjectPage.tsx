@@ -36,16 +36,28 @@ export function ProjectPage() {
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Role", "职责")}</dt><dd className="text-sm">{project.role}</dd></div>
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Year", "年份")}</dt><dd className="text-sm">{project.year}</dd></div>
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Stack", "技术栈")}</dt><dd className="flex flex-wrap gap-1.5">{project.tags.map((tag) => <span key={tag} className="rounded-full border border-border bg-surface px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{tag}</span>)}</dd></div>
-            {project.externalLink && (
-              <div className="pt-1">
-                <a
-                  href={project.externalLink.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-accent/60 bg-surface/65 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground"
-                >
-                  {project.externalLink.label} <span aria-hidden="true">↗</span>
-                </a>
+            {(project.externalLink || (project.downloads && project.downloads.length > 0)) && (
+              <div className="flex flex-wrap gap-2 pt-1">
+                {project.externalLink && (
+                  <a
+                    href={project.externalLink.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-accent/60 bg-surface/65 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground"
+                  >
+                    {project.externalLink.label} <span aria-hidden="true">↗</span>
+                  </a>
+                )}
+                {project.downloads?.map((item) => (
+                  <a
+                    key={item.url}
+                    href={item.url}
+                    download
+                    className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/55 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
+                  >
+                    {item.label} <span aria-hidden="true">↓</span>
+                  </a>
+                ))}
               </div>
             )}
           </dl>
