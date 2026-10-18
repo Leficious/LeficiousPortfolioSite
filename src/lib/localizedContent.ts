@@ -35,10 +35,6 @@ const projectTranslations: Record<string, ProjectTranslation> = {
         url: "/projects/an-echo-has-no-shape/An_Echo_Has_No_Shape_GDD.pdf",
         label: "下载 GDD 设定文档 (PDF)",
       },
-      {
-        url: "/projects/an-echo-has-no-shape/An_Echo_Has_No_Shape_GDD.md",
-        label: "下载 GDD 设定文档 (MD)",
-      },
     ],
     responsibilities: [
       "设计核心单一动词循环及三大区域规则（信号欺瞒、多视角记忆合成、静默呼应）。",
