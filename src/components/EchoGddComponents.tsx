@@ -1,6 +1,7 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLanguage } from "../lib/language";
+import { ECHO_MERMAID_SVGS } from "./echoMermaidSvgs";
 
 export type EchoGddWidgetId =
   | "traveler-arc"
@@ -15,271 +16,56 @@ export function EchoGddWidget({ id }: { id: EchoGddWidgetId }) {
 
   switch (id) {
     case "traveler-arc":
-      return <MermaidBlock chart={isChinese ? TRAVELER_ARC_ZH : TRAVELER_ARC_EN} title={isChinese ? "认识论前提与三阶段体验弧线" : "The Epistemological Premise & 3-Stage Arc"} />;
+      return (
+        <MermaidBlock
+          diagramKey={isChinese ? "traveler-arc-zh" : "traveler-arc-en"}
+          title={isChinese ? "认识论前提与三阶段体验弧线" : "The Epistemological Premise & 3-Stage Arc"}
+        />
+      );
     case "rule-of-three-matrix":
       return <RuleOfThreeMatrix />;
     case "glacier-state-machine":
-      return <MermaidBlock chart={isChinese ? GLACIER_STATE_ZH : GLACIER_STATE_EN} title={isChinese ? "冰川之海：真伪浮冰状态流转" : "Glacial Ocean: Solid vs. Illusory Iceberg State Flow"} />;
+      return (
+        <MermaidBlock
+          diagramKey={isChinese ? "glacier-state-zh" : "glacier-state-en"}
+          title={isChinese ? "冰川之海：真伪浮冰状态流转" : "Glacial Ocean: Solid vs. Illusory Iceberg State Flow"}
+        />
+      );
     case "city-sequence":
-      return <MermaidBlock chart={isChinese ? CITY_SEQUENCE_ZH : CITY_SEQUENCE_EN} title={isChinese ? "遗忘之城：多视角记忆合成序列" : "Unremembered City: Overlapping Perspective Sequence"} />;
+      return (
+        <MermaidBlock
+          diagramKey={isChinese ? "city-sequence-zh" : "city-sequence-en"}
+          title={isChinese ? "遗忘之城：多视角记忆合成序列" : "Unremembered City: Overlapping Perspective Sequence"}
+        />
+      );
     case "woods-telemetry-and-cadence":
-      return <MermaidBlock chart={isChinese ? WOODS_CADENCE_ZH : WOODS_CADENCE_EN} title={isChinese ? "幻影之森：8 秒呼应节拍" : "Illusory Woods: The 8-Second Call-and-Response Cadence"} />;
+      return (
+        <MermaidBlock
+          diagramKey={isChinese ? "woods-cadence-zh" : "woods-cadence-en"}
+          title={isChinese ? "幻影之森：8 秒呼应节拍" : "Illusory Woods: The 8-Second Call-and-Response Cadence"}
+        />
+      );
     case "world-topology-and-wayfinding":
       return (
         <>
-          <MermaidBlock chart={isChinese ? WORLD_TOPOLOGY_ZH : WORLD_TOPOLOGY_EN} title={isChinese ? "声学盆地世界拓扑结构" : "Seamless World Topology"} />
+          <MermaidBlock
+            diagramKey={isChinese ? "world-topology-zh" : "world-topology-en"}
+            title={isChinese ? "声学盆地世界拓扑结构" : "Seamless World Topology"}
+          />
           <WayfindingTable />
         </>
       );
   }
 }
 
-const TRAVELER_ARC_EN = `flowchart TD
-    subgraph Thesis["The Epistemological Premise (World as Presence)"]
-        P["<b>“An Echo Has No Intrinsic Shape”</b><br/>The Traveler never perceives the world directly, only what returns through presence, movement, and attention."]
-    end
-
-    P --> C1["<b>Constraint #1: One Unchanging Verb</b><br/>Only <i>Cast Echo (E)</i> & <i>Attune (F)</i>.<br/>Depth comes from changing the world's rules,<br/>not expanding the player's toolkit."]
-    P --> C2["<b>Constraint #2: Interpretation Over Mastery</b><br/>No enemies or dexterity fail-states.<br/>Tension comes from tolerating absence<br/>and questioning what appears in the fog."]
-    P --> C3["<b>Constraint #3: Diegetic & Seamless</b><br/>No cutscenes, quest logs, or HUD markers.<br/>All 3 regions exist in one continuous<br/>fog volume connected by reverberations."]
-
-    C1 & C2 & C3 --> Arc["<b>The Traveler's 3-Stage Experiential Arc</b>"]
-
-    Arc --> S1["<b>I. Glacial Ocean (Deception)</b><br/><i>“Can I trust what appears in the fog?”</i><br/>Cross-examining your echo against the Siren's false claims."]
-    Arc --> S2["<b>II. Unremembered City (Bearing Witness)</b><br/><i>“Whose memory of the world is complete?”</i><br/>Synthesizing three biased historical projections."]
-    Arc --> S3["<b>III. Illusory Woods (Relinquishing Control)</b><br/><i>“What happens when I stop forcing my voice?”</i><br/>Realizing your own echoes sustain the barrier; pausing to listen."]`;
-
-const TRAVELER_ARC_ZH = `flowchart TD
-    subgraph Thesis["认识论前提（作为在场的世界）"]
-        P["<b>“回声本身并无固有之形”</b><br/>旅人从不直接看见客观世界，只能感知通过自身在场、移动与倾听而折返的回响。"]
-    end
-
-    P --> C1["<b>设计约束 #1：单一不变动词</b><br/>全程仅有<i>释放回声 (E)</i> 与<i>共鸣 (F)</i>。<br/>深度来自改变世界回应的认知规则，<br/>而非扩充角色技能列表。"]
-    P --> C2["<b>设计约束 #2：解读优先于操作</b><br/>没有敌人或操作型失败惩罚。<br/>张力来自对空白的耐受，<br/>以及对雾中显形之物的审视。"]
-    P --> C3["<b>设计约束 #3：内生规则与单场景</b><br/>零过场动画、任务日志或 HUD 路标。<br/>三大区域共存于同一连续雾场中，<br/>由世界回响彼此相连。"]
-
-    C1 & C2 & C3 --> Arc["<b>旅人的三阶段体验弧线</b>"]
-
-    Arc --> S1["<b>I. 冰川之海（欺瞒）</b><br/><i>“我能相信雾中显形的轮廓吗？”</i><br/>用自己的回声与塞壬的虚假信号交叉求证。"]
-    Arc --> S2["<b>II. 遗忘之城（见证）</b><br/><i>“谁对过去的记忆才是完整的？”</i><br/>在三段偏颇的历史投影间识别规律并拼合废墟。"]
-    Arc --> S3["<b>III. 幻影之森（克制）</b><br/><i>“当我停止强行发声时会发生什么？”</i><br/>意识到正是自己的回声维持着迷障，停下脚步倾听回应。"]`;
-
-const GLACIER_STATE_EN = `stateDiagram-v2
-    direction LR
-    [*] --> HiddenInFog: Hidden Stepping Stone
-
-    state "Solid Iceberg (Anchor + Hidden)" as Solid {
-        HiddenInFog --> RevealedWhite: Player Echo (E)
-        RevealedWhite --> OverwrittenPink: Siren Pulse (35% Overwrite)
-        RevealedWhite --> ErasedToFog: Siren Pulse (40% Erase)
-        RevealedWhite --> RetainedWhite: Siren Pulse (25% Untouched)
-        OverwrittenPink --> RevealedWhite: Player Re-Echoes (E)
-        ErasedToFog --> RevealedWhite: Player Re-Echoes (E)
-    }
-
-    state "Illusory Iceberg (Non-Solid Trap)" as Fake {
-        InvisibleInFog --> RemainsInvisible: Player Echo (E) (0% Reveal)
-        InvisibleInFog --> ConjuredPink: Siren Pulse (70% False Reveal)
-        ConjuredPink --> WaterHazard: Player Steps On (Submerges)
-    }`;
-
-const GLACIER_STATE_ZH = `stateDiagram-v2
-    direction LR
-    [*] --> HiddenInFog: 隐形实体浮冰
-
-    state "实体浮冰（常驻锚点 + 隐形踏脚石）" as Solid {
-        HiddenInFog --> RevealedWhite: 玩家回声 (E)
-        RevealedWhite --> OverwrittenPink: 塞壬脉冲（35% 篡改为粉红）
-        RevealedWhite --> ErasedToFog: 塞壬脉冲（40% 抹回浓雾）
-        RevealedWhite --> RetainedWhite: 塞壬脉冲（25% 保持白色）
-        OverwrittenPink --> RevealedWhite: 玩家再次回声 (E)
-        ErasedToFog --> RevealedWhite: 玩家再次回声 (E)
-    }
-
-    state "虚幻浮冰（非实体溺水陷阱）" as Fake {
-        InvisibleInFog --> RemainsInvisible: 玩家回声 (E)（0% 显形）
-        InvisibleInFog --> ConjuredPink: 塞壬脉冲（70% 虚假点亮粉红）
-        ConjuredPink --> WaterHazard: 玩家踏上（下沉落水）
-    }`;
-
-const CITY_SEQUENCE_EN = `sequenceDiagram
-    autonumber
-    actor Player
-    participant Tablet as 0. Central Tablet (Plaza)
-    participant Muse as 1. The Muse (SW: Sky-Blue)
-    participant Ruler as 2. The Ruler (SE: Crimson)
-    participant Arch as 3. The Architect (NE: Emerald)
-    participant City as Multi-Wave State & Fog
-
-    Player->>Tablet: Attune / Read (F)
-    Tablet->>City: Neutral Wave (Stage 0)<br/>Reveals baseline skeletal ruins
-    Player->>Muse: Attune to Muse (SW Quarter)
-    Muse->>City: Wave #1 (Sky-Blue) + Cerulean Fog<br/>Materializes courtyards & living flora
-    Player->>Ruler: Attune to Ruler (SE Quarter)
-    Ruler->>City: Wave #2 (Crimson) + Crimson Fog<br/>Layers colonnades & gates over flora
-    alt Player Attunes Out of Sequence or Exits City Bounds
-        City-->>Player: Spatial Reset Wave (45 m/s)<br/>Collapses unfinished perspective chain back to fog
-    else Player Attunes to Architect (NE Quarter)
-        Player->>Arch: Attune to Architect
-        Arch->>City: Wave #3 (Emerald) -> Synthesizes Stage 4 Gold Wave<br/>All three perspective groups stand simultaneously
-        City-->>Player: Triggers Global World Reverberation
-    end`;
-
-const CITY_SEQUENCE_ZH = `sequenceDiagram
-    autonumber
-    actor Player as 玩家
-    participant Tablet as 0. 中央石碑（中心广场）
-    participant Muse as 1. 缪斯（西南：天蓝）
-    participant Ruler as 2. 统治者（东南：绯红）
-    participant Arch as 3. 建筑师（东北：翡翠）
-    participant City as 多重波纹状态与雾场
-
-    Player->>Tablet: 共鸣 / 阅读 (F)
-    Tablet->>City: 中性基准波（第 0 阶段）<br/>显形基础街道网格与废墟骨架
-    Player->>Muse: 与缪斯雕像共鸣（西南街区）
-    Muse->>City: 波纹 #1（天蓝）+ 蔚蓝雾场<br/>具象化庭院与繁茂植被
-    Player->>Ruler: 与统治者雕像共鸣（东南街区）
-    Ruler->>City: 波纹 #2（绯红）+ 绯红雾场<br/>在植被之上叠加门廊与柱列
-    alt 顺序错误或中途离开城市外边界
-        City-->>Player: 空间重置波（45 m/s）<br/>将未完成的记忆投影坍缩回迷雾
-    else 与建筑师雕像共鸣（东北街区）
-        Player->>Arch: 与建筑师雕像共鸣
-        Arch->>City: 波纹 #3（翡翠）-> 合成为第 4 阶段黄金波纹<br/>三大主观视角建筑群同时完整矗立
-        City-->>Player: 触发全局黄金世界回响
-    end`;
-
-const WOODS_CADENCE_EN = `flowchart LR
-    subgraph Timeline["The 8-Second Call-and-Response Cadence"]
-        direction LR
-        T0["<b>t = 0.0s: Player Presses E</b><br/>White pulse sweeps out (14 m/s).<br/>Illuminates pass-through illusory walls.<br/><i>Player Cooldown (5.0s) starts.</i>"]
-        T3["<b>t = 3.0s: The Silence Threshold</b><br/>White ring fades in the distance.<br/><b>Forest Reply (Green)</b> erupts at 50 m/s.<br/>Illusory walls dissolve for 5.0s."]
-        T5["<b>t = 5.0s: The Temptation Window</b><br/>Player's E cooldown finishes while<br/>Forest Reply is holding open the path<br/>(t = 3.0s to 8.0s)."]
-    end
-
-    T0 --> T3 --> T5
-    T5 -- "Player Refrains From Pressing E<br/>(Listens & Walks Through)" --> Win["<b>Path Remains Open (5.0s Hold)</b><br/>Player walks through dissolved barriers<br/>toward the SW Sentinel Tower"]
-    T5 -- "Player Presses E on Cooldown<br/>(Interrupts Reply)" --> Punish["<b>Active Wave Overwrite (0.35s)</b><br/>Player's white wave erases green wave,<br/>ducks forest audio, & restores barriers"]`;
-
-const WOODS_CADENCE_ZH = `flowchart LR
-    subgraph Timeline["8 秒呼应节拍"]
-        direction LR
-        T0["<b>t = 0.0s：玩家按下 E</b><br/>白色声波向外扩散（14 m/s）。<br/>点亮可穿过的虚幻树墙。<br/><i>启动 5.0 秒技能冷却。</i>"]
-        T3["<b>t = 3.0s：静默阈值</b><br/>玩家白波在远处消散。<br/><b>森林翠绿回应波</b>以 50 m/s 爆发。<br/>虚幻树墙消融敞开 5.0 秒。"]
-        T5["<b>t = 5.0s：诱惑窗口</b><br/>森林回应波维持通道敞开期间<br/>（t = 3.0s 至 8.0s），<br/>玩家的 E 键冷却恰好转好。"]
-    end
-
-    T0 --> T3 --> T5
-    T5 -- "克制按 E<br/>（倾听并穿过）" --> Win["<b>通道保持敞开（持续 5.0s）</b><br/>玩家穿过消融的树墙<br/>抵达西南方哨塔终点"]
-    T5 -- "冷却一好立即按 E<br/>（打断森林回应）" --> Punish["<b>主动声波覆写（0.35s）</b><br/>玩家白波当面抹除绿波、<br/>压低森林音效并重新闭合树墙"]`;
-
-const WORLD_TOPOLOGY_EN = `flowchart TD
-    Hub["<b>Central Hub: Stone Monument</b><br/>Prophecy Tablet & Acoustic Guide Splines"]
-
-    subgraph NorthWest["Northwest Basin: Glacial Ocean"]
-        G_Start["Glacier Entry Tablet"] --> G_Mid["Midpoint Tablet & Siren Emitters"] --> G_End["Glacier End Tablet & Sky Beacon"]
-    end
-
-    subgraph East["Eastern Plateau: Unremembered City"]
-        C_Tab["0. Central Plaza Tablet & Sky Beacon"] --> C_Witness["1. Muse (SW) → 2. Ruler (SE) → 3. Architect (NE)"]
-    end
-
-    subgraph South["Southern Valley: Illusory Woods"]
-        W_In["NW & SE Outskirts Tablets"] --> W_Src["3.0s Forest Reply Center"] --> W_End["SW Clearing, Sentinel Tower & Sky Beacon"]
-    end
-
-    Hub -->|"NW Guide Spline"| G_Start
-    Hub -->|"West Bridge Causeway"| C_Tab
-    Hub -->|"SW Guide Spline"| W_In
-
-    G_End ==>|"Completion Pulse #1"| Gate["<b>World Reverberation & Golden Gate</b><br/>Unlocks at 3/3 Regional Silences Broken"]
-    C_Witness ==>|"Completion Pulse #2"| Gate
-    W_End ==>|"Completion Pulse #3"| Gate`;
-
-const WORLD_TOPOLOGY_ZH = `flowchart TD
-    Hub["<b>中央中枢：石之纪念碑</b><br/>预言石碑与声学导引流光"]
-
-    subgraph NorthWest["西北盆地：冰川之海"]
-        G_Start["冰川起点石碑"] --> G_Mid["中点石碑与塞壬干扰源"] --> G_End["冰川终点石碑与天际光柱"]
-    end
-
-    subgraph East["东部高地：遗忘之城"]
-        C_Tab["0. 中心广场石碑与天际光柱"] --> C_Witness["1. 缪斯（西南）→ 2. 统治者（东南）→ 3. 建筑师（东北）"]
-    end
-
-    subgraph South["南部山谷：幻影之森"]
-        W_In["西北与东南外围石碑"] --> W_Src["3.0 秒森林回应中心"] --> W_End["西南空地、哨塔与天际光柱"]
-    end
-
-    Hub -->|"西北导引流光"| G_Start
-    Hub -->|"西侧长桥通道"| C_Tab
-    Hub -->|"西南导引流光"| W_In
-
-    G_End ==>|"完成脉冲 #1"| Gate["<b>全局世界回响与黄金大门</b><br/>打破 3/3 区域寂静后解锁"]
-    C_Witness ==>|"完成脉冲 #2"| Gate
-    W_End ==>|"完成脉冲 #3"| Gate`;
-
-function MermaidBlock({ chart, title }: { chart: string; title: string }) {
+function MermaidBlock({ diagramKey, title }: { diagramKey: string; title: string }) {
   const { text } = useLanguage();
-  const id = useId().replace(/[^a-zA-Z0-9]/g, "");
-  const [svg, setSvg] = useState<string>("");
   const [expanded, setExpanded] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    let cancelled = false;
-    import("mermaid").then(async (mod) => {
-      const mermaid = mod.default;
-      mermaid.initialize({
-        startOnLoad: false,
-        theme: "dark",
-        securityLevel: "loose",
-        markdownAutoWrap: false,
-        fontFamily: '"DM Sans Variable", system-ui, sans-serif',
-        flowchart: {
-          htmlLabels: true,
-          wrappingWidth: 900,
-          nodeSpacing: 32,
-          rankSpacing: 38,
-          padding: 12,
-        },
-        themeVariables: {
-          darkMode: true,
-          background: "#1c1f24",
-          primaryColor: "#181a1f",
-          primaryTextColor: "#e8edf2",
-          primaryBorderColor: "#8b95a1",
-          lineColor: "#9aa4b0",
-          secondaryColor: "#20242b",
-          tertiaryColor: "#181a1f",
-          clusterBkg: "#1e2229",
-          clusterBorder: "#8b95a1",
-          edgeLabelBackground: "#23272f",
-          actorBkg: "#181a1f",
-          actorBorder: "#8b95a1",
-          actorTextColor: "#e8edf2",
-          actorLineColor: "#8b95a1",
-          signalColor: "#9aa4b0",
-          signalTextColor: "#e8edf2",
-          labelBoxBkgColor: "#1e2229",
-          labelBoxBorderColor: "#8b95a1",
-          labelTextColor: "#e8edf2",
-          loopTextColor: "#e8edf2",
-          noteBkgColor: "#23272f",
-          noteTextColor: "#e8edf2",
-          noteBorderColor: "#8b95a1",
-        },
-      });
-      try {
-        const { svg: rendered } = await mermaid.render(`mermaid-${id}-${Math.random().toString(36).slice(2, 7)}`, chart);
-        if (!cancelled) setSvg(rendered);
-      } catch (err) {
-        console.error("Mermaid render error:", err);
-      }
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [chart, id]);
+  const svg = ECHO_MERMAID_SVGS[diagramKey] ?? "";
+  const baseId = "m-" + diagramKey.replace(/[^a-z0-9]/g, "");
+  const modalSvg = expanded ? svg.replaceAll(baseId, `${baseId}-modal`) : "";
 
   useEffect(() => {
     if (!expanded) return;
@@ -296,29 +82,34 @@ function MermaidBlock({ chart, title }: { chart: string; title: string }) {
     };
   }, [expanded]);
 
-  if (!svg) {
-    return <div className="my-8 min-h-48 rounded-lg border border-border bg-[#1c1f24] p-6" />;
-  }
+  if (!svg) return null;
 
   return (
     <>
       <figure className="my-8">
-        <div className="group relative overflow-hidden rounded-lg border border-border bg-[#1c1f24] p-4 sm:p-6">
-          <button
-            type="button"
+        <div className="group relative overflow-hidden rounded-lg border border-border bg-[#1c1f24] p-3 sm:p-6">
+          <div
+            role="button"
+            tabIndex={0}
             onClick={() => setExpanded(true)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setExpanded(true);
+              }
+            }}
             aria-label={`${text("Expand diagram", "放大图表")}: ${title}`}
-            className="block w-full cursor-zoom-in overflow-x-auto text-center focus-visible:outline-none"
+            className="w-full cursor-zoom-in overflow-x-auto focus-visible:outline-none"
           >
             <div
-              className="mermaid-svg mx-auto flex justify-center [&_svg]:max-h-[440px] [&_svg]:w-auto [&_svg]:max-w-full"
+              className="mermaid-svg mx-auto min-w-[600px] sm:min-w-0 [&_svg]:mx-auto [&_svg]:block [&_svg]:h-auto [&_svg]:w-full [&_svg]:[-webkit-text-size-adjust:100%]"
               dangerouslySetInnerHTML={{ __html: svg }}
             />
-          </button>
+          </div>
           <button
             type="button"
             onClick={() => setExpanded(true)}
-            className="absolute right-3 top-3 rounded border border-foreground/20 bg-background/85 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground opacity-0 backdrop-blur transition-opacity hover:border-accent hover:text-foreground group-hover:opacity-100"
+            className="absolute right-3 top-3 rounded border border-foreground/20 bg-background/85 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground opacity-90 backdrop-blur transition-opacity hover:border-accent hover:text-foreground sm:opacity-0 sm:group-hover:opacity-100"
           >
             {text("Expand", "放大")} +
           </button>
@@ -328,7 +119,7 @@ function MermaidBlock({ chart, title }: { chart: string; title: string }) {
       {expanded &&
         createPortal(
           <div
-            className="fixed inset-0 z-[120] flex cursor-zoom-out items-center justify-center bg-background/95 p-4 backdrop-blur-xl sm:p-8"
+            className="fixed inset-0 z-[120] flex cursor-zoom-out items-center justify-center bg-background/95 p-3 backdrop-blur-xl sm:p-8"
             role="dialog"
             aria-modal="true"
             aria-label={title}
@@ -336,19 +127,24 @@ function MermaidBlock({ chart, title }: { chart: string; title: string }) {
               if (e.target === e.currentTarget) setExpanded(false);
             }}
           >
-            <div className="relative flex max-h-[92vh] w-full max-w-[min(96vw,1600px)] cursor-default flex-col items-center overflow-auto rounded-lg border border-border bg-[#1c1f24] p-6 sm:p-10">
-              <button
-                ref={closeRef}
-                type="button"
-                onClick={() => setExpanded(false)}
-                className="sticky right-0 top-0 ml-auto rounded-full border border-foreground/20 bg-background/90 px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground hover:border-accent hover:text-accent"
-              >
-                {text("Close", "关闭")} ×
-              </button>
-              <div
-                className="my-auto w-full overflow-auto py-4 flex justify-center [&_svg]:h-auto [&_svg]:max-w-none"
-                dangerouslySetInnerHTML={{ __html: svg }}
-              />
+            <div className="relative flex max-h-[92vh] w-full max-w-[min(96vw,1600px)] cursor-default flex-col rounded-lg border border-border bg-[#1c1f24] p-4 sm:p-8">
+              <div className="mb-3 flex items-center justify-between gap-4">
+                <span className="font-mono text-xs text-muted-foreground">{title}</span>
+                <button
+                  ref={closeRef}
+                  type="button"
+                  onClick={() => setExpanded(false)}
+                  className="rounded-full border border-foreground/20 bg-background/90 px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground hover:border-accent hover:text-accent"
+                >
+                  {text("Close", "关闭")} ×
+                </button>
+              </div>
+              <div className="my-auto w-full overflow-auto py-2">
+                <div
+                  className="mx-auto min-w-[680px] [&_svg]:mx-auto [&_svg]:block [&_svg]:h-auto [&_svg]:w-full [&_svg]:[-webkit-text-size-adjust:100%]"
+                  dangerouslySetInnerHTML={{ __html: modalSvg }}
+                />
+              </div>
             </div>
           </div>,
           document.body,
