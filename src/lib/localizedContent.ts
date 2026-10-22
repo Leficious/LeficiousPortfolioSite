@@ -32,7 +32,7 @@ const projectTranslations: Record<string, ProjectTranslation> = {
     },
     downloads: [
       {
-        url: "/projects/an-echo-has-no-shape/An_Echo_Has_No_Shape_GDD.pdf",
+        url: "/projects/an-echo-has-no-shape/An_Echo_Has_No_Shape_GDD_ZH.pdf",
         label: "下载 GDD 设定文档 (PDF)",
       },
     ],
@@ -239,7 +239,7 @@ export const galleryTagZh: Record<GalleryTag, string> = {
 
 function localizeMedia(items: MediaItem[], captions?: string[]) {
   if (!captions) return items;
-  return items.map((item, index) => captions[index] ? { ...item, caption: captions[index] } : item);
+  return items.map((item, index) => { const next = captions[index] ? { ...item, caption: captions[index] } : item; return next.type === "image" && next.src.includes("/projects/an-echo-has-no-shape/map-") ? { ...next, src: next.src.replace(".webp", "-zh.webp") } : next; });
 }
 
 export function localizeProject(project: Project, chinese: boolean): Project {
