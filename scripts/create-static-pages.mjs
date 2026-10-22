@@ -151,7 +151,7 @@ const escapeAttribute = (value) =>
 const shell = await readFile("dist/index.html", "utf8");
 
 const personId = "https://leficious.com/#person";
-const person = { "@type": "Person", "@id": personId, name: "Lefi (Kevin) Shan", alternateName: "Leficious", url: "https://leficious.com/", jobTitle: "Technical Game Designer", sameAs: ["https://www.linkedin.com/in/leficious/", "https://github.com/Leficious"] };
+const person = { "@type": "Person", "@id": personId, name: "Lefi (Kevin) Shan", alternateName: "Leficious", url: "https://leficious.com/", jobTitle: "Technical Game Designer", sameAs: ["https://www.linkedin.com/in/leficious/", "https://github.com/Leficious", "https://leficious.itch.io/"] };
 const imageType = (path) => path.endsWith(".png") ? "image/png" : path.endsWith(".webp") ? "image/webp" : "image/avif";
 
 for (const route of routes) {

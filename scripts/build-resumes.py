@@ -148,7 +148,7 @@ def pdf(path, story):
 
 
 def technical_resume():
-    story = header("TECHNICAL GAME DESIGNER", "https://leficious.com/", "https://www.youtube.com/watch?v=rVIavxdutJE")
+    story = header("TECHNICAL GAME DESIGNER", "https://leficious.com/", "https://youtu.be/cyespsOlRJc")
     story += [
         Paragraph(
             "Combat and gameplay systems prototypes in Unreal Engine 5, with an emphasis on animation timing, enemy behavior, and playable encounter flow.",

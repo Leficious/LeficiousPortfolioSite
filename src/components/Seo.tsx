@@ -31,7 +31,7 @@ const buildStructuredData = (title: string, description: string, path: string, i
     alternateName: "Leficious",
     url: "https://leficious.com/",
     jobTitle: "Technical Game Designer",
-    sameAs: ["https://www.linkedin.com/in/leficious/", "https://github.com/Leficious"],
+    sameAs: ["https://www.linkedin.com/in/leficious/", "https://github.com/Leficious", "https://leficious.itch.io/"],
   };
 
   if (contentPath.startsWith("/projects/")) {

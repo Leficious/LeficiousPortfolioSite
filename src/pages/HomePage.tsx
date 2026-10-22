@@ -22,7 +22,7 @@ export function HomePage() {
             <span className="text-xs text-muted-foreground">2026</span>
           </div>
           <FeaturedReel
-            id="rVIavxdutJE"
+            id="cyespsOlRJc"
             thumbnailSrc="/reels/technical-design-reel-2026.jpg"
             title={text("Technical Game Design Reel 2026", "2026 游戏技术设计作品集")}
             description={text("A quick look at the combat systems, gameplay prototypes, enemies, and technical problem-solving behind my recent work.", "快速展示近期项目中的战斗系统、玩法原型、敌人设计与技术实现。")}
