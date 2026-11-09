@@ -61,9 +61,9 @@ export const galleryEntries: GalleryEntry[] = [
     id: "still-life",
     title: "Still Life",
     description:
-      "A surrealist first-person puzzle labyrinth where taxidermy-still animals serve as rigid industrial counterweights, chasm bridges, and gear wedges while a shivering 1.4 kg Desk Lamp companion leans into your hand for warmth.",
+      "A surrealist first-person puzzle game where motionless animal specimens serve as counterweights, gap bridges, and gear wedges while a shivering Desk Lamp companion leans into your hand for warmth.",
     contribution:
-      "Solo game design, 235 kg zero-slack vertical level design, C# Desk Lamp companion AI, HLSL Kuwahara/ink shaders, Manhattan conduit telemetry, and world assembly",
+      "Solo game design, 235 kg multi-floor level design, C# Desk Lamp companion AI, HLSL ink/painterly shaders, floor indicator line systems, and world assembly",
     software: ["Unity", "C#"],
     year: "2026",
     tags: ["Technical Design", "Realtime", "Environment"],
@@ -92,7 +92,7 @@ export const galleryEntries: GalleryEntry[] = [
     id: "an-echo-has-no-shape",
     title: "An Echo Has No Shape",
     description:
-      "A first-person acoustic exploration and puzzle labyrinth built around a single, unchanging echolocation verb across three regions that subvert how the world answers back.",
+      "A first-person acoustic exploration and puzzle game built around a single echolocation input across three regions that change how each space responds to your pulse.",
     contribution:
       "Solo game design, level and labyrinth layout, C# gameplay and regional echo-state systems, diegetic wayfinding architecture, and world assembly",
     software: ["Unity", "C#"],
@@ -196,7 +196,7 @@ export const galleryEntries: GalleryEntry[] = [
   },
   {
     id: "stylized-classroom",
-    title: "Stylized Classroom — Illustration Match",
+    title: "Stylized Classroom  -  Illustration Match",
     description: "A 3D environment implementation based on an original illustration by ArseniXC, translating its composition, materials, and lighting into a complete scene.",
     contribution: "3D environment implementation, materials, lighting, and final presentation",
     software: ["Maya", "V-Ray", "Substance 3D Painter"],
@@ -584,7 +584,7 @@ export const galleryEntries: GalleryEntry[] = [
   },
   {
     id: "dunes",
-    title: "Dunes — City in Sand",
+    title: "Dunes  -  City in Sand",
     description: "A surfacing and rendering study built from a provided environment scene.",
     contribution: "Texturing, look development, scene organization, and rendering",
     software: ["Maya", "V-Ray", "Substance 3D Painter", "Photoshop"],
