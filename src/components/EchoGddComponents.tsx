@@ -148,7 +148,7 @@ function MermaidBlock({ diagramKey, title }: { diagramKey: string; title: string
   return (
     <>
       <figure className="my-8">
-        <div className="group relative overflow-hidden rounded-lg border border-border bg-[#1c1f24] p-3 sm:p-6">
+        <div className="group relative overflow-hidden rounded-lg border border-border bg-surface/35 p-2 sm:p-4">
           <div
             role="button"
             tabIndex={0}
@@ -188,7 +188,7 @@ function MermaidBlock({ diagramKey, title }: { diagramKey: string; title: string
               if (e.target === e.currentTarget) setExpanded(false);
             }}
           >
-            <div className="relative flex max-h-[92vh] w-full max-w-[min(96vw,1600px)] cursor-default flex-col rounded-lg border border-border bg-[#1c1f24] p-4 sm:p-8">
+            <div className="relative flex max-h-[92vh] w-full max-w-[min(96vw,1600px)] cursor-default flex-col rounded-lg border border-border bg-surface p-4 sm:p-6">
               <div className="mb-3 flex items-center justify-between gap-4">
                 <span className="font-mono text-xs text-muted-foreground">{title}</span>
                 <button
