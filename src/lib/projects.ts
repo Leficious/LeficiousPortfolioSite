@@ -52,7 +52,7 @@ export const projects: Project[] = [
     role: "Solo Game Designer & Developer",
     year: "2026",
     summary:
-      "A surrealist first-person puzzle game where motionless living animals are used as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
+      "A surrealist first-person puzzle game where animals stand still and silent as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
     tags: ["Unity", "C#", "Game Design", "Level Design"],
     cover: "/projects/still-life/cover.webp",
     heroImage: "/projects/still-life/hero-poster.webp",
@@ -70,9 +70,9 @@ export const projects: Project[] = [
     ],
     relatedGalleryIds: ["still-life"],
     overview:
-      "Still Life is a solo first-person puzzle game built in Unity 6 (URP) for Peter Brinson's class at USC around the Situated Player Role of The Dreamer. Inside a monochrome ink-and-paper gallery, outward behaviors are inverted: living animals stand completely still and silent, leading players to carry them around as weights, planks, and gear wedges, while a Desk Lamp shivers in the dark, flees when startled, and leans into your hand for warmth.",
+      "Inside a monochrome gallery and foundry, the behaviors of animals and household objects are swapped. Animals stand still and silent on pedestals, so players carry them around as pressure-plate weights, gap bridges, and gear wedges, while a Desk Lamp shivers in the dark, flees when startled, and warms up when petted.",
     authorNote:
-      "Rather than lecturing the player about empathy through dialogue, I wanted the level design itself to build a habit. Across the first three rooms, every pressure plate, floor gap, and crusher trains you to treat animals strictly as puzzle weights and the Desk Lamp as your companion, until Room 4's industrial shredder rejects the Dog as a 'Living Organism' and leaves you holding the only inanimate object in the room.",
+      "Rather than delivering its theme through dialogue, the level design builds a habit. Across the first three rooms, every pressure plate, floor gap, and crusher trains you to treat animals strictly as puzzle tools and the Desk Lamp as your companion, until Room 4's shredder rejects the Dog as a 'Living Organism' and leaves you holding the only object the sensor will accept.",
     externalLink: {
       url: "https://leficious.itch.io/still-life",
       label: "Play on itch.io",
@@ -287,7 +287,7 @@ export const projects: Project[] = [
         title: "Subverting player habit at the Shredder gate",
         body: [
           "Before entering Hallway 3 and Room 4, the loading screen displays FIG. 04: DESK LAMP (1.4 KG) with a catalog note: 'It shivers in the dark and leans into your hand like something alive, but to the gallery's sensors it is still just an object.' Inside Room 4's 4-directional infinite steel lattice, an Industrial Shredder blocks the exit with the prompt: INSERT 1 OBJECT TO PROCEED. Sitting beside the hopper is the Dog.",
-          "Trained by three rooms of using animals as puzzle hardware, players instinctively grab the Dog and drop it into the chute, only for the shredder to blare 'BZZZT! SAFETY MECHANISM ACTIVATED: LIVING ORGANISM DETECTED!' and eject the Dog unharmed. With no other loose props in the room, the realization lands without a word of dialogue: the mute animals were alive all along, and the shivering Desk Lamp is the only inanimate object the sensor will accept. Sacrificing the Lamp opens the portal into Room 5's pure white space, where the ink outlines dissolve and the Dog wakes up: breathing, perking its ears, tilting its head, and wagging its tail.",
+          "Trained by three rooms of using animals as puzzle hardware, players instinctively grab the Dog and drop it into the chute, only for the shredder to blare 'BZZZT! SAFETY MECHANISM ACTIVATED: LIVING ORGANISM DETECTED!' and eject the Dog unharmed. With no other loose props in the room, the realization lands without a word of dialogue: the silent animals were alive all along, and the Desk Lamp is the only object the sensor will accept. Sacrificing the Lamp opens the portal into Room 5's pure white space, where the ink outlines dissolve and the Dog wakes up: breathing, perking its ears, tilting its head, and wagging its tail.",
         ],
         widget: "still-life-subversion-arc",
         media: [
@@ -371,7 +371,7 @@ export const projects: Project[] = [
     ],
     relatedGalleryIds: ["an-echo-has-no-shape"],
     overview:
-      "An Echo Has No Shape is a solo 4-week project built in Unity 6 for Peter Brinson's class at USC around the Situated Player Role of The Traveler. To focus the entire month on level design and puzzle variety, I locked the player's move set to a single primary action (Emit Echo on E, plus Interact on F) across three regional spokes where progression comes from changing how each space responds to your pulse.",
+      "To focus a 4-week development cycle on level design and puzzle variety, An Echo Has No Shape locks the player's move set to a single primary action (Emit Echo on E, plus Interact on F) across a continuous ~550m x 550m fog basin. Progression comes not from ability upgrades, but from changing how each region responds to your pulse.",
     authorNote:
       "Many echolocation games treat sound as a simple flashlight in the dark: once the pulse reveals the room geometry, the mechanic stops evolving. Across these three regions, the level design changes what your echo accomplishes: verifying solid footing against decoy traps, unlocking a 3-wing city in sequence, and pausing so the forest can open choke-point gates.",
     externalLink: {
@@ -618,9 +618,9 @@ export const projects: Project[] = [
         eyebrow: "07 / Retrospective",
         title: "Level design takeaways",
         body: [
-          "1. Recontextualizing One Verb by Region: Keeping the player on a single E input meant puzzle variety had to come from level design: platform verification in Region 1, sequential 3-wing routing in Region 2, and timed choke-point gates in Region 3.",
+          "1. Designing Around Cooldown Windows: Tuning the player pulse to fade at 1.4s on a 5.0s cooldown created a 3.6s dark gap between casts, giving Siren waves (every 7.0s) and the Forest Reply (at 3.0s) a clear window to interact with level geometry.",
           "2. Visual State Feedback Over Text Hints: In Region 3, tablet hints alone did not stop players from spamming E on cooldown. Adding the 0.35s wave overwrite (where pressing E visibly cuts off the green wave and snaps the gate shut in front of the player) raised solve rates from 15% to 90%.",
-          "3. Matching Floorplans to Puzzle Rules: Each region's layout reinforces its mechanic: non-solid decoys placed along tempting direct shortcuts in the ocean, three statues separated across city wings, and pass-through walls placed across main forest choke points.",
+          "3. Sightless Wayfinding Across a 550m Basin: Combining high-altitude sky beacons, 40m fog and audio crossfade buffers, echo-lit splines, and faint anchor silhouettes kept players oriented across a continuous ~550m scene without HUD markers or minimaps.",
         ],
       },
     ],

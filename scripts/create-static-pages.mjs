@@ -28,7 +28,7 @@ const routes = [
     path: "/projects/still-life",
     title: "Still Life — Leficious",
     description:
-      "A surrealist first-person puzzle game where motionless living animals are used as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
+      "A surrealist first-person puzzle game where animals stand still and silent as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
     image: "/projects/still-life/hero-poster.webp",
     imageWidth: 1920,
     imageHeight: 1080,
@@ -113,7 +113,7 @@ const routes = [
     path: "/zh/projects/still-life",
     title: "静物 — Leficious",
     description:
-      "一部超现实第一人称解谜游戏：保持静止无声的活体动物被当作压力踏板配重、断口桥梁与齿轮止动塞，而家用电器却在暗处发抖、逃跑并依偎你的手心取暖。",
+      "一部超现实第一人称解谜游戏：保持静止无声的动物被当作压力踏板配重、断口桥梁与齿轮止动塞，而家用电器却在暗处发抖、逃跑并依偎你的手心取暖。",
     image: "/projects/still-life/hero-poster.webp",
     imageWidth: 1920,
     imageHeight: 1080,

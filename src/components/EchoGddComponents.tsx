@@ -369,8 +369,8 @@ function StillLifeInversionMatrix() {
         "富有生气的“野生动物”表现：在黑暗或寒风中发抖，靠弹簧灯颈跳跃跟随，在抚摸下恢复暖光，或具领地攻击性（宝箱怪）。",
       ),
       animals: text(
-        "Motionless living animals: zero idle animation and zero vocalization, standing so still that players assume they are inanimate props.",
-        "保持绝对静止的活体动物：零待机动作、零叫声，安静得让玩家误以为它们只是无生命道具。",
+        "Zero idle animation and zero sound: animals stand still on pedestals, leading players to treat them as static puzzle props.",
+        "零待机动作、零叫声：动物在展座上保持静止，使玩家自然将其当作静态解谜道具。",
       ),
     },
     {
@@ -538,7 +538,7 @@ function StillLifeShaderTelemetryTable() {
       domain: text("Static Animal Props (5 to 100 kg)", "静态动物道具 (5 至 100 kg)"),
       tech: text(
         "Triplanar ink cross-hatching, flat matte shading, and a brass calibration ring at base height with zero idle animation.",
-        "三平面程序化版画排线、哑光色阶与底座高度的黄铜校准环，全程零待机动画，使活体动物呈现出静物般的视觉观感。",
+        "三平面程序化版画排线、哑光色阶与底座高度的黄铜校准环，配合零待机动画，强化动物作为静态道具的视觉观感。",
       ),
     },
     {

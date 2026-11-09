@@ -61,7 +61,7 @@ export const galleryEntries: GalleryEntry[] = [
     id: "still-life",
     title: "Still Life",
     description:
-      "A surrealist first-person puzzle game where motionless living animals are used as counterweights, gap bridges, and gear wedges while a shivering Desk Lamp companion leans into your hand for warmth.",
+      "A surrealist first-person puzzle game where animals stand still and silent as counterweights, gap bridges, and gear wedges while a shivering Desk Lamp companion leans into your hand for warmth.",
     contribution:
       "Solo game design, 235 kg multi-floor level design, C# Desk Lamp companion AI, HLSL ink/painterly shaders, floor indicator line systems, and world assembly",
     software: ["Unity", "C#"],
