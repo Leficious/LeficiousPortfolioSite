@@ -82,6 +82,10 @@ export const projects: Project[] = [
         url: "/projects/still-life/Still_Life_GDD.pdf",
         label: "Download GDD (PDF)",
       },
+      {
+        url: "/projects/still-life/Still_Life_1Page_Pitch.pdf",
+        label: "Download 1-Page Pitch (PDF)",
+      },
     ],
     responsibilities: [
       "Designed the role-inversion premise, 9-item counterweight roster (5 kg to 100 kg), and 3-step core puzzle loop.",
@@ -138,6 +142,14 @@ export const projects: Project[] = [
             caption: "Loading screen blueprint (FIG. 01: HORSE, 100 kg) framing animals as calibrated counterweight hardware.",
             width: 1920,
             height: 1080,
+          },
+          {
+            type: "image",
+            src: "/projects/still-life/lamp-companion-concept.webp",
+            alt: "Initial character model sheet for the Goose-E Desk Lamp companion",
+            caption: "Initial 1-Page Pitch concept sheet (Goose-E Lamp): mustard-yellow enamel shade, warm bulb eye, flexible brass gooseneck, and weighted base.",
+            width: 1376,
+            height: 768,
           },
         ],
       },

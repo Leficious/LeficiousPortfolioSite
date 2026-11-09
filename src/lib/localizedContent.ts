@@ -35,6 +35,10 @@ const projectTranslations: Record<string, ProjectTranslation> = {
         url: "/projects/still-life/Still_Life_GDD_ZH.pdf",
         label: "下载 GDD 设定文档 (PDF)",
       },
+      {
+        url: "/projects/still-life/Still_Life_1Page_Pitch_ZH.pdf",
+        label: "下载一页立项提案 (PDF)",
+      },
     ],
     responsibilities: [
       "设计角色倒置前提、9 件动物与家电配重表（5 kg 至 100 kg）及三步核心解谜循环。",
@@ -57,6 +61,7 @@ const projectTranslations: Record<string, ProjectTranslation> = {
           "展览馆总平面与门锁动线图（Z = -12m 至 +188m）：涵盖 1 至 5 号房与 1 至 3 号走廊的正交关卡平面图。",
           "3D 剖面微缩模型主菜单：呈现单色版画排线与纸纹展览馆的整体空间。",
           "加载界面档案蓝图（FIG. 01: 马，100 kg）：以工程制图的形式将动物标定为标准配重硬件。",
+          "一页立项提案角色设定图（Goose-E 鹅颈台灯伙伴）：芥末黄搪瓷灯罩、单颗暖光灯泡眼睛、可弯曲黄铜鹅颈与配重底座。",
         ],
       },
       {
