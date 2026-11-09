@@ -7,6 +7,133 @@ type ProjectTranslation = Pick<Project, "title" | "role" | "summary" | "designGo
 };
 
 const projectTranslations: Record<string, ProjectTranslation> = {
+  "still-life": {
+    title: "静物",
+    role: "独立游戏设计与开发",
+    summary:
+      "一部超现实第一人称解谜迷宫：沉默如标本的刚体动物被当作冰冷的工业砝码、断渊踏板与齿轮止动塞，而家用电器却在黑暗中瑟瑟发抖、逃窜并依偎你的手心取暖。",
+    designGoal:
+      "跨越四大建筑展区，通过关卡机制引导玩家将动物彻底工具化、同时对 1.4 kg 的台灯伙伴倾注共情与保护欲——最终在粉碎机前触发无台词的伦理与认知反转。",
+    ownership:
+      "独立负责游戏设计、零冗余配重组合关卡设计、C# 伙伴 AI 与解谜系统、HLSL 桑原油画/水墨着色器、曼哈顿导管遥测及程序化场景搭建。",
+    scope:
+      "使用 Unity 6（URP）独立完成，源自南加州大学（USC）Peter Brinson 课程，围绕“情境化玩家角色：梦游者（作为谜团的世界）”展开。",
+    outcomes: [
+      "设计并验证了四阶段、235 kg 零冗余三层立体档案馆（展厅 II），每一阶段均将当前已解锁动物总质量 100% 同步锁死在升降梯、断渊桥梁、聚光灯座与闸门上（0 kg 闲置冗余）。",
+      "构建了五状态台灯伙伴 AI 状态机（闪光致盲逃窜、墙角发抖、左键抚摸回暖、跳跃跟随与环境恐惧阻断），并配合零 HUD 三色曼哈顿导管遥测贯穿五大展厅。",
+    ],
+    overview:
+      "《静物》（Still Life）是在南加州大学（USC）Peter Brinson 课程中独立开发的 Unity 6（URP）第一人称解谜游戏，围绕“梦游者（作为谜团的世界）”设计框架构建。在这座单色版画质感的展览馆兼低温铸造厂中，生命与死物的表征被彻底倒置：从 5 kg 的鸡到 100 kg 的石膏马，所有动物都如标本般凝固沉默，被充当压板砝码、断渊踏板与机械卡死塞；而一盏 1.4 kg 的台灯却怕黑发抖、受惊跳逃，并在你的抚摸下发出温暖光晕。",
+    authorNote:
+      "比起用冗长的台词向玩家说教“共情”，我更希望让关卡机制本身去制造一种思维惯性。在前三十分钟里，每一块压力踏板、每一处 4.2m 断渊和每一台冲压机都在训练玩家把动物简化为冰冷的千克数字，同时把台灯当成唯一的活物伙伴——直到展厅 IV 的双轴粉碎机以“检测到活体生物”拒绝碾碎 25 kg 的狗，让你低头面对手中唯一被传感器承认为“死物”的台灯。",
+    externalLink: {
+      url: "https://leficious.itch.io/still-life",
+      label: "在 itch.io 上试玩",
+    },
+    downloads: [
+      {
+        url: "/projects/still-life/Still_Life_GDD_ZH.pdf",
+        label: "下载 GDD 设定文档 (PDF)",
+      },
+    ],
+    responsibilities: [
+      "设计选择性共情倒置前提、9 件标本/家电配重图鉴（5 kg–100 kg）及 L.O.P.（安抚引路、物化称重、镇压清障）核心解谜循环。",
+      "搭建纵深 200m 的线性 Z 轴展览馆建筑群（5 座展厅与 3 条长廊），包含展厅 II 的四阶段 235 kg 零冗余立体配重与展厅 III 的逆向断电冷风回路。",
+      "编写 DeskLampAI 五状态伙伴状态机、宝箱怪领地阻断、曼哈顿导管脉冲着色器，以及展厅 IV 四向无限巨构的 UInt32 静态网格合并（保持 200+ FPS）。",
+    ],
+    mediaCaptions: [
+      "《静物 Still Life》官方预告片。",
+      "跨越五大展厅与纯白终局苏醒的完整实机流程演示。",
+    ],
+    sections: [
+      {
+        eyebrow: "01 / 核心前提与倒置",
+        title: "选择性共情与 L.O.P. 解谜循环",
+        body: [
+          "在 Peter Brinson 的框架中，“梦游者（The Dreamer）”置身于遵循梦境逻辑的世界——玩家在完全参透规则背后的伦理意味之前，便已在内部自洽的规则中本能行事。受雷内·马格利特（René Magritte）物体悖论及《Limbo》《Inside》工业剪影启发，《静物》将有机生物与人造工业品的生命表征进行了彻底倒置。",
+          "整座展览馆的解谜围绕 L.O.P. 循环展开：安抚与引路（Lure & Comfort）——抚摸受惊的 1.4 kg 台灯使其散发暖光，照亮黑暗并激活专属光敏插座；物化与称重（Objectify & Weigh）——收集 5 kg 至 100 kg 的刚体动物标本，将其压上黄铜天平、横跨 4.2m 断渊或塞入冲压机齿轮；镇压与清障（Pacify & Route）——利用聚光灯座定身领地宝箱怪、切断刺骨低温冷风，护送怕黑怕冷的台灯通行。",
+        ],
+        captions: [
+          "展览馆总平面图（Z = -12m 至 +188m）：涵盖展厅 I–V 与长廊 I–III 的正交建筑级关卡蓝图。",
+          "3D 剖面微缩模型主菜单：奠定单色版画排线与石膏展览馆的视觉基调。",
+          "档案室加载蓝图（FIG. 01 — 石膏马，100 kg）：以工业工程制图的形式将动物框定为标准校准硬件。",
+        ],
+      },
+      {
+        eyebrow: "02 / 标本配重名录",
+        title: "9 件标本与家电的配重图鉴",
+        body: [
+          "为了避免物理沙盒解谜沦为杂乱无章的道具堆砌，馆内所有动物标本的质量均严格校准为 5 kg 的整数倍（从 5 kg 的鸡校准垫片直至 100 kg 的石膏马），唯独整份档案图鉴中存在一个非整数异类：FIG. 04 — 台灯伙伴（1.4 kg）。",
+        ],
+      },
+      {
+        eyebrow: "03 / 展厅 I 与长廊 I",
+        title: "伙伴初遇引导与五状态台灯状态机",
+        body: [
+          "展厅 I（书房与石膏马）在零文字弹窗下完成了双重机制引导。当玩家靠近书桌上的台灯时，台灯会经历 0.68 秒惊恐抬头并释放 0.52 秒防御性闪光致盲，随即跳下书桌逃入黑暗角落。追逐 15 秒后，中央地板舱门轰然打开，100 kg 石膏马乘液压升降台升起——在物理空间上替玩家堵截住受惊逃窜的台灯，引导玩家按住鼠标左键在灯罩上来回抚摸使其回暖。",
+          "回暖后的台灯会沿路径跳跃跟随玩家，并在出口处自动跳上光敏插座，配合压在重型黄铜踏板上的 100 kg 石膏马打开大门。进入长廊 I 后，领地意识极强的宝箱怪会咆哮阻断台灯去路，直至玩家将 10 kg 的猫放上金色踏板通电聚光灯座，用金色光束将宝箱怪悬浮定身。",
+        ],
+        captions: [
+          "展厅 I：100 kg 石膏马从中央地下舱门缓缓升起，替玩家堵截受惊逃跑的台灯。",
+          "展厅 I 双重出口：回暖后的 1.4 kg 台灯自动就位光敏插座，配合 100 kg 配重踏板开启大门。",
+          "长廊 I：将 10 kg 猫放上金色踏板激活聚光灯座，用金色光束将宝箱怪悬浮定身以护送台灯通过。",
+        ],
+      },
+      {
+        eyebrow: "04 / 展厅 II",
+        title: "三层生物档案馆（235 kg 零冗余组合数学）",
+        body: [
+          "展厅 II 扩展为一座三层垂直档案馆（1F 中庭、2F 回廊与 3F 顶楼），共收纳 7 件总重 235 kg 的动物标本。为了杜绝剩余道具导致的跳关与冗余，我设计了四阶段 100% 零冗余配重推进（55 kg → 115 kg → 195 kg → 235 kg）：每解锁一只新动物，都必须将当前已解锁的动物总质量 100% 同步锁死在升降梯、金色聚光踏板、断渊桥梁与展柜门锁上，闲置质量恒为 0 kg。",
+          "其中 60 kg 的长颈鹿兼具“空间桥梁”与“重型砝码”双重职能：它既能横放倾倒在 2F 与 3F 的 4.2m 地板断渊上充当实体独木桥，也能在过桥开启电闸后被重新收回背包，用作开启 60 kg 展柜的配重。当第 3 阶段解锁 40 kg 的鹿后，长颈鹿将永久架设在 3F 断渊上，从拓扑层面杜绝顶层死档。",
+        ],
+        captions: [
+          "展厅 II 建筑级关卡图：三层立体档案馆（1F 中庭、2F 回廊、3F 顶楼）完整标注 7 座动物展柜、3 座聚光灯座、2 部升降梯及 4.2m 长颈鹿断渊桥。",
+          "展厅 II 中庭仰视：成群的活体飞书在三层高的档案架与动物展柜间振翅盘旋。",
+          "搬运 60 kg 长颈鹿经过金色聚光灯束（光束正将 1F 东南侧的宝箱怪悬浮定身）。",
+          "双重几何职能：将 60 kg 长颈鹿横放倾倒在 2F 的 4.2m 断渊上搭桥通行，前往开启电闸开关。",
+        ],
+      },
+      {
+        eyebrow: "05 / 长廊 II 与展厅 III",
+        title: "低温铸造厂与逆向断电冷风回路",
+        body: [
+          "长廊 II 引入了喷射刺骨蓝光的低温冷风喷口（Freezing Air Vents）：玩家虽然可以硬闯寒流，但怕冷的台灯会在风口边缘结霜发抖、寸步难行，必须依靠黄铜踏板切断冷风电源。",
+          "展厅 III（低温铸造厂）则通过“逆向取走即断电踏板”颠覆了常规压力板逻辑：馆内预置的动物标本正压在供能踏板上，持续为阻挡台灯的冷风喷口供电。玩家将动物从踏板上取走，既能瞬间切断冷风让台灯安全通过，又能将该动物收入背包，进而把 80 kg 老虎与 100 kg 石膏马直接塞入中央巨型冲压机的三处工业卡死槽（Jammer Nodes）中将其彻底锁死。",
+        ],
+        captions: [
+          "长廊 II 与展厅 III 建筑级关卡图：低温冷风流向、逆向“取走即断电”踏板，以及通向中央巨型冲压机的三条翠绿曼哈顿导管。",
+          "长廊 II：刺骨的低温冷风阻断了发抖的台灯，直至玩家用 25 kg 狗压住断电踏板。",
+          "展厅 III 低温铸造厂：由三条翠绿曼哈顿导管信标供能的中央巨型冲压机。",
+          "机械卡死机制：将 80 kg 老虎直接塞入中层 2 号卡死槽，硬生生锁死中央冲压齿轮。",
+          "用 100 kg 石膏马锁死顶层飞轮后，三条绿色导管全部熄灭，中央冲压机巨齿永久锁死在开启位置。",
+        ],
+      },
+      {
+        eyebrow: "06 / 展厅 IV 与 V 终局",
+        title: "双轴粉碎机前的心理惯性崩塌",
+        body: [
+          "踏入长廊 III 与展厅 IV 前，第四张加载蓝图悄然浮现：FIG. 04 — 台灯伙伴（1.4 kg），下方附着一行平静的档案批注：“它在黑暗中发抖、像活物一样依偎你的手心，但在展览馆传感器眼里，它依然只是一件无生命物品。”在展厅 IV 上下左右四向无限延伸的镂空钢网巨构中央，一台工业双轴粉碎机挡住了去路，屏幕闪烁着：投入 1 件物品以继续（INSERT 1 OBJECT TO PROCEED）。粉碎机旁端坐着那只 25 kg 的狗。",
+          "经过前三座展厅将动物彻底工具化的肌肉记忆训练，玩家会毫不犹豫地抓起 25 kg 的狗扔进粉碎机——然而机器骤然拉响刺耳红光警报：“安全机制触发：检测到活体生物！（LIVING ORGANISM DETECTED!）”并将狗完好无损地弹出。四周没有任何散落杂物，真相在不发一言中轰然落地：那些沉默的动物从始至终都是活着的生命，而你百般呵护的 1.4 kg 台灯，才是传感器唯一认可的“无生命物品”。将发抖的台灯投入粉碎机后，通往展厅 V 纯白空间的门廊开启：压抑的水墨轮廓消融殆尽，远处的狗轻轻呼吸、竖起耳朵、好奇地歪头并摇起了尾巴。",
+        ],
+        captions: [
+          "长廊 III、展厅 IV 与展厅 V 建筑级关卡图：四向无限钢网巨构（Z = +118m 至 +156m）、工业粉碎机伦理反转，以及展厅 V 纯白空间苏醒终局。",
+          "加载界面伏笔（FIG. 04 — 台灯伙伴，1.4 kg）：档案批注早已点明“在传感器眼里，它依然只是一件物品”。",
+          "展厅 IV：工业双轴粉碎机触发安全警报拒绝碾碎 25 kg 的狗（“检测到活体生物！”），瞬间击碎玩家的工具化惯性。",
+          "无台词的终极反转：手捧瑟瑟发抖的 1.4 kg 台灯伙伴——它是整间展厅里唯一能通过传感器的“无生命物品”。",
+          "展厅 V（纯白空间）：褪去冰冷的石膏与水墨滤镜后，25 kg 的狗彻底苏醒——自然呼吸、竖耳、歪头注视并欢快摇尾。",
+        ],
+      },
+      {
+        eyebrow: "07 / 技术美术与设计复盘",
+        title: "超现实着色器、曼哈顿遥测与核心总结",
+        body: [
+          "1. 视觉着色器强化认知偏见：刚体动物采用 ArchivalAnimalSpecimen.shader（三平面程序化版画排线、冷峻石膏漫反射与零顶点位移），而活物家电采用 LivingApplianceCreature.shader（量化 7 FPS 手绘沸腾轮廓、寒冷高频颤抖与温暖次表面红润光泽）。渲染管线在潜移默化中加深了玩家的共情偏见，为展厅 IV 的反转蓄满势能。",
+          "2. 零 HUD 曼哈顿导管遥测：馆内所有压力板、聚光灯座、升降梯与冲压机均通过正交铺设的曼哈顿导管（ConduitDirectionalPulse.shader）传递状态，并按职能严格区分色彩——亮青代表闸门与电梯、暖金代表聚光灯座、翠绿代表冲压机卡死回路，在三层立体空间中实现了零 UI 视觉引导。",
+          "3. 组合数学杜绝物理逃课：展厅 II 的四阶段配重（55 kg → 115 kg → 195 kg → 235 kg）在每一阶段均强制占用 100% 已解锁动物质量，迫使玩家不断回收并重新审视每一件动物标本的空间与质量价值。",
+        ],
+      },
+    ],
+  },
   "an-echo-has-no-shape": {
     title: "回声无形",
     role: "独立游戏设计与开发",
@@ -203,6 +330,7 @@ const projectTranslations: Record<string, ProjectTranslation> = {
 };
 
 const galleryTranslations: Record<string, Pick<GalleryEntry, "title" | "description" | "contribution">> = {
+  "still-life": { title: "静物", description: "超现实第一人称解谜迷宫：沉默的动物充当工业砝码、断渊踏板与机械卡死塞，而怕黑的 1.4 kg 台灯伙伴依偎你的手心取暖，最终在粉碎机前触发无台词的伦理反转。", contribution: "独立完成游戏设计、235 kg 零冗余立体配重关卡、C# 台灯伙伴 AI、HLSL 水墨/油画着色器与曼哈顿导管遥测系统" },
   "an-echo-has-no-shape": { title: "回声无形", description: "围绕单一不变的回声定位动词构建的第一人称声学探索与解谜迷宫，跨越三个颠覆认知规则的区域。", contribution: "独立完成游戏设计、关卡与迷宫布局、C# 玩法与区域回声系统、内生寻路架构及场景整合" },
   "fallen-valkyrie-technical-design": { title: "堕落女武神", description: "围绕武器差异化招式、方向受击、锁定系统与多阶段 Boss 战制作的动作战斗原型。", contribution: "独立技术与战斗设计、蓝图实现、Boss AI、动画系统、实时过场和场景搭建" },
   "starshore-technical-design": { title: "星岸", description: "将移动、技能、索敌、背包、商店与数据驱动拾取物串成完整循环的玩法原型。", contribution: "独立完成技术设计、玩法实现、关卡设计、UI、动画接入与场景搭建" },
@@ -239,7 +367,12 @@ export const galleryTagZh: Record<GalleryTag, string> = {
 
 function localizeMedia(items: MediaItem[], captions?: string[]) {
   if (!captions) return items;
-  return items.map((item, index) => { const next = captions[index] ? { ...item, caption: captions[index] } : item; return next.type === "image" && next.src.includes("/projects/an-echo-has-no-shape/map-") ? { ...next, src: next.src.replace(".webp", "-zh.webp") } : next; });
+  return items.map((item, index) => {
+    const next = captions[index] ? { ...item, caption: captions[index] } : item;
+    return next.type === "image" && /\/projects\/[^/]+\/map-.*\.webp$/.test(next.src)
+      ? { ...next, src: next.src.replace(".webp", "-zh.webp") }
+      : next;
+  });
 }
 
 export function localizeProject(project: Project, chinese: boolean): Project {
@@ -260,5 +393,10 @@ export function localizeProject(project: Project, chinese: boolean): Project {
 export function localizeGalleryEntry(entry: GalleryEntry, chinese: boolean): GalleryEntry {
   if (!chinese) return entry;
   const translation = galleryTranslations[entry.id];
-  return translation ? { ...entry, ...translation } : entry;
+  const localizedMedia = entry.media.map((m) =>
+    m.type === "image" && /\/projects\/[^/]+\/map-.*\.webp$/.test(m.src)
+      ? { ...m, src: m.src.replace(".webp", "-zh.webp") }
+      : m,
+  );
+  return translation ? { ...entry, ...translation, media: localizedMedia } : { ...entry, media: localizedMedia };
 }

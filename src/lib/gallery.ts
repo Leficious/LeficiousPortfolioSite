@@ -58,6 +58,37 @@ export type GalleryEntry = {
 
 export const galleryEntries: GalleryEntry[] = [
   {
+    id: "still-life",
+    title: "Still Life",
+    description:
+      "A surrealist first-person puzzle labyrinth where taxidermy-still animals serve as rigid industrial counterweights, chasm bridges, and gear wedges while a shivering 1.4 kg Desk Lamp companion leans into your hand for warmth.",
+    contribution:
+      "Solo game design, 235 kg zero-slack vertical level design, C# Desk Lamp companion AI, HLSL Kuwahara/ink shaders, Manhattan conduit telemetry, and world assembly",
+    software: ["Unity", "C#"],
+    year: "2026",
+    tags: ["Technical Design", "Realtime", "Environment"],
+    cover: "/projects/still-life/cover.webp",
+    coverAlt: "Still Life Room II Three-Story Menagerie Archive reveal",
+    aspect: "landscape",
+    pinned: true,
+    projectUrl: "/projects/still-life",
+    projectLabel: "View full GDD & case study",
+    media: [
+      { type: "image", src: "/projects/still-life/cover.webp", alt: "Still Life Room II Three-Story Menagerie Archive" },
+      { type: "youtube", url: "https://www.youtube.com/watch?v=4zkp4cTV8LU", title: "Still Life trailer" },
+      { type: "youtube", url: "https://www.youtube.com/watch?v=LAEXC_xDIP4", title: "Still Life full walkthrough" },
+      { type: "image", src: "/projects/still-life/map-01-overview.webp", alt: "Master Facility Plan (Z = -12m to +188m)" },
+      { type: "image", src: "/projects/still-life/shot-04-room1-lamp-plate.webp", alt: "Room I: Comforted Desk Lamp & 100 kg Plaster Horse" },
+      { type: "image", src: "/projects/still-life/map-02-three-story-archive.webp", alt: "Room II Level Design Map: 3-Story Archive (235 kg)" },
+      { type: "image", src: "/projects/still-life/shot-08-room2-giraffe-bridge.webp", alt: "Room II: Tipping the 60 kg Giraffe across the 2F chasm" },
+      { type: "image", src: "/projects/still-life/map-03-cryo-foundry.webp", alt: "Room III Level Design Map: The Cryo-Foundry" },
+      { type: "image", src: "/projects/still-life/shot-11-room3-tiger-jam.webp", alt: "Room III: Jamming the Central Crusher with the 80 kg Tiger" },
+      { type: "image", src: "/projects/still-life/map-04-shredder-finale.webp", alt: "Room IV & V Level Design Map: Industrial Shredder & Pure White Finale" },
+      { type: "image", src: "/projects/still-life/shot-14-room4-shredder-dog.webp", alt: "Room IV: Industrial Shredder rejecting the 25 kg Dog" },
+      { type: "image", src: "/projects/still-life/shot-16-room5-living-dog.webp", alt: "Room V: Awakened Living Dog in the Pure White Void" },
+    ],
+  },
+  {
     id: "an-echo-has-no-shape",
     title: "An Echo Has No Shape",
     description:

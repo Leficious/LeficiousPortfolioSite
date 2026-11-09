@@ -25,6 +25,17 @@ const routes = [
     lang: "en",
   },
   {
+    path: "/projects/still-life",
+    title: "Still Life — Leficious",
+    description:
+      "A surrealist first-person puzzle labyrinth where taxidermy-still animals serve as rigid industrial counterweights and bridges while household appliances shiver, flee, and lean into your hand for warmth.",
+    image: "/projects/still-life/hero-poster.webp",
+    imageWidth: 1920,
+    imageHeight: 1080,
+    schemaType: "CreativeWork",
+    lang: "en",
+  },
+  {
     path: "/projects/an-echo-has-no-shape",
     title: "An Echo Has No Shape — Leficious",
     description:
@@ -96,6 +107,17 @@ const routes = [
     imageWidth: 1200,
     imageHeight: 630,
     schemaType: "ProfilePage",
+    lang: "zh-CN",
+  },
+  {
+    path: "/zh/projects/still-life",
+    title: "静物 — Leficious",
+    description:
+      "一部超现实第一人称解谜迷宫：沉默如标本的刚体动物被当作冰冷的工业砝码、断渊踏板与齿轮止动塞，而家用电器却在黑暗中瑟瑟发抖、逃窜并依偎你的手心取暖。",
+    image: "/projects/still-life/hero-poster.webp",
+    imageWidth: 1920,
+    imageHeight: 1080,
+    schemaType: "CreativeWork",
     lang: "zh-CN",
   },
   {
