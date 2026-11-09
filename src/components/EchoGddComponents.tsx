@@ -369,8 +369,8 @@ function StillLifeInversionMatrix() {
         "富有生气的“野生动物”表现：在黑暗或寒风中发抖，靠弹簧灯颈跳跃跟随，在抚摸下恢复暖光，或具领地攻击性（宝箱怪）。",
       ),
       animals: text(
-        "Static museum specimens: zero animation, zero sound, rigid posture, mounted on bases with brass calibration markings.",
-        "如博物馆石膏标本般静止无声：零动作、零叫声、刚体姿态固定，底座带有黄铜校准环与重量铭牌。",
+        "Motionless living animals: zero idle animation and zero vocalization, standing so still that players assume they are inanimate props.",
+        "保持绝对静止的活体动物：零待机动作、零叫声，安静得让玩家误以为它们只是无生命道具。",
       ),
     },
     {
@@ -391,8 +391,8 @@ function StillLifeInversionMatrix() {
         "7 FPS 手绘抖动轮廓线、寒冷环境下的颤抖位移，以及台灯周围的温暖漫反射光晕。",
       ),
       animals: text(
-        "Triplanar ink cross-hatching, matte plaster shading, and a brass calibration ring at base height.",
-        "三平面版画交叉排线、哑光石膏明暗阶梯，以及底座高度的黄铜刻度环。",
+        "Triplanar ink cross-hatching, flat matte shading, and a brass calibration ring at base height.",
+        "三平面版画交叉排线、哑光色阶明暗，以及底座高度的黄铜刻度环。",
       ),
     },
     {
@@ -415,7 +415,7 @@ function StillLifeInversionMatrix() {
           <tr className="border-b border-border bg-surface/60 text-xs font-semibold text-foreground">
             <th className="p-3.5">{text("Design Axis", "设计维度")}</th>
             <th className="border-l border-border/60 p-3.5">{text("Expressive Appliances (Desk Lamp & Mimics)", "活态家用电器（台灯伙伴与拟态障碍）")}</th>
-            <th className="border-l border-border/60 p-3.5">{text("Static Animal Specimens (5 kg to 100 kg Props)", "静态动物标本（5 kg 至 100 kg 机关道具）")}</th>
+            <th className="border-l border-border/60 p-3.5">{text("Motionless Animals (5 kg to 100 kg Counterweights)", "静止不动的动物（5 kg 至 100 kg 配重）")}</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-border/50 text-xs">
@@ -487,7 +487,7 @@ function StillLifeSpecimenCatalogTable() {
     },
     {
       id: "FIG. 01",
-      name: text("Horse (Loading Blueprint #1)", "石膏马 (加载蓝图 FIG. 01)"),
+      name: text("Horse (Loading Blueprint #1)", "马 (加载蓝图 FIG. 01)"),
       mass: "100 kg",
       role: text("Path Blocker & Heavy Weight", "路径封堵墙与百公斤重物"),
       usage: text("Rises from Room 1's floor hatch to block the fleeing Desk Lamp, opens the 100 kg exit plate, and locks Room 3's upper flywheel.", "从 1 号房地舱升起堵截逃跑的台灯，压开 100 kg 出口踏板，并在 3 号房锁死顶层工业飞轮。"),
@@ -507,7 +507,7 @@ function StillLifeSpecimenCatalogTable() {
         <thead>
           <tr className="border-b border-border bg-surface/60 text-xs font-semibold text-foreground">
             <th className="p-3.5">{text("Catalog ID", "图鉴编号")}</th>
-            <th className="border-l border-border/60 p-3.5">{text("Specimen / Appliance", "标本 / 家电名称")}</th>
+            <th className="border-l border-border/60 p-3.5">{text("Animal / Appliance", "动物 / 家电名称")}</th>
             <th className="border-l border-border/60 p-3.5">{text("Recorded Weight", "标定重量")}</th>
             <th className="border-l border-border/60 p-3.5">{text("Puzzle Function", "解谜职能分类")}</th>
             <th className="border-l border-border/60 p-3.5">{text("Level Design Usage Across Rooms 1 to 5", "在 1 至 5 号房中的具体关卡用途")}</th>
@@ -534,11 +534,11 @@ function StillLifeShaderTelemetryTable() {
 
   const systems = [
     {
-      sys: text("Animal Specimen Shader", "静态动物标本材质"),
+      sys: text("Still Animal Ink Shader", "静止动物版画材质"),
       domain: text("Static Animal Props (5 to 100 kg)", "静态动物道具 (5 至 100 kg)"),
       tech: text(
-        "Triplanar ink cross-hatching, matte plaster shading, and a brass calibration ring at base height with zero vertex animation.",
-        "三平面程序化版画排线、哑光石膏明暗阶梯与底座高度的黄铜校准环，全程零顶点动画以强化静态道具感。",
+        "Triplanar ink cross-hatching, flat matte shading, and a brass calibration ring at base height with zero idle animation.",
+        "三平面程序化版画排线、哑光色阶与底座高度的黄铜校准环，全程零待机动画，使活体动物呈现出静物般的视觉观感。",
       ),
     },
     {

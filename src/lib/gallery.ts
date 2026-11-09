@@ -61,7 +61,7 @@ export const galleryEntries: GalleryEntry[] = [
     id: "still-life",
     title: "Still Life",
     description:
-      "A surrealist first-person puzzle game where motionless animal specimens serve as counterweights, gap bridges, and gear wedges while a shivering Desk Lamp companion leans into your hand for warmth.",
+      "A surrealist first-person puzzle game where motionless living animals are used as counterweights, gap bridges, and gear wedges while a shivering Desk Lamp companion leans into your hand for warmth.",
     contribution:
       "Solo game design, 235 kg multi-floor level design, C# Desk Lamp companion AI, HLSL ink/painterly shaders, floor indicator line systems, and world assembly",
     software: ["Unity", "C#"],
@@ -78,7 +78,7 @@ export const galleryEntries: GalleryEntry[] = [
       { type: "youtube", url: "https://www.youtube.com/watch?v=4zkp4cTV8LU", title: "Still Life trailer" },
       { type: "youtube", url: "https://www.youtube.com/watch?v=LAEXC_xDIP4", title: "Still Life full walkthrough" },
       { type: "image", src: "/projects/still-life/map-01-overview.webp", alt: "Master Facility Plan (Z = -12m to +188m)" },
-      { type: "image", src: "/projects/still-life/shot-04-room1-lamp-plate.webp", alt: "Room I: Comforted Desk Lamp & 100 kg Plaster Horse" },
+      { type: "image", src: "/projects/still-life/shot-04-room1-lamp-plate.webp", alt: "Room I: Comforted Desk Lamp & 100 kg Horse" },
       { type: "image", src: "/projects/still-life/map-02-three-story-archive.webp", alt: "Room II Level Design Map: 3-Story Archive (235 kg)" },
       { type: "image", src: "/projects/still-life/shot-08-room2-giraffe-bridge.webp", alt: "Room II: Tipping the 60 kg Giraffe across the 2F chasm" },
       { type: "image", src: "/projects/still-life/map-03-cryo-foundry.webp", alt: "Room III Level Design Map: The Cryo-Foundry" },

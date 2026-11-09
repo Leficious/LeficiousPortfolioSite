@@ -52,7 +52,7 @@ export const projects: Project[] = [
     role: "Solo Game Designer & Developer",
     year: "2026",
     summary:
-      "A surrealist first-person puzzle game where motionless animal specimens serve as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
+      "A surrealist first-person puzzle game where motionless living animals are used as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
     tags: ["Unity", "C#", "Game Design", "Level Design"],
     cover: "/projects/still-life/cover.webp",
     heroImage: "/projects/still-life/hero-poster.webp",
@@ -70,7 +70,7 @@ export const projects: Project[] = [
     ],
     relatedGalleryIds: ["still-life"],
     overview:
-      "Still Life is a solo first-person puzzle game built in Unity 6 (URP) for Peter Brinson's class at USC around the Situated Player Role of The Dreamer. Inside a monochrome ink-and-plaster gallery, biological roles are inverted: animals stand frozen like museum specimens that players carry as weights, planks, and gear wedges, while a Desk Lamp shivers in the dark, flees when startled, and leans into your hand for warmth.",
+      "Still Life is a solo first-person puzzle game built in Unity 6 (URP) for Peter Brinson's class at USC around the Situated Player Role of The Dreamer. Inside a monochrome ink-and-paper gallery, outward behaviors are inverted: living animals stand completely still and silent, leading players to carry them around as weights, planks, and gear wedges, while a Desk Lamp shivers in the dark, flees when startled, and leans into your hand for warmth.",
     authorNote:
       "Rather than lecturing the player about empathy through dialogue, I wanted the level design itself to build a habit. Across the first three rooms, every pressure plate, floor gap, and crusher trains you to treat animals strictly as puzzle weights and the Desk Lamp as your companion, until Room 4's industrial shredder rejects the Dog as a 'Living Organism' and leaves you holding the only inanimate object in the room.",
     externalLink: {
@@ -109,7 +109,7 @@ export const projects: Project[] = [
         title: "Role inversion and the three-step puzzle loop",
         body: [
           "In Peter Brinson's framework, the Dreamer navigates a world governed by dream logic: an internal rule set that the player acts within before realizing what its rules imply. Inspired by Rene Magritte's object paradoxes and the industrial silhouettes of Limbo and Inside, Still Life swaps the behavioral cues of living creatures and household hardware.",
-          "Every room runs on a three-step loop: collect and place static animal specimens onto brass pressure plates, across 4.2m floor gaps, and into crusher gears; clear route hazards (using Gold Focus Stands to pin Chest Mimics and shutting off cold air vents); and escort the Desk Lamp to the room's optical socket to open the exit.",
+          "Every room runs on a three-step loop: collect and place motionless animals onto brass pressure plates, across 4.2m floor gaps, and into crusher gears; clear route hazards (using Gold Focus Stands to pin Chest Mimics and shutting off cold air vents); and escort the Desk Lamp to the room's optical socket to open the exit.",
         ],
         widget: "still-life-inversion-matrix",
         media: [
@@ -127,7 +127,7 @@ export const projects: Project[] = [
             type: "image",
             src: "/projects/still-life/shot-01-title-diorama.webp",
             alt: "Still Life 3D cutaway title diorama showing the gallery rooms and living lamp",
-            caption: "3D cutaway title diorama introducing the monochrome ink-and-plaster gallery aesthetic.",
+            caption: "3D cutaway title diorama introducing the monochrome ink-and-paper gallery aesthetic.",
             width: 1920,
             height: 1080,
           },
@@ -142,7 +142,7 @@ export const projects: Project[] = [
         ],
       },
       {
-        eyebrow: "02 / Specimen Roster",
+        eyebrow: "02 / Counterweight Roster",
         title: "The 9-item counterweight catalog",
         body: [
           "To keep pressure-plate math readable without messy physics stacking, every animal in the facility is tuned to a clean multiple of 5 kg (from the 5 kg Chicken up to the 100 kg Horse), with only one non-multiple entry in the entire catalog: FIG. 04: Desk Lamp (1.4 kg).",
@@ -153,7 +153,7 @@ export const projects: Project[] = [
         eyebrow: "03 / Room 1 & Hallway 1",
         title: "Companion onboarding and soft hazard gates",
         body: [
-          "Room 1 (The Study & Plaster Horse) teaches both halves of the core loop without tutorial text. Approaching the Desk Lamp startles it: the lamp flashes brightly, leaps off the desk, and flees around the dark perimeter. Fifteen seconds into the chase, a central floor hatch opens and the Plaster Horse rises on a hydraulic lift, physically blocking the loop and cornering the Lamp so the player can hold and drag LMB across its shade to calm it down.",
+          "Room 1 (The Study & The Horse) teaches both halves of the core loop without tutorial text. Approaching the Desk Lamp startles it: the lamp flashes brightly, leaps off the desk, and flees around the dark perimeter. Fifteen seconds into the chase, a central floor hatch opens and the Horse rises on a hydraulic lift, physically blocking the loop and cornering the Lamp so the player can hold and drag LMB across its shade to calm it down.",
           "Once comforted, the Lamp hops behind the player and mounts the optical socket while the Horse weighs down the 100 kg brass plate to open the exit. In Hallway 1, the Lamp stops and shivers outside the reach of a lunging Chest Mimic until the player places the Cat onto a 10 kg Gold Plate, powering a Focus Stand whose golden spotlight levitates and pins the Mimic in mid-air.",
         ],
         widget: "still-life-lamp-ai-fsm",
@@ -161,8 +161,8 @@ export const projects: Project[] = [
           {
             type: "image",
             src: "/projects/still-life/shot-03-room1-horse.webp",
-            alt: "Room 1 Plaster Horse rising from the central floor hatch",
-            caption: "Room 1: The Plaster Horse rises from the central floor hatch to block the loop and corner the startled Desk Lamp.",
+            alt: "Room 1 Horse rising from the central floor hatch",
+            caption: "Room 1: The Horse rises from the central floor hatch to block the loop and corner the startled Desk Lamp.",
             width: 1920,
             height: 1080,
           },
@@ -234,7 +234,7 @@ export const projects: Project[] = [
         title: "The Cryo-Foundry and vent-powering tiles",
         body: [
           "Hallway 2 introduces cold air vents that blast freezing streams across the corridor. While the player can walk straight through cold jets, the Desk Lamp shivers and stops at the edge of the stream until a brass plate cuts power to the vent.",
-          "Room 3 (The Cryo-Foundry) reverses standard pressure-plate behavior with vent-powering tiles. Pre-placed animals sit on floor tiles that actively keep the room's cold jets running. Picking an animal up off its tile shuts off the cold air stream (clearing a safe path for the Desk Lamp) and adds that animal to your inventory so you can wedge the heavy specimens directly into the three gear intakes of the Central Crusher.",
+          "Room 3 (The Cryo-Foundry) reverses standard pressure-plate behavior with vent-powering tiles. Pre-placed animals sit on floor tiles that actively keep the room's cold jets running. Picking an animal up off its tile shuts off the cold air stream (clearing a safe path for the Desk Lamp) and adds that animal to your inventory so you can wedge the heavy animals directly into the three gear intakes of the Central Crusher.",
         ],
         widget: "still-life-room3-foundry-system",
         media: [
@@ -267,7 +267,7 @@ export const projects: Project[] = [
           {
             type: "image",
             src: "/projects/still-life/shot-11-room3-tiger-jam.webp",
-            alt: "Jamming the Central Crusher gears with the Tiger specimen",
+            alt: "Jamming the Central Crusher gears with the Tiger",
             caption: "Mechanical jamming: wedging the Tiger directly into Jammer Intake #2 to lock the central gears.",
             width: 1920,
             height: 1080,
@@ -329,7 +329,7 @@ export const projects: Project[] = [
             type: "image",
             src: "/projects/still-life/shot-16-room5-living-dog.webp",
             alt: "Room 5 Pure White Finale where the awakened Dog breathes, tilts its head, and wags its tail",
-            caption: "Room 5 (Pure White Finale): Stripped of the gallery's ink-and-plaster filter, the Dog wakes up, breathing, tilting its head, and wagging its tail.",
+            caption: "Room 5 (Pure White Finale): Stripped of the gallery's monochrome ink filter, the Dog wakes up, breathing, tilting its head, and wagging its tail.",
             width: 1920,
             height: 1080,
           },
@@ -339,9 +339,9 @@ export const projects: Project[] = [
         eyebrow: "07 / Technical Art & Retrospective",
         title: "Visual contrast, floor indicator lines, and level design takeaways",
         body: [
-          "1. Contrasting Shaders Reinforce Player Habit: Static animals use triplanar ink cross-hatching, matte plaster shading, and zero vertex motion, while appliances use 7 FPS hand-drawn boiling outlines, shivering displacement, and warm light falloff. The visual presentation reinforces the player's assumptions before Room 4 flips them.",
+          "1. Contrasting Shaders Reinforce Player Habit: Motionless animals use triplanar ink cross-hatching, flat matte shading, and zero idle motion, while appliances use 7 FPS hand-drawn boiling outlines, shivering displacement, and warm light falloff. The visual presentation reinforces the player's assumptions before Room 4 flips them.",
           "2. Color-Coded Floor Indicator Lines: Every pressure plate, focus stand, elevator, and crusher connects to its target via right-angle floor and wall indicator lines color-coded by function (Cyan for gates and lifts, Gold for Focus Stands, and Green for Crusher jammers), keeping complex 3-story sightlines readable without floating UI markers.",
-          "3. Full-Allocation Weight Budgets Prevent Sequence Breaks: Requiring 100% of the player's unlocked animal weight pool at each stage of Room 2 (55 kg -> 115 kg -> 195 kg -> 235 kg) ensured every specimen had to be reclaimed and re-routed rather than left behind as spare weight.",
+          "3. Full-Allocation Weight Budgets Prevent Sequence Breaks: Requiring 100% of the player's unlocked animal weight pool at each stage of Room 2 (55 kg -> 115 kg -> 195 kg -> 235 kg) ensured every animal had to be reclaimed and re-routed rather than left behind as spare weight.",
         ],
         widget: "still-life-shader-telemetry",
       },
