@@ -54,7 +54,7 @@ export const projects: Project[] = [
     summary:
       "A surrealist first-person puzzle game where animals stand still and silent as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
     tags: ["Unity", "C#", "Game Design", "Level Design"],
-    cover: "/projects/still-life/cover.webp",
+    cover: "/projects/still-life/hero-poster.webp",
     heroImage: "/projects/still-life/hero-poster.webp",
     coverWidth: 1920,
     coverHeight: 1080,
@@ -118,6 +118,16 @@ export const projects: Project[] = [
         ],
         widget: "still-life-inversion-matrix",
         media: [
+          {
+            type: "image",
+            src: "/projects/still-life/banner-diorama.webp",
+            alt: "Still Life key visual banner (POSE // PULSE) showing the Horse and Tiger on calibration pedestals",
+            caption: "Key visual banner (POSE // PULSE): the Horse (100 kg) and Tiger (80 kg) staged on upper-archive calibration pedestals.",
+            width: 1920,
+            height: 480,
+            fullWidth: true,
+            naturalAspect: true,
+          },
           {
             type: "youtube",
             id: "z71a6UtZ6GY",
