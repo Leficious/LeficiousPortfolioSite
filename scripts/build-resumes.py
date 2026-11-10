@@ -170,7 +170,7 @@ def project(title_html, subtitle, year, bullets, *, compact=False, width=525):
     for bullet in bullets:
         block.append(Paragraph("&#8226;  " + bullet, s_body))
         block.append(Spacer(1, 1.0 if compact else 1.5))
-    block.append(Spacer(1, 2.8 if compact else 4.0))
+    block.append(Spacer(1, 3.2 if compact else 4.0))
     return KeepTogether(block)
 
 
@@ -243,12 +243,12 @@ def technical_resume():
     )
     story += [
         Paragraph(
-            "Game, level, and technical designer building spatial puzzle architecture, combat 3C, and gameplay systems in Unity 6 and Unreal Engine 5, backed by Maya 3D modeling/rigging, environment production, and Python pipeline tooling.",
+            "Game, level, and technical designer creating spatial puzzle layouts, combat 3C, and gameplay prototypes in Unreal Engine 5 and Unity, backed by Maya 3D modeling/rigging, environment production, and Python pipeline tooling.",
             T_BODY,
         ),
         Spacer(1, 5.5),
     ]
-    story += section("Selected technical & level design projects", compact=True, width=w)
+    story += section("Selected game, level & technical design projects", compact=True, width=w)
     story.append(
         project(
             link("Still Life", "https://leficious.com/projects/still-life")
@@ -260,11 +260,11 @@ def technical_resume():
             + link("GDD", "https://leficious.com/projects/still-life/Still_Life_GDD.pdf")
             + "  |  "
             + link("1-Page Pitch", "https://leficious.com/projects/still-life/Still_Life_1Page_Pitch.pdf"),
-            "Solo Unity 6 prototype  |  Multi-floor puzzle & level design, C# companion AI, Maya rigging, and HLSL shaders",
+            "Solo Unity prototype  |  Game & multi-floor level design, Maya 3D modeling/rigging, and AI-assisted C# prototyping",
             "2026",
             [
-                "Architected a 200m, 5-room surrealist puzzle facility—anchored by a 3-story, 4-stage counterweight atrium requiring 100% allocation of a 235 kg animal pool across elevators, gap bridges, optical focus lenses, and gates—conditioning player habits for a wordless finale reversal.",
-                "Engineered a 5-state C# Desk Lamp companion AI on an 18-joint Maya rig (procedural walk, flashbang flee, shivering, petting recovery), paired with zero-HUD tri-color floor conduit shaders, cold-vent/crusher gates, and HLSL printmaking post-processing (200+ FPS).",
+                "Designed a 200m, 5-room surrealist puzzle facility centered on a 3-story, 4-stage counterweight atrium where unlocking each animal requires allocating 100% of a 235 kg weight pool across elevators, gap bridges, focus lenses, and gates.",
+                "Modeled and rigged an 18-joint Desk Lamp companion in Maya and directed its 5-state escort behavior, color-coded floor indicator lines, and inverted cold-vent and crusher puzzles to set up a wordless habit-reversal finale.",
             ],
             compact=True,
             width=w,
@@ -282,11 +282,11 @@ def technical_resume():
                 "5-Page GDD",
                 "https://leficious.com/projects/an-echo-has-no-shape/An_Echo_Has_No_Shape_GDD.pdf",
             ),
-            "Solo 4-week Unity 6 prototype  |  Single-verb C# regional rulesets, level design, and 4-scale sightless wayfinding",
+            "Solo 4-week Unity prototype  |  Level design, 4-scale sightless wayfinding, and AI-assisted C# prototyping",
             "2026",
             [
-                "Built a continuous 550m × 550m sightless acoustic labyrinth around a single echolocation input (Press E) connecting a central hub and three regional puzzles with zero HUD markers, minimaps, or loading screens, guided by a 4-scale non-UI wayfinding hierarchy.",
-                "Scripted three regional C# rulesets that recontextualize the single ping without new controls—Siren phantom ice decoys, sequential 3-wing city loops, and 3.0s silence gates—adding a wave-clash cue after playtests showed E-spamming so players discover the pause rule.",
+                "Designed a continuous 550m x 550m sightless acoustic labyrinth around a single echolocation input (Press E), connecting a central hub and three regional puzzles with zero HUD markers, minimaps, or loading screens via a 4-scale non-UI wayfinding hierarchy.",
+                "Created three regional puzzle rulesets around the same ping input (phantom ice decoys, sequential 3-wing city loops, and 3.0s silence gates), adding a visual wave-clash cue after playtests showed players spamming E so they discover the pause rule.",
             ],
             compact=True,
             width=w,
@@ -338,11 +338,11 @@ def technical_resume():
         project(
             link("Stylize Normals Toolkit v3.0", "https://github.com/Leficious/MayaStylizedNormalsToolkit")
             + " & "
-            + link("3D Environment / Rigging Pipeline", "https://leficious.com/gallery"),
-            "Autodesk Maya, Python, Maya API, Unreal Engine 5, Houdini  |  Open-source tool, environment lighting, and rigging/animation",
+            + link("3D Environment / Rigging Work", "https://leficious.com/gallery"),
+            "Maya, Python, Maya API, Unreal Engine 5, Houdini  |  Open-source tool, environment lighting, and character rigging/animation",
             "2025-26",
             [
-                "Developed an open-source multi-target Maya toolkit for generating, transferring, previewing, and repairing custom foliage/vertex normals; built stylized UE5 environments (Sacred Forest, Water Blossoms with RVT terrain & Houdini snow) and Maya IK/FK character rigs & animations.",
+                "Developed an open-source multi-target Maya workflow for generating, transferring, previewing, and repairing custom vertex normals; built stylized UE5 environments (Sacred Forest, Water Blossoms) and Maya IK/FK character rigs and animations.",
             ],
             compact=True,
             width=w,
@@ -353,17 +353,17 @@ def technical_resume():
     story += section("Tools and skills", compact=True, width=w)
     story += [
         Paragraph(
-            f'<font name="{EN_FONT_BOLD}">Level, Gameplay & Combat Design:</font> Unity 6 (C#, URP), Unreal Engine 5 (Blueprints, GAS, StateTree, Enhanced Input, UMG), multi-floor puzzle & box-garden layout, 3C & combat feel, non-UI spatial wayfinding, iterative playtesting, data-driven systems',
+            f'<font name="{EN_FONT_BOLD}">Gameplay & Level Design:</font> Unreal Engine 5, Blueprints, GAS, StateTree, Behavior Trees, Enhanced Input, UMG, Unity, level & puzzle layout, 3C & combat feel, non-UI spatial wayfinding, playtesting, data-driven systems',
             T_SMALL,
         ),
         Spacer(1, 1.2),
         Paragraph(
-            f'<font name="{EN_FONT_BOLD}">3D Production, Animation & Code:</font> Maya (3D modeling, IK/FK rigging, keyframe animation, Maya API), Animation Blueprints, Motion Warping, Anim Notifies, C#, Python, C++, HLSL/URP shaders, ZBrush, Substance 3D, Houdini, SpeedTree, Gaea, Niagara VFX, Git, Perforce',
+            f'<font name="{EN_FONT_BOLD}">3D, Animation & Code:</font> Maya (modeling, IK/FK rigging, keyframe animation, Maya API, MEL), Animation Blueprints, state machines, Motion Warping, Anim Notifies, retargeting, ZBrush, Substance 3D, SpeedTree, Gaea, Houdini, Python, C++, C#, Git, Perforce',
             T_SMALL,
         ),
         Spacer(1, 1.2),
         Paragraph(
-            f'<font name="{EN_FONT_BOLD}">AI-Assisted Workflows:</font> Antigravity, Codex (code & rapid engine prototyping); Stable Diffusion (ComfyUI, Automatic1111), chaiNNer (image generation & upscaling); Meshy AI (3D mesh generation), Suno (music), ElevenLabs (SFX & voice)',
+            f'<font name="{EN_FONT_BOLD}">AI-Assisted Workflows:</font> Antigravity, Codex (AI-assisted scripting & rapid prototyping); Stable Diffusion (ComfyUI, Automatic1111), chaiNNer; Meshy AI, Suno, ElevenLabs',
             T_SMALL,
         ),
     ]
@@ -448,7 +448,7 @@ def environment_resume():
         ),
         Spacer(1, 1.5),
         Paragraph(
-            f'<font name="{EN_FONT_BOLD}">Rendering & Technical Art:</font> V-Ray, Redshift, Python, Maya API, MEL, HLSL/URP shaders, procedural materials, foliage cards, UVs, high-to-low poly baking, Photoshop',
+            f'<font name="{EN_FONT_BOLD}">Rendering & Technical Art:</font> V-Ray, Redshift, Python, Maya API, MEL, procedural materials, foliage cards, UVs, high-to-low poly baking, Photoshop',
             SMALL,
         ),
         Spacer(1, 1.5),
@@ -616,7 +616,7 @@ def draw_cn_page1_bg(canvas, doc):
 
     canvas.setFont("SimHei", 10.5)
     canvas.setFillColor(TEAL_BRIGHT)
-    canvas.drawString(30, PAGE_H - 57, "游戏与关卡策划 · 战斗策划 · 3C与技术设计（Unity 6 / UE5 / Maya）")
+    canvas.drawString(30, PAGE_H - 57, "游戏与关卡策划 · 战斗策划 · 3C与技术设计（UE5 / Unity / Maya）")
 
     rows = [
         ("联系方式", "+1 626 693-4003  |  leficious@gmail.com  |  微信 LeficiousTepes"),
@@ -718,7 +718,7 @@ def chinese_resume():
     story += cn_section_header("个人概况", "PROFILE", left_w)
     story.append(
         Paragraph(
-            "专注于将空间关卡设计（多层立体配重解谜、四尺度无 UI 导引、无台词机制叙事与试玩迭代）与实时动作战斗机制（角色/敌人 3C 状态机、受击表现与镜头索敌）在 Unity 6 与 UE5 中落地为可玩原型。兼具 USC 游戏设计训练与 Gnomon 3D 场景、Maya 绑定和动画功底，能用白盒、参数与原型高效协同程序、动画、TA 与美术。",
+            "专注于空间关卡设计（多层立体配重解谜、四尺度无 UI 导引、无台词机制叙事与试玩迭代）以及 UE5 实时动作战斗机制（角色/敌人 3C 状态机、受击表现与镜头索敌）。兼具 USC 游戏设计训练与 Gnomon 3D 场景、Maya 建模绑定和动画功底，能用白盒、参数与可玩原型协同程序、动画、TA 与美术。",
             S_BODY,
         )
     )
@@ -728,23 +728,23 @@ def chinese_resume():
     skills = [
         (
             "关卡与箱庭设计",
-            "Unity 6 (URP / C#)、UE5 白盒搭建、多层立体配重与门锁架构、零 HUD 动线引导、单一动词与习惯反转机制递进、试玩迭代、A* / Dijkstra 战棋网格寻路、建筑级关卡平面图与 GDD",
+            "UE5 与 Unity 关卡白盒搭建、多层立体配重与门锁设计、零 HUD 动线引导、单一动词与习惯反转机制递进、试玩迭代、战棋网格寻路、关卡平面图与 GDD",
         ),
         (
             "战斗机制与 3C 表现",
-            "UE5 Animation Blueprint、状态机、Blend Space、上下半身分层混合、Anim Notify 骨骼判定窗、点积方向受击反馈、StateTree 多阶段 Boss AI、GAS 技能框架、越肩/圆锥索敌镜头",
-        ),
-        (
-            "程序思维与管线工具",
-            "C#、Python、UE5 Blueprint、C++、HLSL / URP 着色器、Maya API、MEL、UMG 关卡编辑器开发、数据驱动（Data Table）、Git、Perforce",
+            "UE5 Animation Blueprint、状态机、Blend Space、上下半身分层混合、Anim Notify 骨骼判定窗、点积方向受击反馈、StateTree / Behavior Tree、GAS 技能框架、越肩/圆锥索敌镜头",
         ),
         (
             "3D 制作、绑定与视听功底",
-            "精通 Autodesk Maya（建模/IK-FK绑定/动画）、ZBrush、Substance 3D、Yeti、SpeedTree、Gaea、Houdini、Niagara VFX；具备手绘透视与分镜构图基础",
+            "精通 Maya（建模 / IK-FK 绑定 / 关键帧动画 / Maya API / MEL）、ZBrush、Substance 3D、Yeti、SpeedTree、Gaea、Houdini、Niagara VFX；具备手绘透视与分镜构图基础",
         ),
         (
-            "AI 全流程辅助研发",
-            "Antigravity、Codex（代码与引擎原型验证）；Stable Diffusion (ComfyUI / Automatic1111)、chaiNNer（图像生成与超分）；Meshy AI（3D 网格白盒）、Suno（配乐）、ElevenLabs（SFX 音效与语音）",
+            "脚本工具与版本控制",
+            "UE5 Blueprint、Python、Maya API、MEL、C++、C#（含 AI 辅助原型开发）、UMG 关卡工具、Data Table、Git、Perforce",
+        ),
+        (
+            "AI 辅助研发工作流",
+            "Antigravity、Codex（AI 辅助脚本实现与快速引擎原型验证）；Stable Diffusion (ComfyUI / Automatic1111)、chaiNNer；Meshy AI、Suno、ElevenLabs",
         ),
     ]
     for title, desc in skills:
@@ -764,7 +764,7 @@ def chinese_resume():
     story += cn_section_header("跨学科优势", "HYBRID EDGE", left_w)
     story.append(
         green_dot_bullet(
-            "懂 3D 制作与程序的关卡策划：精通 Maya 建模绑定与 Unity 6 / UE5 实现，能独立完成多层建筑平面图、白盒验证、视线引导（Vista）与着色器视觉反馈。",
+            "懂 3D 制作与引擎原型的关卡策划：熟悉 Maya 建模绑定与 UE5 / Unity 场景搭建，能独立完成多层关卡平面图、白盒验证、3D 资产制作与视线引导（Vista）。",
             left_w,
         )
     )
@@ -789,13 +789,13 @@ def chinese_resume():
             + link("[英文GDD]", "https://leficious.com/projects/still-life/Still_Life_GDD.pdf", "#148578")
             + " "
             + link("[试玩]", "https://leficious.itch.io/still-life", "#148578"),
-            "UNITY 6 · MAYA · C# · 2026",
+            "UNITY · MAYA · 关卡设计 · 2026",
             [
-                "三层立体满额配重与无台词反转：独立完成纵深 200m 的五厅超现实解谜展馆；核心 2 号房采用三层立体大厅与四阶段 235 kg 满额配重推进（每解锁新动物均须将已解锁总重 100% 同步分配于升降梯、4.2m 断口桥梁、聚光灯座与门锁，0 kg 剩余），3 号房以“取走即断电”冷风踏板与冲压机齿轮卡塞反转常规逻辑，借操作习惯铺垫终局粉碎机的无台词叙事反转。",
-                "五状态伙伴 AI、Maya 绑定与零 HUD 导流线：在 Maya 中自制台灯 18 骨骼硬件绑定并由 C# 程序化驱动，实现受惊逃跑、角落发抖、抚摸回暖、跳跃跟随与遇险停步五态 AI；配合聚光定身宝箱怪、三色地面导流线着色器与 HLSL 版画后处理（静态网格合并保持 200+ FPS）。",
+                "三层立体满额配重与无台词反转：独立负责纵深 200m 的五厅超现实解谜关卡设计（C# 代码由 AI 辅助实现）；核心 2 号房设计三层立体大厅与四阶段 235 kg 满额配重推进（每解锁新动物均须将当前总重 100% 同步分配于升降梯、4.2m 断口桥梁、聚光灯座与门锁，0 kg 剩余），3 号房以“取走即断电”冷风踏板与冲压机齿轮卡塞反转常规逻辑，借操作习惯铺垫终局粉碎机的无台词反转。",
+                "伙伴行为设计、Maya 建模绑定与空间引导：在 Maya 中自制台灯 3D 模型与 18 骨骼绑定，设计受惊逃跑、角落发抖、抚摸回暖、跳跃跟随与遇险停步五态行为交互，配合聚光定身宝箱怪与三色地面导流线完成零文字教学。",
             ],
             right_w,
-            title_ratio=0.67,
+            title_ratio=0.66,
         )
     )
 
@@ -808,10 +808,10 @@ def chinese_resume():
             + link("[英文GDD]", "https://leficious.com/projects/an-echo-has-no-shape/An_Echo_Has_No_Shape_GDD.pdf", "#148578")
             + " "
             + link("[试玩]", "https://leficious.itch.io/an-echo-has-no-shape", "#148578"),
-            "UNITY 6 · C# · 2026",
+            "UNITY · 2026",
             [
-                "单一动词与三区域关卡递进：4 周独立搭建 550m×550m 无视觉声学盆地（零 HUD、零小地图、零加载）；全程锁定单一按键（按 E 释放回声），通过改变区域回应规则推进解谜：冰川之海（塞壬干扰波隐藏实冰并伪造诱饵冰）、遗忘之城（三翼街区顺序唤醒闭环）、幻影之森（唯有静默停顿 3.0s 才会让路的活体迷宫）。",
-                "四尺度无 UI 寻路与试玩迭代：构建宏观天际光柱、中观双层体积雾/分轨配乐、微观声学流光与贴身常驻剪影四级导引；针对试玩中玩家高频连按 E 错过静默机制的问题，加入声波对撞与树墙闭合反馈，引导玩家自然领悟停顿解法。",
+                "单一动词与三区域关卡递进：4 周独立完成 550m×550m 无视觉声学盆地的关卡与规则设计（AI 辅助脚本实现，全程零 HUD、零小地图、零加载）；围绕单一回声按键设计三套区域规则：冰川之海（塞壬干扰波隐藏实冰并伪造诱饵冰）、遗忘之城（三翼街区顺序唤醒闭环）、幻影之森（静默停顿 3.0s 方可通行的活体迷宫）。",
+                "四尺度无 UI 寻路与试玩迭代：设计远景天际光柱、双层体积雾与分轨配乐、微观声学流光及常驻地标剪影四级导引；针对试玩中玩家高频连按 E 错过静默机制的问题，补充声波相撞与树墙闭合反馈，让玩家自然领悟停顿解法。",
             ],
             right_w,
             title_ratio=0.77,
@@ -864,7 +864,7 @@ def chinese_resume():
         card_box(
             "核心可交付内容  DELIVERABLES",
             [
-                "可玩 Unity 6 / UE5 原型 Demo  ·  建筑级多层关卡平面图与白盒  ·  Maya 骨骼绑定与战斗状态机  ·  完整中英文 GDD  ·  Python / UMG 工具与 2026 实机混剪（见 leficious.com/zh）",
+                "可玩 UE5 / Unity 原型 Demo  ·  多层关卡平面图与白盒  ·  Maya 建模绑定与 UE5 战斗状态机  ·  完整中英文 GDD  ·  Python / UMG 工具与 2026 实机混剪（见 leficious.com/zh）",
             ],
             right_w,
             vpad=3.4,
@@ -1062,7 +1062,7 @@ def chinese_resume():
     story.append(Spacer(1, 1.8))
     story.append(
         green_dot_bullet(
-            "搭建 Excel 出勤、胜率与资源效率看板，统筹 Parabellum 1/2/3 三家分团（~90 名成员）阵容调配与招新。",
+            "搭建出勤、胜率与资源效率追踪表，统筹 Parabellum 1/2/3 三家分团（约 90 名成员）阵容调配与招新。",
             p2_right_w,
         )
     )
@@ -1084,7 +1084,7 @@ def chinese_resume():
     story.append(Spacer(1, 2.2))
     story.append(
         Paragraph(
-            "<font color='#148578'>工作方式：</font>习惯先在引擎中做出可玩白盒与 3C 原型，再结合试玩反馈与帧级动画表现持续打磨；重视提前交付与跨工种沟通。",
+            "<font color='#148578'>工作方式：</font>习惯利用 AI 快速搭建底层脚本框架，再亲手把控关卡动线、3D 资产绑定、参数手感与试玩迭代；重视提前交付与跨工种沟通。",
             S_SMALL,
         )
     )
