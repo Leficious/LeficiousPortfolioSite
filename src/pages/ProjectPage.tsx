@@ -118,7 +118,7 @@ export function ProjectPage() {
             {section.media && section.media.length > 0 && (
               <div className="mt-8 grid gap-5 sm:grid-cols-2 md:mt-10">
                 {section.media.map((item, mediaIndex) => (
-                  <div key={mediaIndex} className={item.type === "image" && item.fullWidth ? "sm:col-span-2" : undefined}>
+                  <div key={mediaIndex} className={(item.type === "image" && item.fullWidth) || item.type === "youtube" ? "sm:col-span-2" : undefined}>
                     <Media item={item} />
                   </div>
                 ))}
