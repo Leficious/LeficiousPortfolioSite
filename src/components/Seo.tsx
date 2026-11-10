@@ -30,23 +30,47 @@ const buildStructuredData = (title: string, description: string, path: string, i
     name: "Lefi (Kevin) Shan",
     alternateName: "Leficious",
     url: "https://leficious.com/",
-    jobTitle: "Technical Game Designer",
+    jobTitle: "Game, Level & Technical Designer",
     sameAs: ["https://www.linkedin.com/in/leficious/", "https://github.com/Leficious", "https://leficious.itch.io/"],
   };
 
   if (contentPath.startsWith("/projects/")) {
-    return { "@context": "https://schema.org", "@graph": [person, { "@type": "CreativeWork", name: title.replace(" — Leficious", ""), description, url, image, creator: { "@id": person["@id"] } }] };
+    return {
+      "@context": "https://schema.org",
+      "@graph": [
+        person,
+        {
+          "@type": "CreativeWork",
+          name: title.replace(/ (\||—) Leficious$/, ""),
+          description,
+          url,
+          image,
+          creator: { "@id": person["@id"] },
+        },
+      ],
+    };
   }
 
   if (contentPath === "/gallery") {
-    return { "@context": "https://schema.org", "@graph": [person, { "@type": "CollectionPage", name: title, description, url, image, author: { "@id": person["@id"] } }] };
+    return {
+      "@context": "https://schema.org",
+      "@graph": [person, { "@type": "CollectionPage", name: title, description, url, image, author: { "@id": person["@id"] } }],
+    };
   }
 
   return {
     "@context": "https://schema.org",
     "@graph": [
       person,
-      { "@type": contentPath === "/about" ? "ProfilePage" : "WebSite", "@id": `${url}#page`, name: title, description, url, image, author: { "@id": person["@id"] } },
+      {
+        "@type": contentPath === "/about" ? "ProfilePage" : "WebSite",
+        "@id": `${url}#page`,
+        name: title,
+        description,
+        url,
+        image,
+        author: { "@id": person["@id"] },
+      },
     ],
   };
 };

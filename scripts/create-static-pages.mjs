@@ -4,9 +4,9 @@ import { dirname, join } from "node:path";
 const routes = [
   {
     path: "/gallery",
-    title: "Gallery — Leficious",
+    title: "Gallery | Leficious",
     description:
-      "A gallery of technical design, 3D, 2D, environment, character, animation, and technical art work by Leficious.",
+      "A gallery of level design, technical design, 3D, 2D, environment, character, animation, and technical art work by Leficious.",
     image: "/gallery/thumbnails/water-blossoms.webp",
     imageWidth: 1000,
     imageHeight: 563,
@@ -15,9 +15,9 @@ const routes = [
   },
   {
     path: "/about",
-    title: "About & Contact — Leficious",
+    title: "About & Contact | Leficious",
     description:
-      "About Leficious — technical game designer focused on combat design and gameplay systems, with experience across AI, animation, technical art, and 3D production.",
+      "About Lefi (Kevin) Shan: Game, Level & Technical Designer combining authored spatial and narrative play with action-combat systems, gameplay AI, and 3D production.",
     image: "/social/leficious-og-1200x630.png",
     imageWidth: 1200,
     imageHeight: 630,
@@ -26,7 +26,7 @@ const routes = [
   },
   {
     path: "/projects/still-life",
-    title: "Still Life — Leficious",
+    title: "Still Life | Leficious",
     description:
       "A surrealist first-person puzzle game where animals stand still and silent as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
     image: "/projects/still-life/hero-poster.webp",
@@ -37,7 +37,7 @@ const routes = [
   },
   {
     path: "/projects/an-echo-has-no-shape",
-    title: "An Echo Has No Shape — Leficious",
+    title: "An Echo Has No Shape | Leficious",
     description:
       "A 4-week first-person acoustic exploration and puzzle labyrinth built around a single, unchanging echolocation verb across three regions that subvert how the world answers back.",
     image: "/projects/an-echo-has-no-shape/hero-poster.webp",
@@ -48,7 +48,7 @@ const routes = [
   },
   {
     path: "/projects/starshore",
-    title: "Starshore — Leficious",
+    title: "Starshore | Leficious",
     description:
       "A 15-week gameplay prototype connecting character movement, abilities, targeting, inventory, shops, and data-driven pickups.",
     image: "/projects/starshore/design-layout-01.avif",
@@ -59,7 +59,7 @@ const routes = [
   },
   {
     path: "/projects/fallen-valkyrie",
-    title: "Fallen Valkyrie — Leficious",
+    title: "Fallen Valkyrie | Leficious",
     description:
       "A 10-week action-combat prototype centered on weapon-dependent movesets, directional hit reactions, lock-on targeting, and a multiphase boss encounter.",
     image: "/projects/fallen-valkyrie/cover.avif",
@@ -70,7 +70,7 @@ const routes = [
   },
   {
     path: "/projects/sacred-forest",
-    title: "Sacred Forest — Leficious",
+    title: "Sacred Forest | Leficious",
     description:
       "A stylized forest shrine developed end to end through modeling, procedural materials, foliage, lighting, effects, and engine assembly.",
     image: "/projects/sacred-forest/cover.avif",
@@ -81,8 +81,8 @@ const routes = [
   },
   {
     path: "/zh",
-    title: "Leficious — 技术设计与战斗设计作品集",
-    description: "Leficious 的个人作品集，涵盖战斗设计、玩法系统、技术动画、游戏 AI 与 3D 制作。",
+    title: "Leficious | 游戏、关卡与技术设计师",
+    description: "单凯文（Leficious）的个人作品集，涵盖关卡设计、叙事交互、战斗系统、玩法 AI 与 3D 制作。",
     image: "/social/leficious-og-1200x630.png",
     imageWidth: 1200,
     imageHeight: 630,
@@ -91,8 +91,8 @@ const routes = [
   },
   {
     path: "/zh/gallery",
-    title: "作品集 — Leficious",
-    description: "收录 Leficious 的技术设计、3D、2D、环境、角色、动画与技术美术作品。",
+    title: "作品集 | Leficious",
+    description: "收录 Leficious 的关卡与技术设计、3D、2D、环境、角色、动画与技术美术作品。",
     image: "/gallery/thumbnails/water-blossoms.webp",
     imageWidth: 1000,
     imageHeight: 563,
@@ -101,8 +101,8 @@ const routes = [
   },
   {
     path: "/zh/about",
-    title: "关于与联系 — Leficious",
-    description: "Leficious 是一名专注战斗设计与玩法系统的技术设计师，具备游戏 AI、技术动画、技术美术与 3D 制作经验。",
+    title: "关于与联系 | Leficious",
+    description: "关于单凯文（Leficious）：专注于游戏设计、关卡与叙事设计以及技术战斗系统，兼具游戏 AI、技术动画与 3D 制作经验。",
     image: "/social/leficious-og-1200x630.png",
     imageWidth: 1200,
     imageHeight: 630,
@@ -111,7 +111,7 @@ const routes = [
   },
   {
     path: "/zh/projects/still-life",
-    title: "静物 — Leficious",
+    title: "静物 | Leficious",
     description:
       "一部超现实第一人称解谜游戏：保持静止无声的动物被当作压力踏板配重、断口桥梁与齿轮止动塞，而家用电器却在暗处发抖、逃跑并依偎你的手心取暖。",
     image: "/projects/still-life/hero-poster.webp",
@@ -122,7 +122,7 @@ const routes = [
   },
   {
     path: "/zh/projects/an-echo-has-no-shape",
-    title: "回声无形 — Leficious",
+    title: "回声无形 | Leficious",
     description:
       "历时 4 周独立完成的第一人称声学探索与解谜迷宫，仅凭单一不变的“释放回声”动词贯穿三大区域，通过颠覆世界回应玩家的认知规则来推进体验。",
     image: "/projects/an-echo-has-no-shape/hero-poster.webp",
@@ -133,7 +133,7 @@ const routes = [
   },
   {
     path: "/zh/projects/starshore",
-    title: "星岸 — Leficious",
+    title: "星岸 | Leficious",
     description: "历时 15 周完成的玩法原型，将移动、技能、自动索敌、背包、商店与数据驱动拾取物串成一套完整循环。",
     image: "/projects/starshore/design-layout-01.avif",
     imageWidth: 1589,
@@ -143,7 +143,7 @@ const routes = [
   },
   {
     path: "/zh/projects/fallen-valkyrie",
-    title: "堕落女武神 — Leficious",
+    title: "堕落女武神 | Leficious",
     description: "历时 10 周完成的动作战斗原型，包含武器差异化招式、方向受击、锁定系统与多阶段 Boss 战。",
     image: "/projects/fallen-valkyrie/cover.avif",
     imageWidth: 1715,
@@ -153,7 +153,7 @@ const routes = [
   },
   {
     path: "/zh/projects/sacred-forest",
-    title: "圣域森林 — Leficious",
+    title: "圣域森林 | Leficious",
     description: "从建模、程序化材质和植被，到灯光、特效与 Unreal 场景搭建均由我完成的风格化森林神社环境。",
     image: "/projects/sacred-forest/cover.avif",
     imageWidth: 1715,
@@ -173,15 +173,38 @@ const escapeAttribute = (value) =>
 const shell = await readFile("dist/index.html", "utf8");
 
 const personId = "https://leficious.com/#person";
-const person = { "@type": "Person", "@id": personId, name: "Lefi (Kevin) Shan", alternateName: "Leficious", url: "https://leficious.com/", jobTitle: "Technical Game Designer", sameAs: ["https://www.linkedin.com/in/leficious/", "https://github.com/Leficious", "https://leficious.itch.io/"] };
-const imageType = (path) => path.endsWith(".png") ? "image/png" : path.endsWith(".webp") ? "image/webp" : "image/avif";
+const person = {
+  "@type": "Person",
+  "@id": personId,
+  name: "Lefi (Kevin) Shan",
+  alternateName: "Leficious",
+  url: "https://leficious.com/",
+  jobTitle: "Game, Level & Technical Designer",
+  sameAs: ["https://www.linkedin.com/in/leficious/", "https://github.com/Leficious", "https://leficious.itch.io/"],
+};
+const imageType = (path) => (path.endsWith(".png") ? "image/png" : path.endsWith(".webp") ? "image/webp" : "image/avif");
 
 for (const route of routes) {
   const canonical = `https://leficious.com${route.path}`;
   const socialImage = `https://leficious.com${route.image}`;
-  const pageData = route.schemaType === "CreativeWork"
-    ? { "@type": "CreativeWork", name: route.title.replace(" — Leficious", ""), description: route.description, url: canonical, image: socialImage, creator: { "@id": personId } }
-    : { "@type": route.schemaType, name: route.title, description: route.description, url: canonical, image: socialImage, author: { "@id": personId } };
+  const pageData =
+    route.schemaType === "CreativeWork"
+      ? {
+          "@type": "CreativeWork",
+          name: route.title.replace(/ (\||—) Leficious$/, ""),
+          description: route.description,
+          url: canonical,
+          image: socialImage,
+          creator: { "@id": personId },
+        }
+      : {
+          "@type": route.schemaType,
+          name: route.title,
+          description: route.description,
+          url: canonical,
+          image: socialImage,
+          author: { "@id": personId },
+        };
   const structuredData = { "@context": "https://schema.org", "@graph": [person, pageData] };
   const englishPath = route.path.replace(/^\/zh(?=\/|$)/, "") || "/";
   const chinesePath = englishPath === "/" ? "/zh" : `/zh${englishPath}`;
