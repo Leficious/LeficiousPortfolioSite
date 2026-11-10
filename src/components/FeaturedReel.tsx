@@ -48,7 +48,7 @@ export function FeaturedReel({ id, title, description, thumbnailSrc }: FeaturedR
               loading="eager"
               fetchPriority="high"
               decoding="async"
-              className="h-full w-full object-cover opacity-90 transition duration-500 group-hover:scale-[1.015] group-hover:opacity-100"
+              className="h-full w-full object-cover opacity-75 grayscale-[15%] transition duration-500 group-hover:scale-[1.015] group-hover:opacity-90 group-hover:grayscale-0"
               onError={(event) => {
                 const fallback = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
@@ -57,30 +57,19 @@ export function FeaturedReel({ id, title, description, thumbnailSrc }: FeaturedR
                 }
               }}
             />
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/15"
-            />
+            <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-background/65 via-transparent to-background/15" />
             <span className="absolute inset-0 grid place-items-center">
               <span className="grid h-16 w-16 place-items-center rounded-full border border-foreground/35 bg-background/75 pl-1 text-foreground shadow-2xl backdrop-blur transition-all duration-300 group-hover:scale-105 group-hover:border-accent group-hover:text-accent">
                 <PlayIcon />
               </span>
             </span>
-            <span className="absolute bottom-4 left-4 text-[10px] font-medium uppercase tracking-[0.18em] text-foreground/85">
-              {text("Play reel", "播放集锦")}
-            </span>
+            <span className="absolute bottom-4 left-4 font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/80">{text("Play reel", "播放视频")}</span>
           </button>
         )}
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border/60 p-4 sm:px-6">
-        <p
-          className={`max-w-2xl text-sm leading-relaxed text-muted-foreground ${
-            isChinese ? "zh-readable" : ""
-          }`}
-        >
-          <FormattedText>{description}</FormattedText>
-        </p>
+          <p className={`max-w-2xl text-sm leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}><FormattedText>{description}</FormattedText></p>
         <a
           href={`https://youtu.be/${id}`}
           target="_blank"
