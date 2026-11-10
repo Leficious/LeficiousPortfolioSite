@@ -26,7 +26,7 @@ export function HomePage() {
           </div>
           <FeaturedReel
             id="cyespsOlRJc"
-            thumbnailSrc="/reels/technical-design-reel-2026.jpg"
+            thumbnailSrc="/reels/game-design-reel-2026.webp"
             title={text("Game Design Reel 2026", "2026 游戏设计作品集锦")}
             description={text("A look at the level design, narrative mechanics, combat systems, enemy AI, and gameplay prototypes across my recent work.", "展示近期项目中的关卡设计、叙事机制、战斗系统、敌人 AI 与玩法原型。")}
             eyebrow={text("Primary reel · 2026", "设计集锦 · 2026")}

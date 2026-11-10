@@ -48,7 +48,7 @@ export function FeaturedReel({ id, title, description, thumbnailSrc }: FeaturedR
               loading="eager"
               fetchPriority="high"
               decoding="async"
-              className="h-full w-full object-cover opacity-75 grayscale-[15%] transition duration-500 group-hover:scale-[1.015] group-hover:opacity-90 group-hover:grayscale-0"
+              className="h-full w-full object-cover opacity-85 grayscale-[10%] transition duration-500 group-hover:scale-[1.015] group-hover:opacity-100 group-hover:grayscale-0"
               onError={(event) => {
                 const fallback = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
