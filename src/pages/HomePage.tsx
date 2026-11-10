@@ -17,20 +17,23 @@ export function HomePage() {
         <section className="route-reveal border-b border-border/60 py-8 md:py-12" aria-labelledby="technical-reel-title">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <h1 id="technical-reel-title" className="font-display text-2xl font-semibold sm:text-3xl">{text("Technical Game Design Reel", "游戏技术设计作品集")}</h1>
+              <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
+                {text("Lefi (Kevin) Shan · Game, Level & Technical Designer", "单凯文 Lefi Shan · 游戏、关卡与技术设计师")}
+              </p>
+              <h1 id="technical-reel-title" className="font-display text-2xl font-semibold sm:text-3xl">{text("Game Design Reel", "游戏设计作品集锦")}</h1>
             </div>
             <span className="text-xs text-muted-foreground">2026</span>
           </div>
           <FeaturedReel
             id="cyespsOlRJc"
             thumbnailSrc="/reels/technical-design-reel-2026.jpg"
-            title={text("Technical Game Design Reel 2026", "2026 游戏技术设计作品集")}
-            description={text("A quick look at the combat systems, gameplay prototypes, enemies, and technical problem-solving behind my recent work.", "快速展示近期项目中的战斗系统、玩法原型、敌人设计与技术实现。")}
-            eyebrow={text("Primary reel · 2026", "技术设计 · 2026")}
+            title={text("Game Design Reel 2026", "2026 游戏设计作品集锦")}
+            description={text("A look at the level design, narrative mechanics, combat systems, enemy AI, and gameplay prototypes across my recent work.", "展示近期项目中的关卡设计、叙事机制、战斗系统、敌人 AI 与玩法原型。")}
+            eyebrow={text("Primary reel · 2026", "设计集锦 · 2026")}
           />
           <div className="mt-5 flex justify-end">
             <a href={isChinese ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"} download className="inline-flex items-center gap-3 rounded-full border border-accent/60 bg-surface/55 px-5 py-3 text-sm font-medium text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
-              {text("Download technical game design résumé", "下载中文游戏开发简历")} <span aria-hidden="true">↓</span>
+              {text("Download game design résumé", "下载中文游戏开发简历")} <span aria-hidden="true">↓</span>
             </a>
           </div>
         </section>

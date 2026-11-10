@@ -194,7 +194,7 @@ export function AboutPage() {
               <p className="zh-readable mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">{text("Whether you are building an action-combat system, a level-driven narrative game, or a gameplay prototype that needs a designer who can get under the hood, I would be glad to hear about it.", "无论你正在制作动作战斗系统、以空间关卡驱动的叙事作品，还是需要一位能直接深入引擎搭建玩法原型的设计师，都欢迎联系我。")}</p>
               <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />{text("Focused on game, level, combat, and technical design · open to adjacent opportunities", "求职方向：游戏设计 / 关卡策划 / 战斗与技术策划 · 也欢迎相关岗位")}</div>
               <a href={isChinese ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"} download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
-                {text("Download technical game design résumé", "下载中文游戏开发简历")} <span aria-hidden="true">↓</span>
+                {text("Download game design résumé", "下载中文游戏开发简历")} <span aria-hidden="true">↓</span>
               </a>
             </div>
 
