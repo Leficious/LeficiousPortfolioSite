@@ -97,7 +97,7 @@ export function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title={text("About & Contact | Leficious", "关于与联系 | Leficious")} description={text("About Lefi (Kevin) Shan: Game, Level & Technical Designer combining authored spatial and narrative play with action-combat systems, gameplay AI, and 3D production.", "关于单凯文（Leficious）：专注于游戏设计、关卡与叙事设计以及技术战斗系统，兼具游戏 AI、技术动画与 3D 制作经验。")} path={localizedPath("/about")} />
+      <Seo title={text("About & Contact | Leficious", "关于与联系 | Leficious")} description={text("About Lefi (Kevin) Shan: Game, Level & Technical Designer combining authored spatial and narrative play with action-combat systems, gameplay AI, and 3D production.", "关于单凯飞（Leficious）：专注于游戏设计、关卡与叙事设计以及技术战斗系统，兼具游戏 AI、技术动画与 3D 制作经验。")} path={localizedPath("/about")} />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="route-reveal relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-35 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
@@ -125,11 +125,11 @@ export function AboutPage() {
             <figure className="relative mx-auto min-w-0 w-full max-w-full sm:max-w-[390px] lg:translate-y-3">
               <span aria-hidden="true" className="absolute -bottom-3 -left-3 h-[72%] w-[72%] border-b border-l border-warm/70" />
               <div className="relative overflow-hidden border border-border/70 bg-surface shadow-[0_24px_70px_rgba(0,0,0,0.28)]">
-                <img src="/about/lefi-shan-portrait.webp" alt={text("Portrait of Lefi Shan", "单凯文（Kevin Shan）肖像")} width="1000" height="1000" className="aspect-[4/5] w-full object-cover object-center" />
+                <img src="/about/lefi-shan-portrait.webp" alt={text("Portrait of Lefi Shan", "单凯飞（Kevin Shan）肖像")} width="1000" height="1000" className="aspect-[4/5] w-full object-cover object-center" />
                 <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent" />
               </div>
               <figcaption className="mt-4 flex flex-col items-start gap-1 pl-1 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                <span>{text("Lefi Shan (legal name Kevin Shan)", "单凯文（Kevin Shan）")}</span>
+                <span>{text("Lefi Shan (legal name Kevin Shan)", "单凯飞（Kevin Shan）")}</span>
                 <span className="font-mono text-[9px] uppercase tracking-[0.16em]">{text("Los Angeles · California", "美国 · 加利福尼亚州 · 洛杉矶")}</span>
               </figcaption>
             </figure>

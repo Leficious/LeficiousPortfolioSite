@@ -82,7 +82,7 @@ const routes = [
   {
     path: "/zh",
     title: "Leficious | 游戏、关卡与技术设计师",
-    description: "单凯文（Leficious）的个人作品集，涵盖关卡设计、叙事交互、战斗系统、玩法 AI 与 3D 制作。",
+    description: "单凯飞（Leficious）的个人作品集，涵盖关卡设计、空间解谜、战斗系统、玩法工具与 3D 场景制作。",
     image: "/social/leficious-og-1200x630.png",
     imageWidth: 1200,
     imageHeight: 630,
@@ -102,7 +102,7 @@ const routes = [
   {
     path: "/zh/about",
     title: "关于与联系 | Leficious",
-    description: "关于单凯文（Leficious）：专注于游戏设计、关卡与叙事设计以及技术战斗系统，兼具游戏 AI、技术动画与 3D 制作经验。",
+    description: "关于单凯飞（Leficious）：专注于游戏设计、关卡与叙事设计以及技术战斗系统，兼具游戏 AI、技术动画与 3D 制作经验。",
     image: "/social/leficious-og-1200x630.png",
     imageWidth: 1200,
     imageHeight: 630,
