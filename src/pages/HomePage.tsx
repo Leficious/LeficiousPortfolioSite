@@ -25,10 +25,10 @@ export function HomePage() {
             <span className="text-xs text-muted-foreground">2026</span>
           </div>
           <FeaturedReel
-            id="cyespsOlRJc"
+            id="hphiglctUCw"
             thumbnailSrc="/reels/game-design-reel-2026.webp"
             title={text("Game Design Reel 2026", "2026 游戏设计作品集锦")}
-            description={text("A look at the level design, narrative mechanics, combat systems, enemy AI, and gameplay prototypes across my recent work.", "展示近期项目中的关卡设计、叙事机制、战斗系统、敌人 AI 与玩法原型。")}
+            description={text("A look at the multi-story level design, spatial puzzles, combat systems, 3D environment production, and gameplay prototypes across my recent work.", "展示近期项目中的多楼层关卡设计、空间解谜、战斗系统、3D 场景制作与玩法原型。")}
             eyebrow={text("Primary reel · 2026", "设计集锦 · 2026")}
           />
           <div className="mt-5 flex justify-end">
