@@ -12,13 +12,13 @@ export function HomePage() {
   const localizedProjects = projects.map((project) => localizeProject(project, isChinese));
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title={text("Leficious | Game, Level & Technical Designer", "Leficious | 游戏、关卡与技术设计师")} description={text("Selected work by Lefi (Kevin) Shan across level design, narrative play, combat systems, gameplay AI, and 3D production.", "单凯文（Leficious）的个人作品集，涵盖关卡设计、叙事交互、战斗系统、玩法 AI 与 3D 制作。")} path={localizedPath("/")} />
+      <Seo title={text("Leficious | Game, Level & Technical Designer", "Leficious | 游戏、关卡与技术设计师")} description={text("Selected work by Lefi (Kevin) Shan across level design, spatial puzzles, combat systems, gameplay tooling, and 3D environment production.", "单凯飞（Leficious）的个人作品集，涵盖关卡设计、空间解谜、战斗系统、玩法工具与 3D 场景制作。")} path={localizedPath("/")} />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="route-reveal border-b border-border/60 py-8 md:py-12" aria-labelledby="technical-reel-title">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
-                {text("Lefi (Kevin) Shan · Game, Level & Technical Designer", "单凯文 Lefi Shan · 游戏、关卡与技术设计师")}
+                {text("Lefi (Kevin) Shan · Game, Level & Technical Designer", "单凯飞 Lefi Shan · 游戏、关卡与技术设计师")}
               </p>
               <h1 id="technical-reel-title" className="font-display text-2xl font-semibold sm:text-3xl">{text("Game Design Reel", "游戏设计作品集锦")}</h1>
             </div>

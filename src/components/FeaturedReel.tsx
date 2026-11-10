@@ -4,6 +4,7 @@ import { FormattedText } from "./FormattedText";
 
 type FeaturedReelProps = {
   id: string;
+  zhId?: string;
   title: string;
   description: string;
   eyebrow?: string;
@@ -18,16 +19,17 @@ function PlayIcon() {
   );
 }
 
-export function FeaturedReel({ id, title, description, thumbnailSrc }: FeaturedReelProps) {
+export function FeaturedReel({ id, zhId, title, description, thumbnailSrc }: FeaturedReelProps) {
   const [active, setActive] = useState(false);
   const { isChinese, text } = useLanguage();
+  const activeId = isChinese && zhId ? zhId : id;
 
   return (
     <article className="group overflow-hidden rounded-xl border border-border bg-surface/45">
       <div className="relative aspect-video overflow-hidden bg-black">
         {active ? (
           <iframe
-            src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1`}
+            src={`https://www.youtube-nocookie.com/embed/${activeId}?autoplay=1`}
             title={title}
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
@@ -41,7 +43,7 @@ export function FeaturedReel({ id, title, description, thumbnailSrc }: FeaturedR
             aria-label={`${text("Play", "播放")} ${title}`}
           >
             <img
-              src={thumbnailSrc ?? `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}
+              src={thumbnailSrc ?? `https://i.ytimg.com/vi/${activeId}/maxresdefault.jpg`}
               alt=""
               width="1280"
               height="720"
@@ -50,7 +52,7 @@ export function FeaturedReel({ id, title, description, thumbnailSrc }: FeaturedR
               decoding="async"
               className="h-full w-full object-cover opacity-85 grayscale-[10%] transition duration-500 group-hover:scale-[1.015] group-hover:opacity-100 group-hover:grayscale-0"
               onError={(event) => {
-                const fallback = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+                const fallback = `https://i.ytimg.com/vi/${activeId}/hqdefault.jpg`;
 
                 if (event.currentTarget.src !== fallback) {
                   event.currentTarget.src = fallback;
@@ -71,7 +73,7 @@ export function FeaturedReel({ id, title, description, thumbnailSrc }: FeaturedR
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border/60 p-4 sm:px-6">
           <p className={`max-w-2xl text-sm leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}><FormattedText>{description}</FormattedText></p>
         <a
-          href={`https://youtu.be/${id}`}
+          href={`https://youtu.be/${activeId}`}
           target="_blank"
           rel="noreferrer"
           className="shrink-0 py-2 text-xs text-muted-foreground transition-colors hover:text-accent"
