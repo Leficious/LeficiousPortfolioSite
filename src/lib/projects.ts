@@ -54,7 +54,7 @@ export const projects: Project[] = [
     summary:
       "A surrealist first-person puzzle game where animals stand still and silent as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
     tags: ["Unity", "C#", "Game Design", "Level Design"],
-    cover: "/projects/still-life/hero-poster.webp",
+    cover: "/projects/still-life/card-cover.webp",
     heroImage: "/projects/still-life/hero-poster.webp",
     coverWidth: 1920,
     coverHeight: 1080,

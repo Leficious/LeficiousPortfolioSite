@@ -53,7 +53,7 @@ export function HomePage() {
               <li key={project.slug}>
                 <Link to={localizedPath(`/projects/${project.slug}`)} viewTransition className="group grid overflow-hidden rounded-lg border border-border bg-surface/45 transition-all hover:-translate-y-0.5 hover:border-accent/70 hover:bg-surface md:grid-cols-[0.42fr_0.58fr]">
                   <div className="relative min-h-56 overflow-hidden bg-muted md:min-h-72">
-                    <img src={project.cover} alt="" width="800" height="500" loading="lazy" decoding="async" className="h-full w-full object-cover opacity-75 grayscale-[25%] transition duration-500 group-hover:scale-[1.025] group-hover:opacity-90 group-hover:grayscale-0" />
+                    <img src={project.cover} alt="" width="800" height="500" loading="lazy" decoding="async" className={`h-full w-full object-cover ${project.slug === "still-life" ? "object-left" : "object-center"} opacity-75 grayscale-[25%] transition duration-500 group-hover:scale-[1.025] group-hover:opacity-90 group-hover:grayscale-0`} />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-background/45" />
                     <span className="absolute left-4 top-4 rounded-full border border-foreground/20 bg-background/70 px-2.5 py-1 font-mono text-[9px] tracking-[0.16em] backdrop-blur-sm">{String(index + 1).padStart(2, "0")}</span>
                   </div>
