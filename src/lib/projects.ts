@@ -49,11 +49,11 @@ export const projects: Project[] = [
   {
     slug: "still-life",
     title: "Still Life",
-    role: "Solo Game Designer & Developer",
+    role: "Solo Game & Level Designer",
     year: "2026",
     summary:
       "A surrealist first-person puzzle game where animals stand still and silent as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
-    tags: ["Unity", "C#", "Game Design", "Level Design"],
+    tags: ["Unity 6", "Game Design", "Level Design", "3D Modeling & Rigging"],
     cover: "/projects/still-life/card-cover.webp",
     heroImage: "/projects/still-life/hero-poster.webp",
     coverWidth: 1920,
@@ -61,9 +61,9 @@ export const projects: Project[] = [
     designGoal:
       "Build a five-room puzzle progression that trains players to use static animals as physical puzzle tools while escorting a skittish Desk Lamp companion, setting up an unscripted reversal at the finale.",
     ownership:
-      "Solo game design, multi-floor level design, C# companion AI and puzzle systems, custom HLSL ink/painterly shaders, floor indicator line systems, and world assembly.",
+      "Solo game design, multi-floor puzzle and level design, Maya 3D companion modeling and 18-joint rigging, floor indicator line wayfinding, world assembly, and AI-assisted C# prototyping.",
     scope:
-      "Solo project in Unity 6 (URP) developed for Peter Brinson's course at USC around the Situated Player Role of The Dreamer.",
+      "Solo project in Unity 6 developed for Peter Brinson's course at USC around the Situated Player Role of The Dreamer.",
     outcomes: [
       "Designed a 4-stage, 235 kg multi-floor puzzle room (Room 2) where unlocking each new animal requires allocating 100% of your currently unlocked weight pool across elevators, bridges, focus stands, and gates with 0 kg left over.",
       "Built a 5-state Desk Lamp companion AI (flashbang flee, cornered shivering, LMB petting recovery, hopping follow, and hazard stops) paired with color-coded floor indicator lines across 5 rooms.",
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     responsibilities: [
       "Designed the role-inversion premise, 9-item counterweight roster (5 kg to 100 kg), and 3-step core puzzle loop.",
       "Built the 200m linear facility across 5 rooms and 3 connecting hallways, including Room 2's 4-stage 235 kg weight progression and Room 3's vent-powering tile layout.",
-      "Programmed the Desk Lamp 5-state companion AI, Chest Mimic and Cold Vent soft gates, floor indicator line shaders, and static mesh consolidation (200+ FPS in Room 4).",
+      "Modeled and rigged the 18-joint Desk Lamp companion in Maya 2026, designed Chest Mimic and Cold Vent soft gates, and laid out color-coded floor indicator lines across all 5 rooms.",
     ],
     media: [
       {
@@ -370,11 +370,11 @@ export const projects: Project[] = [
   {
     slug: "an-echo-has-no-shape",
     title: "An Echo Has No Shape",
-    role: "Solo Game Designer & Developer",
+    role: "Solo Game & Level Designer",
     year: "2026",
     summary:
       "A 4-week first-person acoustic exploration and puzzle game built around a single, unchanging echolocation input across three regions that change how the environment responds.",
-    tags: ["Unity", "C#", "Game Design", "Level Design"],
+    tags: ["Unity 6", "Game Design", "Level Design", "Spatial Wayfinding"],
     cover: "/projects/an-echo-has-no-shape/cover.webp",
     heroImage: "/projects/an-echo-has-no-shape/hero-poster.webp",
     coverWidth: 1920,
@@ -382,9 +382,9 @@ export const projects: Project[] = [
     designGoal:
       "Sustain a multi-region first-person exploration game on a single primary action (Press E to Emit Echo) without ability unlocks, combat, or HUD markers.",
     ownership:
-      "Solo game design, level layout and gating, C# gameplay and regional echo-state systems, 4-layer sightless wayfinding, audio-fog crossfades, and world assembly.",
+      "Solo game design, level layout and gating, 4-layer sightless wayfinding, world assembly, 6-cohort playtesting, and AI-assisted C# prototyping.",
     scope:
-      "4-week solo project in Unity 6 (URP) developed for Peter Brinson's course at USC around the Situated Player Role of The Traveler.",
+      "4-week solo project in Unity 6 developed for Peter Brinson's course at USC around the Situated Player Role of The Traveler.",
     outcomes: [
       "Built a continuous ~550m x 550m fog-covered basin connecting a central hub and three spoke regions with zero HUD markers, minimaps, or loading screens.",
       "Designed three distinct regional puzzle rules around the same E input: platform verification against decoy signals (Glacial Ocean), a 3-wing sequential street loop (Unremembered City), and a 3.0s pause-and-reply gate (Illusory Woods).",
@@ -469,7 +469,7 @@ export const projects: Project[] = [
             alt: "Region 1 Flow & Platform Classification Map: Glacial Ocean showing the Safe Flanking Route vs. Baited Direct Shortcuts",
             caption: "Region 1 Flow & Gating Map (Glacial Ocean): Showing the Safe Flanking Route (blue arrows) across solid/hidden-solid ice vs. the Baited Direct Shortcuts (red dashed arrows) over non-solid Siren decoys.",
             width: 1600,
-            height: 1400,
+            height: 1200,
             fullWidth: true,
             naturalAspect: true,
           },
@@ -506,7 +506,7 @@ export const projects: Project[] = [
             alt: "Region 2 Street Loop & Reset Boundary Map: Unremembered City showing the 0 -> 1 -> 2 -> 3 street traversal loop",
             caption: "Region 2 Street Loop & Reset Boundary Map (Unremembered City): Showing the required street traversal loop from Center Plaza (0) -> SW Muse Wing (1) -> SE Ruler Wing (2) -> NE Architect Wing (3) and the outer Reset Boundary.",
             width: 1600,
-            height: 1400,
+            height: 1200,
             fullWidth: true,
             naturalAspect: true,
           },
@@ -575,7 +575,7 @@ export const projects: Project[] = [
             alt: "Region 3 Choke-Point Gates & Detour Flow Map: Illusory Woods showing the Direct Path through choke gates vs. Detour Loops",
             caption: "Region 3 Choke-Point Gates & Detour Flow Map (Illusory Woods): Showing the Direct Path (green arrows) through pass-through choke-point gates after a 3.0s wait vs. the Winding Detour Loops (red dashed arrows) when spamming E.",
             width: 1600,
-            height: 1400,
+            height: 1200,
             fullWidth: true,
             naturalAspect: true,
           },
@@ -610,9 +610,9 @@ export const projects: Project[] = [
             type: "image",
             src: "/projects/an-echo-has-no-shape/map-01-world-overview.webp",
             alt: "World Hub-and-Spoke Flow & Wayfinding Map (~550m x 550m) showing the Central Hub, 3 spoke routes, and fog bounds",
-            caption: "World Hub-and-Spoke Flow & Wayfinding Map (~550m x 550m): Showing the Central Hub (H), the 3 spoke traversal flows (1, 2, 3), secondary inter-regional loops, and nested fog transition bounds.",
+            caption: "World Hub-and-Spoke Flow & Wayfinding Map (~550m x 550m): Showing the Central Hub (H), the 3 spoke traversal flows (1, 2, 3), secondary inter-regional loops, and regional fog transition bounds.",
             width: 1600,
-            height: 1600,
+            height: 1200,
             fullWidth: true,
             naturalAspect: true,
           },

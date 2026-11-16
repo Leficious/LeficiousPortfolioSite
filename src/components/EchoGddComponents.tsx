@@ -32,7 +32,7 @@ export function EchoGddWidget({ id }: { id: EchoGddWidgetId }) {
       return (
         <MermaidBlock
           diagramKey={isChinese ? "traveler-arc-zh" : "traveler-arc-en"}
-          title={isChinese ? "单一按键在三大区域中的规则重构与终局门锁聚合图" : "Single-Verb Recontextualization & Regional Gating Progression"}
+          title={isChinese ? "单一按键核心循环与三大区域门锁" : "Single-Action Core Loop & Regional Gates"}
         />
       );
     case "rule-of-three-matrix":
@@ -41,21 +41,21 @@ export function EchoGddWidget({ id }: { id: EchoGddWidgetId }) {
       return (
         <MermaidBlock
           diagramKey={isChinese ? "glacier-state-zh" : "glacier-state-en"}
-          title={isChinese ? "区域 1（冰川之海）：侧翼安全航线、直线诱饵捷径与真伪信号求证" : "Region 1 (Glacial Ocean): Lane Routing & Platform Signal Verification"}
+          title={isChinese ? "区域 1（冰川之海）：侧翼安全航线与诱饵捷径验证流程" : "Region 1 (Glacial Ocean): Lane Routing & Platform Verification"}
         />
       );
     case "city-sequence":
       return (
         <MermaidBlock
           diagramKey={isChinese ? "city-sequence-zh" : "city-sequence-en"}
-          title={isChinese ? "区域 2（遗忘之城）：三翼街区顺序门锁依赖图 (0 -> 1 -> 2 -> 3) 与越界重置" : "Region 2 (Unremembered City): Lock-and-Key Sequence (0 -> 1 -> 2 -> 3) & Reset Gate"}
+          title={isChinese ? "区域 2（遗忘之城）：三翼街区顺序门锁 (0 -> 1 -> 2 -> 3) 与重置边界" : "Region 2 (Unremembered City): 3-Wing Sequence (0 -> 1 -> 2 -> 3) & Reset Gate"}
         />
       );
     case "woods-telemetry-and-cadence":
       return (
         <MermaidBlock
           diagramKey={isChinese ? "woods-cadence-zh" : "woods-cadence-en"}
-          title={isChinese ? "区域 3（幻影之森）：8 秒输入时序轴与主干道岔口虚幻门锁开闭图" : "Region 3 (Illusory Woods): 8-Second Input Timing & Choke-Gate State Switch"}
+          title={isChinese ? "区域 3（幻影之森）：8 秒输入时序轴与主干道岔口门锁" : "Region 3 (Illusory Woods): 8-Second Input Timeline & Choke-Point Gates"}
         />
       );
     case "world-topology-and-wayfinding":
@@ -63,7 +63,7 @@ export function EchoGddWidget({ id }: { id: EchoGddWidgetId }) {
         <>
           <MermaidBlock
             diagramKey={isChinese ? "world-topology-zh" : "world-topology-en"}
-            title={isChinese ? "四层无 UI 空间寻路层级与中枢往返闭环图" : "4-Layer Sightless Wayfinding Hierarchy & Hub-and-Spoke Loop"}
+            title={isChinese ? "四层无 UI 空间寻路层级与中枢往返结构" : "4-Layer Sightless Wayfinding Hierarchy & Hub-and-Spoke Layout"}
           />
           <WayfindingTable />
         </>
@@ -219,9 +219,9 @@ function RuleOfThreeMatrix() {
 
   const rows = [
     {
-      dimension: text("Level Topology", "空间拓扑结构"),
+      dimension: text("Level Layout", "关卡空间布局"),
       hub: text("Central Hub Ring (3 spoke heads + final gate)", "中央环形广场（3 条分支起点与终局石塔门）"),
-      glacier: text("Branching Floe Lanes (Flanking arc vs. direct shortcut)", "双线分岔浮冰航道（侧翼真航线对比直线诱饵捷径）"),
+      glacier: text("Branching Floe Lanes (Flanking route vs. direct shortcut)", "双线分岔浮冰航道（侧翼真航线对比直线诱饵捷径）"),
       city: text("3-Wing Street Grid (Center plaza + SW / SE / NE wings)", "三翼棋盘式街区（中心广场 + 西南/东南/东北三翼）"),
       woods: text("Corridor Maze (Choke-point gates vs. detour loops)", "林间走廊迷宫（岔口虚幻树墙对比绕行长走廊）"),
     },
@@ -234,17 +234,17 @@ function RuleOfThreeMatrix() {
     },
     {
       dimension: text("Environmental Signal", "环境声波机制"),
-      hub: text("Prophecy Tablet (Ignites 3 guide splines)", "中央预言石碑（唤醒三条主干道导引流光）"),
-      glacier: text("3 Siren Emitters (62m pink wave every 7.0s)", "3 处塞壬干扰源（每 7.0s 广播 62m 洋红欺瞒波）"),
-      city: text("3 Wing Statues (150m blue / red / green waves)", "3 座街区见证者雕像（释放 150m 蓝/红/绿建筑图层波）"),
-      woods: text("Forest Reply Center (400m green wave after 3.0s wait)", "森林中心回响源（静默 3.0s 后爆发 400m 翠绿波）"),
+      hub: text("Prophecy Tablet (Lights 3 guide trails)", "中央预言石碑（点亮三条主干道导引流光）"),
+      glacier: text("3 Siren Emitters (62m pink wave every 7.0s)", "3 处塞壬干扰源（每 7.0s 发出 62m 洋红干扰波）"),
+      city: text("3 Wing Statues (150m blue / red / green waves)", "3 座街区雕像（释放 150m 蓝/红/绿建筑图层波）"),
+      woods: text("Forest Reply Center (400m green wave after 3.0s wait)", "森林中心回响源（静默 3.0s 后发出 400m 翠绿波）"),
     },
     {
       dimension: text("Fail State / Reset", "失败惩罚与重置"),
       hub: text("Safe zone (zero hazards or reset states)", "安全区（无陷阱或重置惩罚）"),
       glacier: text("Stepping on a pink decoy floe respawns at last tablet", "误踩无碰撞洋红诱饵冰落水，重置回检查点"),
-      city: text("Wrong order or exiting bounds fires 45 m/s reset wave", "乱序或越界触发 45 m/s 坍缩波重置回阶段 0"),
-      woods: text("Pressing E early overwrites green wave & shuts gates", "过早按 E 触发 0.35s 声波覆写，令岔口树墙闭合"),
+      city: text("Wrong order or exiting bounds fires 45 m/s reset wave", "乱序或越界触发 45 m/s 重置波退回阶段 0"),
+      woods: text("Pressing E early cuts off green wave & shuts gates", "过早按 E 会打断森林绿波，令岔口树墙重新闭合"),
     },
     {
       dimension: text("Color & Fog Identity", "色彩与雾场特征"),
@@ -299,35 +299,35 @@ function WayfindingTable() {
       range: "150m to 450m",
       mechanism: text("Sky Beacons & World Wave", "垂直天际光柱与世界回响"),
       fn: text(
-        "Completing a region fires a 450m golden wave across the basin and ignites its vertical sky beacon, providing a high-altitude landmark visible above the fog.",
+        "Completing a region sends a 450m golden wave across the basin and lights its vertical sky beacon, providing a high-altitude landmark visible above the fog.",
         "每完成一个区域，向整个盆地扫过一道 450m 的黄金世界回响并点亮高空光柱，在浓雾上方提供远景定向地标。",
       ),
     },
     {
       scale: text("2. Meso Scale", "2. 中观缓冲层"),
       range: "50m to 150m",
-      mechanism: text("Nested Fog & Audio Bounds", "内外双层雾效与配乐过渡"),
+      mechanism: text("Fog & Music Transition Zones", "雾效与配乐平滑过渡带"),
       fn: text(
-        "Crossfades fog color, view distance, and regional music tracks across the 40m buffer between outer and inner trigger bounds.",
-        "当玩家穿过各区域 40m 宽的内外触发框缓冲带时，平滑过渡雾效色温、能见度与区域配乐。",
+        "Crossfades fog color, view distance, and regional music tracks across the 40m transition zone around each region.",
+        "当玩家穿过各区域边缘 40m 宽的过渡缓冲带时，平滑渐变雾效色温、能见度与区域配乐。",
       ),
     },
     {
       scale: text("3. Micro Scale", "3. 主干引路层"),
       range: "15m to 50m",
-      mechanism: text("Breadcrumb Guide Splines", "声波唤醒的导引流光"),
+      mechanism: text("Echo-Lit Guide Trails", "声波唤醒的导引流光"),
       fn: text(
-        "Spline ribbons along main paths stay invisible until struck by an echo, then stream particles forward toward the next checkpoint.",
-        "沿主干路径铺设的导引流光平时隐没，在被回声扫过时沿切线奔涌，在不借助常驻地面箭头的情况下引导主干道推进。",
+        "Shimmer guide trails along main paths stay hidden until swept by an echo, then stream forward toward the next checkpoint.",
+        "沿主干路径布置的导引流光平时隐没，在被回声扫过时向前流动，在不借助地面常驻箭头的情况下指引主干道。",
       ),
     },
     {
       scale: text("4. Immediate Scale", "4. 近身视野层"),
       range: "0m to 15m",
-      mechanism: text("Anchor Silhouettes vs. Echo Terrain", "常驻地标剪影与回声地形"),
+      mechanism: text("Landmark Silhouettes vs. Hidden Terrain", "地标微弱剪影与回声地形"),
       fn: text(
-        "Key checkpoints (tablets, statues, spires) retain a faint silhouette in the fog, while secondary terrain appears only when swept by an echo.",
-        "核心检查点（石碑、雕像、冰塔）在浓雾中保留微弱剪影，而次级地形与隐藏路径仅在声波扫过时显形。",
+        "Key checkpoints (tablets, statues, spires) retain a faint outline in the fog, while regular terrain appears only when swept by an echo.",
+        "核心检查点（石碑、雕像、冰塔）在浓雾中保留微弱剪影，而普通地形与隐藏路径仅在声波扫过时显形。",
       ),
     },
   ];
