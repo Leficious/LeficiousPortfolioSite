@@ -42,7 +42,7 @@ export function HomePage() {
           <div className="mb-12 grid gap-6 border-b border-border/60 pb-10 md:grid-cols-12 md:items-end">
             <div className="md:col-span-8">
               <h2 className="font-display text-3xl font-semibold leading-tight sm:text-4xl">{text("Selected projects", "精选项目")}</h2>
-              <p className="zh-readable mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{text("Case studies spanning surrealist and acoustic level design, narrative play, action-combat prototypes, modular gameplay systems, and stylized 3D environments.", "涵盖超现实与声学空间关卡设计、叙事交互、动作战斗原型、模块化玩法系统及风格化 3D 环境的完整项目拆解。")}</p>
+              <p className="zh-readable mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{text("Five project breakdowns across multi-floor and acoustic puzzle design, action-combat encounters, data-driven gameplay loops, and stylized 3D environments.", "五个项目的完整拆解，涵盖多层与声波空间解谜、动作战斗 Boss 战、数据驱动玩法循环及风格化 3D 环境。")}</p>
             </div>
             <div className="md:col-span-4 md:text-right">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{String(localizedProjects.length).padStart(2, "0")} {text("case studies", "个完整项目")}</p>

@@ -59,20 +59,20 @@ export const projects: Project[] = [
     coverWidth: 1920,
     coverHeight: 1080,
     designGoal:
-      "Build a five-room puzzle progression that trains players to use static animals as physical puzzle tools while escorting a skittish Desk Lamp companion, setting up an unscripted reversal at the finale.",
+      "Build a five-room puzzle progression that trains players to treat motionless animals as physical puzzle tools while escorting a skittish Desk Lamp companion toward a silent reversal in Room 4.",
     ownership:
       "Solo game design, multi-floor puzzle and level design, Maya 3D companion modeling and 18-joint rigging, floor indicator line wayfinding, world assembly, and AI-assisted C# prototyping.",
     scope:
       "Solo project in Unity 6 developed for Peter Brinson's course at USC around the Situated Player Role of The Dreamer.",
     outcomes: [
       "Designed a 4-stage, 235 kg multi-floor puzzle room (Room 2) where unlocking each new animal requires allocating 100% of your currently unlocked weight pool across elevators, bridges, focus stands, and gates with 0 kg left over.",
-      "Built a 5-state Desk Lamp companion AI (flashbang flee, cornered shivering, LMB petting recovery, hopping follow, and hazard stops) paired with color-coded floor indicator lines across 5 rooms.",
+      "Modeled and rigged an 18-joint Desk Lamp companion in Maya 2026 and designed its 5-state behavior flow (startled flee, cornered shivering, petting recovery, hopping follow, and hazard stops) across 5 rooms.",
     ],
     relatedGalleryIds: ["still-life"],
     overview:
-      "Inside a monochrome gallery and foundry, the behaviors of animals and household objects are swapped. Animals stand still and silent on pedestals, so players carry them around as pressure-plate weights, gap bridges, and gear wedges, while a Desk Lamp shivers in the dark, flees when startled, and warms up when petted.",
+      "Inside a monochrome gallery and foundry, the behavioral cues of animals and household objects are swapped. Animals stand still and silent on pedestals, so players carry them around as pressure-plate weights, gap bridges, and gear wedges, while a Desk Lamp shivers in the dark, flees when startled, and warms up when petted.",
     authorNote:
-      "Rather than delivering its theme through dialogue, the level design builds a habit. Across the first three rooms, every pressure plate, floor gap, and crusher trains you to treat animals strictly as puzzle tools and the Desk Lamp as your companion, until Room 4's shredder rejects the Dog as a 'Living Organism' and leaves you holding the only object the sensor will accept.",
+      "I built Still Life for Peter Brinson's class at USC to test whether level design could make a thematic point through habit formation alone. Across the first three rooms, every pressure plate, floor gap, and crusher rewards treating silent animals as weight numbers and the Desk Lamp as a companion, so when Room 4's shredder rejects the Dog as a 'Living Organism,' the player has already enacted the premise with their own hands.",
     externalLink: {
       url: "https://leficious.itch.io/still-life",
       label: "Play on itch.io",
@@ -139,7 +139,7 @@ export const projects: Project[] = [
             alt: "Master Facility Plan of Still Life (Z = -12m to +188m) showing Rooms 1 through 5 and Hallways 1 through 3",
             caption: "Master Facility Plan (Z = -12m to +188m): orthographic floorplan and gating overview across Rooms 1 to 5 and Hallways 1 to 3.",
             width: 1600,
-            height: 1400,
+            height: 1200,
             fullWidth: true,
             naturalAspect: true,
           },
@@ -227,15 +227,15 @@ export const projects: Project[] = [
             alt: "Room 2 Architectural Map: The Three-Story Archive (1F, 2F, 3F) and 235 kg flow layout",
             caption: "Room 2 Flow & Gating Map: Multi-elevation floorplan (1F Courtyard, 2F Mezzanine, 3F Penthouse) showing player flow, all 7 animal vaults, 3 Focus Stands, 2 elevators, and 4.2m Giraffe bridges.",
             width: 1600,
-            height: 1400,
+            height: 1200,
             fullWidth: true,
             naturalAspect: true,
           },
           {
             type: "image",
             src: "/projects/still-life/shot-06-room2-atrium.webp",
-            alt: "Sweeping Room 2 overview across the three-story archive with floating alchemy bottles, fluttering books, Chicken, and Chest Mimic",
-            caption: "Room 2 Overview ('Bridge the Gaps.'): Sweeping view across the three-story archive with floating alchemy bottles, fluttering books, the Chicken, Chest Mimic, and elevator frame.",
+            alt: "Wide Room 2 view across the three-story archive with floating alchemy bottles, fluttering books, Chicken, and Chest Mimic",
+            caption: "Room 2 ('Bridge the Gaps.'): Wide view across the three-story archive showing floating alchemy bottles, fluttering books, the Chicken, Chest Mimic, and elevator frame.",
             width: 1920,
             height: 1080,
           },
@@ -264,7 +264,7 @@ export const projects: Project[] = [
             alt: "Hallway 2 & Room 3 Architectural Map: The Cryo-Foundry, Vent-Powering Tiles, and 3-Jammer Central Crusher",
             caption: "Hallway 2 & Room 3 Flow & Gating Map: Cold air vent streams, vent-powering tiles, and the 3 green indicator lines feeding the Central Crusher.",
             width: 1600,
-            height: 1400,
+            height: 1200,
             fullWidth: true,
             naturalAspect: true,
           },
@@ -279,8 +279,8 @@ export const projects: Project[] = [
           {
             type: "image",
             src: "/projects/still-life/shot-10-room3-foundry.webp",
-            alt: "Sweeping Room 3 Cryo-Foundry overview showing the freezing catwalk, Penguin, and 3 glowing intakes on the Central Crusher",
-            caption: "Room 3 Overview ('Keep it warm.'): Sweeping view down the freezing catwalk past the Penguin toward the three glowing intakes of the Central Crusher.",
+            alt: "Room 3 Cryo-Foundry catwalk view showing the Penguin and 3 glowing intakes on the Central Crusher",
+            caption: "Room 3 ('Keep it warm.'): Catwalk view past the Penguin toward the three glowing intakes of the Central Crusher.",
             width: 1920,
             height: 1080,
           },
@@ -314,10 +314,10 @@ export const projects: Project[] = [
           {
             type: "image",
             src: "/projects/still-life/map-04-shredder-finale.webp",
-            alt: "Hallway 3, Room 4 & Room 5 Architectural Map: 4-Directional Infinite Lattice, Industrial Shredder, and Pure White Finale",
-            caption: "Hallway 3, Room 4 & Room 5 Flow & Gating Map: The 4-directional infinite lattice, the Industrial Shredder gate reversal, and the Room 5 Pure White Awakening.",
+            alt: "Hallway 3, Room 4 & Room 5 Architectural Map: 4-Directional Repeating Lattice, Industrial Shredder, and Pure White Finale",
+            caption: "Hallway 3, Room 4 & Room 5 Flow & Gating Map: The 4-directional steel grating platform, the Industrial Shredder gate reversal, and the Room 5 Pure White Finale.",
             width: 1600,
-            height: 1400,
+            height: 1200,
             fullWidth: true,
             naturalAspect: true,
           },
@@ -332,8 +332,8 @@ export const projects: Project[] = [
           {
             type: "image",
             src: "/projects/still-life/shot-14-room4-infinite-lattice.webp",
-            alt: "Sweeping overview of the 4-directional infinite steel lattice and isolated portal frame in Hallway 3 and Room 4",
-            caption: "Hallway 3 & Room 4 Overview: Sweeping view through the 4-directional infinite steel lattice toward the isolated portal frame.",
+            alt: "Corridor view of the 4-directional repeating steel grating and isolated portal frame in Hallway 3 and Room 4",
+            caption: "Hallway 3 & Room 4: Repeating steel grating walkways leading to the isolated central platform and portal frame.",
             width: 1920,
             height: 1080,
           },
@@ -341,7 +341,7 @@ export const projects: Project[] = [
             type: "image",
             src: "/projects/still-life/shot-15-room4-lamp-sacrifice.webp",
             alt: "Holding the shivering Desk Lamp in front of the Industrial Shredder hopper",
-            caption: "The unscripted reversal: after the Shredder rejects the Dog as a living organism, the shivering Desk Lamp is the only inanimate object the sensor will accept.",
+            caption: "Room 4 Shredder Gate: After the Shredder rejects the Dog as a living organism, the shivering Desk Lamp is the only inanimate object the sensor accepts.",
             width: 1920,
             height: 1080,
           },
@@ -349,19 +349,19 @@ export const projects: Project[] = [
             type: "image",
             src: "/projects/still-life/shot-16-room5-living-dog.webp",
             alt: "Room 5 Pure White Finale where the awakened Dog breathes, tilts its head, and wags its tail",
-            caption: "Room 5 (Pure White Finale): Stripped of the gallery's monochrome ink filter, the Dog wakes up, breathing, tilting its head, and wagging its tail.",
+            caption: "Room 5 (Pure White Finale): Outside the gallery's monochrome ink filter, the Dog wakes up, breathes, tilts its head, and wags its tail.",
             width: 1920,
             height: 1080,
           },
         ],
       },
       {
-        eyebrow: "07 / Technical Art & Retrospective",
+        eyebrow: "07 / Presentation & Retrospective",
         title: "Visual contrast, floor indicator lines, and level design takeaways",
         body: [
-          "1. Contrasting Shaders Reinforce Player Habit: Motionless animals use triplanar ink cross-hatching, flat matte shading, and zero idle motion, while appliances use 7 FPS hand-drawn boiling outlines, shivering displacement, and warm light falloff. The visual presentation reinforces the player's assumptions before Room 4 flips them.",
-          "2. Color-Coded Floor Indicator Lines: Every pressure plate, focus stand, elevator, and crusher connects to its target via right-angle floor and wall indicator lines color-coded by function (Cyan for gates and lifts, Gold for Focus Stands, and Green for Crusher jammers), keeping complex 3-story sightlines readable without floating UI markers.",
-          "3. Full-Allocation Weight Budgets Prevent Sequence Breaks: Requiring 100% of the player's unlocked animal weight pool at each stage of Room 2 (55 kg -> 115 kg -> 195 kg -> 235 kg) ensured every animal had to be reclaimed and re-routed rather than left behind as spare weight.",
+          "The visual direction was chosen to reinforce the puzzle habit before Room 4 flips it. Animals use flat monochrome cross-hatching and zero idle motion so they read like archival hardware, whereas the Desk Lamp and Chest Mimics use 7 FPS boiling outlines, shivering motion, and warm light falloff.",
+          "Inside the multi-story rooms, every pressure plate, focus stand, elevator, and crusher connects to its target through right-angle floor and wall indicator lines (Cyan for gates and lifts, Gold for Focus Stands, and Green for Crusher jammers). That kept three-story cause and effect readable without floating UI icons.",
+          "In playtesting Room 2, requiring 100% of the player's unlocked animal weight pool at each stage (55 kg -> 115 kg -> 195 kg -> 235 kg) solved sequence breaking cleanly: every animal had to be reclaimed and re-routed at each tier, so nothing could be left behind as spare weight.",
         ],
         widget: "still-life-shader-telemetry",
       },
@@ -391,9 +391,9 @@ export const projects: Project[] = [
     ],
     relatedGalleryIds: ["an-echo-has-no-shape"],
     overview:
-      "To focus a 4-week development cycle on level design and puzzle variety, An Echo Has No Shape locks the player's move set to a single primary action (Emit Echo on E, plus Interact on F) across a continuous ~550m x 550m fog basin. Progression comes not from ability upgrades, but from changing how each region responds to your pulse.",
+      "I built An Echo Has No Shape over four weeks to test how far level layout and regional rule changes could sustain a single, unchanging action (Emit Echo on E, plus Interact on F) across a continuous ~550m x 550m fog basin.",
     authorNote:
-      "Many echolocation games treat sound as a simple flashlight in the dark: once the pulse reveals the room geometry, the mechanic stops evolving. Across these three regions, the level design changes what your echo accomplishes: verifying solid footing against decoy traps, unlocking a 3-wing city in sequence, and pausing so the forest can open choke-point gates.",
+      "Most echolocation prototypes I played treated sound like a flashlight in the dark: once a pulse outlines the room, the relationship between player input and spatial information never changes. For Peter Brinson's class at USC, I wanted each region to change what pressing E actually does for navigation: verifying solid ice against decoy traps, completing a 3-wing city loop in sequence, and pausing long enough for the forest to open choke-point gates.",
     externalLink: {
       url: "https://leficious.itch.io/an-echo-has-no-shape",
       label: "Play on itch.io",
@@ -429,8 +429,8 @@ export const projects: Project[] = [
         eyebrow: "01 / Level Design Pillars",
         title: "Exploration through pacing and single-verb restraint",
         body: [
-          "Rather than piecing together text logs, the player reads the world through movement, positioning, and timing. Where you stand when you emit a pulse, and when you stop to listen, directly control which paths open.",
-          "The player's move set never expands: Emit Echo (E, 42m range, 5.0s cooldown) and Interact (F at stone tablets). Removing combat, inventory, and ability upgrades forces every regional puzzle to come from level layout and signal behavior.",
+          "Players read the basin through movement, positioning, and timing without text logs or UI prompts. Where you stand when you emit a pulse, and when you stop to listen, directly determine which paths open.",
+          "The player's move set never expands: Emit Echo (E, 42m range, 5.0s cooldown) and Interact (F at stone tablets). Leaving out combat, inventory, and ability upgrades meant every regional puzzle had to come from level layout and signal behavior.",
         ],
         widget: "traveler-arc",
         media: [
@@ -450,7 +450,7 @@ export const projects: Project[] = [
         eyebrow: "02 / Regional Rule Matrix",
         title: "Three regional variations on one verb",
         body: [
-          "Rather than unlocking new abilities, each spoke tests a different habit the player has formed around pressing E and changes how the environment responds.",
+          "Each spoke isolates a specific habit the player forms around pressing E and changes how the environment answers.",
         ],
         widget: "rule-of-three-matrix",
       },
@@ -458,8 +458,8 @@ export const projects: Project[] = [
         eyebrow: "03 / Region 1: Glacial Ocean",
         title: "Flanking safe routes vs. baited decoy shortcuts",
         body: [
-          "First-person platforming over water becomes repetitive if every visible platform is safe, and frustrating if jumps require pixel-perfect timing. The Glacial Ocean builds tension through route verification.",
-          "Between Checkpoints 1 -> 2 -> 3, platforms are split into permanent anchor islands, hidden solid stepping stones along the flanking arc (revealed in white by the player's E pulse), and non-solid decoy floes placed along tempting direct shortcuts. Three Siren emitters broadcast a 62m magenta wave every 7.0s that tints 35% of solid ice pink, hides 40% back in fog, and lights 70% of non-solid decoys in bright pink, forcing players to pause on safe islands and press E to verify white solid geometry before jumping.",
+          "First-person platforming over water gets repetitive if every visible platform is safe, and frustrating if jumps demand tight execution. The Glacial Ocean puts the challenge on pre-jump route verification.",
+          "Between Checkpoints 1 -> 2 -> 3, platforms are split into permanent anchor islands, hidden solid stepping stones along the flanking arc (revealed in white by the player's E pulse), and non-solid decoy floes placed along direct shortcuts. Three Siren emitters broadcast a 62m magenta wave every 7.0s that tints 35% of solid ice pink, hides 40% back in fog, and lights 70% of non-solid decoys in pink. Players have to pause on safe islands and press E to confirm solid white geometry before jumping.",
         ],
         widget: "glacier-state-machine",
         media: [
@@ -496,7 +496,7 @@ export const projects: Project[] = [
         title: "3-wing sequential street loop and reset boundary gate",
         body: [
           "In the Unremembered City, each landmark reveals only one architectural layer of the ruined street grid. No single statue restores the city on its own. To unlock the region, the player must navigate a full clockwise loop across all three city wings in strict sequence (0 -> 1 -> 2 -> 3).",
-          "Interacting with the center plaza tablet reveals the baseline street grid (Stage 0). Three statues in separate wings layer additional architecture onto the city: The Muse (SW, Stage 1) adds courtyard gardens and trees, The Ruler (SE, Stage 2) adds grand archways and citizen figures, and The Architect (NE, Stage 3 -> 4) adds upper walls and roofs, permanently locking all layers in gold. Activating a statue out of order or crossing the outer boundary before Stage 4 triggers a 45 m/s Reset Wave from the center plaza that wipes unfinished layers back to Stage 0.",
+          "Interacting with the center plaza tablet reveals the baseline street grid (Stage 0). Three statues in separate wings layer additional architecture onto the city: The Muse (SW, Stage 1) adds courtyard gardens and trees, The Ruler (SE, Stage 2) adds archways and citizen figures, and The Architect (NE, Stage 3 -> 4) adds upper walls and roofs to lock all layers in gold. Activating a statue out of order or crossing the outer boundary before Stage 4 triggers a 45 m/s Reset Wave from the center plaza that wipes unfinished layers back to Stage 0.",
         ],
         widget: "city-sequence",
         media: [
@@ -530,7 +530,7 @@ export const projects: Project[] = [
             type: "image",
             src: "/projects/an-echo-has-no-shape/city-stage2-ruler-arch.webp",
             alt: "Stage 2 SE Wing (The Ruler) crimson wave revealing archway and citizen silhouettes",
-            caption: "Stage 2 (SE Ruler Wing): Crimson fog, monumental archway, and citizen silhouettes.",
+            caption: "Stage 2 (SE Ruler Wing): Crimson fog, stone archway, and citizen silhouettes.",
             width: 1920,
             height: 895,
           },
@@ -564,8 +564,8 @@ export const projects: Project[] = [
         eyebrow: "05 / Region 3: Illusory Woods",
         title: "Corridor choke-point gates and the 3.0s silence window",
         body: [
-          "Across the main junctions leading to the SW Sentinel Tower, 8 pass-through illusory walls sit across the dirt paths. When the player casts a white echo (42m range, 1.4s duration), the pulse lights up these false walls with the exact same white shader as solid corridor trees, making the direct path look like a dead end and funneling impatient players into long detour loops.",
-          "If the player casts an echo and then waits 3.0s without pressing E again, the center of the forest answers with a 400m Green Reply Wave that dissolves all false walls for 5.0s so the player can walk straight through. If the wait timer was too short (< 1.5s), players triggered the green reply by accident; if too long (>= 5.0s), players pressed E on habit when the cooldown finished and reset the timer. Setting the wait to 3.0s and adding a 0.35s wave overwrite (where pressing E during the open window visibly cuts off the green wave and snaps the gates shut) raised solve rates from 15% to 90%.",
+          "Across the main junctions leading to the SW Sentinel Tower, 8 pass-through illusory walls sit across the dirt paths. When the player casts a white echo (42m range, 1.4s duration), the pulse lights up these false walls with the exact same white outline as solid corridor trees, so the direct route looks like a dead end and impatient players detour into long corridor loops.",
+          "If the player casts an echo and waits 3.0s without pressing E again, the center of the forest answers with a 400m Green Reply Wave that dissolves all false walls for 5.0s so the player can walk straight through. In early playtests, a short wait (< 1.5s) caused players to trigger the green reply by accident, while a long wait (>= 5.0s) meant players pressed E out of habit as soon as the cooldown finished. Tuning the pause to 3.0s and adding a visible 0.35s wave clash (where pressing E during the open window cuts off the green wave and snaps the gates shut) raised solve rates from 15% to 90%.",
         ],
         widget: "woods-telemetry-and-cadence",
         media: [
@@ -638,9 +638,9 @@ export const projects: Project[] = [
         eyebrow: "07 / Retrospective",
         title: "Level design takeaways",
         body: [
-          "1. Designing Around Cooldown Windows: Tuning the player pulse to fade at 1.4s on a 5.0s cooldown created a 3.6s dark gap between casts, giving Siren waves (every 7.0s) and the Forest Reply (at 3.0s) a clear window to interact with level geometry.",
-          "2. Visual State Feedback Over Text Hints: In Region 3, tablet hints alone did not stop players from spamming E on cooldown. Adding the 0.35s wave overwrite (where pressing E visibly cuts off the green wave and snaps the gate shut in front of the player) raised solve rates from 15% to 90%.",
-          "3. Sightless Wayfinding Across a 550m Basin: Combining high-altitude sky beacons, 40m fog and audio crossfade buffers, echo-lit splines, and faint anchor silhouettes kept players oriented across a continuous ~550m scene without HUD markers or minimaps.",
+          "Tuning the player pulse to fade after 1.4s on a 5.0s cooldown left a 3.6s dark window between casts. That gap gave both the Siren waves (every 7.0s) and the Forest Reply (at 3.0s) clear room to register against the terrain.",
+          "In the Illusory Woods, poetic tablet hints alone did not stop players from pressing E on cooldown. Making an early E press visibly cut off the green wave and snap the choke-point gate shut in front of the player taught the rule far more reliably, raising intentional solve rates from 15% to 90%.",
+          "Across the ~550m basin, pairing high-altitude sky beacons with 40m fog and music transition zones, echo-lit guide trails, and faint checkpoint outlines kept players oriented between spokes without HUD markers or a minimap.",
         ],
       },
     ],
@@ -697,7 +697,7 @@ export const projects: Project[] = [
         eyebrow: "02 / Character",
         title: "Controls and animation",
         body: [
-          "The character can move in two primary states: standard locomotion and a faster flight mode. Flight begins with a double-tap forward input and ends when the input is released or the state is interrupted, keeping the transition quick without adding another persistent toggle.",
+          "The character moves in two primary states: standard locomotion and a faster flight mode. Flight begins with a double-tap forward input and ends when the input is released or interrupted, so the transition stays responsive without another toggle key.",
           "The animation setup switches between a broad locomotion blend space for standard movement and dodging, and a narrower forward-driven blend space for flight. Attacks and reactions are played as montages through a dedicated animation slot so they can layer cleanly over locomotion.",
         ],
         media: [
@@ -733,7 +733,7 @@ export const projects: Project[] = [
         eyebrow: "05 / Interface",
         title: "Inventory system",
         body: [
-          "Inventory contents are stored as item identifiers that resolve to shared structured data. The interface creates its item entries dynamically, so the underlying list - not a manually authored screen - determines what appears.",
+          "Inventory contents are stored as item identifiers that resolve to shared structured data. The interface builds its item entries dynamically from that underlying list rather than a fixed hand-placed layout.",
           "Category filters rebuild the visible list from each item's type field. This kept presentation separate from the inventory data and made the same item definitions reusable elsewhere in the project.",
         ],
         media: [
@@ -746,7 +746,7 @@ export const projects: Project[] = [
         title: "Shop system",
         body: [
           "Vendors define their available stock as a configurable list of item identifiers and call into the player's inventory component when a purchase is made. The shop interface builds its entries from that data using the same modular approach as the inventory.",
-          "Item position is calculated from its list index, allowing the interface to create a consistent grid for inventories of different sizes without hand-placing individual entries.",
+          "Each entry's grid coordinates are calculated from its list index, so the interface lays out consistent grids for inventories of different sizes without manual placement.",
         ],
         media: [
           { type: "image", src: "/projects/starshore/shop-01.avif", alt: "Starshore shop interface showing the Damage V item and purchase controls", caption: "Vendor stock displayed through the reusable item interface." },
@@ -757,7 +757,7 @@ export const projects: Project[] = [
         eyebrow: "07 / Data",
         title: "Master pickup item",
         body: [
-          "Rather than creating a separate actor for every pickup, one reusable actor configures itself from a data table. Item data controls its identity and presentation, including rarity-based effects, while leaving room for unique meshes or additional effects when needed.",
+          "One reusable pickup actor configures itself from a data table instead of using separate Blueprints per item. Table rows define each pickup's mesh, rarity color, and optional overrides.",
           "A loot component defines which items an actor can drop and in what quantities. When triggered, it spawns the configured pickups and applies an impulse so drops enter the scene with a readable physical response.",
         ],
         media: [
@@ -819,7 +819,7 @@ export const projects: Project[] = [
         eyebrow: "02 / Character",
         title: "Inputs and animation",
         body: [
-          "The player can move between an unarmed state and two weapons: spear and bow. An enumerated weapon state selects the appropriate locomotion state machine and determines which animation montage responds to each input, allowing the same character framework to support distinct movesets.",
+          "The player switches between an unarmed state and two weapons: spear and bow. An enumerated weapon state selects the locomotion state machine and maps each attack input to the corresponding montage, so one character setup supports distinct movesets.",
           "Layered blends and animation slots separate upper- and lower-body behavior for actions such as aiming, healing, and switching weapons. Retargeted source animations were integrated into the final blendspaces and montages, while secondary motion on wings, hair, and cloth uses Kawaii Physics for a more responsive silhouette.",
         ],
         media: [
@@ -831,8 +831,8 @@ export const projects: Project[] = [
         eyebrow: "03 / Combat foundation",
         title: "Character resources and damage",
         body: [
-          "Health, stamina, and mana use a shared pattern for value changes, interface updates, and regeneration. Stamina and mana begin recovering two seconds after their most recent use, creating a clear rhythm between expenditure and recovery.",
-          "Damage is routed through a Blueprint interface that also filters trace results and passes hit information to other combat systems. Weapon colliders are attached to mesh sockets and enabled only during animation-notify windows, keeping damaging frames aligned with the authored attack motion.",
+          "Health, stamina, and mana share one pattern for value changes, UI updates, and regeneration. Stamina and mana begin recovering two seconds after their most recent use, which sets a clear pace between spending resources and resetting.",
+          "Damage is routed through a Blueprint interface that filters trace results and passes hit information to downstream combat systems. Weapon colliders sit on mesh sockets and turn on only inside animation-notify windows so active hitboxes match the attack swing.",
         ],
         media: [
           { type: "image", src: "/projects/fallen-valkyrie/stats-01.avif", alt: "Mana consumption and delayed regeneration Blueprint", caption: "Mana updates, interface feedback, and timer-based regeneration." },
@@ -844,7 +844,7 @@ export const projects: Project[] = [
         title: "Weapon-aware aim and lock-on",
         body: [
           "Targeting changes with the equipped weapon. Spear attacks search for nearby actors through a sphere trace and orient the character toward a valid damage-interface target. Bow aim instead shifts to an over-the-shoulder camera and traces from the camera through the crosshair to calculate the projectile direction.",
-          "A separate lock-on input searches along the camera's forward direction and keeps the controller oriented toward the selected actor. Entering bow aim temporarily overrides that behavior, preserving free aiming without discarding the current combat framework.",
+          "A separate lock-on input searches along the camera's forward direction and keeps the controller oriented toward the selected actor. Entering bow aim temporarily overrides lock-on rotation so the player can aim freely within the same controller setup.",
         ],
         media: [
           { type: "image", src: "/projects/fallen-valkyrie/targeting-01.avif", alt: "Sphere-trace targeting and look-at rotation Blueprint", caption: "Target validation through the damage interface followed by character orientation." },
@@ -855,7 +855,7 @@ export const projects: Project[] = [
         eyebrow: "05 / Feedback",
         title: "Directional stagger system",
         body: [
-          "Hit reactions use impact information passed through the damage interface. Because overlap events do not provide a usable hit location, the system immediately performs a short trace from the weapon socket - or from a projectile's recorded spawn position - to the affected actor.",
+          "Hit reactions use impact information passed through the damage interface. Because overlap events do not provide a usable hit location, the system immediately performs a short trace from the weapon socket (or from a projectile's recorded spawn position) to the affected actor.",
           "The resulting direction is compared with the target's forward and right vectors to select an appropriate reaction. Individual attacks can also opt into knockdown behavior, and the reaction montage plays in a high-priority slot so a readable hit response can interrupt the current action.",
         ],
         media: [
@@ -900,7 +900,7 @@ export const projects: Project[] = [
     cover: "/projects/sacred-forest/cover.avif",
     coverWidth: 1715,
     coverHeight: 963,
-    designGoal: "Translate a stylized concept into a cohesive realtime environment supported by consistent materials, foliage, lighting, and effects.",
+    designGoal: "Translate a stylized concept into a playable realtime environment with consistent materials, foliage, lighting, and effects.",
     ownership: "Environment production and technical art: modeling, sculpting, texturing, foliage, lighting, VFX, shader integration, and Python tooling.",
     scope: "Individual environment project based on an original concept by En Moroldo.",
     outcomes: [
@@ -954,8 +954,8 @@ export const projects: Project[] = [
         eyebrow: "03 / Scene integration",
         title: "Foliage, blending, and tooling",
         body: [
-          "Foliage was assembled from lightweight cards using a hand-painted texture atlas. In Unreal Engine, Runtime Virtual Texture data samples the landscape color and feeds it into the foliage material, helping plants blend into the terrain instead of reading as disconnected assets.",
-          "Bushes and other fuller forms use vertex normals transferred from a sphere to produce softer, more cohesive lighting. I built a Python utility in Maya to automate that transfer workflow, reducing a repetitive asset-preparation step and keeping the treatment consistent across the foliage set.",
+          "Foliage was assembled from lightweight cards using a hand-painted texture atlas. In Unreal Engine, Runtime Virtual Texture data samples the landscape color and feeds it into the foliage material so plants blend into the terrain where they meet the ground.",
+          "Bushes and other fuller forms use vertex normals transferred from a sphere for softer lighting across the canopy. I wrote a Python utility in Maya to batch that transfer step across selected foliage meshes.",
         ],
         media: [
           { type: "image", src: "/projects/sacred-forest/foliage-01.avif", alt: "Wireframe view of stylized flowers, clover, and foliage cards", caption: "The foliage set combines modeled stems and leaves with lightweight flower and ground-cover cards." },

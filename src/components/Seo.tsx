@@ -41,7 +41,7 @@ const buildStructuredData = (title: string, description: string, path: string, i
         person,
         {
           "@type": "CreativeWork",
-          name: title.replace(/ (\||—) Leficious$/, ""),
+          name: title.replace(/ \| Leficious$/, ""),
           description,
           url,
           image,

@@ -97,7 +97,7 @@ export function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title={text("About & Contact | Leficious", "关于与联系 | Leficious")} description={text("About Lefi (Kevin) Shan: Game, Level & Technical Designer combining authored spatial and narrative play with action-combat systems, gameplay AI, and 3D production.", "关于单凯飞（Leficious）：专注于游戏设计、关卡与叙事设计以及技术战斗系统，兼具游戏 AI、技术动画与 3D 制作经验。")} path={localizedPath("/about")} />
+      <Seo title={text("About & Contact | Leficious", "关于与联系 | Leficious")} description={text("About Lefi (Kevin) Shan: MS student in Game Design and Development at USC working across level design, spatial puzzles, combat systems, and 3D production.", "关于单凯飞（Leficious）：南加州大学游戏设计与开发硕士在读，专注于关卡与空间解谜设计、动作战斗系统及 3D 制作。")} path={localizedPath("/about")} />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
         <section className="route-reveal relative isolate overflow-hidden border-x border-b border-border/60 px-6 py-16 sm:px-10 md:py-24 lg:px-14">
           <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-35 [background-image:linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
@@ -114,10 +114,10 @@ export function AboutPage() {
               </h1>
               <div className="mt-8 max-w-2xl space-y-4 text-pretty text-lg leading-relaxed text-muted-foreground">
                 <p>
-                  {text("I started out in 3D environment and technical art at Gnomon, where I learned how spaces, materials, and production pipelines are built from the ground up. Over time, I cared more about what players actually do inside those spaces than the static assets themselves, which pulled me into game design. Building combat systems, enemy AI, and character feel in Unreal Engine gave me a way to connect animation timing and code directly to player decisions.", "我最早在 Gnomon 学习 3D 环境与技术美术，从零开始接触空间构建、材质表现与制作管线。随着项目深入，相比静态资产本身，我越来越关心玩家在空间里的实际行为与决策，并因此转向游戏设计。在 Unreal Engine 中搭建战斗系统、敌人 AI 与角色手感，让我能把动画节奏和底层实现直接转化为玩家的操作反馈。")}
+                  {text("I started out in 3D environment and technical art at Gnomon, where I learned how spaces, materials, and production pipelines are built from the ground up. Over time I grew more interested in what players actually do inside those spaces than in the static assets alone, which pulled me toward game design. Prototyping combat systems, enemy AI, and character feel in Unreal Engine gave me a direct way to connect animation timing and system rules to player decisions.", "我本科在 Gnomon 学习 3D 环境与技术美术，从头学习空间构建、材质制作与资产管线。做得越久，我越关心玩家在空间里的实际行动与判断，于是转向游戏设计。在 Unreal Engine 里制作战斗系统、敌人 AI 与角色操控，让我能把动画帧率、状态规则与玩家决策直接联系起来。")}
                 </p>
                 <p>
-                  {text("At USC's School of Cinematic Arts, my work has expanded into level design and experimental narrative play. Whether I am tuning a multiphase boss fight or designing a surrealist puzzle exhibition where player habits carry the story without dialogue, I like staying hands-on across both the spatial pacing and the systems under the hood.", "进入南加州大学（USC）电影艺术学院攻读硕士后，我的创作进一步延伸至关卡设计与实验性叙事玩法。无论是打磨多阶段 Boss 战的博弈节奏，还是设计不依赖台词、仅靠空间动线与操作习惯完成叙事反转的超现实解谜展馆，我都喜欢同时深入空间节奏与底层系统的实现。")}
+                  {text("As a master's student at USC's School of Cinematic Arts, my focus has broadened into level design and experimental narrative play. My projects range from multiphase action-combat encounters in Unreal to first-person spatial puzzle games in Unity where level structure and player habit carry the meaning without dialogue.", "进入南加州大学（USC）电影艺术学院攻读硕士后，我的研究与创作重心拓展到了关卡设计与实验性叙事玩法。目前的作品既包括 Unreal 多阶段动作 Boss 战原型，也包括在无对白条件下依靠空间动线与玩家习惯推进主题的第一人称解谜游戏。")}
                 </p>
               </div>
             </div>
@@ -141,7 +141,7 @@ export function AboutPage() {
             <div className="md:col-span-4">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Outside the editor", "编辑器之外")}</p>
               <h2 id="personal-title" className="mt-4 font-display text-3xl font-semibold leading-tight">{text("Outside ", "游戏开发")}<span className="text-warm">{text("game development", "之外")}</span></h2>
-              <p className="zh-readable mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("I like technically solid work, but I never want the result to feel sterile. Whether a project is commercial or experimental, the mechanics, level pacing, and presentation should push the same feeling.", "我喜欢技术扎实的作品，但绝不希望它显得冰冷机械。无论是商业向动作原型还是实验性空间作品，机制、关卡节奏与视听表现都应当指向同一种体验。")}</p>
+              <p className="zh-readable mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{text("Most of my instincts about pacing, rhythm, and structure come from habits outside of game engines: classical music rehearsal, figure skating, and reading across media and social history.", "我对节奏、结构与肢体反馈的很多直觉，其实来自引擎之外的长期习惯：室内乐排练、花样滑冰训练，以及对叙事作品和社会史的阅读。")}</p>
             </div>
             <div className="route-reveal-list grid gap-4 md:col-span-8">
               {outsideEditor.map((item) => (
@@ -157,7 +157,7 @@ export function AboutPage() {
           </div>
           <div className="mt-8 grid gap-4 rounded-lg border border-border/70 bg-background/45 p-6 md:grid-cols-[0.28fr_0.72fr] md:p-8">
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">{text("A few influences", "一些影响")}</p>
-            <p className="zh-readable text-sm leading-relaxed text-muted-foreground"><FormattedText>{text("Zenless Zone Zero is one of my main references for how animation timing, VFX, UI, and graphic direction can all push the same tactile attitude. Fire Emblem Fates: Conquest and Arknights interest me for a structural reason: map geometry, turn order, and compact rulesets that make tactical decisions feel personal. On the spatial and narrative side, works ranging from René Magritte and Lewis Carroll to Shin Sekai Yori (which I wrote a sociology paper on regarding surveillance and institutional conditioning) shape how I think about framing, player habits, and letting level mechanics tell a story without explaining the joke.", "《绝区零》是我观察动画帧率、VFX、UI 与平面视觉如何共同塑造利落操作手感的重要参考；《火焰之纹章 if：暗夜王国》与《明日方舟》则让我着迷于地图几何结构、行动顺序与精简规则如何交织出极具个人色彩的战术决策。而在空间与叙事层面，从雷内·马格利特的视觉悖论、刘易斯·卡罗尔的梦境逻辑，到《来自新世界》（我曾专门就其中的监视体系与社会规训写过一篇社会学论文），都影响了我如何利用空间构图、玩家习惯与关卡机制本身来讲述故事。")}</FormattedText></p>
+            <p className="zh-readable text-sm leading-relaxed text-muted-foreground"><FormattedText>{text("Zenless Zone Zero is a frequent reference for me on how animation timing, VFX, UI, and graphic direction can reinforce a sharp combat rhythm. Fire Emblem Fates: Conquest and Arknights interest me for their map geometry, turn economy, and compact rule sets. On the spatial and narrative side, René Magritte, Lewis Carroll, and Shin Sekai Yori (which I wrote a sociology paper on regarding surveillance and institutional conditioning) shape how I think about framing, habit formation, and letting level mechanics carry an argument without spelling it out.", "《绝区零》是我研究动画帧数、VFX、UI 与平面视觉如何共同支撑打击节奏的重要参考；《火焰之纹章 if：暗夜王国》与《明日方舟》则让我着迷于地图几何、行动经济与精简规则的设计。在空间与叙事层面，雷内·马格利特、刘易斯·卡罗尔以及《来自新世界》（我曾围绕其中的监视制度与社会规训写过一篇社会学论文）影响了我对视角构图、习惯养成以及“用机制本身表达观点”的思考。")}</FormattedText></p>
           </div>
         </section>
 
@@ -168,7 +168,7 @@ export function AboutPage() {
           </div>
           <div className="divide-y divide-border/60">
             <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">{text("MS, Game Design and Development", "游戏设计与开发硕士（在读）")}</p><p className="mt-1 text-sm text-muted-foreground">{text("USC School of Cinematic Arts", "南加州大学电影艺术学院")}</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">{text("Expected 2028", "预计 2028 年毕业")}</p></div>
-            <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">{text("BFA, Digital Production - Games", "数字制作艺术学士（游戏方向）")}</p><p className="mt-1 text-sm text-muted-foreground">{text("Gnomon School of Visual Effects · Featured in Gnomon's student reel", "Gnomon School of Visual Effects · 作品入选 Gnomon 学生作品集锦")}</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">2025</p></div>
+            <div className="grid gap-2 p-6 sm:grid-cols-[1fr_auto] sm:items-end md:px-8"><div><p className="font-display text-lg font-semibold">{text("BFA, Digital Production (Games)", "数字制作艺术学士（游戏方向）")}</p><p className="mt-1 text-sm text-muted-foreground">{text("Gnomon School of Visual Effects · Featured in Gnomon's student reel", "Gnomon School of Visual Effects · 作品入选 Gnomon 学生作品集锦")}</p></div><p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">2025</p></div>
           </div>
         </section>
 
@@ -191,7 +191,7 @@ export function AboutPage() {
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{text("Contact / Open channel", "联系我 / 合作机会")}</p>
               <h2 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl">{text("Let's make something ", "一起做出真正")}<span className="text-accent">{text("feel good", "好玩")}</span>{text(" to play.", "的东西。")}</h2>
-              <p className="zh-readable mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">{text("Whether you are building an action-combat system, a level-driven narrative game, or a gameplay prototype that needs a designer who can get under the hood, I would be glad to hear about it.", "无论你正在制作动作战斗系统、以空间关卡驱动的叙事作品，还是需要一位能直接深入引擎搭建玩法原型的设计师，都欢迎联系我。")}</p>
+              <p className="zh-readable mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">{text("If you are hiring for game design, level design, combat design, or technical design roles and internships, feel free to reach out by email or LinkedIn.", "如果你正在招聘游戏设计、关卡策划、战斗设计或技术策划相关的全职与实习岗位，欢迎通过邮件或 LinkedIn 联系我。")}</p>
               <div className="mt-6 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--color-accent)]" />{text("Focused on game, level, combat, and technical design · open to adjacent opportunities", "求职方向：游戏设计 / 关卡策划 / 战斗与技术策划 · 也欢迎相关岗位")}</div>
               <a href={isChinese ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"} download className="mt-6 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-background/55 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground">
                 {text("Download game design résumé", "下载中文游戏开发简历")} <span aria-hidden="true">↓</span>

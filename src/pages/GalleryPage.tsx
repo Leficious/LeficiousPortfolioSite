@@ -57,7 +57,7 @@ export function GalleryPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title={text("Gallery — Leficious", "作品集 — Leficious")} description={text("A gallery of technical design, 3D, 2D, environment, character, animation, and technical art work by Leficious.", "收录 Leficious 的技术设计、3D、2D、环境、角色、动画与技术美术作品。")} path={localizedPath("/gallery")} image="/gallery/thumbnails/water-blossoms.webp" imageWidth={1000} imageHeight={563} />
+      <Seo title={text("Gallery | Leficious", "作品集 | Leficious")} description={text("Level design, technical design, 3D environment art, character rigging, VFX, and tool development by Lefi (Kevin) Shan.", "单凯飞（Leficious）的关卡与技术设计、3D 环境、角色绑定、实时特效与工具开发作品集。")} path={localizedPath("/gallery")} image="/gallery/thumbnails/water-blossoms.webp" imageWidth={1000} imageHeight={563} />
       <div aria-hidden={selected ? "true" : undefined} inert={selected ? true : undefined}>
         <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6">
           <section className="route-reveal border-b border-border/60 py-10 md:py-14" aria-labelledby="environment-reel-title">

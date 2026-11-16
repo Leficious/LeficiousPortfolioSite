@@ -6,7 +6,7 @@ const routes = [
     path: "/gallery",
     title: "Gallery | Leficious",
     description:
-      "A gallery of level design, technical design, 3D, 2D, environment, character, animation, and technical art work by Leficious.",
+      "Level design, technical design, 3D environment art, character rigging, VFX, and tool development by Lefi (Kevin) Shan.",
     image: "/gallery/thumbnails/water-blossoms.webp",
     imageWidth: 1000,
     imageHeight: 563,
@@ -17,7 +17,7 @@ const routes = [
     path: "/about",
     title: "About & Contact | Leficious",
     description:
-      "About Lefi (Kevin) Shan: Game, Level & Technical Designer combining authored spatial and narrative play with action-combat systems, gameplay AI, and 3D production.",
+      "About Lefi (Kevin) Shan: MS student in Game Design and Development at USC working across level design, spatial puzzles, combat systems, and 3D production.",
     image: "/social/leficious-og-1200x630.png",
     imageWidth: 1200,
     imageHeight: 630,
@@ -28,7 +28,7 @@ const routes = [
     path: "/projects/still-life",
     title: "Still Life | Leficious",
     description:
-      "A surrealist first-person puzzle game where animals stand still and silent as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
+      "A surrealist first-person puzzle game where motionless animals serve as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
     image: "/projects/still-life/hero-poster.webp",
     imageWidth: 1920,
     imageHeight: 1080,
@@ -39,7 +39,7 @@ const routes = [
     path: "/projects/an-echo-has-no-shape",
     title: "An Echo Has No Shape | Leficious",
     description:
-      "A 4-week first-person acoustic exploration and puzzle labyrinth built around a single, unchanging echolocation verb across three regions that subvert how the world answers back.",
+      "A 4-week first-person acoustic exploration and puzzle game built around one unchanging echolocation input across three regions with distinct spatial rules.",
     image: "/projects/an-echo-has-no-shape/hero-poster.webp",
     imageWidth: 1920,
     imageHeight: 1080,
@@ -124,7 +124,7 @@ const routes = [
     path: "/zh/projects/an-echo-has-no-shape",
     title: "回声无形 | Leficious",
     description:
-      "历时 4 周独立完成的第一人称声学探索与解谜迷宫，仅凭单一不变的“释放回声”动词贯穿三大区域，通过颠覆世界回应玩家的认知规则来推进体验。",
+      "历时 4 周独立完成的第一人称声波探索与解谜游戏，全程固定单一回声按键，通过改变三大区域对声波的反馈规则来推进关卡。",
     image: "/projects/an-echo-has-no-shape/hero-poster.webp",
     imageWidth: 1920,
     imageHeight: 1080,
@@ -191,7 +191,7 @@ for (const route of routes) {
     route.schemaType === "CreativeWork"
       ? {
           "@type": "CreativeWork",
-          name: route.title.replace(/ (\||—) Leficious$/, ""),
+          name: route.title.replace(/ \| Leficious$/, ""),
           description: route.description,
           url: canonical,
           image: socialImage,

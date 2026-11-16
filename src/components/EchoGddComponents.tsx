@@ -385,14 +385,14 @@ function StillLifeInversionMatrix() {
       ),
     },
     {
-      dim: text("Shader & Material Treatment", "材质与视觉区分"),
+      dim: text("Visual Treatment", "视觉与材质区分"),
       appliances: text(
-        "Hand-drawn boiling outlines (7 FPS), shivering displacement in cold air, and warm light falloff around the Desk Lamp.",
-        "7 FPS 手绘抖动轮廓线、寒冷环境下的颤抖位移，以及台灯周围的温暖漫反射光晕。",
+        "7 FPS hand-drawn boiling outlines, shivering motion in cold air, and warm light falloff around the Desk Lamp.",
+        "7 FPS 手绘抖动轮廓线、寒冷环境下的颤抖动画，以及台灯周围的温暖漫反射光晕。",
       ),
       animals: text(
-        "Triplanar ink cross-hatching, flat matte shading, and a brass calibration ring at base height.",
-        "三平面版画交叉排线、哑光色阶明暗，以及底座高度的黄铜刻度环。",
+        "Monochrome ink cross-hatching, flat matte shading, and a brass calibration ring around the base.",
+        "单色版画交叉排线、哑光色阶明暗，以及底座高度的黄铜刻度环。",
       ),
     },
     {
@@ -534,23 +534,23 @@ function StillLifeShaderTelemetryTable() {
 
   const systems = [
     {
-      sys: text("Still Animal Ink Shader", "静止动物版画材质"),
+      sys: text("Still Animal Print Treatment", "静止动物版画表现"),
       domain: text("Static Animal Props (5 to 100 kg)", "静态动物道具 (5 至 100 kg)"),
       tech: text(
-        "Triplanar ink cross-hatching, flat matte shading, and a brass calibration ring at base height with zero idle animation.",
-        "三平面程序化版画排线、哑光色阶与底座高度的黄铜校准环，配合零待机动画，强化动物作为静态道具的视觉观感。",
+        "Monochrome ink cross-hatching, flat matte shading, and a brass calibration ring at the base with zero idle motion.",
+        "单色版画排线、哑光色阶与底座高度的黄铜校准环，配合零待机动作，强化动物作为静态道具的观感。",
       ),
     },
     {
-      sys: text("Living Appliance Shader", "活态家电材质"),
+      sys: text("Animated Appliance Presentation", "活态家电表现"),
       domain: text("Desk Lamp, Chest Mimics & Books", "台灯伙伴、宝箱怪与飞书"),
       tech: text(
-        "7 FPS hand-drawn boiling outlines, shivering displacement in cold air, and warm light falloff around the Desk Lamp.",
-        "7 FPS 手绘抖动轮廓、寒冷与受惊状态下的高频颤抖位移，以及靠近台灯时的温暖漫反射光晕。",
+        "7 FPS boiling outlines, shivering motion near cold vents, and warm light falloff around the Desk Lamp.",
+        "7 FPS 手绘抖动轮廓、靠近冷风时的颤抖表现，以及台灯周围的温暖漫反射光晕。",
       ),
     },
     {
-      sys: text("Color-Coded Floor Indicator Lines", "三色地面导流线系统"),
+      sys: text("Color-Coded Floor Indicator Lines", "三色地面导流线"),
       domain: text("Zero-HUD Puzzle State Feedback", "零 HUD 机关连线反馈"),
       tech: text(
         "Floor and wall indicator lines connect every plate to its target door or machine: Cyan for gates and lifts, Gold for Focus Stands, and Green for Crusher jammers.",
@@ -558,19 +558,19 @@ function StillLifeShaderTelemetryTable() {
       ),
     },
     {
-      sys: text("Room 4 Static Mesh Consolidation", "4 号房四向无限钢网静态合并"),
-      domain: text("4-Directional Infinite Lattice", "四向无限延伸钢网空间"),
+      sys: text("Room 4 Repeating Grid Framing", "4 号房四向重复钢网空间"),
+      domain: text("4-Directional Grating Platform", "四向延伸钢网平台"),
       tech: text(
-        "Merges hundreds of repeated steel grating cells and columns across Hallway 3 and Room 4 into 6 static meshes (~6 draw calls at 200+ FPS).",
-        "将 3 号走廊与 4 号房向上下左右四向延伸的镂空钢网与立柱合并烘焙为 6 个静态网格（约 6 次 Draw Call，保持 200+ FPS）。",
+        "Frames the central Industrial Shredder inside a repeating grid of steel walkways and doorframes with zero loose props, isolating the final choice.",
+        "将中央工业粉碎机孤立在四向延伸的镂空钢网与门框阵列中央，清空一切多余散落道具，聚焦终局抉择。",
       ),
     },
     {
-      sys: text("Painterly Post-Process & Finale Dissolve", "版画后期滤镜与纯白终局消融"),
-      domain: text("Full-Screen Ink Filter -> Room 5 Whiteout", "全屏版画滤镜 -> 5 号房纯白消融"),
+      sys: text("Monochrome Filter & Room 5 Dissolve", "单色版画滤镜与终局消融"),
+      domain: text("Rooms 1 to 4 -> Room 5 White Finale", "1 至 4 号房 -> 5 号房纯白空间"),
       tech: text(
-        "Combines Kuwahara painterly filtering, paper grain, and ink outlines across Rooms 1 to 4 before dissolving to pure white as the Dog wakes in Room 5.",
-        "在 1 至 4 号房应用桑原笔触滤波、纸张纹理与水墨轮廓，并在踏入 5 号房时平滑消融为纯白空间。",
+        "Maintains a monochrome print look with paper grain across Rooms 1 to 4 before dissolving to pure white when the Dog wakes in Room 5.",
+        "在 1 至 4 号房保持纸张纹理与单色版画观感，并在踏入 5 号房时过渡为纯白空间。",
       ),
     },
   ];
@@ -580,9 +580,9 @@ function StillLifeShaderTelemetryTable() {
       <table className="w-full min-w-[680px] border-collapse text-left text-sm">
         <thead>
           <tr className="border-b border-border bg-surface/60 text-xs font-semibold text-foreground">
-            <th className="p-3.5">{text("Visual / Technical System", "视觉与技术系统")}</th>
-            <th className="border-l border-border/60 p-3.5">{text("Target Domain", "应用对象")}</th>
-            <th className="border-l border-border/60 p-3.5">{text("Implementation & Level Design Purpose", "实现方式与关卡设计作用")}</th>
+            <th className="p-3.5">{text("Presentation / Spatial System", "视觉与空间引导系统")}</th>
+            <th className="border-l border-border/60 p-3.5">{text("Target Elements", "作用对象")}</th>
+            <th className="border-l border-border/60 p-3.5">{text("Design Function", "关卡设计作用")}</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-border/50 text-xs">

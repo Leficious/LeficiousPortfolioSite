@@ -68,7 +68,7 @@ export function WelcomeIntro() {
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerleave", onLeave);
 
-    // Cached dither noise — drawn once, painted as pattern (kills banding)
+    // Cached dither noise, drawn once and painted as a pattern to prevent banding
     const noise = document.createElement("canvas");
     noise.width = noise.height = 128;
     const nctx = noise.getContext("2d")!;
@@ -100,7 +100,7 @@ export function WelcomeIntro() {
       ctx.fillStyle = noisePattern;
       ctx.fillRect(0, 0, width, height);
 
-      // PASS 1 — ambient dots (one fillStyle, no warp math, skips hot zone)
+      // PASS 1: ambient dots (one fillStyle, no warp math, skips hot zone)
       ctx.fillStyle = "rgba(150, 180, 210, 0.18)";
       const drift = Math.sin(t) * 0.6;
       for (let j = 0; j < rows; j++) {
@@ -116,7 +116,7 @@ export function WelcomeIntro() {
         }
       }
 
-      // PASS 2 — warped + brightened dots inside influence radius
+      // PASS 2: warped and brightened dots inside influence radius
       if (mouse.active) {
         const ci = Math.floor(mouse.x / spacing);
         const cj = Math.floor(mouse.y / spacing);
@@ -239,7 +239,7 @@ export function WelcomeIntro() {
     >
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
-      {/* Edge geometric lattices — static SVG, cheap to render */}
+      {/* Edge geometric lattices: static SVG */}
       <svg
         className="pointer-events-none absolute inset-0 h-full w-full"
         xmlns="http://www.w3.org/2000/svg"
@@ -328,12 +328,12 @@ export function WelcomeIntro() {
           Welcome
         </p>
         <h1 id="welcome-title" className="mt-6 max-w-3xl font-display text-4xl font-semibold leading-[1.05] text-balance text-foreground md:text-6xl">
-          I'm <span className="text-accent">leficious</span> — technical &amp;
-          combat designer.
+          I'm <span className="text-accent">leficious</span>, a game, level &amp;
+          technical designer.
         </h1>
         <p id="welcome-description" className="mt-6 max-w-xl text-pretty text-base text-muted-foreground md:text-lg">
-          Prototypes, combat systems, AI, and the tools that ship them. Move
-          your cursor across the lattice. Click to enter.
+          Level design, spatial puzzles, combat systems, and 3D production. Move
+          your cursor across the grid, or click to enter.
         </p>
         <button
           type="button"

@@ -27,7 +27,7 @@ export function ProjectPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo title={`${project.title} — Leficious`} description={project.summary} path={localizedPath(`/projects/${project.slug}`)} image={project.cover} imageWidth={project.coverWidth} imageHeight={project.coverHeight} />
+      <Seo title={`${project.title} | Leficious`} description={project.summary} path={localizedPath(`/projects/${project.slug}`)} image={project.cover} imageWidth={project.coverWidth} imageHeight={project.coverHeight} />
       <article id="main-content" tabIndex={-1} className="mx-auto max-w-5xl px-6 py-16 md:py-24">
         <Link to={localizedPath("/")} viewTransition className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-accent">← {text("All projects", "全部项目")}</Link>
         <header className="mt-8 grid gap-6 md:grid-cols-12">
@@ -130,7 +130,7 @@ export function ProjectPage() {
         {relatedGallery.length > 0 && (
           <section className="mt-20 border-t border-border/60 pt-10 md:mt-28 md:pt-14" aria-labelledby="related-gallery-title">
             <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
-              <div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">{text("Related gallery work", "相关作品")}</p><h2 id="related-gallery-title" className="mt-3 font-display text-2xl font-semibold">{text("Visuals and production studies.", "更多画面与制作过程。")}</h2></div>
+              <div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">{text("Related gallery work", "相关作品")}</p><h2 id="related-gallery-title" className="mt-3 font-display text-2xl font-semibold">{text("Visuals and production studies", "更多画面与制作记录")}</h2></div>
               <Link to={localizedPath("/gallery")} viewTransition className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-accent">{text("View gallery", "查看作品集")} →</Link>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
