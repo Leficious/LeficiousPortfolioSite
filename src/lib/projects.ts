@@ -331,9 +331,9 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            src: "/projects/still-life/shot-14-room4-infinite-lattice.webp",
-            alt: "Corridor view of the 4-directional repeating steel grating and isolated portal frame in Hallway 3 and Room 4",
-            caption: "Hallway 3 & Room 4: Repeating steel grating walkways leading to the isolated central platform and portal frame.",
+            src: "/projects/still-life/shot-14-room4-shredder-dog.webp",
+            alt: "Industrial Shredder flashing SAFETY MECHANISM ACTIVATED: LIVING ORGANISM DETECTED while holding the Dog",
+            caption: "Dog Rejected ('LIVING ORGANISM DETECTED!'): Dropping the Dog into the chute triggers the red safety alarm and ejects it unharmed.",
             width: 1920,
             height: 1080,
           },
