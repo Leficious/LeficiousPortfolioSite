@@ -298,19 +298,20 @@
     to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
   }
 
-  @keyframes signal-dot-online {
-    0%, 50% { opacity: 0; transform: scale(0.2); text-shadow: none; }
-    72% { opacity: 1; transform: scale(1.4); text-shadow: 0 0 18px var(--color-accent); }
-    100% { opacity: 1; transform: scale(1); text-shadow: 0 0 8px color-mix(in oklch, var(--color-accent) 55%, transparent); }
+  @keyframes signal-datum-online {
+    0%, 50% { opacity: 0; transform: translate(-2px, 2px) scale(0.84); filter: none; }
+    74% { opacity: 1; transform: translate(1px, -1px) scale(1.04); filter: drop-shadow(0 0 8px color-mix(in oklch, var(--color-warm) 55%, transparent)); }
+    100% { opacity: 1; transform: translate(0, 0) scale(1); filter: none; }
   }
 
   .signal-intro-running .site-mark-enter {
     animation: system-mark-enter 520ms 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  .signal-intro-running .site-mark-dot {
-    display: inline-block;
-    animation: signal-dot-online 720ms 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  .signal-intro-running .site-mark-datum {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: signal-datum-online 720ms 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .signal-intro-running .signal-nav-enter {
