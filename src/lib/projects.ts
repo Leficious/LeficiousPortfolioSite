@@ -39,6 +39,7 @@ export type Project = {
   authorNote?: string;
   externalLink?: { url: string; label: string };
   downloads?: Array<{ url: string; label: string }>;
+  references?: Array<{ url: string; label: string }>;
   responsibilities: string[];
   media: MediaItem[];
   snippets: CodeSnippet[];
@@ -63,7 +64,7 @@ export const projects: Project[] = [
     ownership:
       "Solo game design, multi-floor puzzle and level design, Maya 3D companion modeling and 18-joint rigging, floor indicator line wayfinding, world assembly, and AI-assisted C# prototyping.",
     scope:
-      "Solo project in Unity 6 developed for Peter Brinson's course at USC around the Situated Player Role of The Dreamer.",
+      "Solo project in Unity 6 developed for USC Professor Peter Brinson's course around [Situated Player Role 4: The Dreamer, World as Enigma](https://peterbrinson.github.io/teach/PBOH/Design/Storytelling/Situated-Player-Role-4---The-Dreamer,-World-as-Enigma).",
     outcomes: [
       "Designed a 4-stage, 235 kg multi-floor puzzle room (Room 2) where unlocking each new animal requires allocating 100% of your currently unlocked weight pool across elevators, bridges, focus stands, and gates with 0 kg left over.",
       "Modeled and rigged an 18-joint Desk Lamp companion in Maya 2026 and designed its 5-state behavior flow (startled flee, cornered shivering, petting recovery, hopping follow, and hazard stops) across 5 rooms.",
@@ -85,6 +86,12 @@ export const projects: Project[] = [
       {
         url: "/projects/still-life/Still_Life_1Page_Pitch.pdf",
         label: "Download 1-Page Pitch (PDF)",
+      },
+    ],
+    references: [
+      {
+        url: "https://peterbrinson.github.io/teach/PBOH/Design/Storytelling/Situated-Player-Role-4---The-Dreamer,-World-as-Enigma",
+        label: "Peter Brinson: The Dreamer, World as Enigma",
       },
     ],
     responsibilities: [
@@ -112,7 +119,7 @@ export const projects: Project[] = [
         eyebrow: "01 / Premise, Audio Prompt & Core Loop",
         title: "Role inversion, the soundtrack prompt, and the three-step puzzle loop",
         body: [
-          "In Peter Brinson's framework, the Dreamer navigates a world governed by dream logic: an internal rule set that the player acts within before realizing what its rules imply. Inspired by Rene Magritte's object paradoxes and the inverted dream logic of Lewis Carroll's Alice's Adventures in Wonderland, Still Life swaps the behavioral cues of living creatures and household hardware.",
+          "Still Life was designed around USC Professor Peter Brinson's environmental storytelling concept of [Situated Player Role 4: The Dreamer, World as Enigma](https://peterbrinson.github.io/teach/PBOH/Design/Storytelling/Situated-Player-Role-4---The-Dreamer,-World-as-Enigma). In his four-role course framework, a standard puzzle game asks what the world's rules permit, whereas a Dreamer game runs on surreal dream logic where mechanics double as metaphors and the player's own puzzle solutions enact what the world expresses (alongside touchstones like Lewis Carroll's Alice's Adventures in Wonderland, Papo & Yo, and Satoshi Kon's Paprika). Combining that brief with Rene Magritte's object paradoxes, Still Life swaps the behavioral cues of living creatures and household hardware.",
           "Built for thatgamejam #02, the facility was paced around the jam's 66-second soundtrack prompt composed by Jason Grace. Its three sonic shifts shaped the progression of Rooms 1 through 5: the opening switch clicks and sparse winding music-box melody in the dark (0:00 to 0:21) inspired Room 1's startled Desk Lamp fleeing through a silent room of motionless animals; the steady clockwork percussion loop beneath warm strings (0:21 to 0:53) drove the core loop of hauling silent animals as 15 kg to 80 kg counterweights while protecting the Lamp from hazards in Rooms 2 and 3; and the abrupt mechanical cutoff (0:53 to 1:06) inspired Room 4's Industrial Shredder reversal and Room 5's silent white awakening.",
           "Every room runs on a three-step loop: collect and place motionless animals onto brass pressure plates, across 4.2m floor gaps, and into crusher gears; clear route hazards (using Gold Focus Stands to pin Chest Mimics and shutting off cold air vents); and escort the Desk Lamp to the room's optical socket to open the exit.",
         ],
@@ -384,7 +391,7 @@ export const projects: Project[] = [
     ownership:
       "Solo game design, level layout and gating, 4-layer sightless wayfinding, world assembly, 6-cohort playtesting, and AI-assisted C# prototyping.",
     scope:
-      "4-week solo project in Unity 6 developed for Peter Brinson's course at USC around the Situated Player Role of The Traveler.",
+      "4-week solo project in Unity 6 developed for USC Professor Peter Brinson's course around [Situated Player Role 2: The Traveler, World as Presence](https://peterbrinson.github.io/teach/PBOH/Design/Storytelling/Situated-Player-Role-2---The-Traveler,-World-as-Presence).",
     outcomes: [
       "Built a continuous ~550m x 550m fog-covered basin connecting a central hub and three spoke regions with zero HUD markers, minimaps, or loading screens.",
       "Designed three distinct regional puzzle rules around the same E input: platform verification against decoy signals (Glacial Ocean), a 3-wing sequential street loop (Unremembered City), and a 3.0s pause-and-reply gate (Illusory Woods).",
@@ -402,6 +409,12 @@ export const projects: Project[] = [
       {
         url: "/projects/an-echo-has-no-shape/An_Echo_Has_No_Shape_GDD.pdf",
         label: "Download GDD (PDF)",
+      },
+    ],
+    references: [
+      {
+        url: "https://peterbrinson.github.io/teach/PBOH/Design/Storytelling/Situated-Player-Role-2---The-Traveler,-World-as-Presence",
+        label: "Peter Brinson: The Traveler, World as Presence",
       },
     ],
     responsibilities: [
@@ -429,7 +442,7 @@ export const projects: Project[] = [
         eyebrow: "01 / Level Design Pillars",
         title: "Exploration through pacing and single-verb restraint",
         body: [
-          "Players read the basin through movement, positioning, and timing without text logs or UI prompts. Where you stand when you emit a pulse, and when you stop to listen, directly determine which paths open.",
+          "An Echo Has No Shape was built around USC Professor Peter Brinson's concept of [Situated Player Role 2: The Traveler, World as Presence](https://peterbrinson.github.io/teach/PBOH/Design/Storytelling/Situated-Player-Role-2---The-Traveler,-World-as-Presence). In his environmental storytelling framework, where an Investigator game asks players to reconstruct a past plot from text logs and clues, the Traveler experiences a continuous world in the present tense through movement and attention: where you walk, when you pause, and what you stop to hear determine what the world reveals. In this basin, that idea becomes the core puzzle mechanic, since where you stand when casting an echo and when you wait in silence control which paths open.",
           "The player's move set never expands: Emit Echo (E, 42m range, 5.0s cooldown) and Interact (F at stone tablets). Leaving out combat, inventory, and ability upgrades meant every regional puzzle had to come from level layout and signal behavior.",
         ],
         widget: "traveler-arc",

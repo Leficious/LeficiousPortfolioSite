@@ -36,6 +36,25 @@ export function ProjectPage() {
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Role", "职责")}</dt><dd className="text-sm">{project.role}</dd></div>
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Year", "年份")}</dt><dd className="text-sm">{project.year}</dd></div>
             <div><dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Stack", "技术栈")}</dt><dd className="flex flex-wrap gap-1.5">{project.tags.map((tag) => <span key={tag} className="rounded-full border border-border bg-surface px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{tag}</span>)}</dd></div>
+            {project.references && project.references.length > 0 && (
+              <div>
+                <dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{text("Design reference", "理论参考")}</dt>
+                <dd className="mt-1 space-y-1 text-sm">
+                  {project.references.map((ref) => (
+                    <a
+                      key={ref.url}
+                      href={ref.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-baseline gap-1 text-foreground/90 underline decoration-accent/60 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+                    >
+                      <span>{ref.label}</span>
+                      <span aria-hidden="true" className="shrink-0 font-mono text-[10px] text-accent">↗</span>
+                    </a>
+                  ))}
+                </dd>
+              </div>
+            )}
             {(project.externalLink || (project.downloads && project.downloads.length > 0)) && (
               <div className="flex flex-wrap gap-2 pt-1">
                 {project.externalLink && (
@@ -77,7 +96,7 @@ export function ProjectPage() {
             ].map(([label, value], briefIndex) => (
               <div key={label} className="border-b border-border/60 p-5 last:border-b-0 md:border-b-0 md:border-r md:p-6 md:last:border-r-0">
                 <dt className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground"><span className="text-accent">0{briefIndex + 1}</span>{label}</dt>
-                <dd className={`mt-4 text-sm leading-relaxed text-foreground/90 ${isChinese ? "zh-readable" : ""}`}>{value}</dd>
+                <dd className={`mt-4 text-sm leading-relaxed text-foreground/90 ${isChinese ? "zh-readable" : ""}`}><FormattedText>{value}</FormattedText></dd>
               </div>
             ))}
           </dl>

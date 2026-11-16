@@ -1,7 +1,7 @@
 import type { GalleryEntry, GalleryTag } from "./gallery";
 import type { MediaItem, Project, ProjectSection } from "./projects";
 
-type ProjectTranslation = Pick<Project, "title" | "role" | "summary" | "designGoal" | "ownership" | "scope" | "outcomes" | "overview" | "authorNote" | "responsibilities" | "externalLink" | "downloads"> & {
+type ProjectTranslation = Pick<Project, "title" | "role" | "summary" | "designGoal" | "ownership" | "scope" | "outcomes" | "overview" | "authorNote" | "responsibilities" | "externalLink" | "downloads" | "references"> & {
   sections: Array<Pick<ProjectSection, "eyebrow" | "title" | "body"> & { captions?: string[] }>;
   mediaCaptions?: string[];
 };
@@ -17,7 +17,7 @@ const projectTranslations: Record<string, ProjectTranslation> = {
     ownership:
       "独立负责游戏设计、多层空间关卡设计、Maya 3D 台灯伙伴建模与 18 骨骼绑定、零 HUD 三色地面导流线寻路、场景搭建及 AI 辅助 C# 原型实现。",
     scope:
-      "使用 Unity 6 独立完成，源自南加州大学（USC）Peter Brinson 课程，围绕“情境化玩家角色：梦游者”展开。",
+      "使用 Unity 6 独立完成，源自南加州大学（USC）Peter Brinson 教授课程中的设计课题 [情境化玩家角色 4：梦游者（世界作为谜题）](https://peterbrinson.github.io/teach/PBOH/Design/Storytelling/Situated-Player-Role-4---The-Dreamer,-World-as-Enigma)。",
     outcomes: [
       "设计并验证了四阶段、235 kg 满额配重推进的三层档案馆关卡（2 号房）：每解锁一只新动物，均需将当前已解锁动物总重量 100% 同步分配在升降梯、断口桥梁、聚光灯座与闸门上（0 kg 剩余）。",
       "在 Maya 2026 中建模并绑定 18 骨骼台灯伙伴，设计其五种行为状态（受惊逃跑、角落发抖、左键抚摸回暖、跳跃跟随与遇险停步），并配合三色地面导流线贯穿五间展厅。",
@@ -40,6 +40,12 @@ const projectTranslations: Record<string, ProjectTranslation> = {
         label: "下载一页立项提案 (PDF)",
       },
     ],
+    references: [
+      {
+        url: "https://peterbrinson.github.io/teach/PBOH/Design/Storytelling/Situated-Player-Role-4---The-Dreamer,-World-as-Enigma",
+        label: "Peter Brinson：梦游者（世界作为谜题）",
+      },
+    ],
     responsibilities: [
       "设计角色倒置前提、9 件动物与家电配重表（5 kg 至 100 kg）及三步核心解谜循环。",
       "搭建纵深 200m 的五间展厅与三条连接走廊，包含 2 号房的四阶段 235 kg 满额配重推进与 3 号房的“取走即断电”冷风踏板布局。",
@@ -54,7 +60,7 @@ const projectTranslations: Record<string, ProjectTranslation> = {
         eyebrow: "01 / 核心前提、赛题配乐与解谜循环",
         title: "角色倒置、赛题配乐结构与三步核心解谜循环",
         body: [
-          "在 Peter Brinson 的框架中，“梦游者（The Dreamer）”置身于遵循梦境规则的空间：玩家在意识到规则背后的含义之前，已经顺着关卡机制自然行事。受雷内·马格利特（Rene Magritte）物体悖论及刘易斯·卡罗尔《爱丽丝梦游仙境》倒置梦境逻辑的启发，《静物》对调了动物与家电的行为表现。",
+          "《静物》围绕南加州大学（USC）Peter Brinson 教授环境叙事框架中的 [情境化玩家角色 4：梦游者（The Dreamer, World as Enigma）](https://peterbrinson.github.io/teach/PBOH/Design/Storytelling/Situated-Player-Role-4---The-Dreamer,-World-as-Enigma) 设计。在这一四角色课程体系中，常规解谜主要考察“世界规则允许玩家做什么”，而“梦游者”作品遵循超现实的梦境逻辑，让解谜机制本身充当隐喻，使玩家在顺应规则解开机关的过程中亲手演出作品所表达的含义（课程参考包括《爱丽丝梦游仙境》、《Papo & Yo》与今敏《红辣椒》）。结合这一课题与雷内·马格利特（Rene Magritte）的物体悖论，《静物》对调了动物与日常器物的行为线索。",
           "本作专为 thatgamejam #02 开发，整座展馆的关卡节奏围绕作曲家 Jason Grace 创作的 66 秒赛题配乐展开。曲目的三段声音转折直接确立了 1 至 5 号房的流程推进：开篇（0:00 至 0:21）是黑暗中清脆的物理开关咔哒声与稀疏的八音盒发条旋律，由此诞生了 1 号房走近台灯触发闪光受惊、在静止动物之间追逐安抚的开场；中段（0:21 至 0:53）在稳定的机械齿轮节拍之上铺开温暖弦乐，对应 2 号与 3 号房一边将沉默动物当作 15 kg 至 80 kg 配重搬运、一边为怕冷台灯解除路线障碍的核心循环；尾声（0:53 至 1:06）弦乐戛然而止、归于冷峻的机械寂静，直接启发了 4 号房工业粉碎机的规则反转与 5 号房纯白空间的无声苏醒。",
           "每间展厅均围绕三步解谜循环展开：第一步，抱起静止不动的动物并将其放置在黄铜压力踏板上、4.2m 地板断口上或冲压机齿轮槽内；第二步，利用聚光灯座定身宝箱怪、关闭低温冷风喷口以扫清路线障碍；第三步，引导台灯伙伴跳上终点光敏插座，配合重型踏板打开下一房间大门。",
         ],
@@ -151,7 +157,7 @@ const projectTranslations: Record<string, ProjectTranslation> = {
     ownership:
       "独立负责游戏设计、关卡动线与门锁布局、四层无 UI 空间寻路设计、场景整合、6 轮试玩调优及 AI 辅助 C# 原型实现。",
     scope:
-      "历时 4 周使用 Unity 6 独立完成，源自南加州大学（USC）Peter Brinson 课程，围绕“情境化玩家角色：旅人”展开。",
+      "历时 4 周使用 Unity 6 独立完成，源自南加州大学（USC）Peter Brinson 教授课程中的设计课题 [情境化玩家角色 2：旅人（世界作为在场）](https://peterbrinson.github.io/teach/PBOH/Design/Storytelling/Situated-Player-Role-2---The-Traveler,-World-as-Presence)。",
     outcomes: [
       "在单一连续场景中搭建约 550m x 550m 的浓雾盆地，在零 HUD 路标、零小地图、零加载界面下连通中央中枢与三大分支区域。",
       "围绕同一个 E 键设计了三种区域解谜规则：真伪浮冰信号交叉验证（冰川之海）、三翼街区顺序回路（遗忘之城）与 3.0 秒静默岔口门锁（幻影之森）。",
@@ -170,6 +176,12 @@ const projectTranslations: Record<string, ProjectTranslation> = {
         label: "下载 GDD 设定文档 (PDF)",
       },
     ],
+    references: [
+      {
+        url: "https://peterbrinson.github.io/teach/PBOH/Design/Storytelling/Situated-Player-Role-2---The-Traveler,-World-as-Presence",
+        label: "Peter Brinson：旅人（世界作为在场）",
+      },
+    ],
     responsibilities: [
       "设计单一按键核心循环及三大区域门锁规则（真伪平台验证、三翼街区顺序回路、3.0 秒静默岔口门锁）。",
       "搭建约 550m x 550m 的中枢辐射式无缝盆地与四层无 UI 空间寻路体系。",
@@ -184,7 +196,7 @@ const projectTranslations: Record<string, ProjectTranslation> = {
         eyebrow: "01 / 关卡设计支柱",
         title: "走位节奏驱动探索与单一按键约束",
         body: [
-          "整座盆地不设文字日志或 UI 指引，玩家通过走位、朝向与停顿时机来判断环境：站在何处发声、何时停步倾听，直接决定了哪条通路打开。",
+          "《回声无形》围绕南加州大学（USC）Peter Brinson 教授环境叙事框架中的 [情境化玩家角色 2：旅人（The Traveler, World as Presence）](https://peterbrinson.github.io/teach/PBOH/Design/Storytelling/Situated-Player-Role-2---The-Traveler,-World-as-Presence) 构建。在其课程体系中，不同于依靠文字日志和线索去还原过去情节的“调查者（Investigator）”模式，“旅人”完全在连续的现在时态中感知世界：移动与注意力本身就是核心机制，玩家走到哪里、何时驻足、停下来倾听什么，决定了环境向你显露什么。在这座浓雾盆地里，这一理念直接构成了核心谜题规则：发声时的站位与停步静默的时机，决定了哪条通路会打开。",
           "玩家的动作集合全程不变：释放回声（按 E，42m 半径，5.0s 冷却）与石碑交互（按 F）。省去战斗、背包与技能升级后，所有谜题变化都来自空间布局与声波规则。",
         ],
         captions: [
