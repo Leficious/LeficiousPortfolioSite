@@ -1,8 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <path d="M0 6 6 0h48l10 10v48l-6 6H6l-6-6Z" fill="#10151c"/>
-  <path d="M1 6.5 6.5 1h47L63 10.5v47L57.5 63h-51L1 57.5Z" fill="none" stroke="#26313f" stroke-width="1.5"/>
-  <path d="M8 14 14 8h6v32.5L8 52.5Z" fill="#dce4ec"/>
-  <path d="M23.5 44H56v6l-6 6H11.5Z" fill="#dce4ec"/>
-  <rect x="24" y="32" width="8" height="8" fill="#c59a68"/>
-  <polygon points="24,8 34,8 56,30 56,40" fill="#c59a68"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <defs>
+    <clipPath id="fc">
+      <polygon points="52,23.5 76.5,23.5 63.8,45.5 52,45.5"/>
+    </clipPath>
+  </defs>
+  <path d="M0 7 7 0h76l13 13v76l-7 7H7l-7-7Z" fill="#10151c"/>
+  <path d="M1.8 7.8 7.8 1.8h74.4l12 12v74.4l-6 6H7.8l-6-6Z" fill="none" stroke="#283444" stroke-width="2.2"/>
+  <path d="M31.2 14.5H4L48 90.7l15-26h-5.8L48 80.6 12.2 19.5h19Z" fill="#dce4ec"/>
+  <path d="M52 14.5h40l-18 31.2h-5.8l15.6-26.2H52Z" fill="#dce4ec"/>
+  <polygon points="19,23.5 31.2,23.5 31.2,45.5" fill="#6b869b"/>
+  <g clip-path="url(#fc)" fill="none" stroke="#c59a68" stroke-width="3.6">
+    <circle cx="47" cy="50.2" r="12.5"/>
+    <circle cx="47" cy="50.2" r="22.5"/>
+  </g>
+  <polygon points="41.5,65.2 54.5,65.2 48,76.5" fill="#c59a68"/>
+  <path d="M35.8 10 47.4 3.3V50H78l-6.5 11.2h-31L35.8 53Z" fill="#dce4ec"/>
 </svg>

@@ -1,37 +1,58 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useLanguage } from "../lib/language";
+import { HeroBootLockup } from "./BrandMark";
+
+const INTRO_STORAGE_KEY = "intro-p03e2-seen";
+const emptySubscribe = () => () => {};
+const getClientHydrated = () => true;
+const getServerHydrated = () => false;
 
 /**
- * Matrix / geometric lattice intro.
- * Optimized: two-pass dot rendering (cheap ambient batch + warped hot zone),
- * cached noise dither, capped DPR, eased mouse.
+ * First-visit tactical blueprint entry stage featuring the P03-E2 boot sting
+ * and interactive geometric dot lattice. Hydration-safe for SSR prerendering.
  */
 export function WelcomeIntro() {
-  const [dismissed, setDismissed] = useState(() => {
-    if (typeof window === "undefined") return true;
-    try {
-      return (
-        localStorage.getItem("intro-seen") === "1" ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-        window.matchMedia("(pointer: coarse)").matches
-      );
-    } catch {
-      return false;
-    }
-  });
+  const { text } = useLanguage();
+  const hydrated = useSyncExternalStore(emptySubscribe, getClientHydrated, getServerHydrated);
+  const [dismissed, setDismissed] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const shouldOpen = useMemo(() => {
+    if (!hydrated) return false;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("intro") === "1") return true;
+
+      const cleanPath = window.location.pathname.replace(/\/$/, "") || "/";
+      if (cleanPath !== "/" && cleanPath !== "/zh") return false;
+
+      if (
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        window.matchMedia("(pointer: coarse)").matches
+      ) {
+        return false;
+      }
+
+      return localStorage.getItem(INTRO_STORAGE_KEY) !== "1";
+    } catch {
+      return false;
+    }
+  }, [hydrated]);
+
+  const active = shouldOpen && !dismissed;
+
   useEffect(() => {
-    if (dismissed) return;
+    if (!active) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, [dismissed]);
+  }, [active]);
 
   useEffect(() => {
-    if (dismissed) return;
+    if (!active) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { alpha: false });
@@ -68,7 +89,6 @@ export function WelcomeIntro() {
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerleave", onLeave);
 
-    // Cached dither noise, drawn once and painted as a pattern to prevent banding
     const noise = document.createElement("canvas");
     noise.width = noise.height = 128;
     const nctx = noise.getContext("2d")!;
@@ -76,7 +96,7 @@ export function WelcomeIntro() {
     for (let i = 0; i < img.data.length; i += 4) {
       const v = (Math.random() * 255) | 0;
       img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
-      img.data[i + 3] = 14;
+      img.data[i + 3] = 12;
     }
     nctx.putImageData(img, 0, 0);
     const noisePattern = ctx.createPattern(noise, "repeat")!;
@@ -95,13 +115,12 @@ export function WelcomeIntro() {
         mouse.y += (mouse.ty - mouse.y) * 0.25;
       }
 
-      ctx.fillStyle = "rgb(14, 18, 26)";
+      ctx.fillStyle = "rgb(16, 21, 28)";
       ctx.fillRect(0, 0, width, height);
       ctx.fillStyle = noisePattern;
       ctx.fillRect(0, 0, width, height);
 
-      // PASS 1: ambient dots (one fillStyle, no warp math, skips hot zone)
-      ctx.fillStyle = "rgba(150, 180, 210, 0.18)";
+      ctx.fillStyle = "rgba(150, 180, 208, 0.16)";
       const drift = Math.sin(t) * 0.6;
       for (let j = 0; j < rows; j++) {
         const baseY = j * spacing + drift;
@@ -116,7 +135,6 @@ export function WelcomeIntro() {
         }
       }
 
-      // PASS 2: warped and brightened dots inside influence radius
       if (mouse.active) {
         const ci = Math.floor(mouse.x / spacing);
         const cj = Math.floor(mouse.y / spacing);
@@ -133,42 +151,46 @@ export function WelcomeIntro() {
             if (d2 >= influenceSq) continue;
             const dist = Math.sqrt(d2);
             const f = 1 - dist / influence;
-            const push = f * f * 34;
+            const push = f * f * 32;
             const inv = dist > 0.001 ? 1 / dist : 0;
             const x = baseX + dx * inv * push;
             const y = baseY + dy * inv * push;
-            const size = 1 + f * 3.2;
-            const alpha = 0.22 + f * 0.7;
-            const tint = 180 + ((f * 70) | 0);
-            ctx.fillStyle = `rgba(${tint - 30},${tint},${tint + 10},${alpha})`;
+            const size = 1 + f * 3.0;
+            const alpha = 0.22 + f * 0.68;
+            const rCh = (165 + f * 65) | 0;
+            const gCh = (182 + f * 42) | 0;
+            const bCh = (196 + f * 24) | 0;
+            ctx.fillStyle = `rgba(${rCh},${gCh},${bCh},${alpha})`;
             ctx.fillRect(x - size / 2, y - size / 2, size, size);
           }
         }
 
-        // brightness halo
         const halo = ctx.createRadialGradient(
-          mouse.x, mouse.y, 0,
-          mouse.x, mouse.y, influence
+          mouse.x,
+          mouse.y,
+          0,
+          mouse.x,
+          mouse.y,
+          influence,
         );
-        halo.addColorStop(0, "rgba(180, 210, 235, 0.10)");
-        halo.addColorStop(0.5, "rgba(150, 190, 220, 0.04)");
-        halo.addColorStop(1, "rgba(150, 190, 220, 0)");
+        halo.addColorStop(0, "rgba(197, 154, 104, 0.09)");
+        halo.addColorStop(0.5, "rgba(142, 190, 212, 0.04)");
+        halo.addColorStop(1, "rgba(142, 190, 212, 0)");
         ctx.fillStyle = halo;
         ctx.fillRect(mouse.x - influence, mouse.y - influence, influence * 2, influence * 2);
 
-        // scan ring + crosshair
-        ctx.strokeStyle = "rgba(150, 200, 230, 0.22)";
+        ctx.strokeStyle = "rgba(197, 154, 104, 0.24)";
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.arc(mouse.x, mouse.y, influence, 0, Math.PI * 2);
         ctx.stroke();
 
-        ctx.strokeStyle = "rgba(170, 210, 235, 0.45)";
+        ctx.strokeStyle = "rgba(220, 228, 236, 0.45)";
         ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 4 + (Math.sin(t * 6) + 1) * 3, 0, Math.PI * 2);
+        ctx.arc(mouse.x, mouse.y, 4 + (Math.sin(t * 6) + 1) * 2.5, 0, Math.PI * 2);
         ctx.stroke();
 
-        ctx.strokeStyle = "rgba(190, 215, 235, 0.3)";
+        ctx.strokeStyle = "rgba(197, 154, 104, 0.36)";
         ctx.beginPath();
         ctx.moveTo(mouse.x - 16, mouse.y);
         ctx.lineTo(mouse.x + 16, mouse.y);
@@ -177,12 +199,11 @@ export function WelcomeIntro() {
         ctx.stroke();
       }
 
-      // moving scanline
       const scanY = ((t * 60) % (height + 60)) - 30;
       const grad = ctx.createLinearGradient(0, scanY - 30, 0, scanY + 30);
-      grad.addColorStop(0, "rgba(120, 180, 220, 0)");
-      grad.addColorStop(0.5, "rgba(120, 180, 220, 0.05)");
-      grad.addColorStop(1, "rgba(120, 180, 220, 0)");
+      grad.addColorStop(0, "rgba(120, 180, 210, 0)");
+      grad.addColorStop(0.5, "rgba(120, 180, 210, 0.045)");
+      grad.addColorStop(1, "rgba(120, 180, 210, 0)");
       ctx.fillStyle = grad;
       ctx.fillRect(0, scanY - 30, width, 60);
 
@@ -205,26 +226,36 @@ export function WelcomeIntro() {
       window.removeEventListener("pointerleave", onLeave);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
-  }, [dismissed]);
+  }, [active]);
 
   const handleDismiss = useCallback(() => {
     if (leaving) return;
     setLeaving(true);
     try {
-      localStorage.setItem("intro-seen", "1");
+      localStorage.setItem(INTRO_STORAGE_KEY, "1");
     } catch {
       // Storage can be unavailable in privacy-restricted contexts.
     }
-    setTimeout(() => setDismissed(true), 500);
+    window.setTimeout(() => setDismissed(true), 480);
   }, [leaving]);
 
   useEffect(() => {
-    if (dismissed) return;
-    const timer = window.setTimeout(handleDismiss, 5000);
-    return () => window.clearTimeout(timer);
-  }, [dismissed, handleDismiss]);
+    if (!active) return;
+    const timer = window.setTimeout(handleDismiss, 5200);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" || event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        handleDismiss();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [active, handleDismiss]);
 
-  if (dismissed) return null;
+  if (!active) return null;
 
   return (
     <div
@@ -239,23 +270,21 @@ export function WelcomeIntro() {
     >
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
-      {/* Edge geometric lattices: static SVG */}
       <svg
         className="pointer-events-none absolute inset-0 h-full w-full"
         xmlns="http://www.w3.org/2000/svg"
-        aria-hidden
+        aria-hidden="true"
       >
         <defs>
           <pattern id="edge-grid" width="22" height="22" patternUnits="userSpaceOnUse">
-            <path d="M22 0H0V22" fill="none" stroke="rgba(150,180,210,0.22)" strokeWidth="0.5" />
+            <path d="M22 0H0V22" fill="none" stroke="rgba(150,180,210,0.2)" strokeWidth="0.5" />
           </pattern>
-          {/* Simpler sci-fi tile: corner bracket + center tick */}
           <pattern id="edge-tri" width="56" height="56" patternUnits="userSpaceOnUse">
-            <g fill="none" stroke="rgba(170,200,225,0.3)" strokeWidth="0.6">
+            <g fill="none" stroke="rgba(197,154,104,0.28)" strokeWidth="0.6">
               <path d="M4 12 V4 H12" />
               <path d="M52 28 H44" />
             </g>
-            <circle cx="28" cy="28" r="0.9" fill="rgba(180,210,235,0.5)" />
+            <circle cx="28" cy="28" r="0.9" fill="rgba(180,210,235,0.45)" />
           </pattern>
           <linearGradient id="fade-t" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="white" stopOpacity="1" />
@@ -275,7 +304,6 @@ export function WelcomeIntro() {
           </linearGradient>
         </defs>
 
-        {/* top triangular lattice */}
         <g mask="url(#mask-top)">
           <rect width="100%" height="140" fill="url(#edge-tri)" />
         </g>
@@ -283,8 +311,7 @@ export function WelcomeIntro() {
           <rect width="100%" height="140" fill="url(#fade-t)" />
         </mask>
 
-        {/* bottom triangular lattice */}
-        <g mask="url(#mask-bot)" transform="translate(0, 0)">
+        <g mask="url(#mask-bot)">
           <rect y="0" width="100%" height="100%" fill="url(#edge-tri)" />
         </g>
         <mask id="mask-bot">
@@ -292,7 +319,6 @@ export function WelcomeIntro() {
           <rect y="0" width="100%" height="100%" fill="url(#fade-b)" style={{ maskType: "alpha" }} />
         </mask>
 
-        {/* left grid lattice */}
         <g mask="url(#mask-left)">
           <rect width="180" height="100%" fill="url(#edge-grid)" />
         </g>
@@ -300,7 +326,6 @@ export function WelcomeIntro() {
           <rect width="180" height="100%" fill="url(#fade-l)" />
         </mask>
 
-        {/* right grid lattice */}
         <g mask="url(#mask-right)">
           <rect width="100%" height="100%" fill="url(#edge-grid)" />
         </g>
@@ -309,12 +334,11 @@ export function WelcomeIntro() {
         </mask>
       </svg>
 
-      {/* corner registration marks */}
       <div className="pointer-events-none absolute inset-6 z-10">
         {(["tl", "tr", "bl", "br"] as const).map((pos) => (
           <div
             key={pos}
-            className={`absolute h-4 w-4 border-foreground/30 ${
+            className={`absolute h-4 w-4 border-warm/45 ${
               pos === "tl" ? "left-0 top-0 border-l border-t" : ""
             } ${pos === "tr" ? "right-0 top-0 border-r border-t" : ""} ${
               pos === "bl" ? "bottom-0 left-0 border-b border-l" : ""
@@ -324,26 +348,40 @@ export function WelcomeIntro() {
       </div>
 
       <div className="pointer-events-none relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-        <p className="font-mono text-sm uppercase tracking-[0.5em] text-muted-foreground md:text-base">
-          Welcome
+        <p className="font-mono text-[11px] uppercase tracking-[0.38em] text-warm/90 sm:text-xs">
+          {text("Lefi (Kevin) Shan · Portfolio", "单凯飞 Lefi Shan · 个人作品集")}
         </p>
-        <h1 id="welcome-title" className="mt-6 max-w-3xl font-display text-4xl font-semibold leading-[1.05] text-balance text-foreground md:text-6xl">
-          I'm <span className="text-accent">leficious</span>, a game, level &amp;
-          technical designer.
+
+        <div className="mt-7">
+          <HeroBootLockup />
+        </div>
+
+        <h1
+          id="welcome-title"
+          className="mt-7 max-w-2xl font-display text-xl font-medium tracking-[-0.01em] text-foreground/95 sm:text-2xl"
+        >
+          {text("Game, level & technical design", "游戏、关卡与技术设计")}
         </h1>
-        <p id="welcome-description" className="mt-6 max-w-xl text-pretty text-base text-muted-foreground md:text-lg">
-          Level design, spatial puzzles, combat systems, and 3D production. Move
-          your cursor across the grid, or click to enter.
+
+        <p
+          id="welcome-description"
+          className="mt-3 max-w-lg text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base"
+        >
+          {text(
+            "Level architecture, spatial puzzles, combat systems, and 3D production. Move your cursor across the grid, or click anywhere to enter.",
+            "涵盖关卡架构、空间解谜、战斗系统与 3D 场景制作。移动鼠标探索网格，或点击任意处进入。",
+          )}
         </p>
+
         <button
           type="button"
           onClick={(event) => {
             event.stopPropagation();
             handleDismiss();
           }}
-          className="pointer-events-auto mt-10 rounded-full border border-border bg-background/70 px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
+          className="pointer-events-auto mt-9 rounded-full border border-warm/45 bg-background/75 px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.24em] text-foreground/90 transition-colors hover:border-warm hover:bg-warm/12 hover:text-foreground"
         >
-          Enter portfolio
+          {text("Enter portfolio", "进入作品集")}
         </button>
       </div>
     </div>

@@ -1,30 +1,6 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useLanguage, type Language } from "../lib/language";
-
-function BrandMark({
-  className = "h-[19px] w-[19px] sm:h-[21px] sm:w-[21px]",
-  animated = false,
-}: {
-  className?: string;
-  animated?: boolean;
-}) {
-  return (
-    <svg viewBox="0 0 64 64" aria-hidden="true" className={`shrink-0 overflow-visible ${className}`}>
-      <path d="M10 15 15 10h5v31L10 51Z" className="fill-foreground" />
-      <path d="M23 44h31v5l-5 5H13Z" className="fill-foreground" />
-      <g
-        className={
-          animated
-            ? "site-mark-datum transition-transform duration-300 ease-out group-hover:translate-x-[2px] group-hover:-translate-y-[2px]"
-            : ""
-        }
-      >
-        <rect x="25" y="33" width="6" height="6" className="fill-warm" />
-        <polygon points="25,10 33.5,10 54,30.5 54,39" className="fill-warm" />
-      </g>
-    </svg>
-  );
-}
+import { BrandCrest, NavbarBrandLockup } from "./BrandMark";
 
 export function SiteNav() {
   const { pathname, hash } = useLocation();
@@ -44,10 +20,10 @@ export function SiteNav() {
         <Link
           to={localizedPath("/")}
           viewTransition
-          className="site-mark-enter group inline-flex items-center gap-2.5 font-display text-base font-semibold tracking-[-0.015em] text-foreground sm:text-[17.5px]"
+          aria-label="Leficious"
+          className="site-mark-enter inline-flex items-center py-0.5"
         >
-          <BrandMark animated />
-          <span>leficious</span>
+          <NavbarBrandLockup />
         </Link>
         <nav aria-label={text("Primary", "主导航")} className="signal-nav-enter col-span-2 row-start-2 flex min-w-0 items-center justify-start gap-7 text-[11px] text-muted-foreground sm:col-span-1 sm:col-start-2 sm:row-start-1 sm:justify-self-end sm:gap-6 sm:text-sm">
           <NavLink to={localizedPath("/")} end viewTransition className={({ isActive }) => navClass(isActive)}>{text("Work", "项目")}</NavLink>
@@ -95,8 +71,8 @@ export function SiteFooter() {
     <footer className="mt-24 border-t border-border/60">
       <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-10 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
         <p className="inline-flex items-center gap-2.5">
-          <BrandMark className="h-3.5 w-3.5 opacity-85" />
-          <span>© {new Date().getFullYear()} leficious · {text("Game, Level & Technical Design", "游戏、关卡与技术设计")}</span>
+          <BrandCrest className="h-4 w-4 opacity-90" />
+          <span>© {new Date().getFullYear()} Lefi Shan · {text("Game, Level & Technical Design", "游戏、关卡与技术设计")}</span>
         </p>
         <p className="font-mono text-xs">leficious.com</p>
       </div>
