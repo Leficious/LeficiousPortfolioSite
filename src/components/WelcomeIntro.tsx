@@ -1,24 +1,50 @@
-import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useLanguage } from "../lib/language";
-import { HeroBootLockup } from "./BrandMark";
+import { HeroBootLockup, type HeroBootLockupHandle } from "./BrandMark";
 
-const INTRO_STORAGE_KEY = "intro-p03e2-seen";
+const CURTAIN_SESSION_KEY = "leficious-boot-curtain-v1";
 const emptySubscribe = () => () => {};
 const getClientHydrated = () => true;
 const getServerHydrated = () => false;
 
+const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+
+/** Symmetric mechanical hydraulic curve (matches cubic-bezier(0.76, 0, 0.24, 1)). */
+function easeInOutQuart(x: number) {
+  return x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2;
+}
+
+function easeOutExpo(x: number) {
+  return x >= 1 ? 1 : 1 - Math.pow(2, -10 * x);
+}
+
+type WelcomeIntroProps = {
+  onActiveChange?: (active: boolean) => void;
+};
+
 /**
- * First-visit tactical blueprint entry stage featuring the P03-E2 boot sting
- * and interactive geometric dot lattice. Hydration-safe for SSR prerendering.
+ * Fast (~1.5s) GPU-composited Tactical Boot Curtain.
+ * Zero <canvas>, zero SVG <mask>, zero blur filters: two GPU translate3d
+ * blast shutters + driven P03-E2 vector lockup, auto-parting straight into
+ * the homepage with zero click wall.
  */
-export function WelcomeIntro() {
+export function WelcomeIntro({ onActiveChange }: WelcomeIntroProps) {
   const { text } = useLanguage();
   const hydrated = useSyncExternalStore(emptySubscribe, getClientHydrated, getServerHydrated);
-  const [dismissed, setDismissed] = useState(false);
-  const [leaving, setLeaving] = useState(false);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [done, setDone] = useState(false);
 
-  const shouldOpen = useMemo(() => {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const topShutterRef = useRef<HTMLDivElement>(null);
+  const botShutterRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const seamRef = useRef<HTMLDivElement>(null);
+  const barFillRef = useRef<HTMLDivElement>(null);
+  const pctRef = useRef<HTMLSpanElement>(null);
+  const lockupRef = useRef<HeroBootLockupHandle>(null);
+  const t0Ref = useRef<number>(0);
+  const skipAtRef = useRef<number | null>(null);
+
+  const shouldRun = useMemo(() => {
     if (!hydrated) return false;
     try {
       const params = new URLSearchParams(window.location.search);
@@ -27,362 +53,229 @@ export function WelcomeIntro() {
       const cleanPath = window.location.pathname.replace(/\/$/, "") || "/";
       if (cleanPath !== "/" && cleanPath !== "/zh") return false;
 
-      if (
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-        window.matchMedia("(pointer: coarse)").matches
-      ) {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         return false;
       }
 
-      return localStorage.getItem(INTRO_STORAGE_KEY) !== "1";
+      return sessionStorage.getItem(CURTAIN_SESSION_KEY) !== "1";
     } catch {
       return false;
     }
   }, [hydrated]);
 
-  const active = shouldOpen && !dismissed;
+  const active = shouldRun && !done;
+
+  useEffect(() => {
+    onActiveChange?.(active);
+  }, [active, onActiveChange]);
 
   useEffect(() => {
     if (!active) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [active]);
 
-  useEffect(() => {
-    if (!active) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: false });
-    if (!ctx) return;
-
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    let width = 0;
-    let height = 0;
-    let cols = 0;
-    let rows = 0;
-    const spacing = 30;
-
-    const resize = () => {
-      width = canvas.clientWidth;
-      height = canvas.clientHeight;
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      cols = Math.ceil(width / spacing) + 2;
-      rows = Math.ceil(height / spacing) + 2;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const mouse = { x: -9999, y: -9999, tx: -9999, ty: -9999, active: false };
-    const onMove = (e: PointerEvent) => {
-      mouse.tx = e.clientX;
-      mouse.ty = e.clientY;
-      mouse.active = true;
-    };
-    const onLeave = () => {
-      mouse.active = false;
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("pointerleave", onLeave);
-
-    const noise = document.createElement("canvas");
-    noise.width = noise.height = 128;
-    const nctx = noise.getContext("2d")!;
-    const img = nctx.createImageData(128, 128);
-    for (let i = 0; i < img.data.length; i += 4) {
-      const v = (Math.random() * 255) | 0;
-      img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
-      img.data[i + 3] = 12;
-    }
-    nctx.putImageData(img, 0, 0);
-    const noisePattern = ctx.createPattern(noise, "repeat")!;
-
-    let t = 0;
-    let raf = 0;
-    let running = true;
-    const influence = 200;
-    const influenceSq = influence * influence;
-
-    const tick = () => {
-      if (!running) return;
-      t += 0.008;
-      if (mouse.active) {
-        mouse.x += (mouse.tx - mouse.x) * 0.25;
-        mouse.y += (mouse.ty - mouse.y) * 0.25;
-      }
-
-      ctx.fillStyle = "rgb(16, 21, 28)";
-      ctx.fillRect(0, 0, width, height);
-      ctx.fillStyle = noisePattern;
-      ctx.fillRect(0, 0, width, height);
-
-      ctx.fillStyle = "rgba(150, 180, 208, 0.16)";
-      const drift = Math.sin(t) * 0.6;
-      for (let j = 0; j < rows; j++) {
-        const baseY = j * spacing + drift;
-        for (let i = 0; i < cols; i++) {
-          const baseX = i * spacing;
-          if (mouse.active) {
-            const dx = baseX - mouse.x;
-            const dy = baseY - mouse.y;
-            if (dx * dx + dy * dy < influenceSq) continue;
-          }
-          ctx.fillRect(baseX - 0.5, baseY - 0.5, 1, 1);
-        }
-      }
-
-      if (mouse.active) {
-        const ci = Math.floor(mouse.x / spacing);
-        const cj = Math.floor(mouse.y / spacing);
-        const r = Math.ceil(influence / spacing) + 1;
-        for (let j = cj - r; j <= cj + r; j++) {
-          if (j < 0 || j >= rows) continue;
-          for (let i = ci - r; i <= ci + r; i++) {
-            if (i < 0 || i >= cols) continue;
-            const baseX = i * spacing;
-            const baseY = j * spacing + drift;
-            const dx = baseX - mouse.x;
-            const dy = baseY - mouse.y;
-            const d2 = dx * dx + dy * dy;
-            if (d2 >= influenceSq) continue;
-            const dist = Math.sqrt(d2);
-            const f = 1 - dist / influence;
-            const push = f * f * 32;
-            const inv = dist > 0.001 ? 1 / dist : 0;
-            const x = baseX + dx * inv * push;
-            const y = baseY + dy * inv * push;
-            const size = 1 + f * 3.0;
-            const alpha = 0.22 + f * 0.68;
-            const rCh = (165 + f * 65) | 0;
-            const gCh = (182 + f * 42) | 0;
-            const bCh = (196 + f * 24) | 0;
-            ctx.fillStyle = `rgba(${rCh},${gCh},${bCh},${alpha})`;
-            ctx.fillRect(x - size / 2, y - size / 2, size, size);
-          }
-        }
-
-        const halo = ctx.createRadialGradient(
-          mouse.x,
-          mouse.y,
-          0,
-          mouse.x,
-          mouse.y,
-          influence,
-        );
-        halo.addColorStop(0, "rgba(197, 154, 104, 0.09)");
-        halo.addColorStop(0.5, "rgba(142, 190, 212, 0.04)");
-        halo.addColorStop(1, "rgba(142, 190, 212, 0)");
-        ctx.fillStyle = halo;
-        ctx.fillRect(mouse.x - influence, mouse.y - influence, influence * 2, influence * 2);
-
-        ctx.strokeStyle = "rgba(197, 154, 104, 0.24)";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, influence, 0, Math.PI * 2);
-        ctx.stroke();
-
-        ctx.strokeStyle = "rgba(220, 228, 236, 0.45)";
-        ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 4 + (Math.sin(t * 6) + 1) * 2.5, 0, Math.PI * 2);
-        ctx.stroke();
-
-        ctx.strokeStyle = "rgba(197, 154, 104, 0.36)";
-        ctx.beginPath();
-        ctx.moveTo(mouse.x - 16, mouse.y);
-        ctx.lineTo(mouse.x + 16, mouse.y);
-        ctx.moveTo(mouse.x, mouse.y - 16);
-        ctx.lineTo(mouse.x, mouse.y + 16);
-        ctx.stroke();
-      }
-
-      const scanY = ((t * 60) % (height + 60)) - 30;
-      const grad = ctx.createLinearGradient(0, scanY - 30, 0, scanY + 30);
-      grad.addColorStop(0, "rgba(120, 180, 210, 0)");
-      grad.addColorStop(0.5, "rgba(120, 180, 210, 0.045)");
-      grad.addColorStop(1, "rgba(120, 180, 210, 0)");
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, scanY - 30, width, 60);
-
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-
-    const onVisibilityChange = () => {
-      running = !document.hidden;
-      cancelAnimationFrame(raf);
-      if (running) raf = requestAnimationFrame(tick);
-    };
-    document.addEventListener("visibilitychange", onVisibilityChange);
-
-    return () => {
-      running = false;
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerleave", onLeave);
-      document.removeEventListener("visibilitychange", onVisibilityChange);
-    };
-  }, [active]);
-
-  const handleDismiss = useCallback(() => {
-    if (leaving) return;
-    setLeaving(true);
     try {
-      localStorage.setItem(INTRO_STORAGE_KEY, "1");
+      sessionStorage.setItem(CURTAIN_SESSION_KEY, "1");
     } catch {
-      // Storage can be unavailable in privacy-restricted contexts.
+      // Session storage can be blocked in strict privacy modes.
     }
-    window.setTimeout(() => setDismissed(true), 480);
-  }, [leaving]);
 
-  useEffect(() => {
-    if (!active) return;
-    const timer = window.setTimeout(handleDismiss, 5200);
+    let raf = 0;
+    const t0 = performance.now();
+    t0Ref.current = t0;
+    skipAtRef.current = null;
+    let lastPct = -1;
+    let pointerReleased = false;
+
+    const triggerSkip = () => {
+      if (skipAtRef.current !== null) return;
+      skipAtRef.current = (performance.now() - t0) / 1000;
+      if (rootRef.current && !pointerReleased) {
+        pointerReleased = true;
+        rootRef.current.style.pointerEvents = "none";
+      }
+    };
+
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" || event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        handleDismiss();
+        triggerSkip();
       }
     };
     window.addEventListener("keydown", onKeyDown);
+
+    const tick = (now: number) => {
+      const t = (now - t0) / 1000;
+      const skipT = skipAtRef.current;
+
+      // Drive P03-E2 + LEFICIOUS vector lockup up until shutter split completes
+      lockupRef.current?.step(t);
+
+      // Update top-right calibration telemetry (only touch textContent when integer changes)
+      const syncRatio = clamp01(t / 1.22);
+      const pct = Math.round(easeOutExpo(syncRatio) * 100);
+      if (pct !== lastPct) {
+        lastPct = pct;
+        if (pctRef.current) {
+          pctRef.current.textContent = `${String(pct).padStart(3, "0")}%`;
+        }
+      }
+      if (barFillRef.current) {
+        barFillRef.current.style.transform = `scaleX(${easeOutExpo(syncRatio).toFixed(3)})`;
+      }
+
+      // Compute shutter split progress (normal auto-split starts at 1.30s over 0.48s; skip splits immediately over 0.36s)
+      const splitStart = skipT !== null ? Math.min(skipT, 1.3) : 1.3;
+      const splitDur = skipT !== null ? 0.36 : 0.48;
+      const rawSplit = clamp01((t - splitStart) / splitDur);
+      const split = easeInOutQuart(rawSplit);
+
+      // Release pointer events as soon as shutters begin parting so there is zero click wall
+      if (t >= splitStart - 0.04 && !pointerReleased && rootRef.current) {
+        pointerReleased = true;
+        rootRef.current.style.pointerEvents = "none";
+      }
+
+      // Horizontal seam beam ignition right before shutter release
+      if (seamRef.current) {
+        if (skipT !== null) {
+          const seamFade = 1 - clamp01((t - skipT) / 0.18);
+          seamRef.current.style.transform = "scaleX(1)";
+          seamRef.current.style.opacity = (seamFade * 0.7).toFixed(2);
+        } else if (t >= 1.12 && t <= 1.52) {
+          const seamGrow = easeOutExpo(clamp01((t - 1.12) / 0.2));
+          const seamFade = t < 1.32 ? 1 : 1 - clamp01((t - 1.32) / 0.2);
+          seamRef.current.style.transform = `scaleX(${seamGrow.toFixed(3)})`;
+          seamRef.current.style.opacity = (seamFade * 0.9).toFixed(2);
+        } else {
+          seamRef.current.style.opacity = "0";
+        }
+      }
+
+      // Center lockup clean disengage as blast doors unlatch
+      if (stageRef.current) {
+        const fadeOut = clamp01((t - (splitStart - 0.03)) / 0.17);
+        const op = 1 - fadeOut;
+        const sc = 1 - fadeOut * 0.03;
+        stageRef.current.style.opacity = op.toFixed(3);
+        stageRef.current.style.transform = `translate3d(0, 0, 0) scale(${sc.toFixed(4)})`;
+      }
+
+      // GPU-composited upper & lower architectural shutters
+      if (topShutterRef.current && botShutterRef.current) {
+        const pctShift = split * 102;
+        topShutterRef.current.style.transform = `translate3d(0, -${pctShift.toFixed(2)}%, 0)`;
+        botShutterRef.current.style.transform = `translate3d(0, ${pctShift.toFixed(2)}%, 0)`;
+      }
+
+      if (rawSplit < 1) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        setDone(true);
+      }
+    };
+
+    raf = requestAnimationFrame(tick);
     return () => {
-      window.clearTimeout(timer);
+      cancelAnimationFrame(raf);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [active, handleDismiss]);
+  }, [active]);
 
   if (!active) return null;
 
   return (
     <div
-      onClick={handleDismiss}
-      className={`fixed inset-0 z-[100] cursor-crosshair overflow-hidden bg-background transition-opacity duration-500 ${
-        leaving ? "pointer-events-none opacity-0" : "opacity-100"
-      }`}
-      aria-labelledby="welcome-title"
-      aria-describedby="welcome-description"
-      aria-modal="true"
-      role="dialog"
+      ref={rootRef}
+      onClick={() => {
+        if (skipAtRef.current === null) {
+          skipAtRef.current = (performance.now() - t0Ref.current) / 1000;
+          if (rootRef.current) rootRef.current.style.pointerEvents = "none";
+        }
+      }}
+      aria-hidden="true"
+      className="fixed inset-0 z-[100] overflow-hidden select-none"
     >
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-
-      <svg
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
+      {/* Upper architectural blast shutter */}
+      <div
+        ref={topShutterRef}
+        className="absolute inset-x-0 top-0 h-1/2 bg-[#0d1218] [background-image:linear-gradient(to_right,rgba(130,165,195,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(130,165,195,0.035)_1px,transparent_1px)] [background-size:48px_48px] will-change-transform"
       >
-        <defs>
-          <pattern id="edge-grid" width="22" height="22" patternUnits="userSpaceOnUse">
-            <path d="M22 0H0V22" fill="none" stroke="rgba(150,180,210,0.2)" strokeWidth="0.5" />
-          </pattern>
-          <pattern id="edge-tri" width="56" height="56" patternUnits="userSpaceOnUse">
-            <g fill="none" stroke="rgba(197,154,104,0.28)" strokeWidth="0.6">
-              <path d="M4 12 V4 H12" />
-              <path d="M52 28 H44" />
-            </g>
-            <circle cx="28" cy="28" r="0.9" fill="rgba(180,210,235,0.45)" />
-          </pattern>
-          <linearGradient id="fade-t" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="white" stopOpacity="1" />
-            <stop offset="1" stopColor="white" stopOpacity="0" />
-          </linearGradient>
-          <linearGradient id="fade-b" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0" stopColor="white" stopOpacity="1" />
-            <stop offset="1" stopColor="white" stopOpacity="0" />
-          </linearGradient>
-          <linearGradient id="fade-l" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="white" stopOpacity="1" />
-            <stop offset="1" stopColor="white" stopOpacity="0" />
-          </linearGradient>
-          <linearGradient id="fade-r" x1="1" y1="0" x2="0" y2="0">
-            <stop offset="0" stopColor="white" stopOpacity="1" />
-            <stop offset="1" stopColor="white" stopOpacity="0" />
-          </linearGradient>
-        </defs>
+        <div className="pointer-events-none absolute inset-x-5 top-5 flex items-center justify-between sm:inset-x-8 sm:top-6">
+          <div className="flex items-center gap-2.5">
+            <span className="h-2.5 w-2.5 border-l border-t border-warm/75" />
+            <span className="font-mono text-[10px] tracking-[0.26em] text-muted-foreground/80 uppercase">
+              P03-E2 // LEFICIOUS.COM
+            </span>
+          </div>
 
-        <g mask="url(#mask-top)">
-          <rect width="100%" height="140" fill="url(#edge-tri)" />
-        </g>
-        <mask id="mask-top">
-          <rect width="100%" height="140" fill="url(#fade-t)" />
-        </mask>
-
-        <g mask="url(#mask-bot)">
-          <rect y="0" width="100%" height="100%" fill="url(#edge-tri)" />
-        </g>
-        <mask id="mask-bot">
-          <rect y="0" width="100%" height="100%" fill="black" />
-          <rect y="0" width="100%" height="100%" fill="url(#fade-b)" style={{ maskType: "alpha" }} />
-        </mask>
-
-        <g mask="url(#mask-left)">
-          <rect width="180" height="100%" fill="url(#edge-grid)" />
-        </g>
-        <mask id="mask-left">
-          <rect width="180" height="100%" fill="url(#fade-l)" />
-        </mask>
-
-        <g mask="url(#mask-right)">
-          <rect width="100%" height="100%" fill="url(#edge-grid)" />
-        </g>
-        <mask id="mask-right">
-          <rect x="calc(100% - 180px)" width="180" height="100%" fill="url(#fade-r)" />
-        </mask>
-      </svg>
-
-      <div className="pointer-events-none absolute inset-6 z-10">
-        {(["tl", "tr", "bl", "br"] as const).map((pos) => (
-          <div
-            key={pos}
-            className={`absolute h-4 w-4 border-warm/45 ${
-              pos === "tl" ? "left-0 top-0 border-l border-t" : ""
-            } ${pos === "tr" ? "right-0 top-0 border-r border-t" : ""} ${
-              pos === "bl" ? "bottom-0 left-0 border-b border-l" : ""
-            } ${pos === "br" ? "bottom-0 right-0 border-b border-r" : ""}`}
-          />
-        ))}
-      </div>
-
-      <div className="pointer-events-none relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-        <p className="font-mono text-[11px] uppercase tracking-[0.38em] text-warm/90 sm:text-xs">
-          {text("Lefi (Kevin) Shan · Portfolio", "单凯飞 Lefi Shan · 个人作品集")}
-        </p>
-
-        <div className="mt-7">
-          <HeroBootLockup />
+          <div className="flex items-center gap-3">
+            <div className="h-[2px] w-14 overflow-hidden bg-border/60 sm:w-20">
+              <div
+                ref={barFillRef}
+                className="h-full w-full origin-left scale-x-0 bg-warm will-change-transform"
+              />
+            </div>
+            <span
+              ref={pctRef}
+              className="w-9 text-right font-mono text-[10px] tracking-[0.18em] text-warm/90"
+            >
+              000%
+            </span>
+            <span className="h-2.5 w-2.5 border-r border-t border-warm/75" />
+          </div>
         </div>
 
-        <h1
-          id="welcome-title"
-          className="mt-7 max-w-2xl font-display text-xl font-medium tracking-[-0.01em] text-foreground/95 sm:text-2xl"
-        >
-          {text("Game, level & technical design", "游戏、关卡与技术设计")}
-        </h1>
+        {/* Machined seam lip & registration ticks along upper door */}
+        <div className="pointer-events-none absolute right-[calc(50%+235px)] bottom-0 left-8 hidden h-px bg-border/75 sm:block" />
+        <div className="pointer-events-none absolute right-8 bottom-0 left-[calc(50%+235px)] hidden h-px bg-border/75 sm:block" />
+        <div className="pointer-events-none absolute bottom-0 left-8 hidden h-4 w-px bg-border/70 sm:block" />
+        <div className="pointer-events-none absolute bottom-0 left-1/4 hidden h-2 w-px bg-warm/45 md:block" />
+        <div className="pointer-events-none absolute right-1/4 bottom-0 hidden h-2 w-px bg-warm/45 md:block" />
+        <div className="pointer-events-none absolute right-8 bottom-0 hidden h-4 w-px bg-border/70 sm:block" />
+      </div>
 
-        <p
-          id="welcome-description"
-          className="mt-3 max-w-lg text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base"
-        >
-          {text(
-            "Level architecture, spatial puzzles, combat systems, and 3D production. Move your cursor across the grid, or click anywhere to enter.",
-            "涵盖关卡架构、空间解谜、战斗系统与 3D 场景制作。移动鼠标探索网格，或点击任意处进入。",
-          )}
-        </p>
+      {/* Lower architectural blast shutter */}
+      <div
+        ref={botShutterRef}
+        className="absolute inset-x-0 bottom-0 h-1/2 bg-[#0d1218] [background-image:linear-gradient(to_right,rgba(130,165,195,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(130,165,195,0.035)_1px,transparent_1px)] [background-size:48px_48px] will-change-transform"
+      >
+        <div className="pointer-events-none absolute top-0 right-[calc(50%+235px)] left-8 hidden h-px bg-border/75 sm:block" />
+        <div className="pointer-events-none absolute top-0 right-8 left-[calc(50%+235px)] hidden h-px bg-border/75 sm:block" />
+        <div className="pointer-events-none absolute top-0 left-8 hidden h-4 w-px bg-border/70 sm:block" />
+        <div className="pointer-events-none absolute top-0 left-1/4 hidden h-2 w-px bg-warm/45 md:block" />
+        <div className="pointer-events-none absolute top-0 right-1/4 hidden h-2 w-px bg-warm/45 md:block" />
+        <div className="pointer-events-none absolute top-0 right-8 hidden h-4 w-px bg-border/70 sm:block" />
 
-        <button
-          type="button"
-          onClick={(event) => {
-            event.stopPropagation();
-            handleDismiss();
-          }}
-          className="pointer-events-auto mt-9 rounded-full border border-warm/45 bg-background/75 px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.24em] text-foreground/90 transition-colors hover:border-warm hover:bg-warm/12 hover:text-foreground"
-        >
-          {text("Enter portfolio", "进入作品集")}
-        </button>
+        <div className="pointer-events-none absolute inset-x-5 bottom-5 flex items-center justify-between sm:inset-x-8 sm:bottom-6">
+          <div className="flex items-center gap-2.5">
+            <span className="h-2.5 w-2.5 border-b border-l border-warm/75" />
+            <span className="font-mono text-[10px] tracking-[0.22em] text-muted-foreground/80 uppercase">
+              {text(
+                "Lefi (Kevin) Shan · Game, Level & Technical Design",
+                "单凯飞 Lefi Shan · 游戏、关卡与技术设计",
+              )}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2.5">
+            <span className="hidden font-mono text-[9px] tracking-[0.22em] text-muted-foreground/50 uppercase sm:inline">
+              {text("Click / Esc", "点击 / Esc")}
+            </span>
+            <span className="h-2.5 w-2.5 border-r border-b border-warm/75" />
+          </div>
+        </div>
+      </div>
+
+      {/* Horizontal center seam ignition line */}
+      <div
+        ref={seamRef}
+        className="pointer-events-none absolute inset-x-0 top-1/2 h-[1.5px] -translate-y-1/2 scale-x-0 bg-gradient-to-r from-transparent via-warm to-transparent opacity-0 will-change-transform"
+      />
+
+      {/* Center lockup stage */}
+      <div
+        ref={stageRef}
+        className="pointer-events-none absolute inset-0 flex items-center justify-center px-6 will-change-transform"
+      >
+        <HeroBootLockup ref={lockupRef} />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef } from "react";
+import { forwardRef, useCallback, useEffect, useId, useImperativeHandle, useRef } from "react";
 
 type GlyphSpec = {
   x: number;
@@ -158,11 +158,7 @@ export function NavbarBrandLockup() {
         const shift = u * 7.2;
         const crest = Math.sin(raw * Math.PI);
 
-        const w0 = wRefs.current[0];
-        const w1 = wRefs.current[1];
-        const w2 = wRefs.current[2];
-        const w3 = wRefs.current[3];
-
+        const [w0, w1, w2, w3] = wRefs.current;
         if (w0) {
           w0.setAttribute("r", (3.6 + shift).toFixed(2));
           w0.setAttribute("opacity", easeInOutCubic(clamp01((u - 0.08) / 0.55)).toFixed(2));
@@ -252,10 +248,17 @@ export function NavbarBrandLockup() {
   );
 }
 
+export type HeroBootLockupHandle = {
+  /** Advance lockup deterministically to elapsed seconds `t` (0.00 -> 1.35s). */
+  step: (t: number) => void;
+};
+
 /**
- * Full-stage Tactical Boot Sting + Wave Glide Idle Lockup for WelcomeIntro.tsx.
+ * Driven P03-E2 + LEFICIOUS Tactical Boot Sting lockup for the Boot Curtain.
+ * Exposes `step(t)` so the parent curtain drives the entire sequence from a
+ * single requestAnimationFrame loop with zero extra timers.
  */
-export function HeroBootLockup() {
+export const HeroBootLockup = forwardRef<HeroBootLockupHandle>(function HeroBootLockup(_, ref) {
   const rawId = useId();
   const uid = rawId.replace(/[^a-zA-Z0-9_-]/g, "");
   const chClipId = `hero-ch-${uid}`;
@@ -284,43 +287,32 @@ export function HeroBootLockup() {
   const glyphGrpRefs = useRef<(SVGGElement | null)[]>([]);
   const glyphPathRefs = useRef<(SVGPathElement | null)[]>([]);
 
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      if (assemblyRef.current) assemblyRef.current.style.display = "none";
-      if (unifiedRef.current) unifiedRef.current.style.display = "";
-      return;
-    }
-
-    let raf = 0;
-    const t0 = performance.now();
-
-    const tick = (now: number) => {
-      const t = (now - t0) / 1000;
-
-      // 0. Tactical Laser Pre-Lock (0.00 -> 0.28s)
+  const step = useCallback(
+    (t: number) => {
+      // 0. Tactical Laser Pre-Lock (0.00 -> 0.24s)
       if (lasersRef.current && reticleRef.current) {
-        if (t < 0.3) {
-          const flicker = (t > 0.05 && t < 0.085) || (t > 0.13 && t < 0.155) ? 0.2 : 1.0;
-          const fade = t < 0.18 ? clamp01(t / 0.04) : clamp01(1 - (t - 0.18) / 0.12);
+        if (t < 0.25) {
+          const flicker = (t > 0.04 && t < 0.07) || (t > 0.11 && t < 0.135) ? 0.22 : 1.0;
+          const fade = t < 0.15 ? clamp01(t / 0.035) : clamp01(1 - (t - 0.15) / 0.1);
           lasersRef.current.setAttribute("opacity", (fade * flicker * 0.85).toFixed(2));
-          const rot = (1 - easeOutExpo(prog(t, 0, 0.22))) * 45;
+          const rot = (1 - easeOutExpo(prog(t, 0, 0.19))) * 45;
           reticleRef.current.setAttribute("transform", `rotate(${rot.toFixed(1)} 47 50.2)`);
         } else {
           lasersRef.current.setAttribute("opacity", "0");
         }
       }
 
-      // 1. Seamless L Assembly -> Single Unified Path at t >= 0.44s
+      // 1. Seamless L Assembly -> Single Unified Path at t >= 0.36s
       if (assemblyRef.current && unifiedRef.current && shaftRef.current && baseRef.current) {
-        if (t < 0.44) {
+        if (t < 0.36) {
           assemblyRef.current.style.display = "";
           unifiedRef.current.style.display = "none";
-          const pSpire = easeOutExpo(prog(t, 0.08, 0.28));
-          const pFoot = easeOutExpo(prog(t, 0.14, 0.28));
+          const pSpire = easeOutExpo(prog(t, 0.05, 0.24));
+          const pFoot = easeOutExpo(prog(t, 0.1, 0.24));
           shaftRef.current.setAttribute("transform", `translate(0, ${((1 - pSpire) * -36).toFixed(2)})`);
-          shaftRef.current.style.opacity = String(clamp01(prog(t, 0.08, 0.05)));
+          shaftRef.current.style.opacity = String(clamp01(prog(t, 0.05, 0.045)));
           baseRef.current.setAttribute("transform", `translate(${((1 - pFoot) * -30).toFixed(2)}, 0)`);
-          baseRef.current.style.opacity = String(clamp01(prog(t, 0.14, 0.05)));
+          baseRef.current.style.opacity = String(clamp01(prog(t, 0.1, 0.045)));
         } else {
           assemblyRef.current.style.display = "none";
           unifiedRef.current.style.display = "";
@@ -329,10 +321,13 @@ export function HeroBootLockup() {
 
       // HUD Wireframe Ghost Echo
       if (ghostRef.current) {
-        if (t > 0.18 && t < 0.44) {
-          const pg = easeOutExpo(prog(t, 0.18, 0.24));
-          ghostRef.current.setAttribute("transform", `translate(${((1 - pg) * 5.0).toFixed(2)}, ${((1 - pg) * -3.0).toFixed(2)})`);
-          ghostRef.current.setAttribute("opacity", ((1 - pg) * 0.85).toFixed(2));
+        if (t > 0.14 && t < 0.36) {
+          const pg = easeOutExpo(prog(t, 0.14, 0.2));
+          ghostRef.current.setAttribute(
+            "transform",
+            `translate(${((1 - pg) * 5.0).toFixed(2)}, ${((1 - pg) * -3.0).toFixed(2)})`,
+          );
+          ghostRef.current.setAttribute("opacity", ((1 - pg) * 0.82).toFixed(2));
         } else {
           ghostRef.current.setAttribute("opacity", "0");
         }
@@ -340,18 +335,24 @@ export function HeroBootLockup() {
 
       // 2. Counter-Vector 60° Breech-Lock Prism Clamp + Fiducials
       if (fmRef.current && fuRef.current) {
-        const pFm = easeOutExpo(prog(t, 0.2, 0.36));
-        const pFu = easeOutExpo(prog(t, 0.25, 0.35));
-        fmRef.current.setAttribute("transform", `translate(${((1 - pFm) * -14).toFixed(2)}, ${((1 - pFm) * 8).toFixed(2)})`);
-        fmRef.current.style.opacity = String(clamp01(prog(t, 0.2, 0.08)));
-        fuRef.current.setAttribute("transform", `translate(${((1 - pFu) * 14).toFixed(2)}, ${((1 - pFu) * -8).toFixed(2)})`);
-        fuRef.current.style.opacity = String(clamp01(prog(t, 0.25, 0.08)));
+        const pFm = easeOutExpo(prog(t, 0.14, 0.3));
+        const pFu = easeOutExpo(prog(t, 0.18, 0.3));
+        fmRef.current.setAttribute(
+          "transform",
+          `translate(${((1 - pFm) * -14).toFixed(2)}, ${((1 - pFm) * 8).toFixed(2)})`,
+        );
+        fmRef.current.style.opacity = String(clamp01(prog(t, 0.14, 0.07)));
+        fuRef.current.setAttribute(
+          "transform",
+          `translate(${((1 - pFu) * 14).toFixed(2)}, ${((1 - pFu) * -8).toFixed(2)})`,
+        );
+        fuRef.current.style.opacity = String(clamp01(prog(t, 0.18, 0.07)));
       }
 
       if (fidsRef.current && fidTlRef.current && fidTrRef.current && fidBtRef.current) {
-        if (t > 0.26 && t < 0.68) {
-          const pf = easeOutExpo(prog(t, 0.26, 0.24));
-          const fadeF = t < 0.48 ? 1.0 : 1 - (t - 0.48) / 0.2;
+        if (t > 0.2 && t < 0.56) {
+          const pf = easeOutExpo(prog(t, 0.2, 0.2));
+          const fadeF = t < 0.4 ? 1.0 : 1 - (t - 0.4) / 0.16;
           const spread = (1 - pf) * 7;
           fidTlRef.current.setAttribute("transform", `translate(${-spread}, ${-spread * 0.6})`);
           fidTrRef.current.setAttribute("transform", `translate(${spread}, ${-spread * 0.6})`);
@@ -363,97 +364,90 @@ export function HeroBootLockup() {
       }
 
       // 3. Slate Counterweight Wipe & Lower Brass Chevron
-      const pSl = easeOutQuart(prog(t, 0.32, 0.28));
+      const pSl = easeOutQuart(prog(t, 0.24, 0.24));
       slateRectRef.current?.setAttribute("height", (26 * pSl).toFixed(2));
-      const pCh = easeOutQuart(prog(t, 0.34, 0.28));
+      const pCh = easeOutQuart(prog(t, 0.26, 0.24));
 
-      // 4. Silky-Smooth Concentric Wave Glide
+      // 4. Acoustic Fan-In (0.28 -> 0.64s) -> Signature Wave Glide Pulse (0.64 -> 1.26s)
       const baseR = [10.8, 18.0, 25.2];
       let chevRecoil = 0;
       let slateGlow = 0;
       let glintPos = -999;
 
-      if (t <= 1.32) {
-        const pWave = easeOutCubic(prog(t, 0.36, 0.56));
+      if (t <= 0.64) {
+        const pWave = easeOutCubic(prog(t, 0.28, 0.36));
         const shift = (1 - pWave) * -5.4;
-        const glow = Math.sin(clamp01(prog(t, 0.36, 0.5)) * Math.PI);
+        const glow = Math.sin(clamp01(prog(t, 0.28, 0.34)) * Math.PI);
         baseR.forEach((br, i) => {
           const el = wRefs.current[i];
           if (!el) return;
-          const fadeIn = clamp01(prog(t, 0.36 + i * 0.06, 0.22));
+          const fadeIn = clamp01(prog(t, 0.28 + i * 0.045, 0.16));
           el.setAttribute("r", (br + shift).toFixed(2));
           el.setAttribute("opacity", fadeIn.toFixed(2));
-          el.setAttribute("stroke", lerpRgb(COL_BRASS, COL_BRASS_HOT, glow * 0.85));
+          el.setAttribute("stroke", lerpRgb(COL_BRASS, COL_BRASS_HOT, glow * 0.75));
         });
         wRefs.current[3]?.setAttribute("opacity", "0");
+      } else if (t < 1.26) {
+        const raw = (t - 0.64) / 0.62;
+        const u = easeInOutCubic(raw);
+        const shift = u * 7.2;
+        const crest = Math.sin(raw * Math.PI);
+
+        const [w0, w1, w2, w3] = wRefs.current;
+        if (w0) {
+          w0.setAttribute("r", (3.6 + shift).toFixed(2));
+          w0.setAttribute("opacity", easeInOutCubic(clamp01((u - 0.08) / 0.55)).toFixed(2));
+          w0.setAttribute("stroke", lerpRgb(COL_BRASS, COL_BRASS_HOT, crest * 0.75));
+        }
+        if (w1) {
+          w1.setAttribute("r", (10.8 + shift).toFixed(2));
+          w1.setAttribute("opacity", "1");
+          w1.setAttribute("stroke", lerpRgb(COL_BRASS, COL_BRASS_HOT, crest * 0.9));
+        }
+        if (w2) {
+          w2.setAttribute("r", (18.0 + shift).toFixed(2));
+          w2.setAttribute("opacity", "1");
+          w2.setAttribute("stroke", lerpRgb(COL_BRASS, COL_BRASS_HOT, crest * 0.65));
+        }
+        if (w3) {
+          w3.setAttribute("r", (25.2 + shift).toFixed(2));
+          w3.setAttribute("opacity", (1 - easeInOutCubic(clamp01(u / 0.88))).toFixed(2));
+          w3.setAttribute("stroke", lerpRgb(COL_BRASS, COL_BRASS_HOT, crest * 0.35));
+        }
+
+        chevRecoil = crest * 1.15;
+        slateGlow = crest * 0.75;
+        glintPos = raw * 320 - 30;
       } else {
-        const it = t - 1.32;
-        const period = 2.6;
-        const cyc = it % period;
-        const cycleIdx = Math.floor(it / period);
-
-        if (cyc < 1.15) {
-          const raw = cyc / 1.15;
-          const u = easeInOutCubic(raw);
-          const shift = u * 7.2;
-          const crest = Math.sin(raw * Math.PI);
-
-          const [w0, w1, w2, w3] = wRefs.current;
-          if (w0) {
-            w0.setAttribute("r", (3.6 + shift).toFixed(2));
-            w0.setAttribute("opacity", easeInOutCubic(clamp01((u - 0.08) / 0.55)).toFixed(2));
-            w0.setAttribute("stroke", lerpRgb(COL_BRASS, COL_BRASS_HOT, crest * 0.75));
-          }
-          if (w1) {
-            w1.setAttribute("r", (10.8 + shift).toFixed(2));
-            w1.setAttribute("opacity", "1");
-            w1.setAttribute("stroke", lerpRgb(COL_BRASS, COL_BRASS_HOT, crest * 0.9));
-          }
-          if (w2) {
-            w2.setAttribute("r", (18.0 + shift).toFixed(2));
-            w2.setAttribute("opacity", "1");
-            w2.setAttribute("stroke", lerpRgb(COL_BRASS, COL_BRASS_HOT, crest * 0.65));
-          }
-          if (w3) {
-            w3.setAttribute("r", (25.2 + shift).toFixed(2));
-            w3.setAttribute("opacity", (1 - easeInOutCubic(clamp01(u / 0.88))).toFixed(2));
-            w3.setAttribute("stroke", lerpRgb(COL_BRASS, COL_BRASS_HOT, crest * 0.35));
-          }
-
-          chevRecoil = crest * 1.15;
-          slateGlow = crest * 0.75;
-        } else {
-          baseR.forEach((br, i) => {
-            const el = wRefs.current[i];
-            if (!el) return;
-            el.setAttribute("r", br.toFixed(2));
-            el.setAttribute("opacity", "1");
-            el.setAttribute("stroke", "#c59a68");
-          });
-          wRefs.current[3]?.setAttribute("opacity", "0");
-        }
-
-        if (cycleIdx % 2 === 0 && cyc > 0.2 && cyc < 0.78) {
-          glintPos = ((cyc - 0.2) / 0.58) * 320 - 30;
-        }
+        baseR.forEach((br, i) => {
+          const el = wRefs.current[i];
+          if (!el) return;
+          el.setAttribute("r", br.toFixed(2));
+          el.setAttribute("opacity", "1");
+          el.setAttribute("stroke", "#c59a68");
+        });
+        wRefs.current[3]?.setAttribute("opacity", "0");
       }
 
       if (chevRef.current) {
-        chevRef.current.setAttribute("transform", `translate(0, ${((1 - pCh) * 12 + chevRecoil).toFixed(2)})`);
-        chevRef.current.style.opacity = String(clamp01(prog(t, 0.34, 0.12)));
+        chevRef.current.setAttribute(
+          "transform",
+          `translate(0, ${((1 - pCh) * 12 + chevRecoil).toFixed(2)})`,
+        );
+        chevRef.current.style.opacity = String(clamp01(prog(t, 0.26, 0.1)));
       }
       if (slateRef.current) {
         slateRef.current.setAttribute("fill", lerpRgb(COL_SLATE, COL_SLATE_HOT, slateGlow));
         slateRef.current.setAttribute("opacity", (0.88 + slateGlow * 0.1).toFixed(2));
       }
 
-      // 5. Laser Scanbar + Synchronized Stencil Decode
-      const ps = easeOutQuart(prog(t, 0.24, 0.56));
-      const sx = t <= 0.24 ? -10 : ps * 268;
+      // 5. Laser Scanbar + Synchronized Stencil Decode (0.18 -> 0.66s)
+      const ps = easeOutQuart(prog(t, 0.18, 0.44));
+      const sx = t <= 0.18 ? -10 : ps * 268;
       if (scanbarRef.current) {
-        if (t > 0.24 && t < 0.84) {
+        if (t > 0.18 && t < 0.66) {
           scanbarRef.current.setAttribute("transform", `translate(${Math.min(260, sx).toFixed(1)}, 0)`);
-          const sFade = t < 0.7 ? 1.0 : 1 - (t - 0.7) / 0.14;
+          const sFade = t < 0.54 ? 1.0 : 1 - (t - 0.54) / 0.12;
           scanbarRef.current.setAttribute("opacity", sFade.toFixed(2));
         } else {
           scanbarRef.current.setAttribute("opacity", "0");
@@ -470,17 +464,17 @@ export function HeroBootLockup() {
         const path = glyphPathRefs.current[i];
         if (!grp || !path) return;
 
-        if (t < 0.9) {
+        if (t < 0.7) {
           const distPast = sx - g.x;
           if (distPast < 0) {
             grp.style.opacity = "0";
           } else {
             const pLock = clamp01(distPast / 42);
-            let jitterX = (1 - easeOutExpo(pLock)) * -7;
+            let jitterX = (1 - easeOutExpo(pLock)) * -6;
             let jitterY = 0;
-            if (distPast < 16) {
-              jitterX += i % 2 === 0 ? 2.0 : -2.0;
-              jitterY = i % 2 === 0 ? -1.0 : 1.0;
+            if (distPast < 14) {
+              jitterX += i % 2 === 0 ? 1.8 : -1.8;
+              jitterY = i % 2 === 0 ? -0.9 : 0.9;
             }
             grp.setAttribute("transform", `translate(${(g.x + jitterX).toFixed(2)}, ${jitterY.toFixed(2)})`);
             grp.style.opacity = clamp01(distPast / 8).toFixed(2);
@@ -493,27 +487,25 @@ export function HeroBootLockup() {
           path.setAttribute("fill", glintPos > -100 ? `url(#${glintId})` : "#dce4ec");
         }
       });
+    },
+    [glintId],
+  );
 
-      raf = requestAnimationFrame(tick);
-    };
-
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [glintId]);
+  useImperativeHandle(ref, () => ({ step }), [step]);
 
   return (
-    <div className="inline-flex flex-col items-center gap-5 sm:flex-row sm:gap-7">
+    <div className="inline-flex items-center gap-5 sm:gap-7">
       <svg
         viewBox="0 0 96 96"
         aria-hidden="true"
-        className="h-20 w-20 shrink-0 overflow-visible sm:h-24 sm:w-24"
+        className="h-16 w-16 shrink-0 overflow-visible sm:h-20 sm:w-20"
       >
         <defs>
           <clipPath id={chClipId}>
             <polygon points={CHAMBER_POINTS} />
           </clipPath>
           <clipPath id={slClipId}>
-            <rect ref={slateRectRef} x="16" y="22" width="18" height="26" />
+            <rect ref={slateRectRef} x="16" y="22" width="18" height="0" />
           </clipPath>
         </defs>
 
@@ -525,8 +517,8 @@ export function HeroBootLockup() {
           <rect ref={reticleRef} x="43.5" y="46.7" width="7" height="7" fill="none" stroke="#f2d4a2" strokeWidth="1.1" />
         </g>
 
-        <path ref={fmRef} d={FRAME_MAIN_D} fill="#dce4ec" />
-        <path ref={fuRef} d={FRAME_UR_D} fill="#dce4ec" />
+        <path ref={fmRef} d={FRAME_MAIN_D} fill="#dce4ec" style={{ opacity: 0 }} />
+        <path ref={fuRef} d={FRAME_UR_D} fill="#dce4ec" style={{ opacity: 0 }} />
 
         <g ref={fidsRef} fill="none" stroke="#c59a68" strokeWidth="1.5" opacity="0">
           <path ref={fidTlRef} d="M 5.5 9.5 H -1.5 L 2.2 16.0" />
@@ -539,23 +531,23 @@ export function HeroBootLockup() {
         </g>
 
         <g clipPath={`url(#${chClipId})`} fill="none">
-          <circle ref={(el) => { wRefs.current[0] = el; }} cx="47" cy="50.2" r="10.8" stroke="#c59a68" strokeWidth="2.05" />
-          <circle ref={(el) => { wRefs.current[1] = el; }} cx="47" cy="50.2" r="18.0" stroke="#c59a68" strokeWidth="2.05" />
-          <circle ref={(el) => { wRefs.current[2] = el; }} cx="47" cy="50.2" r="25.2" stroke="#c59a68" strokeWidth="2.05" />
+          <circle ref={(el) => { wRefs.current[0] = el; }} cx="47" cy="50.2" r="10.8" stroke="#c59a68" strokeWidth="2.05" opacity="0" />
+          <circle ref={(el) => { wRefs.current[1] = el; }} cx="47" cy="50.2" r="18.0" stroke="#c59a68" strokeWidth="2.05" opacity="0" />
+          <circle ref={(el) => { wRefs.current[2] = el; }} cx="47" cy="50.2" r="25.2" stroke="#c59a68" strokeWidth="2.05" opacity="0" />
           <circle ref={(el) => { wRefs.current[3] = el; }} cx="47" cy="50.2" r="32.4" stroke="#c59a68" strokeWidth="2.05" opacity="0" />
         </g>
 
-        <polygon ref={chevRef} points={CHEVRON_POINTS} fill="#c59a68" />
+        <polygon ref={chevRef} points={CHEVRON_POINTS} fill="#c59a68" style={{ opacity: 0 }} />
         <path ref={ghostRef} d={L_MONOLITH_D} fill="none" stroke="#6b869b" strokeWidth="1.1" opacity="0" />
 
         <g ref={assemblyRef}>
-          <polygon ref={shaftRef} points="36.20,10.24 47.00,4.00 47.00,55.00 37.26,55.00 36.20,53.16" fill="#dce4ec" />
-          <polygon ref={baseRef} points="36.20,50.20 77.20,50.20 70.96,61.00 40.73,61.00 36.20,53.16" fill="#dce4ec" />
+          <polygon ref={shaftRef} points="36.20,10.24 47.00,4.00 47.00,55.00 37.26,55.00 36.20,53.16" fill="#dce4ec" style={{ opacity: 0 }} />
+          <polygon ref={baseRef} points="36.20,50.20 77.20,50.20 70.96,61.00 40.73,61.00 36.20,53.16" fill="#dce4ec" style={{ opacity: 0 }} />
         </g>
         <path ref={unifiedRef} d={L_MONOLITH_D} fill="#dce4ec" style={{ display: "none" }} />
       </svg>
 
-      <div className="w-60 shrink-0 sm:w-80 md:w-96">
+      <div className="w-52 shrink-0 sm:w-72 md:w-80">
         <svg viewBox="0 -3 262 42" aria-hidden="true" className="block w-full overflow-visible">
           <defs>
             <linearGradient ref={gradRef} id={glintId} x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse">
@@ -568,7 +560,7 @@ export function HeroBootLockup() {
           </defs>
           <g>
             {WORDMARK_GLYPHS.map((g, i) => (
-              <g key={i} ref={(el) => { glyphGrpRefs.current[i] = el; }} transform={`translate(${g.x}, 0)`}>
+              <g key={i} ref={(el) => { glyphGrpRefs.current[i] = el; }} style={{ opacity: 0 }}>
                 <path
                   ref={(el) => { glyphPathRefs.current[i] = el; }}
                   d={g.d}
@@ -587,4 +579,4 @@ export function HeroBootLockup() {
       </div>
     </div>
   );
-}
+});
