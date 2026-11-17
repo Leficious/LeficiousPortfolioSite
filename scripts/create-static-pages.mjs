@@ -18,7 +18,7 @@ const routes = [
     title: "About & Contact | Leficious",
     description:
       "About Lefi (Kevin) Shan: MS student in Game Design and Development at USC working across level design, spatial puzzles, combat systems, and 3D production.",
-    image: "/social/leficious-og-1200x630.png",
+    image: "/social/leficious-og-1200x630.png?v=p03e2",
     imageWidth: 1200,
     imageHeight: 630,
     schemaType: "ProfilePage",
@@ -83,7 +83,7 @@ const routes = [
     path: "/zh",
     title: "Leficious | 游戏、关卡与技术设计师",
     description: "单凯飞（Leficious）的个人作品集，涵盖关卡设计、空间解谜、战斗系统、玩法工具与 3D 场景制作。",
-    image: "/social/leficious-og-1200x630.png",
+    image: "/social/leficious-og-1200x630.png?v=p03e2",
     imageWidth: 1200,
     imageHeight: 630,
     schemaType: "WebSite",
@@ -103,7 +103,7 @@ const routes = [
     path: "/zh/about",
     title: "关于与联系 | Leficious",
     description: "关于单凯飞（Leficious）：专注于游戏设计、关卡与叙事设计以及技术战斗系统，兼具游戏 AI、技术动画与 3D 制作经验。",
-    image: "/social/leficious-og-1200x630.png",
+    image: "/social/leficious-og-1200x630.png?v=p03e2",
     imageWidth: 1200,
     imageHeight: 630,
     schemaType: "ProfilePage",
@@ -182,7 +182,10 @@ const person = {
   jobTitle: "Game, Level & Technical Designer",
   sameAs: ["https://www.linkedin.com/in/leficious/", "https://github.com/Leficious", "https://leficious.itch.io/"],
 };
-const imageType = (path) => (path.endsWith(".png") ? "image/png" : path.endsWith(".webp") ? "image/webp" : "image/avif");
+const imageType = (path) => {
+  const clean = path.split("?")[0];
+  return clean.endsWith(".png") ? "image/png" : clean.endsWith(".webp") ? "image/webp" : "image/avif";
+};
 
 for (const route of routes) {
   const canonical = `https://leficious.com${route.path}`;

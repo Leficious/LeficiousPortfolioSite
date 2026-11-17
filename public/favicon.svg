@@ -4,15 +4,17 @@
       <polygon points="52,23.5 76.5,23.5 63.8,45.5 52,45.5"/>
     </clipPath>
   </defs>
-  <path d="M0 7 7 0h76l13 13v76l-7 7H7l-7-7Z" fill="#10151c"/>
-  <path d="M1.8 7.8 7.8 1.8h74.4l12 12v74.4l-6 6H7.8l-6-6Z" fill="none" stroke="#283444" stroke-width="2.2"/>
-  <path d="M31.2 14.5H4L48 90.7l15-26h-5.8L48 80.6 12.2 19.5h19Z" fill="#dce4ec"/>
-  <path d="M52 14.5h40l-18 31.2h-5.8l15.6-26.2H52Z" fill="#dce4ec"/>
-  <polygon points="19,23.5 31.2,23.5 31.2,45.5" fill="#6b869b"/>
-  <g clip-path="url(#fc)" fill="none" stroke="#c59a68" stroke-width="3.6">
-    <circle cx="47" cy="50.2" r="12.5"/>
-    <circle cx="47" cy="50.2" r="22.5"/>
+  <rect width="96" height="96" rx="18" fill="#10151c"/>
+  <rect x="1.5" y="1.5" width="93" height="93" rx="16.5" fill="none" stroke="#283546" stroke-width="2.2"/>
+  <g transform="translate(48 48.5) scale(1.04) translate(-48 -47)">
+    <path d="M31.2 14.5H4L48 90.7l15-26h-5.8L48 80.6 12.2 19.5h19Z" fill="#dce4ec"/>
+    <path d="M52 14.5h40l-18 31.2h-5.8l15.6-26.2H52Z" fill="#dce4ec"/>
+    <polygon points="19,23.5 31.2,23.5 31.2,45.5" fill="#6b869b"/>
+    <g clip-path="url(#fc)" fill="none" stroke="#c59a68" stroke-width="3.8">
+      <circle cx="47" cy="50.2" r="12.5"/>
+      <circle cx="47" cy="50.2" r="22.5"/>
+    </g>
+    <polygon points="41.5,65.2 54.5,65.2 48,76.5" fill="#c59a68"/>
+    <path d="M35.8 10 47.4 3.3V50H78l-6.5 11.2h-31L35.8 53Z" fill="#dce4ec"/>
   </g>
-  <polygon points="41.5,65.2 54.5,65.2 48,76.5" fill="#c59a68"/>
-  <path d="M35.8 10 47.4 3.3V50H78l-6.5 11.2h-31L35.8 53Z" fill="#dce4ec"/>
 </svg>

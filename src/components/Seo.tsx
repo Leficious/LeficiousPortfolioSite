@@ -9,7 +9,7 @@ type SeoProps = {
   imageHeight?: number;
 };
 
-const defaultImage = "/social/leficious-og-1200x630.png";
+const defaultImage = "/social/leficious-og-1200x630.png?v=p03e2";
 
 const setMeta = (selector: string, attribute: "name" | "property", value: string, content: string) => {
   let element = document.head.querySelector<HTMLMetaElement>(selector);
@@ -90,7 +90,8 @@ export function Seo({ title, description, path = "/", image, imageWidth = 1200, 
     setMeta('meta[property="og:image"]', "property", "og:image", resolvedImage);
     setMeta('meta[property="og:image:width"]', "property", "og:image:width", String(imageWidth));
     setMeta('meta[property="og:image:height"]', "property", "og:image:height", String(imageHeight));
-    setMeta('meta[property="og:image:type"]', "property", "og:image:type", resolvedImage.endsWith(".png") ? "image/png" : resolvedImage.endsWith(".webp") ? "image/webp" : "image/avif");
+    const cleanImage = resolvedImage.split("?")[0];
+    setMeta('meta[property="og:image:type"]', "property", "og:image:type", cleanImage.endsWith(".png") ? "image/png" : cleanImage.endsWith(".webp") ? "image/webp" : "image/avif");
     setMeta('meta[name="twitter:image"]', "name", "twitter:image", resolvedImage);
     setMeta('meta[name="twitter:card"]', "name", "twitter:card", "summary_large_image");
 
