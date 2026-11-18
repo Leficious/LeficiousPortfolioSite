@@ -134,16 +134,16 @@ export function GalleryPage() {
                 className="slate-folio group flex cursor-pointer items-center gap-3.5 rounded-xs border border-warm/45 p-2 pr-4 text-left transition-all hover:-translate-y-0.5 hover:border-[#dfc092]"
               >
                 <span className="relative block h-12 w-21 shrink-0 overflow-hidden rounded-xs border border-warm/35 bg-black">
-                  <video
-                    src="/loops/env-reel.mp4"
-                    poster="/reels/environment-props-reel-2026.jpg"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="h-full w-full object-cover"
+                  <img
+                    src="/reels/environment-props-reel-2026.jpg"
+                    alt=""
+                    width="320"
+                    height="180"
+                    loading="eager"
+                    decoding="async"
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <span className="absolute inset-0 grid place-items-center bg-black/25 text-xs text-[#f6e6c5] transition-colors group-hover:bg-black/10">
+                  <span className="absolute inset-0 grid place-items-center bg-black/28 text-xs text-[#f6e6c5] transition-colors group-hover:bg-black/10">
                     {reelExpanded ? "−" : "▶"}
                   </span>
                 </span>
@@ -177,7 +177,6 @@ export function GalleryPage() {
             <section className="animate-folio-unfold mt-6 rounded-xs border border-warm/40 bg-[#0d1018] p-3 sm:p-4">
               <FeaturedReel
                 id="t5MchABcd3c"
-                autoStart
                 thumbnailSrc="/reels/environment-props-reel-2026.jpg"
                 title={text("Environment & Props Reel 2026", "2026 环境与道具作品集锦")}
                 description={text(

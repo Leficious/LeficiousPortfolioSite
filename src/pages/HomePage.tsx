@@ -13,7 +13,7 @@ type FolioMeta = {
   tabShortZh: string;
   subtitleEn: string;
   subtitleZh: string;
-  loopSrc: string;
+  thumbSrc: string;
   plateSrc: string;
   plateSrcZh?: string;
   plateLabelEn: string;
@@ -28,7 +28,7 @@ const FOLIO_META: Record<string, FolioMeta> = {
     tabShortZh: "I · 静物",
     subtitleEn: "The 235 kg Counterweight Archive",
     subtitleZh: "235 kg 满额配重档案馆",
-    loopSrc: "/loops/still-life.mp4",
+    thumbSrc: "/projects/still-life/hero-poster.webp",
     plateSrc: "/projects/still-life/map-02-three-story-archive.webp",
     plateSrcZh: "/projects/still-life/map-02-three-story-archive-zh.webp",
     plateLabelEn: "FIG. 02 · Three-Story Archive Orthographic Plan (1F–3F)",
@@ -41,7 +41,7 @@ const FOLIO_META: Record<string, FolioMeta> = {
     tabShortZh: "II · 回声无形",
     subtitleEn: "Basin of Three Silences",
     subtitleZh: "三重寂静之声波盆地",
-    loopSrc: "/loops/echo.mp4",
+    thumbSrc: "/projects/an-echo-has-no-shape/hero-poster.webp",
     plateSrc: "/projects/an-echo-has-no-shape/map-01-world-overview.webp",
     plateSrcZh: "/projects/an-echo-has-no-shape/map-01-world-overview-zh.webp",
     plateLabelEn: "FIG. 01 · 550m Sightless Hub-and-Spoke Basin Topology",
@@ -54,7 +54,7 @@ const FOLIO_META: Record<string, FolioMeta> = {
     tabShortZh: "III · 堕落女武神",
     subtitleEn: "Multiphase Boss & Stance Combat",
     subtitleZh: "双武器姿态与多阶段 Boss 战",
-    loopSrc: "/loops/fallen-valkyrie.mp4",
+    thumbSrc: "/projects/fallen-valkyrie/cover.avif",
     plateSrc: "/projects/fallen-valkyrie/ai-statetree-01.avif",
     plateLabelEn: "FIG. 06 · Modular Boss StateTree & Distance Priority Graph",
     plateLabelZh: "图 06 · 模块化 Boss StateTree 决策状态树",
@@ -66,10 +66,10 @@ const FOLIO_META: Record<string, FolioMeta> = {
     tabShortZh: "IV · 星岸",
     subtitleEn: "Interconnected ARPG Loop",
     subtitleZh: "飞行、索敌与数据驱动玩法循环",
-    loopSrc: "/loops/starshore.mp4",
-    plateSrc: "/projects/starshore/design-layout-01.avif",
-    plateLabelEn: "FIG. 01 · Traversal Space, Soft-Lock Targeting & Vendor Loop",
-    plateLabelZh: "图 01 · 核心探索动线与共享数据循环",
+    thumbSrc: "/projects/starshore/design-layout-01.avif",
+    plateSrc: "/projects/starshore/targeting-01.avif",
+    plateLabelEn: "FIG. 02 · Soft-Lock Targeting & Shared Data Breakdown",
+    plateLabelZh: "图 02 · 半自动索敌与数据驱动循环拆解",
     emblem: "compass",
   },
   "sacred-forest": {
@@ -78,7 +78,7 @@ const FOLIO_META: Record<string, FolioMeta> = {
     tabShortZh: "V · 圣域森林",
     subtitleEn: "Stylized Shrine & Normal Tooling",
     subtitleZh: "风格化森林神社与法线工具管线",
-    loopSrc: "/loops/sacred-forest.mp4",
+    thumbSrc: "/projects/sacred-forest/cover.avif",
     plateSrc: "/projects/sacred-forest/foliage-01.avif",
     plateLabelEn: "FIG. 03 · Foliage Wireframe & Custom Vertex-Normal Tooling",
     plateLabelZh: "图 03 · 植被拓扑卡片与自定义法线工具",
@@ -363,22 +363,22 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                         type="button"
                         onClick={() => setPlayingAudioEmbed(true)}
                         className="group relative block h-full w-full cursor-pointer text-left"
-                        aria-label={text("Play full 2026 Game Design Reel with sound", "播放带音效完整 2026 作品集锦")}
+                        aria-label={text("Play full 2026 Game Design Reel", "播放完整 2026 作品集锦")}
                       >
-                        <video
-                          src="/loops/reel-montage.mp4"
-                          poster="/reels/game-design-reel-2026.webp"
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          className="h-full w-full object-cover"
+                        <img
+                          src="/reels/game-design-reel-2026.webp"
+                          alt={text("2026 Game Design Reel thumbnail", "2026 游戏设计作品集锦封面")}
+                          width="1280"
+                          height="720"
+                          loading="eager"
+                          decoding="async"
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
                         />
-                        <span className="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/5" />
+                        <span className="absolute inset-0 bg-black/18 transition-colors group-hover:bg-black/5" />
                         <span className="absolute inset-0 grid place-items-center">
                           <span className="brass-plaque inline-flex items-center gap-2.5 rounded-xs px-5 py-2.5 font-display text-sm font-bold tracking-wide transition-transform group-hover:scale-[1.03]">
                             <span aria-hidden="true">▶</span>
-                            {text("Play Full 2026 Reel (Audio)", "播放完整 2026 作品集锦")}
+                            {text("Play 2026 Reel", "播放 2026 作品集锦")}
                           </span>
                         </span>
                       </button>
@@ -451,20 +451,21 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                             type="button"
                             onClick={() => setPlayingAudioEmbed(true)}
                             className="group relative block h-full w-full cursor-pointer text-left"
-                            aria-label={`${text("Play trailer with audio", "播放有声演示")}: ${activeProject.title}`}
+                            aria-label={`${text("Play walkthrough video", "播放演示视频")}: ${activeProject.title}`}
                           >
-                            <video
-                              key={activeMeta.loopSrc}
-                              src={activeMeta.loopSrc}
-                              poster={activeProject.heroImage ?? activeProject.cover}
-                              autoPlay
-                              loop
-                              muted
-                              playsInline
-                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                            <img
+                              key={activeMeta.thumbSrc}
+                              src={activeMeta.thumbSrc}
+                              alt={activeProject.title}
+                              width="1280"
+                              height="720"
+                              loading="eager"
+                              decoding="async"
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                             />
-                            <span className="absolute bottom-2 right-2 rounded-xs border border-[#dfc092]/55 bg-[#0e1017]/88 px-2.5 py-1 font-display text-xs font-semibold text-[#f3e7cf] opacity-95 backdrop-blur-xs transition-all group-hover:scale-[1.03] group-hover:bg-[#dfc092] group-hover:text-[#15120e]">
-                              ▶ {text("Play w/ Audio", "播放完整视频")}
+                            <span className="absolute inset-0 bg-black/14 transition-colors group-hover:bg-black/0" />
+                            <span className="absolute bottom-2.5 right-2.5 rounded-xs border border-[#dfc092]/60 bg-[#0e1017]/88 px-3 py-1 font-display text-xs font-semibold text-[#f3e7cf] shadow-md backdrop-blur-xs transition-all group-hover:scale-[1.03] group-hover:bg-[#dfc092] group-hover:text-[#15120e]">
+                              ▶ {text("Play Video", "播放演示")}
                             </span>
                           </button>
                         )}
@@ -556,7 +557,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
         <button
           type="button"
           onClick={() =>
-            isReelActive ? selectBinder("still-life", false) : selectBinder("reel", true)
+            isReelActive ? selectBinder("still-life", false) : selectBinder("reel", false)
           }
           className="cursor-pointer rounded-full border border-warm/55 bg-[#11141d]/90 px-6 py-2 font-display text-sm font-semibold tracking-wide text-[#ece4d4] shadow-[0_6px_20px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:border-[#dfc092] hover:bg-[#1a1f2d] hover:text-[#f7e7c8]"
         >
