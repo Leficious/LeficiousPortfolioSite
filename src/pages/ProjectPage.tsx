@@ -17,6 +17,13 @@ import { getProject, projects } from "../lib/projects";
 import { NotFoundPage } from "./NotFoundPage";
 
 const ROMAN_NUMERALS = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"] as const;
+const ORDERED_FOLIO_SLUGS = [
+  "still-life",
+  "an-echo-has-no-shape",
+  "fallen-valkyrie",
+  "starshore",
+  "sacred-forest",
+] as const;
 
 function toRoman(n: number): string {
   return ROMAN_NUMERALS[n - 1] ?? String(n);
@@ -62,10 +69,11 @@ export function ProjectPage() {
   const leadVideo = project.slug !== "sacred-forest" && project.media[0]?.type === "youtube" ? project.media[0] : null;
   const heroVisual = project.heroImage ?? project.cover;
 
-  const index = projects.findIndex((item) => item.slug === project.slug);
+  const orderedProjects = ORDERED_FOLIO_SLUGS.map((s) => projects.find((p) => p.slug === s) ?? projects[0]);
+  const index = Math.max(0, orderedProjects.findIndex((item) => item.slug === project.slug));
   const folioRoman = toRoman(index + 1);
-  const nextIdx = (index + 1) % projects.length;
-  const next = localizeProject(projects[nextIdx], isChinese);
+  const nextIdx = (index + 1) % orderedProjects.length;
+  const next = localizeProject(orderedProjects[nextIdx], isChinese);
   const nextRoman = toRoman(nextIdx + 1);
 
   const relatedGallery = galleryEntries

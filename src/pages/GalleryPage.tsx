@@ -293,9 +293,9 @@ export function GalleryPage() {
                       <img
                         src={entry.cover}
                         alt={entry.coverAlt}
-                        width="1200"
-                        height="675"
-                        loading={index < 4 ? "eager" : "lazy"}
+                        width={entry.aspect === "portrait" ? 900 : entry.aspect === "square" ? 1000 : 1200}
+                        height={entry.aspect === "portrait" ? 1200 : entry.aspect === "square" ? 1000 : 675}
+                        loading={index < 6 ? "eager" : "lazy"}
                         decoding="async"
                         className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.022]"
                       />

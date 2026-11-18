@@ -4,6 +4,13 @@ import { projects } from "../lib/projects";
 import { AstrolabeCrest } from "./AtelierChrome";
 
 const ROMAN = ["I", "II", "III", "IV", "V"] as const;
+const FOLIO_SLUGS = [
+  "still-life",
+  "an-echo-has-no-shape",
+  "fallen-valkyrie",
+  "starshore",
+  "sacred-forest",
+] as const;
 
 type SiteNavProps = {
   activeFolioSlug?: string | null;
@@ -65,7 +72,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
         {/* Center Roman Numeral Folio Jumpers (I - V) */}
         <nav aria-label={text("Case Folios I to V", "档案卷一至五")} className="flex w-full flex-col items-center">
           <div className="w-9 border-t border-warm/25" />
-          {projects.map((proj, idx) => {
+          {FOLIO_SLUGS.map((slug) => projects.find((p) => p.slug === slug) ?? projects[0]).map((proj, idx) => {
             const numeral = ROMAN[idx] ?? String(idx + 1);
             const activeOnHome = isHome && activeFolioSlug === proj.slug;
             const activeOnProject = cleanPath === `/projects/${proj.slug}`;
