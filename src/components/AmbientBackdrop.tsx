@@ -48,9 +48,9 @@ function routeBearing(pathname: string, stepIndex = 0) {
 }
 
 /**
- * Persistent nocturnal celestial drafting mat (`#0E1017`).
+ * Persistent nocturnal Victorian mahogany & soot celestial drafting desk (`#0D0A09` — zero blue!).
  * Combines continuous slow clockwork astrolabe drift, 60fps cursor parallax,
- * warm roving lamplight falloff, and rising brass/parchment dust motes.
+ * warm candlelit umber falloff, and rising ember/parchment dust motes.
  */
 export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
   const { pathname } = useLocation();
@@ -60,27 +60,28 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
   return (
     <div
       aria-hidden="true"
-      className="celestial-mat pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#0e1017]"
+      className="celestial-mat pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#0d0a09]"
     >
-      {/* Subtle radial studio desk falloff + cursor-following warm brass lamplight pool */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_54%_46%,rgba(36,45,68,0.4)_0%,rgba(14,16,23,0.93)_72%,#090b10_100%)]" />
+      {/* Warm candlelit mahogany & soot study falloff (ZERO blue channel!) */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_54%_46%,rgba(52,33,20,0.44)_0%,rgba(16,12,10,0.94)_72%,#070504_100%)]" />
       <div
         className="absolute -inset-24 opacity-90"
         style={{
           background:
-            "radial-gradient(620px circle at var(--spot-x) var(--spot-y), rgba(197, 154, 104, 0.085), rgba(197, 154, 104, 0.02) 45%, transparent 72%)",
+            "radial-gradient(620px circle at var(--spot-x) var(--spot-y), rgba(168, 132, 82, 0.085), rgba(125, 25, 25, 0.025) 46%, transparent 72%)",
         }}
       />
 
-      {/* Outer drafting mat frame hairlines on desktop */}
-      <div className="absolute inset-y-4 left-[92px] right-5 hidden border border-[#c59a68]/18 lg:block">
-        <span className="absolute -left-1 -top-1 h-2.5 w-2.5 border-l border-t border-[#c59a68]/55" />
-        <span className="absolute -right-1 -top-1 h-2.5 w-2.5 border-r border-t border-[#c59a68]/55" />
-        <span className="absolute -bottom-1 -left-1 h-2.5 w-2.5 border-b border-l border-[#c59a68]/55" />
-        <span className="absolute -bottom-1 -right-1 h-2.5 w-2.5 border-b border-r border-[#c59a68]/55" />
+      {/* Outer Victorian drafting mat double-bronze frame hairlines on desktop */}
+      <div className="absolute inset-y-3.5 left-[90px] right-4 hidden border border-[#a88452]/22 lg:block">
+        <div className="absolute inset-[3px] border border-[#a88452]/10" />
+        <span className="absolute -left-1 -top-1 h-3 w-3 border-l-2 border-t-2 border-[#a88452]/65" />
+        <span className="absolute -right-1 -top-1 h-3 w-3 border-r-2 border-t-2 border-[#a88452]/65" />
+        <span className="absolute -bottom-1 -left-1 h-3 w-3 border-b-2 border-l-2 border-[#a88452]/65" />
+        <span className="absolute -bottom-1 -right-1 h-3 w-3 border-b-2 border-r-2 border-[#a88452]/65" />
       </div>
 
-      {/* Mathematical Celestial Astrolabe Etching w/ Cursor Parallax + Continuous Clockwork Drift */}
+      {/* Mathematical Celestial Astrolabe Etching in Tarnished Bronze & Chalk */}
       <div
         className="absolute inset-0"
         style={{
@@ -92,13 +93,11 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
           className="absolute left-1/2 top-1/2 h-[min(126vh,1180px)] w-[min(126vh,1180px)] -translate-x-[47%] -translate-y-1/2 opacity-95"
           fill="none"
         >
-          {/* Fixed cardinal & diagonal surveyor axes */}
-          <line x1="40" y1="500" x2="960" y2="500" stroke="#ece4d4" strokeWidth="0.55" opacity="0.075" />
-          <line x1="500" y1="40" x2="500" y2="960" stroke="#ece4d4" strokeWidth="0.55" opacity="0.075" />
-          <line x1="150" y1="150" x2="850" y2="850" stroke="#c59a68" strokeWidth="0.5" strokeDasharray="4 6" opacity="0.09" />
-          <line x1="850" y1="150" x2="150" y2="850" stroke="#c59a68" strokeWidth="0.5" strokeDasharray="4 6" opacity="0.09" />
+          <line x1="40" y1="500" x2="960" y2="500" stroke="#e8dcc4" strokeWidth="0.55" opacity="0.065" />
+          <line x1="500" y1="40" x2="500" y2="960" stroke="#e8dcc4" strokeWidth="0.55" opacity="0.065" />
+          <line x1="150" y1="150" x2="850" y2="850" stroke="#a88452" strokeWidth="0.5" strokeDasharray="4 6" opacity="0.09" />
+          <line x1="850" y1="150" x2="150" y2="850" stroke="#a88452" strokeWidth="0.5" strokeDasharray="4 6" opacity="0.09" />
 
-          {/* Outer step-indexed degree astrolabe + continuous clockwise clockwork drift */}
           <g
             style={{
               transform: `rotate(${bearing}deg)`,
@@ -107,9 +106,9 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
             }}
           >
             <g className="animate-astrolabe-cw">
-              <circle cx="500" cy="500" r="424" stroke="#c59a68" strokeWidth="0.9" opacity="0.21" />
-              <circle cx="500" cy="500" r="404" stroke="#ece4d4" strokeWidth="0.55" opacity="0.1" />
-              <circle cx="500" cy="500" r="356" stroke="#ece4d4" strokeWidth="0.5" strokeDasharray="2 5" opacity="0.1" />
+              <circle cx="500" cy="500" r="424" stroke="#a88452" strokeWidth="0.95" opacity="0.22" />
+              <circle cx="500" cy="500" r="404" stroke="#e8dcc4" strokeWidth="0.55" opacity="0.09" />
+              <circle cx="500" cy="500" r="356" stroke="#a88452" strokeWidth="0.5" strokeDasharray="2 5" opacity="0.11" />
 
               {OUTER_TICKS.map((t, idx) => (
                 <g key={idx}>
@@ -118,18 +117,18 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
                     y1={t.y1}
                     x2={t.x2}
                     y2={t.y2}
-                    stroke={t.major ? "#c59a68" : "#ece4d4"}
+                    stroke={t.major ? "#a88452" : "#e8dcc4"}
                     strokeWidth={t.major ? "0.95" : "0.5"}
-                    opacity={t.major ? "0.3" : "0.12"}
+                    opacity={t.major ? "0.3" : "0.11"}
                   />
                   {t.major && (
                     <text
                       x={t.lx}
                       y={t.ly}
-                      fill="#c59a68"
-                      opacity="0.25"
-                      fontSize="7.5"
-                      fontFamily="IBM Plex Mono, monospace"
+                      fill="#a88452"
+                      opacity="0.26"
+                      fontSize="8"
+                      fontFamily="Cinzel Variable, serif"
                       textAnchor="middle"
                       dominantBaseline="middle"
                     >
@@ -139,13 +138,11 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
                 </g>
               ))}
 
-              {/* Inscribed hexagram / sextant chords */}
-              <polygon points="500,96 850,702 150,702" stroke="#c59a68" strokeWidth="0.55" opacity="0.1" />
-              <polygon points="500,904 850,298 150,298" stroke="#ece4d4" strokeWidth="0.5" opacity="0.07" />
+              <polygon points="500,96 850,702 150,702" stroke="#a88452" strokeWidth="0.55" opacity="0.1" />
+              <polygon points="500,904 850,298 150,298" stroke="#7d1919" strokeWidth="0.55" opacity="0.12" />
             </g>
           </g>
 
-          {/* Inner counter-rotating ecliptic vernier ring */}
           <g
             style={{
               transform: `rotate(${innerBearing}deg)`,
@@ -154,9 +151,9 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
             }}
           >
             <g className="animate-astrolabe-ccw">
-              <circle cx="500" cy="500" r="280" stroke="#c59a68" strokeWidth="0.8" opacity="0.18" />
-              <circle cx="500" cy="438" r="218" stroke="#ece4d4" strokeWidth="0.6" opacity="0.095" />
-              <circle cx="500" cy="562" r="218" stroke="#c59a68" strokeWidth="0.55" opacity="0.095" />
+              <circle cx="500" cy="500" r="280" stroke="#a88452" strokeWidth="0.8" opacity="0.18" />
+              <circle cx="500" cy="438" r="218" stroke="#e8dcc4" strokeWidth="0.6" opacity="0.08" />
+              <circle cx="500" cy="562" r="218" stroke="#a88452" strokeWidth="0.55" opacity="0.09" />
               {INNER_TICKS.map((t, idx) => (
                 <line
                   key={idx}
@@ -164,9 +161,9 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
                   y1={t.y1}
                   x2={t.x2}
                   y2={t.y2}
-                  stroke="#c59a68"
+                  stroke="#a88452"
                   strokeWidth={t.major ? "0.9" : "0.5"}
-                  opacity={t.major ? "0.25" : "0.11"}
+                  opacity={t.major ? "0.24" : "0.1"}
                 />
               ))}
             </g>
@@ -174,7 +171,6 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
         </svg>
       </div>
 
-      {/* Floating nocturnal dust motes in the desk lamplight */}
       <LamplightDustCanvas />
     </div>
   );

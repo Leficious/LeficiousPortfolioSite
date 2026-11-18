@@ -12,16 +12,18 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Newsreader Variable", "Songti SC", "STSong", "PingFang SC", Georgia, serif;
-  --font-display: "Cormorant Variable", "Songti SC", "STSong", "SimSun", Georgia, serif;
-  --font-numeral: "Cinzel Variable", "Cormorant Variable", Georgia, serif;
+  --font-sans: "EB Garamond Variable", "Songti SC", "STSong", "PingFang SC", Georgia, serif;
+  --font-display: "Playfair Display Variable", "Songti SC", "STSong", "SimSun", Georgia, serif;
+  --font-numeral: "Cinzel Variable", "Playfair Display Variable", Georgia, serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  --radius-xs: 2px;
-  --radius-sm: 2px;
-  --radius-md: 3px;
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 1px);
+  /* Zero soft SaaS rounded corners — strict architectural Victorian edges */
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -53,57 +55,57 @@
 }
 
 :root {
-  --radius: 0.125rem;
+  --radius: 0px;
   --mx: 0;
   --my: 0;
   --spot-x: 52vw;
   --spot-y: 44vh;
 
-  /* Nocturnal clocktower celestial drafting desk */
-  --background: #0e1017;
-  --foreground: #ece4d4;
+  /* Nocturnal Victorian mahogany & soot drafting desk (ZERO blue!) */
+  --background: #0d0a09;
+  --foreground: #ece2d0;
 
-  /* Cotton rag-parchment folio stock */
-  --parchment: #ede4d0;
-  --parchment-deep: #e2d5ba;
-  --parchment-ink: #171412;
-  --parchment-muted: #52493e;
-  --rubric: #8b2624;
+  /* Aged unbleached cotton rag-vellum stock */
+  --parchment: #e8dcc4;
+  --parchment-deep: #dad0b7;
+  --parchment-ink: #191310;
+  --parchment-muted: #574638;
+  --rubric: #7d1919;
 
-  /* Bookcloth spine & dark-slate specimen plates */
-  --spine: #090b10;
-  --surface: #141822;
-  --surface-foreground: #ece4d4;
-  --card: #141822;
-  --card-foreground: #ece4d4;
-  --popover: #141822;
-  --popover-foreground: #ece4d4;
+  /* Ebony bookbinding spine & smoked walnut-umber leather folios */
+  --spine: #080605;
+  --surface: #17120f;
+  --surface-foreground: #ece2d0;
+  --card: #17120f;
+  --card-foreground: #ece2d0;
+  --popover: #17120f;
+  --popover-foreground: #ece2d0;
 
-  --primary: #ece4d4;
-  --primary-foreground: #0e1017;
+  --primary: #ece2d0;
+  --primary-foreground: #0d0a09;
 
-  --secondary: #1b202d;
-  --secondary-foreground: #ece4d4;
+  --secondary: #221a15;
+  --secondary-foreground: #ece2d0;
 
-  --muted: #181c28;
-  --muted-foreground: #aba293;
+  --muted: #1b1411;
+  --muted-foreground: #af9f8c;
 
-  /* Burnished antique brass */
-  --accent: #c59a68;
-  --accent-foreground: #0e1017;
-  --warm: #c59a68;
+  /* Aged tarnished antique bronze (NEVER canary yellow) */
+  --accent: #a88452;
+  --accent-foreground: #0d0a09;
+  --warm: #a88452;
 
-  --destructive: #9e302d;
-  --destructive-foreground: #faf6ee;
+  --destructive: #8a1c1c;
+  --destructive-foreground: #faf3e6;
 
-  --border: rgba(197, 154, 104, 0.28);
-  --input: rgba(197, 154, 104, 0.28);
-  --ring: #c59a68;
+  --border: rgba(168, 132, 82, 0.3);
+  --input: rgba(168, 132, 82, 0.3);
+  --ring: #a88452;
 }
 
 .dark {
-  --background: #0e1017;
-  --foreground: #ece4d4;
+  --background: #0d0a09;
+  --foreground: #ece2d0;
 }
 
 @layer base {
@@ -119,15 +121,16 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-optical-sizing: auto;
-    font-size: 16.5px;
-    line-height: 1.66;
+    font-variant-numeric: lining-nums;
+    font-size: 17.5px;
+    line-height: 1.62;
     -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    font-variant-numeric: lining-nums;
+    letter-spacing: -0.008em;
   }
 
   :focus-visible {
@@ -152,24 +155,27 @@
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
-  .font-numeral { font-family: var(--font-numeral); }
+  .font-numeral {
+    font-family: var(--font-numeral);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
 }
 
-/* Cotton rag-parchment tactile sheet using real scanned handmade paper fiber + warm top-lit sheen */
+/* Cotton rag-vellum sheet using real scanned handmade paper fiber + warm deckle edge shadow */
 .parchment-sheet {
   position: relative;
   background-color: var(--parchment);
   background-image: radial-gradient(
     ellipse at 50% 18%,
-    rgba(255, 251, 240, 0.52) 0%,
-    rgba(237, 228, 208, 0) 72%
+    rgba(255, 249, 236, 0.45) 0%,
+    rgba(232, 220, 196, 0) 74%
   );
   color: var(--parchment-ink);
   box-shadow:
-    0 26px 68px rgba(3, 5, 10, 0.64),
-    0 4px 14px rgba(0, 0, 0, 0.36),
-    inset 0 0 46px rgba(132, 102, 60, 0.13),
-    inset 0 0 0 1px rgba(145, 110, 62, 0.38);
+    0 28px 70px rgba(4, 2, 1, 0.78),
+    0 6px 18px rgba(0, 0, 0, 0.48),
+    inset 0 0 52px rgba(112, 80, 42, 0.16),
+    inset 0 0 0 1px rgba(124, 90, 48, 0.44);
 }
 
 .parchment-sheet::before {
@@ -177,22 +183,61 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.14;
+  opacity: 0.16;
   mix-blend-mode: multiply;
   background-image: url("/textures/rag-paper-tile.webp");
   background-size: 360px 360px;
 }
 
-/* Dark-slate linen folio / specimen card */
+/* Smoked mahogany / oxblood-umber leather folio (ZERO blue!) */
 .slate-folio {
-  background: linear-gradient(165deg, #1d2231 0%, #121620 100%);
+  background: linear-gradient(165deg, #211915 0%, #140f0c 100%);
   color: var(--foreground);
   box-shadow:
-    0 18px 48px rgba(3, 5, 10, 0.56),
-    inset 0 0 0 1px rgba(197, 154, 104, 0.26);
+    0 20px 52px rgba(4, 2, 1, 0.72),
+    inset 0 0 0 1px rgba(168, 132, 82, 0.3);
 }
 
-/* Tactile 3D tilt + metallic brass glint on interactive cards */
+/* Chamfered Victorian apothecary / ledger ticket */
+.victorian-ticket {
+  position: relative;
+  clip-path: polygon(
+    7px 0,
+    calc(100% - 7px) 0,
+    100% 7px,
+    100% calc(100% - 7px),
+    calc(100% - 7px) 100%,
+    7px 100%,
+    0 calc(100% - 7px),
+    0 7px
+  );
+}
+
+/* Oxidized chased antique-bronze plaque w/ chamfered Victorian corners */
+.brass-plaque {
+  background: linear-gradient(180deg, #b8925d 0%, #876335 100%);
+  color: #150e08;
+  clip-path: polygon(
+    6px 0,
+    calc(100% - 6px) 0,
+    100% 6px,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    6px 100%,
+    0 calc(100% - 6px),
+    0 6px
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 238, 204, 0.45),
+    inset 0 -1px 0 rgba(42, 26, 10, 0.65),
+    inset 0 0 0 2px rgba(42, 26, 10, 0.35);
+}
+
+.brass-plaque:hover {
+  background: linear-gradient(180deg, #c6a06a 0%, #96703e 100%);
+}
+
+/* Tactile 3D tilt + warm bronze candle-glint on interactive cards */
 .tactile-tilt {
   --card-rx: 0deg;
   --card-ry: 0deg;
@@ -210,7 +255,7 @@
   opacity: 0;
   background: radial-gradient(
     280px circle at var(--glint-x) var(--glint-y),
-    rgba(245, 222, 180, 0.16),
+    rgba(218, 178, 118, 0.16),
     transparent 70%
   );
   transition: opacity 220ms ease;
@@ -223,35 +268,35 @@
 /* Stacked multi-pass under-lip for Gallery specimen plates */
 .specimen-stack-parchment {
   box-shadow:
-    0 24px 60px rgba(3, 5, 10, 0.62),
-    5px 5px 0 -1px #dfd2b6,
-    6px 6px 0 0 rgba(122, 92, 52, 0.65);
+    0 24px 60px rgba(4, 2, 1, 0.72),
+    5px 5px 0 -1px #d6c8ab,
+    6px 6px 0 0 rgba(108, 78, 42, 0.72);
 }
 
 .specimen-stack-parchment:hover {
   box-shadow:
-    0 28px 68px rgba(3, 5, 10, 0.72),
-    7px 7px 0 -1px #dfd2b6,
-    8px 8px 0 0 rgba(139, 38, 36, 0.7);
+    0 28px 68px rgba(4, 2, 1, 0.82),
+    7px 7px 0 -1px #d6c8ab,
+    8px 8px 0 0 rgba(125, 25, 25, 0.8);
 }
 
 .specimen-stack-slate {
   box-shadow:
-    0 18px 48px rgba(3, 5, 10, 0.56),
-    inset 0 0 0 1px rgba(197, 154, 104, 0.26),
-    5px 5px 0 -1px #10131c,
-    6px 6px 0 0 rgba(197, 154, 104, 0.38);
+    0 18px 48px rgba(4, 2, 1, 0.7),
+    inset 0 0 0 1px rgba(168, 132, 82, 0.3),
+    5px 5px 0 -1px #120d0b,
+    6px 6px 0 0 rgba(168, 132, 82, 0.42);
 }
 
 .specimen-stack-slate:hover {
   box-shadow:
-    0 24px 56px rgba(3, 5, 10, 0.72),
-    inset 0 0 0 1px rgba(223, 192, 146, 0.58),
-    7px 7px 0 -1px #131722,
-    8px 8px 0 0 rgba(223, 192, 146, 0.55);
+    0 24px 56px rgba(4, 2, 1, 0.82),
+    inset 0 0 0 1px rgba(196, 156, 98, 0.62),
+    7px 7px 0 -1px #17110e,
+    8px 8px 0 0 rgba(196, 156, 98, 0.58);
 }
 
-/* Ensure packed gallery cards (both parchment-sheet & slate-folio) position absolutely inside GalleryLayout */
+/* Ensure packed gallery cards position absolutely inside GalleryLayout */
 .gallery-card {
   position: relative;
 }
@@ -260,29 +305,24 @@
   position: absolute;
 }
 
-/* Brushed antique brass plaque */
-.brass-plaque {
-  background: linear-gradient(180deg, #d7b582 0%, #b58952 100%);
-  color: #16120d;
-  box-shadow:
-    0 3px 10px rgba(0, 0, 0, 0.38),
-    inset 0 1px 0 rgba(255, 245, 224, 0.52),
-    inset 0 -1px 0 rgba(74, 50, 22, 0.45);
-}
-
-.brass-plaque:hover {
-  background: linear-gradient(180deg, #e2c495 0%, #c4985f 100%);
-}
-
-/* Duotone engraving look for architectural blueprints on rag-parchment */
+/* GPU-native ink-engraving & sepia daguerreotype treatments for folio plates (zero SVG filter blanking) */
 .ink-engraving {
-  filter: url(#atelier-ink-plate) contrast(1.08);
-  transition: filter 340ms ease, transform 440ms cubic-bezier(0.22, 1, 0.36, 1);
+  filter: grayscale(1) brightness(1.32) invert(1) contrast(1.72) sepia(0.38);
+  mix-blend-mode: multiply;
+  transition: filter 320ms ease, transform 440ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.daguerreotype-plate {
+  filter: sepia(0.46) contrast(1.08) brightness(0.94) saturate(0.72);
+  transition: filter 320ms ease, transform 440ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .group:hover .ink-engraving,
-.ink-engraving:hover {
+.ink-engraving:hover,
+.group:hover .daguerreotype-plate,
+.daguerreotype-plate:hover {
   filter: none;
+  mix-blend-mode: normal;
 }
 
 /* Persistent shell & route transition names */
@@ -303,7 +343,6 @@
  * ========================================================================== */
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Continuous clockwork astrolabe drift */
   @keyframes astrolabe-cw {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
@@ -324,7 +363,6 @@
     animation: astrolabe-ccw 155s linear infinite;
   }
 
-  /* 01. Route Swap: Desk Clear & Deal */
   @keyframes desk-sheet-clear {
     from {
       opacity: 1;
@@ -332,14 +370,14 @@
     }
     to {
       opacity: 0;
-      transform: translate3d(-34px, 12px, 0) rotate(-2.2deg) scale(0.985);
+      transform: translate3d(-34px, 12px, 0) rotate(-2deg) scale(0.985);
     }
   }
 
   @keyframes desk-sheet-deal {
     from {
       opacity: 0;
-      transform: translate3d(28px, 16px, 0) rotate(1.6deg) scale(0.985);
+      transform: translate3d(28px, 16px, 0) rotate(1.4deg) scale(0.985);
     }
     to {
       opacity: 1;
@@ -347,15 +385,14 @@
     }
   }
 
-  /* 02. Binder Shuffle: Pin Pendulum Sway & Folio Arc */
   @keyframes folio-arc-in {
     0% {
       opacity: 0.45;
-      transform: translate3d(26px, 16px, 0) rotate(2.6deg) scale(0.965);
+      transform: translate3d(22px, 14px, 0) rotate(1.8deg) scale(0.972);
     }
     68% {
       opacity: 1;
-      transform: translate3d(-2px, -2px, 0) rotate(-0.25deg) scale(1.003);
+      transform: translate3d(-1px, -1px, 0) rotate(-0.15deg) scale(1.002);
     }
     100% {
       opacity: 1;
@@ -364,13 +401,12 @@
   }
 
   @keyframes pin-pendulum-sway {
-    0% { transform: rotate(-2.1deg) translateY(-4px); }
-    38% { transform: rotate(1.25deg) translateY(0); }
-    72% { transform: rotate(-0.45deg); }
+    0% { transform: rotate(-2deg) translateY(-3px); }
+    38% { transform: rotate(1.15deg) translateY(0); }
+    72% { transform: rotate(-0.4deg); }
     100% { transform: rotate(0deg); }
   }
 
-  /* 03. Case-Study Dive: Unfolding Architectural Folio + Brass Hairline Draw */
   @keyframes folio-unfold {
     from {
       opacity: 0;
@@ -389,48 +425,15 @@
     to { transform: scaleX(1); opacity: 1; }
   }
 
-  /* Specimen Pass Switch Crossfade */
   @keyframes pass-plate-settle {
     from { opacity: 0.35; transform: scale(0.988); }
     to { opacity: 1; transform: scale(1); }
   }
 
-  /* Crimson letterpress stamp press */
   @keyframes stamp-press {
-    0% { transform: scale(1.28) rotate(-9deg); opacity: 0.55; }
-    52% { transform: scale(0.92) rotate(-2.5deg); opacity: 1; }
-    100% { transform: scale(1) rotate(-4deg); opacity: 1; }
-  }
-
-  /* Widescreen World Stage Cross-Wipe & Pinned Blueprint Deal */
-  @keyframes world-stage-reveal {
-    from {
-      opacity: 0.22;
-      transform: scale(1.045);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1.012);
-    }
-  }
-
-  @keyframes blueprint-pin-deal {
-    0% {
-      opacity: 0;
-      transform: translate3d(18px, 14px, 0) rotate(9deg) scale(0.94);
-    }
-    100% {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) rotate(5.5deg) scale(1);
-    }
-  }
-
-  .animate-world-stage {
-    animation: world-stage-reveal 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .animate-blueprint-pin {
-    animation: blueprint-pin-deal 460ms 75ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    0% { transform: scale(1.26) rotate(-9deg); opacity: 0.6; }
+    52% { transform: scale(0.93) rotate(-2deg); opacity: 1; }
+    100% { transform: scale(1) rotate(-3deg); opacity: 1; }
   }
 
   .animate-folio-arc {
@@ -438,7 +441,7 @@
   }
 
   .animate-pin-pendulum {
-    transform-origin: 50% 6px;
+    transform-origin: 50% 10px;
     animation: pin-pendulum-sway 540ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 

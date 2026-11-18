@@ -68,7 +68,7 @@ export function FormattedText({ children }: { children: string }) {
         className="font-semibold text-current underline decoration-current/45 underline-offset-4 transition-opacity hover:opacity-75"
       >
         {renderItalicTitles(label, `lt-${match.index}`)}
-        <span aria-hidden="true" className="ml-0.5 font-mono text-[0.78em] opacity-80">↗</span>
+        <span aria-hidden="true" className="ml-0.5 font-numeral text-[0.78em] opacity-80">↗</span>
       </a>,
     );
     lastIndex = match.index + match[0].length;

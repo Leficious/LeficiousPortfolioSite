@@ -62,13 +62,13 @@ function DiagramFrame({
   return (
     <figure
       ref={ref}
-      className={`slate-folio my-8 overflow-hidden rounded-xs border border-warm/35 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+      className={`slate-folio my-8 overflow-hidden border border-warm/35 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         inView ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
       }`}
     >
-      <figcaption className="flex flex-col gap-1 border-b border-warm/25 bg-[#0c0f17]/80 px-4 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:px-5">
+      <figcaption className="flex flex-col gap-1 border-b border-warm/25 bg-[#120d0a]/90 px-4 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:px-5">
         <span className="font-display text-base font-bold tracking-tight text-[#f2e8d5]">{title}</span>
-        {subtitle && <span className="font-mono text-[11px] text-warm/85">{subtitle}</span>}
+        {subtitle && <span className="font-numeral tabular-nums text-[11px] text-warm/85">{subtitle}</span>}
       </figcaption>
       <div className="p-4 sm:p-5">{children}</div>
     </figure>
@@ -85,10 +85,10 @@ function SpecDrawer({
   children: ReactNode;
 }) {
   return (
-    <details className="slate-folio group my-6 overflow-hidden rounded-xs border border-warm/35">
+    <details className="slate-folio group my-6 overflow-hidden border border-warm/35">
       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3.5 font-display text-base font-bold text-[#f2e8d5] transition-colors hover:bg-secondary/80 sm:px-5 [&::-webkit-details-marker]:hidden">
         <span>{summary}</span>
-        <span className="flex shrink-0 items-center gap-3 font-mono text-xs text-muted-foreground">
+        <span className="flex shrink-0 items-center gap-3 font-numeral tabular-nums text-xs text-muted-foreground">
           <span className="hidden sm:inline">{meta}</span>
           <span aria-hidden="true" className="inline-block w-3 text-center text-warm group-open:hidden">
             +
@@ -98,7 +98,7 @@ function SpecDrawer({
           </span>
         </span>
       </summary>
-      <div className="border-t border-warm/25 bg-[#0b0e15]/75">{children}</div>
+      <div className="border-t border-warm/25 bg-[#100c09]/85">{children}</div>
     </details>
   );
 }
@@ -139,12 +139,12 @@ function TravelerArcDiagram() {
       subtitle={text("Fixed input: E (42m echo, 5.0s cooldown) · F (Interact)", "固定输入：按 E 发声（42m / 5.0s 冷却）· 按 F 交互")}
     >
       <div className="space-y-3">
-        <div className="rounded-xs border border-border bg-background/70 px-4 py-3">
+        <div className="border border-border bg-background/70 px-4 py-3">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <p className="font-display text-sm font-semibold text-foreground">
               {text("Central Hub — Stone Monument", "中央中枢 — 石之纪念碑")}
             </p>
-            <span className="font-mono text-[11px] text-muted-foreground">
+            <span className="font-numeral tabular-nums text-[11px] text-muted-foreground">
               {text("Non-linear spoke selection", "三大分支可按任意顺序探索")}
             </span>
           </div>
@@ -156,13 +156,13 @@ function TravelerArcDiagram() {
           </p>
         </div>
 
-        <div className="grid gap-px overflow-hidden rounded-xs border border-border bg-border md:grid-cols-3">
+        <div className="grid gap-px overflow-hidden border border-border bg-border md:grid-cols-3">
           {spokes.map((spoke) => (
             <div key={spoke.index} className="flex flex-col justify-between bg-background/85 p-4">
               <div>
                 <div className="flex items-baseline justify-between gap-2">
-                  <span className="font-mono text-xs text-warm">{spoke.index}</span>
-                  <span className="font-mono text-[11px] text-muted-foreground">{spoke.reward}</span>
+                  <span className="font-numeral tabular-nums text-xs text-warm">{spoke.index}</span>
+                  <span className="font-numeral tabular-nums text-[11px] text-muted-foreground">{spoke.reward}</span>
                 </div>
                 <h4 className="mt-2 font-display text-sm font-semibold text-foreground">{spoke.region}</h4>
                 <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{spoke.layout}</p>
@@ -172,7 +172,7 @@ function TravelerArcDiagram() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-1 rounded-xs border border-warm/45 bg-background/70 px-4 py-3 sm:flex-row sm:items-baseline sm:justify-between">
+        <div className="flex flex-col gap-1 border border-warm/45 bg-background/70 px-4 py-3 sm:flex-row sm:items-baseline sm:justify-between">
           <p className="font-display text-sm font-semibold text-foreground">
             {text("Finale — 3 / 3 Sky Beacons Lit", "终局 — 三座天际光柱全亮")}
           </p>
@@ -223,7 +223,7 @@ function RuleOfThreeMatrix() {
   ];
 
   return (
-    <div className="my-8 overflow-x-auto rounded-xs border border-border bg-surface">
+    <div className="my-8 overflow-x-auto border border-border bg-surface">
       <table className="w-full min-w-[720px] border-collapse text-left text-xs">
         <thead>
           <tr className="border-b border-border bg-background/60 font-semibold text-foreground">
@@ -257,13 +257,13 @@ function GlacierVerificationDiagram() {
       title={text("Region 1 — Signal Verification Matrix", "区域 1 — 真伪浮冰声波验证逻辑")}
       subtitle={text("Player White Pulse (E) vs. Siren 62m Magenta Wave (every 7.0s)", "玩家白波 (E) 对比 塞壬 62m 洋红波（7.0s 周期）")}
     >
-      <div className="grid gap-px overflow-hidden rounded-xs border border-border bg-border md:grid-cols-2">
+      <div className="grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2">
         <div className="bg-background/85 p-4">
           <div className="flex items-baseline justify-between gap-2">
             <h4 className="font-display text-sm font-semibold text-foreground">
               {text("Flanking Arc — Solid Stepping Stones", "侧翼弧线 — 隐形实体真冰")}
             </h4>
-            <span className="font-mono text-[11px] text-warm">{text("Safe route", "安全主航线")}</span>
+            <span className="font-numeral tabular-nums text-[11px] text-warm">{text("Safe route", "安全主航线")}</span>
           </div>
           <dl className="mt-3 space-y-2 text-xs">
             <div className="flex justify-between gap-4 border-t border-border/70 pt-2">
@@ -282,7 +282,7 @@ function GlacierVerificationDiagram() {
             <h4 className="font-display text-sm font-semibold text-foreground">
               {text("Direct Line — Non-Solid Decoy Floes", "直线捷径 — 无碰撞诱饵假冰")}
             </h4>
-            <span className="font-mono text-[11px] text-muted-foreground">{text("Respawn hazard", "踩踏即落水")}</span>
+            <span className="font-numeral tabular-nums text-[11px] text-muted-foreground">{text("Respawn hazard", "踩踏即落水")}</span>
           </div>
           <dl className="mt-3 space-y-2 text-xs">
             <div className="flex justify-between gap-4 border-t border-border/70 pt-2">
@@ -341,17 +341,17 @@ function CitySequenceDiagram() {
       subtitle={text("Strict clockwise loop: 00 → 01 → 02 → 03 → 04", "严格顺时针激活：00 → 01 → 02 → 03 → 04")}
     >
       <div className="space-y-3">
-        <div className="grid gap-px overflow-hidden rounded-xs border border-border bg-border sm:grid-cols-5">
+        <div className="grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-5">
           {stages.map((s) => (
             <div key={s.step} className="bg-background/85 p-3.5">
-              <span className="font-mono text-xs text-warm">{s.step}</span>
+              <span className="font-numeral tabular-nums text-xs text-warm">{s.step}</span>
               <h4 className="mt-1.5 font-display text-xs font-semibold text-foreground sm:text-sm">{s.name}</h4>
-              <p className="mt-1 font-mono text-[11px] text-muted-foreground">{s.wave}</p>
+              <p className="mt-1 font-numeral tabular-nums text-[11px] text-muted-foreground">{s.wave}</p>
               <p className="mt-2 border-t border-border/70 pt-2 text-xs leading-relaxed text-muted-foreground">{s.layer}</p>
             </div>
           ))}
         </div>
-        <p className="rounded-xs border border-border bg-background/60 px-4 py-2.5 text-xs text-muted-foreground">
+        <p className="border border-border bg-background/60 px-4 py-2.5 text-xs text-muted-foreground">
           <span className="font-medium text-foreground">{text("Reset boundary rule: ", "重置门锁规则：")}</span>
           {text(
             "Interacting with a wing statue out of sequence or crossing the outer city perimeter before Stage 04 fires a 45 m/s reset wave from the center plaza, collapsing unfinished layers back to Stage 00.",
@@ -373,7 +373,7 @@ function WoodsTimelineDiagram() {
     >
       <div ref={ref} className="space-y-4">
         <div>
-          <div className="mb-1.5 flex justify-between font-mono text-[11px] text-muted-foreground">
+          <div className="mb-1.5 flex justify-between font-numeral tabular-nums text-[11px] text-muted-foreground">
             <span>0.0s ({text("Cast E", "按 E")})</span>
             <span>1.4s ({text("Fade", "白波消退")})</span>
             <span className="text-warm">3.0s ({text("Green reply", "绿波回应")})</span>
@@ -386,7 +386,7 @@ function WoodsTimelineDiagram() {
               transform: inView ? "scaleX(1)" : "scaleX(0)",
               transition: "transform 640ms cubic-bezier(0.22, 1, 0.36, 1)",
             }}
-            className="grid grid-cols-[17.5fr_20fr_62.5fr] gap-px overflow-hidden rounded-xs border border-border bg-border text-xs"
+            className="grid grid-cols-[17.5fr_20fr_62.5fr] gap-px overflow-hidden border border-border bg-border text-xs"
           >
             <div className="bg-secondary px-2.5 py-2.5">
               <p className="font-medium text-foreground">{text("White Pulse", "玩家白波")}</p>
@@ -405,7 +405,7 @@ function WoodsTimelineDiagram() {
           </div>
         </div>
 
-        <div className="grid gap-px overflow-hidden rounded-xs border border-border bg-border sm:grid-cols-2">
+        <div className="grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2">
           <div className="bg-background/85 p-3.5">
             <p className="font-display text-xs font-semibold text-foreground">
               {text("Outcome A — Player Waits Without Recasting", "分支 A — 克制不按 E（t = 3.0s – 8.0s）")}
@@ -485,11 +485,11 @@ function WayfindingHierarchyDiagram() {
       title={text("Four-Layer Sightless Wayfinding Hierarchy", "四层无 UI 空间寻路层级")}
       subtitle={text("Zero HUD · Zero minimap · ~550m × 550m continuous basin", "零 HUD · 零小地图 · 约 550m × 550m 连续盆地")}
     >
-      <div className="grid gap-px overflow-hidden rounded-xs border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
         {tiers.map((tier) => (
           <div key={tier.index} className="flex flex-col justify-between bg-background/85 p-4">
             <div>
-              <div className="flex items-baseline justify-between gap-2 font-mono text-xs">
+              <div className="flex items-baseline justify-between gap-2 font-numeral tabular-nums text-xs">
                 <span className="text-warm">{tier.index}</span>
                 <span className="text-muted-foreground">{tier.range}</span>
               </div>
@@ -580,10 +580,10 @@ function StillLifeInversionSection() {
         title={text("Three-Step Room Loop", "单房间三步核心解谜循环")}
         subtitle={text("Zero-HUD floor lines: Cyan (Lifts/Gates) · Gold (Focus Stands) · Green (Crusher)", "零 HUD 地面导流线：青色（闸门/电梯）· 金色（聚光定身）· 绿色（冲压机）")}
       >
-        <div className="grid gap-px overflow-hidden rounded-xs border border-border bg-border md:grid-cols-3">
+        <div className="grid gap-px overflow-hidden border border-border bg-border md:grid-cols-3">
           {steps.map((s) => (
             <div key={s.step} className="bg-background/85 p-4">
-              <span className="font-mono text-xs text-warm">{s.step}</span>
+              <span className="font-numeral tabular-nums text-xs text-warm">{s.step}</span>
               <h4 className="mt-1.5 font-display text-sm font-semibold text-foreground">{s.title}</h4>
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{s.detail}</p>
             </div>
@@ -591,7 +591,7 @@ function StillLifeInversionSection() {
         </div>
       </DiagramFrame>
 
-      <div className="overflow-x-auto rounded-xs border border-border bg-surface">
+      <div className="overflow-x-auto border border-border bg-surface">
         <table className="w-full min-w-[640px] border-collapse text-left text-xs">
           <thead>
             <tr className="border-b border-border bg-background/60 font-semibold text-foreground">
@@ -648,9 +648,9 @@ function StillLifeSpecimenCatalogDrawer() {
           <tbody className="divide-y divide-border">
             {specimens.map((s) => (
               <tr key={s.id}>
-                <td className="p-3.5 font-mono text-warm whitespace-nowrap">{s.id}</td>
+                <td className="p-3.5 font-numeral tabular-nums text-warm whitespace-nowrap">{s.id}</td>
                 <td className="border-l border-border p-3.5 font-medium text-foreground whitespace-nowrap">{s.name}</td>
-                <td className="border-l border-border p-3.5 font-mono text-foreground/90 whitespace-nowrap">{s.mass}</td>
+                <td className="border-l border-border p-3.5 font-numeral tabular-nums text-foreground/90 whitespace-nowrap">{s.mass}</td>
                 <td className="border-l border-border p-3.5 leading-relaxed text-muted-foreground">{s.role}</td>
               </tr>
             ))}
@@ -677,17 +677,17 @@ function StillLifeLampOnboardingDiagram() {
       subtitle={text("DeskLampProceduralRig.cs · 5-state behavior flow", "五状态伙伴行为流")}
     >
       <div className="space-y-3">
-        <div className="grid gap-px overflow-hidden rounded-xs border border-border bg-border sm:grid-cols-5">
+        <div className="grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-5">
           {beat.map((b) => (
             <div key={b.n} className="bg-background/85 p-3.5">
-              <span className="font-mono text-xs text-warm">{b.n}</span>
+              <span className="font-numeral tabular-nums text-xs text-warm">{b.n}</span>
               <h4 className="mt-1 font-display text-xs font-semibold text-foreground sm:text-sm">{b.title}</h4>
               <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{b.desc}</p>
             </div>
           ))}
         </div>
 
-        <div className="grid gap-px overflow-hidden rounded-xs border border-border bg-border sm:grid-cols-2">
+        <div className="grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2">
           <div className="bg-background/85 p-3.5">
             <p className="font-display text-xs font-semibold text-foreground">
               {text("Soft Gate A — Chest Mimics (Hallway 1 & Room 2)", "路线软门锁 A — 宝箱怪（1 号走廊与 2 号房）")}
@@ -779,11 +779,11 @@ function StillLifeRoom2AllocationDiagram() {
           <div key={p.phase} className="space-y-1.5">
             <div className="flex flex-wrap items-baseline justify-between gap-2 text-xs">
               <span className="font-display text-sm font-bold text-foreground">
-                {p.phase} <span className="ml-1.5 font-mono text-xs font-normal text-muted-foreground">({p.pool} / 235 kg)</span>
+                {p.phase} <span className="ml-1.5 font-numeral tabular-nums text-xs font-normal text-muted-foreground">({p.pool} / 235 kg)</span>
               </span>
-              <span className="font-mono text-[11px] text-warm">{p.unlock}</span>
+              <span className="font-numeral tabular-nums text-[11px] text-warm">{p.unlock}</span>
             </div>
-            <div className="flex h-7 w-full overflow-hidden rounded-xs border border-border bg-background/80 font-mono text-[11px] font-medium">
+            <div className="flex h-7 w-full overflow-hidden border border-border bg-background/80 font-numeral tabular-nums text-[11px] font-medium">
               <div
                 style={{
                   width: "100%",
@@ -804,7 +804,7 @@ function StillLifeRoom2AllocationDiagram() {
                 ))}
               </div>
             </div>
-            <p className="font-mono text-[11px] text-muted-foreground">{p.equation}</p>
+            <p className="font-numeral tabular-nums text-[11px] text-muted-foreground">{p.equation}</p>
           </div>
         ))}
       </div>
@@ -819,9 +819,9 @@ function StillLifeRoom3FoundryDiagram() {
       title={text("Room 3 — Inverted Vent Tiles & Three-Intake Crusher", "3 号房 — 取走即断电踏板与三路冲压机卡塞门锁")}
       subtitle={text("Cryo-Foundry · 3 green floor indicator lines", "低温车间 · 三条绿色地面导流线")}
     >
-      <div className="grid gap-px overflow-hidden rounded-xs border border-border bg-border md:grid-cols-2">
+      <div className="grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2">
         <div className="bg-background/85 p-4">
-          <span className="font-mono text-xs text-warm">01</span>
+          <span className="font-numeral tabular-nums text-xs text-warm">01</span>
           <h4 className="mt-1.5 font-display text-sm font-semibold text-foreground">
             {text("Inverted Vent-Powering Tiles", "逆向“取走即断电”冷风踏板")}
           </h4>
@@ -834,7 +834,7 @@ function StillLifeRoom3FoundryDiagram() {
         </div>
 
         <div className="bg-background/85 p-4">
-          <span className="font-mono text-xs text-warm">02</span>
+          <span className="font-numeral tabular-nums text-xs text-warm">02</span>
           <h4 className="mt-1.5 font-display text-sm font-semibold text-foreground">
             {text("Central Crusher — 3 Mechanical Jammers", "中央冲压机 — 三处机械卡塞槽")}
           </h4>
@@ -891,10 +891,10 @@ function StillLifeSubversionDiagram() {
       title={text("Rooms 4 & 5 — Unscripted Habit Reversal", "4 号房与 5 号房 — 无台词习惯反转流程")}
       subtitle={text("Zero dialogue · Enacted directly by player input", "零对白说教 · 由玩家亲手操作完成反转")}
     >
-      <div className="grid gap-px overflow-hidden rounded-xs border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
         {beats.map((b) => (
           <div key={b.n} className="bg-background/85 p-4">
-            <span className="font-mono text-xs text-warm">{b.n}</span>
+            <span className="font-numeral tabular-nums text-xs text-warm">{b.n}</span>
             <h4 className="mt-1.5 font-display text-sm font-semibold text-foreground">{b.title}</h4>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{b.desc}</p>
           </div>

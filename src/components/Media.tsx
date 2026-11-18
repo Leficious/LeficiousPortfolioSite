@@ -81,9 +81,9 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
           height={item.height ?? 900}
           loading="lazy"
           decoding="async"
-          className={`${item.naturalAspect ? "" : "aspect-video "}h-auto w-full bg-[#0a0c12] object-contain transition-transform duration-300 group-hover:scale-[1.008]`}
+          className={`${item.naturalAspect ? "" : "aspect-video "}h-auto w-full bg-[#0b0806] object-contain transition-transform duration-300 group-hover:scale-[1.008]`}
         />
-        <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-xs border border-warm/45 bg-[#0e1017]/92 px-2.5 py-1.5 font-display text-xs font-semibold text-[#f2e5cb] opacity-0 backdrop-blur-sm transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
+        <span className="absolute bottom-3 right-3 flex items-center gap-1.5 border border-warm/45 bg-[#120d0a]/92 px-2.5 py-1.5 font-numeral text-[10.5px] font-semibold tracking-wider text-[#f2e5cb] uppercase opacity-0 backdrop-blur-sm transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
           <ExpandIcon />
           {text("Inspect Plate", "放大检视")}
         </span>
@@ -92,7 +92,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
       {expanded &&
         createPortal(
           <div
-            className="fixed inset-0 z-[220] flex cursor-zoom-out items-center justify-center bg-[#06080d]/94 p-4 backdrop-blur-md sm:p-8"
+            className="fixed inset-0 z-[220] flex cursor-zoom-out items-center justify-center bg-[#080605]/94 p-4 backdrop-blur-md sm:p-8"
             role="dialog"
             aria-modal="true"
             aria-label={`${text("Expanded plate", "放大图版")}: ${item.alt}`}
@@ -108,7 +108,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
                 ref={closeRef}
                 type="button"
                 onClick={() => setExpanded(false)}
-                className="brass-plaque self-end inline-flex cursor-pointer items-center gap-2 rounded-xs px-3.5 py-1.5 font-display text-xs font-bold tracking-wide"
+                className="brass-plaque self-end inline-flex cursor-pointer items-center gap-2 px-3.5 py-1.5 font-numeral text-xs font-bold tracking-[0.12em] uppercase"
                 aria-label={text("Close expanded image", "关闭大图")}
               >
                 {text("Close Plate", "关闭图版")} <ExpandIcon close />
@@ -116,10 +116,10 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
               <img
                 src={item.src}
                 alt={item.alt}
-                className="max-h-[calc(100vh-8rem)] max-w-full rounded-xs border-2 border-warm/45 bg-[#090b10] object-contain shadow-2xl"
+                className="max-h-[calc(100vh-8rem)] max-w-full border-2 border-warm/45 bg-[#090706] object-contain shadow-2xl"
               />
               {item.caption && (
-                <p className="max-w-4xl text-center font-display text-sm italic text-[#dcd2be]">
+                <p className="max-w-4xl text-center font-display text-sm italic text-[#ddd0ba]">
                   <FormattedText>{item.caption}</FormattedText>
                 </p>
               )}
@@ -165,8 +165,8 @@ function YouTubeEmbed({ id, title, thumbnailSrc }: { id: string; title: string; 
         onError={() => setThumbnail(`https://i.ytimg.com/vi/${id}/hqdefault.jpg`)}
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
       />
-      <span aria-hidden="true" className="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/5" />
-      <span className="brass-plaque relative rounded-xs px-4 py-2 font-display text-xs font-bold tracking-wide transition-transform group-hover:scale-[1.03]">
+      <span aria-hidden="true" className="absolute inset-0 bg-black/22 transition-colors group-hover:bg-black/8" />
+      <span className="brass-plaque relative px-4.5 py-2 font-numeral text-xs font-bold tracking-[0.12em] uppercase transition-transform group-hover:scale-[1.03]">
         ▶ {text("Play Clip", "播放片段")}
       </span>
     </button>
@@ -176,8 +176,8 @@ function YouTubeEmbed({ id, title, thumbnailSrc }: { id: string; title: string; 
 export function Media({ item }: { item: MediaItem }) {
   return (
     <figure className="space-y-2.5">
-      <div className="slate-folio overflow-hidden rounded-xs border border-warm/35 p-1">
-        <div className="overflow-hidden rounded-xs border border-warm/20 bg-[#090b10]">
+      <div className="slate-folio overflow-hidden border border-warm/38 p-1.5">
+        <div className="overflow-hidden border border-warm/22 bg-[#090706]">
           {item.type === "image" && <ExpandableImage item={item} />}
           {item.type === "video" && (
             <video src={item.src} poster={item.poster} controls playsInline preload="metadata" className="h-auto w-full" />
@@ -190,7 +190,7 @@ export function Media({ item }: { item: MediaItem }) {
         </div>
       </div>
       {item.caption && (
-        <figcaption className="px-0.5 text-xs leading-relaxed text-muted-foreground sm:text-[13px]">
+        <figcaption className="px-0.5 text-[14.5px] leading-snug text-muted-foreground">
           <FormattedText>{item.caption}</FormattedText>
         </figcaption>
       )}

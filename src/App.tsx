@@ -1,7 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AmbientBackdrop } from "./components/AmbientBackdrop";
-import { InkPlateFilter } from "./components/AtelierChrome";
 import { useDeskParallax } from "./lib/atelierMotion";
 import { SiteNav } from "./components/SiteNav";
 import { HomePage } from "./pages/HomePage";
@@ -59,7 +58,6 @@ export function App() {
 
   return (
     <div className="relative min-h-screen">
-      <InkPlateFilter />
       <AmbientBackdrop dialStep={dialStep} />
       <SiteNav activeFolioSlug={activeFolioSlug} onSelectFolioSlug={handleSelectFolio} />
 

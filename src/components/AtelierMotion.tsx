@@ -84,8 +84,8 @@ export function LamplightDustCanvas() {
         ctx.beginPath();
         ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
         ctx.fillStyle = m.gold
-          ? `rgba(223, 192, 146, ${finalAlpha.toFixed(3)})`
-          : `rgba(236, 228, 212, ${finalAlpha.toFixed(3)})`;
+          ? `rgba(188, 146, 88, ${finalAlpha.toFixed(3)})`
+          : `rgba(232, 220, 196, ${finalAlpha.toFixed(3)})`;
         ctx.fill();
       }
 

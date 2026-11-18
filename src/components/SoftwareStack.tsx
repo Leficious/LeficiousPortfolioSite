@@ -43,7 +43,7 @@ export function SoftwareStack({ software, showLabels = false, tone = "slate" }: 
   return (
     <div aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`}>
       <p
-        className={`font-numeral text-[10.5px] tracking-[0.2em] uppercase ${
+        className={`font-numeral text-[10.5px] font-semibold tracking-[0.22em] uppercase ${
           isParchment ? "text-parchment-muted" : "text-warm/85"
         }`}
       >
@@ -54,16 +54,16 @@ export function SoftwareStack({ software, showLabels = false, tone = "slate" }: 
           <span
             key={name}
             title={name}
-            className={`inline-flex min-h-7 items-center gap-2 rounded-xs border px-2.5 py-1 text-xs transition-colors ${
+            className={`victorian-ticket inline-flex min-h-7 items-center gap-2 border px-2.5 py-1 text-xs transition-colors ${
               isParchment
-                ? "border-[#8c683a]/55 bg-parchment-deep/65 text-parchment-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]"
-                : "border-warm/30 bg-background/65 text-muted-foreground"
+                ? "border-[#7a582e]/55 bg-parchment-deep/75 text-parchment-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.4)]"
+                : "border-warm/35 bg-[#120d0a]/85 text-muted-foreground"
             }`}
           >
             <span
               aria-hidden="true"
               className={`font-numeral text-[10.5px] font-bold tracking-wider ${
-                isParchment ? "text-rubric" : "text-[#dfc092]"
+                isParchment ? "text-rubric" : "text-[#d4af77]"
               }`}
             >
               {abbreviations[name]}
@@ -71,7 +71,7 @@ export function SoftwareStack({ software, showLabels = false, tone = "slate" }: 
             {showLabels && (
               <span
                 className={`border-l pl-2 font-medium ${
-                  isParchment ? "border-[#8c683a]/40 text-parchment-ink" : "border-warm/25 text-foreground/90"
+                  isParchment ? "border-[#7a582e]/40 text-parchment-ink" : "border-warm/25 text-foreground/90"
                 }`}
               >
                 {compactNames[name] ?? name}
@@ -95,7 +95,7 @@ export function SoftwareSummary({ software }: Pick<SoftwareStackProps, "software
       aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`}
       className="flex items-baseline gap-2 text-xs text-muted-foreground"
     >
-      <span className="shrink-0 font-numeral text-[10px] tracking-wider text-warm/80">{text("TOOLS", "工具")}</span>
+      <span className="shrink-0 font-numeral text-[10px] font-semibold tracking-wider text-warm/85">{text("TOOLS", "工具")}</span>
       <span className="min-w-0 truncate">{summary}</span>
     </p>
   );

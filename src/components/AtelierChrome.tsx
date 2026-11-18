@@ -26,7 +26,7 @@ const ASTROLABE_TICKS = Array.from({ length: 24 }, (_, idx) => {
 
 /**
  * Custom P03-E2 geometric L-monolith crest inscribed inside a mathematical
- * double-ring brass astrolabe. 100% vector SVG, zero raster assets.
+ * double-ring tarnished antique-bronze astrolabe.
  */
 export function AstrolabeCrest({ className = "h-11 w-11" }: { className?: string }) {
   const rawId = useId();
@@ -40,10 +40,9 @@ export function AstrolabeCrest({ className = "h-11 w-11" }: { className?: string
         </clipPath>
       </defs>
 
-      {/* Outer astrolabe degree bezel (rotates subtly on spine crest hover) */}
       <g className="origin-center transition-transform duration-700 ease-out group-hover:rotate-[30deg]">
-        <circle cx="48" cy="48" r="46.8" fill="none" stroke="#c59a68" strokeWidth="1" opacity="0.82" />
-        <circle cx="48" cy="48" r="42.2" fill="none" stroke="#c59a68" strokeWidth="0.6" opacity="0.45" />
+        <circle cx="48" cy="48" r="46.8" fill="none" stroke="#a88452" strokeWidth="1" opacity="0.85" />
+        <circle cx="48" cy="48" r="42.2" fill="none" stroke="#a88452" strokeWidth="0.6" opacity="0.45" />
         {ASTROLABE_TICKS.map((t, i) => (
           <line
             key={i}
@@ -51,76 +50,63 @@ export function AstrolabeCrest({ className = "h-11 w-11" }: { className?: string
             y1={t.y1}
             x2={t.x2}
             y2={t.y2}
-            stroke="#c59a68"
+            stroke="#a88452"
             strokeWidth={t.major ? "0.95" : "0.55"}
             opacity={t.major ? "0.85" : "0.45"}
           />
         ))}
-        {/* Cardinal diamond finials */}
-        <polygon points="48,0 50,3 48,6 46,3" fill="#dfc092" />
-        <polygon points="48,90 50,93 48,96 46,93" fill="#c59a68" opacity="0.75" />
+        <polygon points="48,0 50,3 48,6 46,3" fill="#c6a06a" />
+        <polygon points="48,90 50,93 48,96 46,93" fill="#a88452" opacity="0.75" />
       </g>
 
-      {/* Inscribed P03-E2 crest */}
       <g transform="translate(10.5, 11) scale(0.78)">
-        <path d={FRAME_MAIN_D} fill="#ece4d4" />
-        <path d={FRAME_UR_D} fill="#ece4d4" />
-        <g clipPath={`url(#${clipId})`} fill="none" stroke="#c59a68" strokeWidth="2.3">
+        <path d={FRAME_MAIN_D} fill="#e8dcc4" />
+        <path d={FRAME_UR_D} fill="#e8dcc4" />
+        <g clipPath={`url(#${clipId})`} fill="none" stroke="#a88452" strokeWidth="2.3">
           <circle cx="47" cy="50.2" r="10.8" />
           <circle cx="47" cy="50.2" r="18.0" />
           <circle cx="47" cy="50.2" r="25.2" />
         </g>
-        <polygon points={CHEVRON_POINTS} fill="#c59a68" />
-        <path d={L_MONOLITH_D} fill="#dfc092" />
+        <polygon points={CHEVRON_POINTS} fill="#a88452" />
+        <path d={L_MONOLITH_D} fill="#c6a06a" />
       </g>
     </svg>
   );
 }
 
 /**
- * Four heavy machined triangular brass corner clasps with rivets
- * for the panoramic Velvet Cinema Plate on the Home detective board.
+ * Four ornate chased Victorian antique-bronze acanthus scrollwork corner brackets.
  */
-export function BrassCornerClasps() {
-  const Clasp = ({ pos, rot }: { pos: string; rot: string }) => (
-    <svg
-      viewBox="0 0 44 44"
-      aria-hidden="true"
-      className={`pointer-events-none absolute z-20 h-9 w-9 sm:h-11 sm:w-11 ${pos} ${rot}`}
-    >
-      <defs>
-        <linearGradient id="brass-clasp-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#ebd09e" />
-          <stop offset="55%" stopColor="#c2945a" />
-          <stop offset="100%" stopColor="#886130" />
-        </linearGradient>
-      </defs>
-      <polygon
-        points="0,0 42,0 34,8 8,8 8,34 0,42"
-        fill="url(#brass-clasp-grad)"
-        stroke="#4b3316"
-        strokeWidth="0.9"
-      />
-      <polyline points="2.5,36 2.5,2.5 36,2.5" fill="none" stroke="#fff3d6" strokeWidth="0.7" opacity="0.55" />
-      <circle cx="5" cy="5" r="1.7" fill="#3b260e" stroke="#f5dfb3" strokeWidth="0.5" />
-      <circle cx="26" cy="4.2" r="1.3" fill="#3b260e" />
-      <circle cx="4.2" cy="26" r="1.3" fill="#3b260e" />
-    </svg>
-  );
-
+export function BrassCornerClasps({ sizeClass = "h-12 w-12 sm:h-15 sm:w-15" }: { sizeClass?: string }) {
   return (
-    <>
-      <Clasp pos="-left-1 -top-1" rot="rotate-0" />
-      <Clasp pos="-right-1 -top-1" rot="rotate-90" />
-      <Clasp pos="-right-1 -bottom-1" rot="rotate-180" />
-      <Clasp pos="-left-1 -bottom-1" rot="-rotate-90" />
-    </>
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-20">
+      <img
+        src="/ornaments/bronze-corner.webp"
+        alt=""
+        className={`absolute left-0 top-0 select-none drop-shadow-[0_3px_6px_rgba(0,0,0,0.75)] ${sizeClass}`}
+      />
+      <img
+        src="/ornaments/bronze-corner.webp"
+        alt=""
+        className={`absolute right-0 top-0 rotate-90 select-none drop-shadow-[0_3px_6px_rgba(0,0,0,0.75)] ${sizeClass}`}
+      />
+      <img
+        src="/ornaments/bronze-corner.webp"
+        alt=""
+        className={`absolute bottom-0 right-0 rotate-180 select-none drop-shadow-[0_3px_6px_rgba(0,0,0,0.75)] ${sizeClass}`}
+      />
+      <img
+        src="/ornaments/bronze-corner.webp"
+        alt=""
+        className={`absolute bottom-0 left-0 -rotate-90 select-none drop-shadow-[0_3px_6px_rgba(0,0,0,0.75)] ${sizeClass}`}
+      />
+    </div>
   );
 }
 
 /**
- * Symmetrical geometric Art-Nouveau / Art-Deco double-hairline corner filigree
- * for rag-parchment folios and dark-slate specimen plates.
+ * Symmetrical Victorian double-hairline & Gothic trefoil/filigree corner mounts
+ * for rag-parchment folios and smoked-mahogany leather plates.
  */
 export function FolioCorners({
   tone = "parchment",
@@ -129,28 +115,29 @@ export function FolioCorners({
   tone?: "parchment" | "slate";
   inset?: string;
 }) {
-  const stroke = tone === "parchment" ? "#8c683a" : "#c59a68";
-  const accent = tone === "parchment" ? "#8b2624" : "#dfc092";
+  const stroke = tone === "parchment" ? "#7a582e" : "#a88452";
+  const accent = tone === "parchment" ? "#7d1919" : "#c6a06a";
 
   const Corner = ({ rotate }: { rotate: string }) => (
     <svg
-      viewBox="0 0 36 36"
+      viewBox="0 0 42 42"
       aria-hidden="true"
-      className={`h-7 w-7 sm:h-8 sm:w-8 ${rotate}`}
+      className={`h-8 w-8 sm:h-9 sm:w-9 ${rotate}`}
       fill="none"
     >
-      <path d="M1 35 V1 H35" stroke={stroke} strokeWidth="1.15" />
-      <path d="M5 29 V5 H29" stroke={stroke} strokeWidth="0.75" opacity="0.78" />
-      <path d="M1 13 L13 1" stroke={stroke} strokeWidth="0.8" opacity="0.7" />
-      <path d="M5 17 C11 17 17 11 17 5" stroke={stroke} strokeWidth="0.8" opacity="0.75" />
-      <polygon points="5,5 8.5,5 5,8.5" fill={accent} opacity="0.85" />
+      <path d="M1 41 V1 H41" stroke={stroke} strokeWidth="1.25" />
+      <path d="M5.5 34 V5.5 H34" stroke={stroke} strokeWidth="0.8" opacity="0.82" />
+      <path d="M1 15 L15 1" stroke={stroke} strokeWidth="0.85" opacity="0.75" />
+      <path d="M5.5 21 C13 21 21 13 21 5.5" stroke={stroke} strokeWidth="0.85" opacity="0.8" />
+      <path d="M5.5 13 C9.5 13 13 9.5 13 5.5" stroke={stroke} strokeWidth="0.75" opacity="0.7" />
+      <polygon points="5.5,5.5 9.5,5.5 5.5,9.5" fill={accent} opacity="0.9" />
     </svg>
   );
 
   return (
     <div aria-hidden="true" className={`pointer-events-none absolute ${inset}`}>
-      <div className="absolute inset-0 border border-current opacity-25" style={{ color: stroke }} />
-      <div className="absolute inset-[3px] border border-current opacity-15" style={{ color: stroke }} />
+      <div className="absolute inset-0 border border-current opacity-30" style={{ color: stroke }} />
+      <div className="absolute inset-[3.5px] border border-current opacity-18" style={{ color: stroke }} />
       <div className="absolute left-0 top-0"><Corner rotate="rotate-0" /></div>
       <div className="absolute right-0 top-0"><Corner rotate="rotate-90" /></div>
       <div className="absolute right-0 bottom-0"><Corner rotate="rotate-180" /></div>
@@ -160,71 +147,59 @@ export function FolioCorners({
 }
 
 /**
- * Machined brass binding pin + taut suspension threads holding the active folio on Home.
- * Physically sways with damped pendulum inertia whenever a new folio latches onto the desk.
+ * Taut dark-bronze suspension cords + authentic embossed Deep-Crimson Sealing-Wax Stamp
+ * straddling the top-center border of the active folio (zero yellow circles!).
  */
 export function BrassPinThreads({ animKey }: { animKey?: string }) {
   return (
-    <div aria-hidden="true" className="pointer-events-none relative mx-auto -mb-3 h-11 w-72 sm:w-96 z-30">
+    <div aria-hidden="true" className="pointer-events-none relative z-30 mx-auto -mb-6 h-15 w-80 sm:w-[440px]">
       <div key={animKey} className="animate-pin-pendulum h-full w-full">
-        <svg viewBox="0 0 360 46" className="h-full w-full overflow-visible" fill="none">
-          {/* Taut angled brass suspension threads */}
-          <line x1="180" y1="9" x2="44" y2="45" stroke="#c59a68" strokeWidth="1.2" opacity="0.88" />
-          <line x1="180" y1="9" x2="316" y2="45" stroke="#c59a68" strokeWidth="1.2" opacity="0.88" />
-          {/* Grommet eyelets on the folio top edge */}
-          <circle cx="44" cy="45" r="3" fill="#181513" stroke="#b58952" strokeWidth="1.2" />
-          <circle cx="316" cy="45" r="3" fill="#181513" stroke="#b58952" strokeWidth="1.2" />
+        <svg viewBox="0 0 440 58" className="h-full w-full overflow-visible" fill="none">
+          <line x1="220" y1="18" x2="54" y2="54" stroke="#9e7a48" strokeWidth="1.25" opacity="0.85" />
+          <line x1="220" y1="18" x2="386" y2="54" stroke="#9e7a48" strokeWidth="1.25" opacity="0.85" />
+          <circle cx="54" cy="54" r="3" fill="#191310" stroke="#9e7a48" strokeWidth="1.2" />
+          <circle cx="386" cy="54" r="3" fill="#191310" stroke="#9e7a48" strokeWidth="1.2" />
         </svg>
       </div>
-      {/* Central machined brass binding pin */}
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 grid h-5 w-5 place-items-center rounded-full border border-[#f3deb9]/75 bg-gradient-to-b from-[#ead0a0] to-[#9b713d] shadow-[0_4px_10px_rgba(0,0,0,0.68)]">
-        <span className="h-1.5 w-1.5 rounded-full bg-[#3a2610]" />
-      </div>
+      {/* Authentic Venetian Red Sealing-Wax Stamp straddling the top edge */}
+      <img
+        src="/ornaments/crimson-wax-seal.webp"
+        alt=""
+        width="64"
+        height="64"
+        className="absolute left-1/2 top-1 h-13 w-13 -translate-x-1/2 select-none drop-shadow-[0_6px_12px_rgba(0,0,0,0.72)] sm:h-14 sm:w-14"
+      />
     </div>
   );
 }
 
 /**
- * Crisp flat vector crimson letterpress / hanko seal (zero plastic 3D AI wax).
+ * Authentic embossed Deep-Crimson Sealing-Wax Stamp (`#7D1518`).
  */
 export function CrimsonStamp({
-  label = "ATELIER SEAL",
-  className = "h-12 w-12",
+  className = "h-13 w-13",
   stamped = false,
 }: {
   label?: string;
   className?: string;
   stamped?: boolean;
 }) {
-  const rawId = useId();
-  const pathId = `seal-arc-${rawId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
-
   return (
-    <svg
-      viewBox="0 0 80 80"
+    <img
+      src="/ornaments/crimson-wax-seal.webp"
+      alt=""
       aria-hidden="true"
-      className={`shrink-0 select-none ${stamped ? "animate-stamp-press" : "-rotate-6"} ${className}`}
-    >
-      <defs>
-        <path id={pathId} d="M 40,40 m -27,0 a 27,27 0 1,1 54,0 a 27,27 0 1,1 -54,0" />
-      </defs>
-      <circle cx="40" cy="40" r="36" fill="rgba(139, 38, 36, 0.08)" stroke="#8b2624" strokeWidth="2.1" strokeDasharray="48 3 26 2" />
-      <circle cx="40" cy="40" r="31.5" fill="none" stroke="#8b2624" strokeWidth="0.85" opacity="0.85" />
-      <circle cx="40" cy="40" r="18.5" fill="none" stroke="#8b2624" strokeWidth="0.85" opacity="0.8" />
-      <text fill="#8b2624" fontSize="5.4" fontFamily="Cinzel Variable, serif" fontWeight="700" letterSpacing="2.1">
-        <textPath href={`#${pathId}`} startOffset="4%">
-          {label} · LEFICIOUS ·
-        </textPath>
-      </text>
-      {/* Inscribed geometric L */}
-      <path d="M35 28 V47 H48 L45.5 51 H31 V30.5 Z" fill="#8b2624" />
-      <circle cx="44" cy="36" r="2.2" fill="#8b2624" />
-    </svg>
+      width="96"
+      height="96"
+      className={`shrink-0 select-none object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.52)] ${
+        stamped ? "animate-stamp-press" : "-rotate-3"
+      } ${className}`}
+    />
   );
 }
 
 /**
- * Ornamental horizontal brass divider with central diamond finial.
+ * Ornamental horizontal Victorian bronze divider with central crimson diamond finial.
  */
 export function BrassRule({
   tone = "parchment",
@@ -233,37 +208,13 @@ export function BrassRule({
   tone?: "parchment" | "slate";
   className?: string;
 }) {
-  const line = tone === "parchment" ? "bg-[#8c683a]/35" : "bg-warm/30";
-  const gem = tone === "parchment" ? "border-[#8c683a] bg-[#8b2624]" : "border-warm bg-warm";
+  const line = tone === "parchment" ? "bg-[#7a582e]/42" : "bg-warm/32";
+  const gem = tone === "parchment" ? "border-[#7a582e] bg-[#7d1919]" : "border-warm bg-[#7d1919]";
   return (
     <div aria-hidden="true" className={`flex items-center gap-2.5 ${className}`}>
       <span className={`h-px flex-1 ${line}`} />
-      <span className={`h-1.5 w-1.5 rotate-45 border ${gem}`} />
+      <span className={`h-2 w-2 rotate-45 border ${gem}`} />
       <span className={`h-px flex-1 ${line}`} />
     </div>
-  );
-}
-
-/**
- * Global SVG <defs> filter that turns dark-background architectural blueprints
- * and wireframes into lampblack-and-sepia ink engravings on rag-parchment.
- */
-export function InkPlateFilter() {
-  return (
-    <svg aria-hidden="true" className="pointer-events-none fixed h-0 w-0 overflow-hidden">
-      <defs>
-        <filter id="atelier-ink-plate" colorInterpolationFilters="sRGB">
-          {/* Invert dark blueprint background to bright paper, desaturate, and tint to warm lampblack + sepia */}
-          <feColorMatrix
-            type="matrix"
-            values="
-              -0.33 -0.50 -0.17 0 0.94
-              -0.33 -0.50 -0.17 0 0.90
-              -0.33 -0.50 -0.17 0 0.82
-               0     0     0    1 0"
-          />
-        </filter>
-      </defs>
-    </svg>
   );
 }
