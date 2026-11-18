@@ -1,9 +1,9 @@
 @import "tailwindcss" source(none);
 @source "../src";
 
-.gallery-layout { position: relative; display: grid; grid-template-columns: 1fr; gap: 24px; align-items: start; }
+.gallery-layout { position: relative; display: grid; grid-template-columns: 1fr; gap: 22px; align-items: start; }
 @media (min-width: 640px) { .gallery-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1024px) {
+@media (min-width: 1100px) {
   .gallery-layout { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .gallery-layout > [data-wide="true"] { grid-column: span 2; }
 }
@@ -13,8 +13,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
-  --font-display: "Schibsted Grotesk Variable", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", "PingFang SC", "Microsoft YaHei UI", system-ui, sans-serif;
+  --font-display: "Cormorant Variable", "Songti SC", "STSong", "SimSun", Georgia, serif;
+  --font-numeral: "Cinzel Variable", "Cormorant Variable", Georgia, serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
   --radius-xs: 2px;
@@ -37,6 +38,12 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-warm: var(--warm);
+  --color-parchment: var(--parchment);
+  --color-parchment-deep: var(--parchment-deep);
+  --color-parchment-ink: var(--parchment-ink);
+  --color-parchment-muted: var(--parchment-muted);
+  --color-rubric: var(--rubric);
+  --color-spine: var(--spine);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -47,46 +54,53 @@
 }
 
 :root {
-  --radius: 0.1875rem;
+  --radius: 0.125rem;
 
-  /* Neutral deep carbon/graphite ground — zero blue-slate SaaS cast */
-  --background: #0d0e10;
-  --foreground: #eceeef;
+  /* Nocturnal clocktower celestial drafting desk */
+  --background: #0e1017;
+  --foreground: #ece4d4;
 
-  --surface: #141619;
-  --surface-foreground: #eceeef;
+  /* Cotton rag-parchment folio stock */
+  --parchment: #ede4d0;
+  --parchment-deep: #e2d5ba;
+  --parchment-ink: #181513;
+  --parchment-muted: #564e43;
+  --rubric: #8b2624;
 
-  --card: #141619;
-  --card-foreground: #eceeef;
+  /* Bookcloth spine & dark-slate specimen plates */
+  --spine: #090b10;
+  --surface: #141822;
+  --surface-foreground: #ece4d4;
+  --card: #141822;
+  --card-foreground: #ece4d4;
+  --popover: #141822;
+  --popover-foreground: #ece4d4;
 
-  --popover: #141619;
-  --popover-foreground: #eceeef;
+  --primary: #ece4d4;
+  --primary-foreground: #0e1017;
 
-  --primary: #eceeef;
-  --primary-foreground: #0d0e10;
+  --secondary: #1b202d;
+  --secondary-foreground: #ece4d4;
 
-  --secondary: #1c1f24;
-  --secondary-foreground: #eceeef;
+  --muted: #181c28;
+  --muted-foreground: #a49c8e;
 
-  --muted: #181a1f;
-  --muted-foreground: #989da6;
-
-  /* Single brand chromatic accent matching P03-E2 crest brass */
+  /* Burnished antique brass */
   --accent: #c59a68;
-  --accent-foreground: #0d0e10;
+  --accent-foreground: #0e1017;
   --warm: #c59a68;
 
-  --destructive: #c4544e;
-  --destructive-foreground: #fafafa;
+  --destructive: #9e302d;
+  --destructive-foreground: #faf6ee;
 
-  --border: #262930;
-  --input: #262930;
+  --border: rgba(197, 154, 104, 0.28);
+  --input: rgba(197, 154, 104, 0.28);
   --ring: #c59a68;
 }
 
 .dark {
-  --background: #0d0e10;
-  --foreground: #eceeef;
+  --background: #0e1017;
+  --foreground: #ece4d4;
 }
 
 @layer base {
@@ -105,13 +119,13 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4, h5 {
+  h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.022em;
+    letter-spacing: -0.01em;
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-ring);
+    outline: 1.5px solid var(--color-ring);
     outline-offset: 3px;
   }
 
@@ -132,75 +146,224 @@
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
+  .font-numeral { font-family: var(--font-numeral); }
 }
 
-.ambient-backdrop {
-  display: none;
+/* Cotton rag-parchment tactile sheet using real scanned handmade paper fiber */
+.parchment-sheet {
+  position: relative;
+  background-color: var(--parchment);
+  color: var(--parchment-ink);
+  box-shadow:
+    0 24px 64px rgba(3, 5, 10, 0.62),
+    0 4px 14px rgba(0, 0, 0, 0.35),
+    inset 0 0 44px rgba(132, 102, 60, 0.13),
+    inset 0 0 0 1px rgba(145, 110, 62, 0.36);
 }
 
+.parchment-sheet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.14;
+  mix-blend-mode: multiply;
+  background-image: url("/textures/rag-paper-tile.webp");
+  background-size: 360px 360px;
+}
+
+/* Dark-slate linen folio / specimen card */
+.slate-folio {
+  background: linear-gradient(165deg, #1b202e 0%, #121620 100%);
+  color: var(--foreground);
+  box-shadow:
+    0 18px 48px rgba(3, 5, 10, 0.56),
+    inset 0 0 0 1px rgba(197, 154, 104, 0.25);
+}
+
+/* Ensure packed gallery cards (both parchment-sheet & slate-folio) position absolutely inside GalleryLayout */
+.gallery-card {
+  position: relative;
+}
+
+.gallery-layout--packed > .gallery-card {
+  position: absolute;
+}
+
+/* Brushed antique brass plaque */
+.brass-plaque {
+  background: linear-gradient(180deg, #d3b17e 0%, #b58952 100%);
+  color: #16120d;
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 245, 224, 0.48),
+    inset 0 -1px 0 rgba(74, 50, 22, 0.45);
+}
+
+.brass-plaque:hover {
+  background: linear-gradient(180deg, #dec090 0%, #c1955d 100%);
+}
+
+/* Duotone engraving look for architectural blueprints on rag-parchment */
+.ink-engraving {
+  filter: url(#atelier-ink-plate) contrast(1.08);
+  transition: filter 320ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .ink-engraving,
+.ink-engraving:hover {
+  filter: none;
+}
+
+/* Persistent shell & route transition names */
 .site-header {
   view-transition-name: site-header;
+}
+
+.celestial-mat {
+  view-transition-name: celestial-mat;
 }
 
 .route-stage {
   view-transition-name: route-content;
 }
 
+/* ============================================================================
+ * F-01 TACTILE MOTION & PAGE TRANSITIONS (380ms - 500ms, ZERO SCROLL LOCK)
+ * ========================================================================== */
+
 @media (prefers-reduced-motion: no-preference) {
-  @keyframes route-fade-out {
-    from { opacity: 1; }
-    to { opacity: 0; }
+  /* 01. Route Swap: Desk Clear & Deal */
+  @keyframes desk-sheet-clear {
+    from {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translate3d(-34px, 12px, 0) rotate(-2.2deg) scale(0.985);
+    }
   }
 
-  @keyframes route-fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  @keyframes desk-sheet-deal {
+    from {
+      opacity: 0;
+      transform: translate3d(28px, 16px, 0) rotate(1.6deg) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+  }
+
+  /* 02. Binder Shuffle: Pin Unlatch & Folio Arc */
+  @keyframes folio-arc-in {
+    0% {
+      opacity: 0.45;
+      transform: translate3d(26px, 16px, 0) rotate(2.6deg) scale(0.965);
+    }
+    68% {
+      opacity: 1;
+      transform: translate3d(-2px, -2px, 0) rotate(-0.25deg) scale(1.003);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+  }
+
+  @keyframes pin-latch-drop {
+    0% { transform: translateY(-7px) scale(1.08); }
+    100% { transform: translateY(0) scale(1); }
+  }
+
+  /* 03. Case-Study Dive: Unfolding Architectural Folio + Brass Hairline Draw */
+  @keyframes folio-unfold {
+    from {
+      opacity: 0;
+      transform-origin: top center;
+      transform: translateY(-10px) scaleY(0.965);
+    }
+    to {
+      opacity: 1;
+      transform-origin: top center;
+      transform: translateY(0) scaleY(1);
+    }
+  }
+
+  @keyframes brass-rule-draw {
+    from { transform: scaleX(0); opacity: 0.3; }
+    to { transform: scaleX(1); opacity: 1; }
+  }
+
+  /* Crimson letterpress stamp press */
+  @keyframes stamp-press {
+    0% { transform: scale(1.22) rotate(-8deg); opacity: 0.6; }
+    55% { transform: scale(0.94) rotate(-3deg); opacity: 1; }
+    100% { transform: scale(1) rotate(-4deg); opacity: 1; }
+  }
+
+  .animate-folio-arc {
+    animation: folio-arc-in 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .animate-pin-latch {
+    animation: pin-latch-drop 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .animate-folio-unfold {
+    animation: folio-unfold 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .animate-brass-rule {
+    transform-origin: left center;
+    animation: brass-rule-draw 520ms 90ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .animate-stamp-press {
+    animation: stamp-press 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
 
 ::view-transition-old(root),
 ::view-transition-new(root),
 ::view-transition-old(site-header),
-::view-transition-new(site-header) {
+::view-transition-new(site-header),
+::view-transition-old(celestial-mat),
+::view-transition-new(celestial-mat) {
   animation: none;
   mix-blend-mode: normal;
 }
 
 ::view-transition-group(site-header) {
-  z-index: 50;
+  z-index: 60;
+}
+
+::view-transition-group(celestial-mat) {
+  z-index: 0;
 }
 
 ::view-transition-group(route-content) {
-  animation-duration: 160ms;
-  animation-timing-function: ease-out;
+  animation-duration: 460ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 ::view-transition-old(route-content) {
-  animation: route-fade-out 90ms ease-out both;
+  animation: desk-sheet-clear 175ms ease-in both;
   mix-blend-mode: normal;
 }
 
 ::view-transition-new(route-content) {
-  animation: route-fade-in 140ms 30ms ease-out both;
+  animation: desk-sheet-deal 360ms 85ms cubic-bezier(0.22, 1, 0.36, 1) both;
   mix-blend-mode: normal;
 }
 
-html.language-switching::view-transition-group(route-content),
-html.language-switching::view-transition-group(site-header) {
-  animation-duration: 140ms;
-  animation-timing-function: ease-out;
+html.language-switching::view-transition-old(route-content) {
+  animation: desk-sheet-clear 110ms ease-in both;
 }
 
-html.language-switching::view-transition-old(route-content),
-html.language-switching::view-transition-old(site-header) {
-  animation: route-fade-out 80ms ease-out both;
-  mix-blend-mode: normal;
-}
-
-html.language-switching::view-transition-new(route-content),
-html.language-switching::view-transition-new(site-header) {
-  animation: route-fade-in 120ms 20ms ease-out both;
-  mix-blend-mode: normal;
+html.language-switching::view-transition-new(route-content) {
+  animation: desk-sheet-deal 220ms 40ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -212,31 +375,15 @@ html.language-switching::view-transition-new(site-header) {
   }
 }
 
-/* Faint, static relief contour print in wide desktop margins only */
-@media (min-width: 1280px) {
-  .ambient-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    display: block;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .ambient-backdrop__map {
-    position: absolute;
-    inset: 0;
-    mask-image:
-      linear-gradient(to right, black 0%, black calc(50% - 630px), transparent calc(50% - 555px), transparent calc(50% + 555px), black calc(50% + 630px), black 100%),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.55) 55%, transparent 94%);
-    mask-composite: intersect;
-    -webkit-mask-composite: source-in;
-  }
+/* Native CJK editorial rendering for Chinese routes */
+html[lang="zh-CN"] body {
+  font-family: "PingFang SC", "Microsoft YaHei UI", "Noto Sans CJK SC", system-ui, sans-serif;
 }
 
-/* Use native CJK rendering for Chinese prose. */
-html[lang="zh-CN"] body {
-  font-family: "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", system-ui, sans-serif;
+html[lang="zh-CN"] h1,
+html[lang="zh-CN"] h2,
+html[lang="zh-CN"] h3 {
+  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "PingFang SC", serif;
 }
 
 html[lang="zh-CN"] .zh-readable {

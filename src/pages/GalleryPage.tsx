@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { FolioCorners } from "../components/AtelierChrome";
 import { FeaturedReel } from "../components/FeaturedReel";
+import { GalleryLayout } from "../components/GalleryLayout";
 import { GalleryLightbox } from "../components/GalleryLightbox";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
-import { GalleryLayout } from "../components/GalleryLayout";
-import { galleryCaptions, wideGalleryEntries } from "../lib/galleryPresentation";
 import { galleryEntries, galleryTags, type GalleryEntry, type GalleryTag } from "../lib/gallery";
+import { galleryCaptions, wideGalleryEntries } from "../lib/galleryPresentation";
 import { useLanguage } from "../lib/language";
 import { galleryTagZh, localizeGalleryEntry } from "../lib/localizedContent";
 
@@ -15,6 +16,8 @@ export function GalleryPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const [reelExpanded, setReelExpanded] = useState(false);
+
   const requestedTag = searchParams.get("tag");
   const activeTag = galleryTags.includes(requestedTag as GalleryTag) ? (requestedTag as GalleryTag) : "All";
 
@@ -27,12 +30,21 @@ export function GalleryPage() {
 
   const [slide, setSlide] = useState(0);
   const triggerRef = useRef<HTMLElement | null>(null);
-  const selectedSource = galleryEntries.find((entry) => entry.id === searchParams.get("entry")) ?? null;
+  const selectedId = searchParams.get("entry");
+  const selectedSource = galleryEntries.find((entry) => entry.id === selectedId) ?? null;
   const selected = selectedSource ? localizeGalleryEntry(selectedSource, isChinese) : null;
 
   useEffect(() => {
     if (!selectedSource) triggerRef.current?.focus({ preventScroll: true });
   }, [selectedSource]);
+
+  const tagCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: galleryEntries.length };
+    for (const tag of galleryTags) {
+      counts[tag] = galleryEntries.filter((e) => e.tags.includes(tag)).length;
+    }
+    return counts;
+  }, []);
 
   const visibleEntries = useMemo(() => {
     const filtered = activeTag === "All" ? galleryEntries : galleryEntries.filter((entry) => entry.tags.includes(activeTag));
@@ -40,6 +52,16 @@ export function GalleryPage() {
       .sort((a, b) => Number(Boolean(b.pinned)) - Number(Boolean(a.pinned)))
       .map((entry) => localizeGalleryEntry(entry, isChinese));
   }, [activeTag, isChinese]);
+
+  const selectedIndexInVisible = useMemo(() => {
+    if (!selected) return -1;
+    return visibleEntries.findIndex((e) => e.id === selected.id);
+  }, [selected, visibleEntries]);
+
+  const nextVisibleEntry =
+    visibleEntries.length > 1 && selectedIndexInVisible !== -1
+      ? visibleEntries[(selectedIndexInVisible + 1) % visibleEntries.length]
+      : null;
 
   const openEntry = useCallback(
     (entry: GalleryEntry) => {
@@ -52,6 +74,14 @@ export function GalleryPage() {
     [searchParams, setSearchParams],
   );
 
+  const stepToNextEntry = useCallback(() => {
+    if (!nextVisibleEntry) return;
+    setSlide(0);
+    const next = new URLSearchParams(searchParams);
+    next.set("entry", nextVisibleEntry.id);
+    setSearchParams(next, { replace: true, state: location.state });
+  }, [location.state, nextVisibleEntry, searchParams, setSearchParams]);
+
   const closeEntry = useCallback(() => {
     if (location.state?.galleryEntryOpened) navigate(-1);
     else {
@@ -62,9 +92,9 @@ export function GalleryPage() {
   }, [location.state, navigate, searchParams, setSearchParams]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen text-foreground">
       <Seo
-        title={text("Gallery | Leficious", "作品集 | Leficious")}
+        title={text("Atelier Gallery | Leficious", "视觉与技术画廊 | Leficious")}
         description={text(
           "3D environment art, character rigging, realtime VFX, technical prototypes, and Maya tooling by Lefi (Kevin) Shan.",
           "单凯飞（Leficious）的 3D 环境美术、角色绑定、实时特效、技术原型与 Maya 工具作品集。",
@@ -74,118 +104,228 @@ export function GalleryPage() {
         imageWidth={1000}
         imageHeight={563}
       />
+
       <div aria-hidden={selected ? "true" : undefined} inert={selected ? true : undefined}>
-        <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6">
-          <section className="border-b border-border py-10 md:py-14" aria-labelledby="environment-reel-title">
-            <div className="mb-6 flex flex-wrap items-baseline justify-between gap-4">
-              <h1 id="environment-reel-title" className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-                {text("Environment & Props Reel", "环境与道具作品集锦")}
+        <main id="main-content" tabIndex={-1} className="mx-auto max-w-[1260px] px-5 pt-8 sm:px-8 lg:pt-10">
+          {/* Compact Atelier Salon Header + Expandable Environment Reel */}
+          <header className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+            <div>
+              <p className="font-numeral text-[11px] tracking-[0.24em] text-warm/90">
+                {text("SALON SPECIMEN WALL · ARCHIVE", "工作室视觉与技术标本馆")}
+              </p>
+              <h1 className="mt-1.5 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                {text("Atelier Archive & Visual Studies", "视觉美术与技术拆解画廊")}
               </h1>
-              <span className="font-mono text-xs text-muted-foreground">2026</span>
+              <p className="mt-1 font-display text-base italic text-[#d58278] sm:text-lg">
+                {text(
+                  "Realtime 3D Environments, Character Rigging, Shaders & Maya Pipeline Tooling",
+                  "实时 3D 场景、角色绑定毛发、程序化材质与 Maya 工具管线",
+                )}
+              </p>
             </div>
 
-            <FeaturedReel
-              id="t5MchABcd3c"
-              thumbnailSrc="/reels/environment-props-reel-2026.jpg"
-              title={text("Environment & Props Reel 2026", "2026 环境与道具作品集锦")}
-              description={text(
-                "Realtime 3D environments, hero props, Substance material graphs, stylized foliage, and scene lighting.",
-                "实时 3D 场景、核心道具、Substance 程序化材质、风格化植被与灯光作品。",
-              )}
-            />
+            {/* Compact Live-Looping Environment Reel Card + 3D Art CV Plaque */}
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setReelExpanded((prev) => !prev)}
+                aria-expanded={reelExpanded}
+                className="slate-folio group flex cursor-pointer items-center gap-3.5 rounded-xs border border-warm/45 p-2 pr-4 text-left transition-colors hover:border-[#dfc092]"
+              >
+                <span className="relative block h-12 w-21 shrink-0 overflow-hidden rounded-xs border border-warm/35 bg-black">
+                  <video
+                    src="/loops/env-reel.mp4"
+                    poster="/reels/environment-props-reel-2026.jpg"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="h-full w-full object-cover"
+                  />
+                  <span className="absolute inset-0 grid place-items-center bg-black/25 text-xs text-[#f6e6c5] transition-colors group-hover:bg-black/10">
+                    {reelExpanded ? "−" : "▶"}
+                  </span>
+                </span>
+                <span>
+                  <span className="block font-display text-sm font-bold text-foreground transition-colors group-hover:text-[#dfc092]">
+                    {text("Environment & Props Reel 2026", "2026 环境与道具作品集锦")}
+                  </span>
+                  <span className="block font-mono text-[11px] text-muted-foreground">
+                    {reelExpanded
+                      ? text("Hide stage ↑", "收起播放器 ↑")
+                      : text("Expand 16:9 reel w/ audio ↓", "展开带音效高清集锦 ↓")}
+                  </span>
+                </span>
+              </button>
 
-            {!isChinese && (
-              <div className="mt-5 flex justify-end">
+              {!isChinese && (
                 <a
                   href="/resume/Leficious_3D_Environment_Artist_Resume.pdf"
                   download
-                  className="inline-flex items-center gap-2.5 rounded-xs border border-border bg-surface px-4 py-2.5 text-xs font-medium text-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background"
+                  className="brass-plaque inline-flex items-center gap-2 rounded-xs px-4 py-3 font-display text-xs font-bold tracking-wide transition-transform active:scale-95"
                 >
-                  Download 3D environment art résumé (PDF) <span aria-hidden="true">↓</span>
+                  <span>3D Art Résumé</span>
+                  <span aria-hidden="true">↓</span>
                 </a>
-              </div>
-            )}
-          </section>
+              )}
+            </div>
+          </header>
 
-          <section className="py-10 md:py-14" aria-label={text("Archive", "全部作品")}>
-            <div className="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-6">
-              <div className="flex flex-wrap gap-1.5" role="group" aria-label={text("Filter by discipline", "按类别筛选")}>
-                {["All", ...galleryTags].map((tag) => {
+          {/* Expandable Full-Width Theater Stage for Environment Reel */}
+          {reelExpanded && (
+            <section className="animate-folio-unfold mt-6 rounded-xs border border-warm/40 bg-[#0d1018] p-3 sm:p-4">
+              <FeaturedReel
+                id="t5MchABcd3c"
+                autoStart
+                thumbnailSrc="/reels/environment-props-reel-2026.jpg"
+                title={text("Environment & Props Reel 2026", "2026 环境与道具作品集锦")}
+                description={text(
+                  "Realtime 3D environments, hero props, Substance material graphs, stylized foliage, and scene lighting.",
+                  "实时 3D 场景、核心道具、Substance 程序化材质、风格化植被与灯光作品。",
+                )}
+              />
+            </section>
+          )}
+
+          {/* Stepped Physical File-Folder Filter Tabs Sitting on Horizontal Brass Rule */}
+          <section className="mt-8 pb-12 md:mt-10" aria-label={text("Archive", "全部作品")}>
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-3 border-b border-warm/45">
+              <div
+                className="flex flex-wrap items-end gap-1"
+                role="group"
+                aria-label={text("Filter by discipline", "按类别筛选")}
+              >
+                {(["All", ...galleryTags] as const).map((tag) => {
                   const active = activeTag === tag;
+                  const label = tag === "All" ? text("All Plates", "全部图版") : isChinese ? galleryTagZh[tag] : tag;
                   return (
                     <button
                       key={tag}
                       type="button"
                       aria-pressed={active}
-                      onClick={() => setActiveTag(tag as GalleryTag | "All")}
-                      className={`cursor-pointer rounded-xs border px-3 py-1.5 text-xs font-medium transition-colors ${
+                      onClick={() => setActiveTag(tag)}
+                      className={`relative -mb-px inline-flex cursor-pointer items-center gap-2 rounded-t-sm px-3.5 py-2 font-display text-xs font-bold tracking-wide transition-all sm:px-4 sm:text-[13px] ${
                         active
-                          ? "border-foreground bg-foreground text-background"
-                          : "border-border bg-surface text-muted-foreground hover:border-foreground/45 hover:text-foreground"
+                          ? "parchment-sheet z-10 border-x border-t-2 border-[#8c683a]/65 border-t-rubric py-2.5 text-parchment-ink"
+                          : "border-x border-t border-warm/25 bg-[#141822]/90 text-muted-foreground hover:bg-[#1c2130] hover:text-foreground"
                       }`}
                     >
-                      {tag === "All" ? text("All", "全部") : isChinese ? galleryTagZh[tag as GalleryTag] : tag}
+                      {active && <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-rubric" />}
+                      <span>{label}</span>
+                      <span
+                        className={`font-mono text-[10.5px] font-normal ${
+                          active ? "text-parchment-muted" : "text-muted-foreground/75"
+                        }`}
+                      >
+                        ({tagCounts[tag] ?? 0})
+                      </span>
                     </button>
                   );
                 })}
               </div>
 
-              <p className="font-mono text-xs text-muted-foreground" aria-live="polite">
-                {visibleEntries.length} {text(visibleEntries.length === 1 ? "work" : "works", "项作品")}
+              <p className="pb-2 font-numeral text-[11px] tracking-[0.18em] text-warm/80" aria-live="polite">
+                {visibleEntries.length} {text(visibleEntries.length === 1 ? "SPECIMEN" : "SPECIMENS", "件标本")}
               </p>
             </div>
 
+            {/* Mixed-Stock Salon Specimen Wall (Parchment Pinned Plates + Dark-Slate Specimen Cards) */}
             <GalleryLayout>
-              {visibleEntries.map((entry, index) => (
-                <button
-                  key={entry.id}
-                  data-wide={wideGalleryEntries.has(entry.id)}
-                  type="button"
-                  onClick={() => openEntry(entry)}
-                  className="gallery-card group flex w-full cursor-pointer flex-col overflow-hidden rounded-xs border border-border bg-surface text-left transition-colors duration-200 hover:border-foreground/45"
-                  aria-label={`${text("Open", "打开")} ${entry.title}, ${entry.media.length} ${text(entry.media.length === 1 ? "item" : "items", "项内容")}`}
-                >
-                  <div className="relative w-full shrink-0 overflow-hidden bg-muted">
-                    <img
-                      src={entry.cover}
-                      alt={entry.coverAlt}
-                      width="1200"
-                      height="675"
-                      loading={index < 3 ? "eager" : "lazy"}
-                      decoding="async"
-                      className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.015]"
-                    />
-                    {entry.id === "tenebria-character-rig" && (
-                      <img
-                        src="/gallery/artstation/tenebria/braids-back-render.avif"
-                        alt={text("Tenebria braid detail", "Tenebria 编发细节")}
-                        width="2160"
-                        height="3840"
-                        loading="lazy"
-                        className="block max-h-[360px] w-full border-t border-border object-cover object-top"
-                      />
-                    )}
-                  </div>
-                  <div className="flex w-full flex-col p-4">
-                    <div className="flex items-baseline justify-between gap-4">
-                      <h2 className="font-display text-base font-semibold tracking-tight transition-colors group-hover:text-warm sm:text-lg">
-                        {entry.title}
-                      </h2>
-                      <span className="shrink-0 font-mono text-[11px] text-muted-foreground">
-                        {entry.year}
+              {visibleEntries.map((entry, index) => {
+                const isPinned = Boolean(entry.pinned);
+                const plateLabel = `PLATE ${String(index + 1).padStart(2, "0")}`;
+                const caption = galleryCaptions[entry.id]?.[isChinese ? 1 : 0] ?? entry.contribution;
+
+                return (
+                  <button
+                    key={entry.id}
+                    data-wide={wideGalleryEntries.has(entry.id)}
+                    type="button"
+                    onClick={() => openEntry(entry)}
+                    aria-label={`${text("Inspect", "检视图版")} ${entry.title}, ${entry.media.length} ${text(
+                      entry.media.length === 1 ? "pass" : "passes",
+                      "张分解图",
+                    )}`}
+                    className={`gallery-card group flex w-full cursor-pointer flex-col overflow-hidden rounded-xs p-3 text-left transition-transform duration-300 hover:-translate-y-1 sm:p-3.5 ${
+                      isPinned
+                        ? "parchment-sheet border-[3px] border-[#151821]"
+                        : "slate-folio hover:shadow-[0_22px_54px_rgba(3,5,10,0.72),inset_0_0_0_1px_rgba(223,192,146,0.52)]"
+                    }`}
+                  >
+                    <FolioCorners tone={isPinned ? "parchment" : "slate"} inset="inset-1.5" />
+
+                    {/* Top Plate Index Header */}
+                    <div className="relative z-10 mb-2 flex w-full items-center justify-between px-1">
+                      <span
+                        className={`font-numeral text-[10.5px] font-semibold tracking-[0.18em] ${
+                          isPinned ? "text-parchment-muted" : "text-warm/85"
+                        }`}
+                      >
+                        {plateLabel} · {entry.year}
+                      </span>
+                      <span
+                        className={`font-mono text-[10.5px] ${
+                          isPinned ? "text-rubric" : "text-muted-foreground group-hover:text-[#dfc092]"
+                        }`}
+                      >
+                        {entry.media.length} {text(entry.media.length === 1 ? "PASS" : "PASSES", "图层")} →
                       </span>
                     </div>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                      {galleryCaptions[entry.id]?.[isChinese ? 1 : 0] ?? entry.contribution}
-                    </p>
-                  </div>
-                </button>
-              ))}
+
+                    {/* Framed Artwork Bevel */}
+                    <div
+                      className={`relative z-10 w-full shrink-0 overflow-hidden rounded-xs border bg-[#0b0d13] ${
+                        isPinned ? "border-[#735329]/55" : "border-warm/28"
+                      }`}
+                    >
+                      <img
+                        src={entry.cover}
+                        alt={entry.coverAlt}
+                        width="1200"
+                        height="675"
+                        loading={index < 4 ? "eager" : "lazy"}
+                        decoding="async"
+                        className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.018]"
+                      />
+                      {entry.id === "tenebria-character-rig" && (
+                        <img
+                          src="/gallery/artstation/tenebria/braids-back-render.avif"
+                          alt={text("Tenebria braid detail", "Tenebria 编发细节")}
+                          width="2160"
+                          height="3840"
+                          loading="lazy"
+                          className="block max-h-[340px] w-full border-t border-[#735329]/45 object-cover object-top"
+                        />
+                      )}
+                    </div>
+
+                    {/* Curatorial Plate Caption */}
+                    <div className="relative z-10 flex w-full flex-col px-1 pt-3 pb-0.5">
+                      <h2
+                        className={`font-display text-lg font-bold leading-snug tracking-tight transition-colors sm:text-[19px] ${
+                          isPinned
+                            ? "text-parchment-ink group-hover:text-rubric"
+                            : "text-foreground group-hover:text-[#dfc092]"
+                        }`}
+                      >
+                        {entry.title}
+                      </h2>
+                      <p
+                        className={`mt-1 text-xs leading-relaxed sm:text-[13px] ${
+                          isPinned ? "text-parchment-muted" : "text-muted-foreground"
+                        }`}
+                      >
+                        {caption}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
             </GalleryLayout>
 
             {!visibleEntries.length && (
               <p className="py-20 text-center text-muted-foreground">
-                {text("No entries use this tag yet.", "暂时没有使用该标签的作品。")}
+                {text("No specimen plates match this discipline.", "暂时没有属于该类别的作品。")}
               </p>
             )}
           </section>
@@ -193,7 +333,17 @@ export function GalleryPage() {
         <SiteFooter />
       </div>
 
-      {selected && <GalleryLightbox entry={selected} slide={slide} onSlideChange={setSlide} onClose={closeEntry} />}
+      {selected && (
+        <GalleryLightbox
+          entry={selected}
+          plateNumber={selectedIndexInVisible >= 0 ? selectedIndexInVisible + 1 : 1}
+          slide={slide}
+          onSlideChange={setSlide}
+          onClose={closeEntry}
+          onNextEntry={nextVisibleEntry ? stepToNextEntry : undefined}
+          nextEntryTitle={nextVisibleEntry?.title}
+        />
+      )}
     </div>
   );
 }

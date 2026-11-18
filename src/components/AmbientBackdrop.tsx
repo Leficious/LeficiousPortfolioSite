@@ -1,221 +1,169 @@
-import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
-type StaticPeak = {
-  x: number;
-  y: number;
-  amplitude: number;
-  cosA: number;
-  sinA: number;
-  invSX2: number;
-  invSY2: number;
-  reach: number;
-};
-
-function seededRandom(seedText: string) {
-  let seed = 2166136261;
-  for (const character of seedText) {
-    seed ^= character.charCodeAt(0);
-    seed = Math.imul(seed, 16777619);
-  }
-  return () => {
-    seed += 0x6d2b79f5;
-    let value = seed;
-    value = Math.imul(value ^ (value >>> 15), value | 1);
-    value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
-    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+const OUTER_TICKS = Array.from({ length: 72 }, (_, idx) => {
+  const deg = idx * 5;
+  const rad = (deg * Math.PI) / 180;
+  const major = deg % 30 === 0;
+  const mid = deg % 15 === 0;
+  const r1 = major ? 404 : mid ? 412 : 417;
+  const r2 = 424;
+  return {
+    x1: (500 + Math.cos(rad) * r1).toFixed(1),
+    y1: (500 + Math.sin(rad) * r1).toFixed(1),
+    x2: (500 + Math.cos(rad) * r2).toFixed(1),
+    y2: (500 + Math.sin(rad) * r2).toFixed(1),
+    major,
+    deg,
+    lx: (500 + Math.cos(rad) * 392).toFixed(1),
+    ly: (500 + Math.sin(rad) * 392).toFixed(1),
   };
+});
+
+const INNER_TICKS = Array.from({ length: 36 }, (_, idx) => {
+  const rad = (idx * 10 * Math.PI) / 180;
+  const major = idx % 3 === 0;
+  const r1 = major ? 268 : 274;
+  const r2 = 280;
+  return {
+    x1: (500 + Math.cos(rad) * r1).toFixed(1),
+    y1: (500 + Math.sin(rad) * r1).toFixed(1),
+    x2: (500 + Math.cos(rad) * r2).toFixed(1),
+    y2: (500 + Math.sin(rad) * r2).toFixed(1),
+    major,
+  };
+});
+
+function routeBearing(pathname: string, stepIndex = 0) {
+  const clean = pathname.replace(/^\/zh(?=\/|$)/, "") || "/";
+  let base = 0;
+  if (clean.startsWith("/gallery")) base = 60;
+  else if (clean.startsWith("/about")) base = 120;
+  else if (clean.startsWith("/projects/still-life")) base = 30;
+  else if (clean.startsWith("/projects/an-echo-has-no-shape")) base = 90;
+  else if (clean.startsWith("/projects/fallen-valkyrie")) base = 150;
+  else if (clean.startsWith("/projects/starshore")) base = 210;
+  else if (clean.startsWith("/projects/sacred-forest")) base = 270;
+  return base + stepIndex * 24;
 }
 
-const MS_EDGES: number[][][] = [
-  [],
-  [[3, 2]],
-  [[2, 1]],
-  [[3, 1]],
-  [[0, 1]],
-  [[0, 3], [2, 1]],
-  [[0, 2]],
-  [[0, 3]],
-  [[0, 3]],
-  [[0, 2]],
-  [[0, 1], [3, 2]],
-  [[0, 1]],
-  [[3, 1]],
-  [[2, 1]],
-  [[3, 2]],
-  [],
-];
-
-const CONTOUR_LEVELS = [0.22, 0.36, 0.5, 0.65, 0.8];
-
 /**
- * Quiet, static architectural contour relief in wide desktop gutters.
- * Renders once on mount/resize — zero animation loop, zero cursor tracking,
- * zero sonar pulses, and zero HUD labels.
+ * Persistent nocturnal celestial drafting mat (`#0E1017`).
+ * 100% mathematical vector `<svg>` — rotates its outer and inner astrolabe dials
+ * smoothly (`520ms` GPU transform) whenever the route or active binder tab changes.
  */
-export function AmbientBackdrop() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d");
-    if (!context) return;
-
-    const desktop = window.matchMedia("(min-width: 1280px)");
-    const cellSize = 16;
-
-    const renderStaticContours = () => {
-      if (!desktop.matches) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        return;
-      }
-
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
-      context.clearRect(0, 0, width, height);
-
-      const contentWidth = Math.min(1152, width - 48);
-      const contentLeft = (width - contentWidth) / 2;
-      const contentRight = width - contentLeft;
-      if (contentLeft < 60) return;
-
-      const cleanRoute = pathname.replace(/^\/zh(?=\/|$)/, "") || "/";
-      const random = seededRandom(`contour-${cleanRoute}`);
-      const peaksPerSide = 4;
-      const rows = Math.ceil(height / cellSize);
-
-      (["left", "right"] as const).forEach((side) => {
-        const minX = side === "left" ? 0 : Math.max(contentRight - 16, width - contentLeft);
-        const maxX = side === "left" ? contentLeft + 16 : width;
-        if (maxX - minX < 40) return;
-
-        const cols = Math.ceil((maxX - minX) / cellSize);
-        const stride = cols + 1;
-        const field = new Float32Array((rows + 1) * stride);
-
-        const peaks: StaticPeak[] = [];
-        for (let i = 0; i < peaksPerSide; i += 1) {
-          const x = minX + (0.18 + random() * 0.64) * (maxX - minX);
-          const y = ((i + 0.2 + random() * 0.55) / peaksPerSide) * (height * 0.85) + 32;
-          const amplitude = 0.72 + random() * 0.36;
-          const sigmaX = Math.max(48, (maxX - minX) * (0.34 + random() * 0.22));
-          const sigmaY = 95 + random() * 75;
-          const angle = (random() - 0.5) * 0.75;
-          peaks.push({
-            x,
-            y,
-            amplitude,
-            cosA: Math.cos(angle),
-            sinA: Math.sin(angle),
-            invSX2: 1 / (sigmaX * sigmaX),
-            invSY2: 1 / (sigmaY * sigmaY),
-            reach: Math.max(sigmaX, sigmaY) * 2.5,
-          });
-        }
-
-        for (let r = 0; r <= rows; r += 1) {
-          const y = r * cellSize;
-          const rowOff = r * stride;
-          for (let c = 0; c <= cols; c += 1) {
-            const x = minX + c * cellSize;
-            field[rowOff + c] = 0.06 * Math.sin(x * 0.014) * Math.cos(y * 0.011);
-          }
-        }
-
-        for (const p of peaks) {
-          const c0 = Math.max(0, Math.floor((p.x - p.reach - minX) / cellSize));
-          const c1 = Math.min(cols, Math.ceil((p.x + p.reach - minX) / cellSize));
-          const r0 = Math.max(0, Math.floor((p.y - p.reach) / cellSize));
-          const r1 = Math.min(rows, Math.ceil((p.y + p.reach) / cellSize));
-
-          for (let r = r0; r <= r1; r += 1) {
-            const dy = r * cellSize - p.y;
-            const rowOff = r * stride;
-            for (let c = c0; c <= c1; c += 1) {
-              const dx = minX + c * cellSize - p.x;
-              const rx = dx * p.cosA - dy * p.sinA;
-              const ry = dx * p.sinA + dy * p.cosA;
-              const d2 = rx * rx * p.invSX2 + ry * ry * p.invSY2;
-              if (d2 < 6.2) {
-                field[rowOff + c] += p.amplitude * Math.exp(-d2);
-              }
-            }
-          }
-        }
-
-        CONTOUR_LEVELS.forEach((level, levelIdx) => {
-          const isIndex = levelIdx === 1 || levelIdx === 3;
-          context.beginPath();
-
-          for (let r = 0; r < rows; r += 1) {
-            const y0 = r * cellSize;
-            const rowOff = r * stride;
-            const nextOff = (r + 1) * stride;
-
-            for (let c = 0; c < cols; c += 1) {
-              const vTL = field[rowOff + c];
-              const vTR = field[rowOff + c + 1];
-              const vBR = field[nextOff + c + 1];
-              const vBL = field[nextOff + c];
-
-              let mask = 0;
-              if (vTL >= level) mask |= 8;
-              if (vTR >= level) mask |= 4;
-              if (vBR >= level) mask |= 2;
-              if (vBL >= level) mask |= 1;
-              if (mask === 0 || mask === 15) continue;
-
-              const x0 = minX + c * cellSize;
-              for (const [e1, e2] of MS_EDGES[mask]) {
-                const interp = (edge: number): [number, number] => {
-                  if (edge === 0) {
-                    const f = Math.max(0, Math.min(1, (level - vTL) / (vTR - vTL || 1e-5)));
-                    return [x0 + f * cellSize, y0];
-                  }
-                  if (edge === 1) {
-                    const f = Math.max(0, Math.min(1, (level - vTR) / (vBR - vTR || 1e-5)));
-                    return [x0 + cellSize, y0 + f * cellSize];
-                  }
-                  if (edge === 2) {
-                    const f = Math.max(0, Math.min(1, (level - vBL) / (vBR - vBL || 1e-5)));
-                    return [x0 + f * cellSize, y0 + cellSize];
-                  }
-                  const f = Math.max(0, Math.min(1, (level - vTL) / (vBL - vTL || 1e-5)));
-                  return [x0, y0 + f * cellSize];
-                };
-                const [x1, y1] = interp(e1);
-                const [x2, y2] = interp(e2);
-                context.moveTo(x1, y1);
-                context.lineTo(x2, y2);
-              }
-            }
-          }
-
-          context.strokeStyle = isIndex
-            ? "rgba(197, 154, 104, 0.11)"
-            : "rgba(236, 238, 239, 0.068)";
-          context.lineWidth = isIndex ? 0.9 : 0.7;
-          context.stroke();
-        });
-      });
-    };
-
-    renderStaticContours();
-    window.addEventListener("resize", renderStaticContours);
-    return () => window.removeEventListener("resize", renderStaticContours);
-  }, [pathname]);
+  const bearing = routeBearing(pathname, dialStep);
+  const innerBearing = -Math.round(bearing * 0.65);
 
   return (
-    <div aria-hidden="true" className="ambient-backdrop">
-      <canvas ref={canvasRef} className="ambient-backdrop__map" />
+    <div
+      aria-hidden="true"
+      className="celestial-mat pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#0e1017]"
+    >
+      {/* Subtle radial studio desk falloff */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_54%_46%,rgba(34,42,64,0.36)_0%,rgba(14,16,23,0.92)_72%,#090b10_100%)]" />
+
+      {/* Outer drafting mat frame hairlines on desktop */}
+      <div className="absolute inset-y-4 left-[92px] right-5 hidden border border-[#c59a68]/16 lg:block">
+        <span className="absolute -left-1 -top-1 h-2 w-2 border-l border-t border-[#c59a68]/45" />
+        <span className="absolute -right-1 -top-1 h-2 w-2 border-r border-t border-[#c59a68]/45" />
+        <span className="absolute -bottom-1 -left-1 h-2 w-2 border-b border-l border-[#c59a68]/45" />
+        <span className="absolute -bottom-1 -right-1 h-2 w-2 border-b border-r border-[#c59a68]/45" />
+      </div>
+
+      {/* Mathematical Celestial Astrolabe Etching */}
+      <svg
+        viewBox="0 0 1000 1000"
+        className="absolute left-1/2 top-1/2 h-[min(126vh,1180px)] w-[min(126vh,1180px)] -translate-x-[47%] -translate-y-1/2 opacity-90"
+        fill="none"
+      >
+        {/* Fixed cardinal & diagonal surveyor axes */}
+        <line x1="40" y1="500" x2="960" y2="500" stroke="#ece4d4" strokeWidth="0.55" opacity="0.07" />
+        <line x1="500" y1="40" x2="500" y2="960" stroke="#ece4d4" strokeWidth="0.55" opacity="0.07" />
+        <line x1="150" y1="150" x2="850" y2="850" stroke="#c59a68" strokeWidth="0.5" strokeDasharray="4 6" opacity="0.08" />
+        <line x1="850" y1="150" x2="150" y2="850" stroke="#c59a68" strokeWidth="0.5" strokeDasharray="4 6" opacity="0.08" />
+
+        {/* Outer rotating degree astrolabe */}
+        <g
+          style={{
+            transform: `rotate(${bearing}deg)`,
+            transformOrigin: "500px 500px",
+            transition: "transform 560ms cubic-bezier(0.22, 1, 0.36, 1)",
+          }}
+        >
+          <circle cx="500" cy="500" r="424" stroke="#c59a68" strokeWidth="0.85" opacity="0.18" />
+          <circle cx="500" cy="500" r="404" stroke="#ece4d4" strokeWidth="0.55" opacity="0.09" />
+          <circle cx="500" cy="500" r="356" stroke="#ece4d4" strokeWidth="0.5" strokeDasharray="2 5" opacity="0.09" />
+
+          {OUTER_TICKS.map((t, idx) => (
+            <g key={idx}>
+              <line
+                x1={t.x1}
+                y1={t.y1}
+                x2={t.x2}
+                y2={t.y2}
+                stroke={t.major ? "#c59a68" : "#ece4d4"}
+                strokeWidth={t.major ? "0.9" : "0.5"}
+                opacity={t.major ? "0.26" : "0.11"}
+              />
+              {t.major && (
+                <text
+                  x={t.lx}
+                  y={t.ly}
+                  fill="#c59a68"
+                  opacity="0.22"
+                  fontSize="7.5"
+                  fontFamily="IBM Plex Mono, monospace"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                >
+                  {String(t.deg).padStart(3, "0")}°
+                </text>
+              )}
+            </g>
+          ))}
+
+          {/* Inscribed hexagram / sextant chords */}
+          <polygon
+            points="500,96 850,702 150,702"
+            stroke="#c59a68"
+            strokeWidth="0.55"
+            opacity="0.09"
+          />
+          <polygon
+            points="500,904 850,298 150,298"
+            stroke="#ece4d4"
+            strokeWidth="0.5"
+            opacity="0.065"
+          />
+        </g>
+
+        {/* Inner counter-rotating ecliptic vernier ring */}
+        <g
+          style={{
+            transform: `rotate(${innerBearing}deg)`,
+            transformOrigin: "500px 500px",
+            transition: "transform 560ms cubic-bezier(0.22, 1, 0.36, 1)",
+          }}
+        >
+          <circle cx="500" cy="500" r="280" stroke="#c59a68" strokeWidth="0.75" opacity="0.16" />
+          <circle cx="500" cy="438" r="218" stroke="#ece4d4" strokeWidth="0.6" opacity="0.085" />
+          <circle cx="500" cy="562" r="218" stroke="#c59a68" strokeWidth="0.55" opacity="0.085" />
+          {INNER_TICKS.map((t, idx) => (
+            <line
+              key={idx}
+              x1={t.x1}
+              y1={t.y1}
+              x2={t.x2}
+              y2={t.y2}
+              stroke="#c59a68"
+              strokeWidth={t.major ? "0.85" : "0.5"}
+              opacity={t.major ? "0.22" : "0.1"}
+            />
+          ))}
+        </g>
+      </svg>
     </div>
   );
 }

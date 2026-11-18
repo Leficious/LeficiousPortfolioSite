@@ -8,6 +8,7 @@ type FeaturedReelProps = {
   title: string;
   description: string;
   thumbnailSrc?: string;
+  autoStart?: boolean;
 };
 
 function PlayIcon() {
@@ -18,14 +19,14 @@ function PlayIcon() {
   );
 }
 
-export function FeaturedReel({ id, zhId, title, description, thumbnailSrc }: FeaturedReelProps) {
-  const [active, setActive] = useState(false);
+export function FeaturedReel({ id, zhId, title, description, thumbnailSrc, autoStart = false }: FeaturedReelProps) {
+  const [active, setActive] = useState(autoStart);
   const { isChinese, text } = useLanguage();
   const activeId = isChinese && zhId ? zhId : id;
 
   return (
-    <article className="group overflow-hidden rounded-xs border border-border bg-surface">
-      <div className="relative aspect-video overflow-hidden bg-black">
+    <article className="slate-folio group overflow-hidden rounded-xs border border-warm/35 p-1.5">
+      <div className="relative aspect-video overflow-hidden rounded-xs border border-warm/25 bg-black">
         {active ? (
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${activeId}?autoplay=1`}
@@ -49,7 +50,7 @@ export function FeaturedReel({ id, zhId, title, description, thumbnailSrc }: Fea
               loading="eager"
               fetchPriority="high"
               decoding="async"
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.012]"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
               onError={(event) => {
                 const fallback = `https://i.ytimg.com/vi/${activeId}/hqdefault.jpg`;
                 if (event.currentTarget.src !== fallback) {
@@ -57,18 +58,18 @@ export function FeaturedReel({ id, zhId, title, description, thumbnailSrc }: Fea
                 }
               }}
             />
-            <span aria-hidden="true" className="absolute inset-0 bg-black/15 transition-colors duration-300 group-hover:bg-black/5" />
+            <span aria-hidden="true" className="absolute inset-0 bg-black/20 transition-colors duration-300 group-hover:bg-black/5" />
             <span className="absolute inset-0 grid place-items-center">
-              <span className="inline-flex items-center gap-2.5 rounded-xs border border-foreground/45 bg-background/88 px-5 py-3 text-xs font-medium tracking-wide text-foreground shadow-2xl backdrop-blur-sm transition-colors duration-200 group-hover:border-foreground group-hover:bg-foreground group-hover:text-background">
+              <span className="brass-plaque inline-flex items-center gap-2.5 rounded-xs px-5 py-2.5 font-display text-sm font-bold tracking-wide transition-transform duration-200 group-hover:scale-[1.03]">
                 <PlayIcon />
-                <span>{text("Play reel", "播放集锦")}</span>
+                <span>{text("Play Walkthrough", "播放实机演示")}</span>
               </span>
             </span>
           </button>
         )}
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border px-5 py-3.5 sm:px-6">
+      <div className="flex flex-wrap items-center justify-between gap-4 px-3.5 pt-3 pb-2 sm:px-4">
         <p className={`max-w-2xl text-sm leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
           <FormattedText>{description}</FormattedText>
         </p>
@@ -76,7 +77,7 @@ export function FeaturedReel({ id, zhId, title, description, thumbnailSrc }: Fea
           href={`https://youtu.be/${activeId}`}
           target="_blank"
           rel="noreferrer"
-          className="shrink-0 text-xs text-muted-foreground transition-colors hover:text-foreground"
+          className="shrink-0 font-display text-xs font-semibold text-warm transition-colors hover:text-[#f2d6a9]"
         >
           {text("Watch on YouTube", "在 YouTube 打开")} ↗
         </a>

@@ -57,10 +57,10 @@ function DiagramFrame({
   children: ReactNode;
 }) {
   return (
-    <figure className="my-8 overflow-hidden rounded-xs border border-border bg-surface">
-      <figcaption className="flex flex-col gap-1 border-b border-border bg-background/50 px-4 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:px-5">
-        <span className="font-display text-sm font-semibold text-foreground">{title}</span>
-        {subtitle && <span className="font-mono text-[11px] text-muted-foreground">{subtitle}</span>}
+    <figure className="slate-folio my-8 overflow-hidden rounded-xs border border-warm/35">
+      <figcaption className="flex flex-col gap-1 border-b border-warm/25 bg-[#0c0f17]/80 px-4 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:px-5">
+        <span className="font-display text-base font-bold tracking-tight text-[#f2e8d5]">{title}</span>
+        {subtitle && <span className="font-mono text-[11px] text-warm/85">{subtitle}</span>}
       </figcaption>
       <div className="p-4 sm:p-5">{children}</div>
     </figure>
@@ -77,8 +77,8 @@ function SpecDrawer({
   children: ReactNode;
 }) {
   return (
-    <details className="group my-6 overflow-hidden rounded-xs border border-border bg-surface">
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3.5 text-sm font-medium text-foreground transition-colors hover:bg-secondary sm:px-5 [&::-webkit-details-marker]:hidden">
+    <details className="slate-folio group my-6 overflow-hidden rounded-xs border border-warm/35">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3.5 font-display text-base font-bold text-[#f2e8d5] transition-colors hover:bg-secondary/80 sm:px-5 [&::-webkit-details-marker]:hidden">
         <span>{summary}</span>
         <span className="flex shrink-0 items-center gap-3 font-mono text-xs text-muted-foreground">
           <span className="hidden sm:inline">{meta}</span>
@@ -90,7 +90,7 @@ function SpecDrawer({
           </span>
         </span>
       </summary>
-      <div className="border-t border-border bg-background/40">{children}</div>
+      <div className="border-t border-warm/25 bg-[#0b0e15]/75">{children}</div>
     </details>
   );
 }

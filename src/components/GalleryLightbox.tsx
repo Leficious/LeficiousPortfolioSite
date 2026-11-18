@@ -4,17 +4,29 @@ import { Link } from "react-router-dom";
 import { type GalleryEntry, getYouTubeId } from "../lib/gallery";
 import { useLanguage } from "../lib/language";
 import { galleryTagZh } from "../lib/localizedContent";
+import { BrassRule, CrimsonStamp, FolioCorners } from "./AtelierChrome";
 import { FormattedText } from "./FormattedText";
 import { SoftwareStack } from "./SoftwareStack";
 
 type GalleryLightboxProps = {
   entry: GalleryEntry;
+  plateNumber?: number;
   slide: number;
   onSlideChange: (slide: number) => void;
   onClose: () => void;
+  onNextEntry?: () => void;
+  nextEntryTitle?: string;
 };
 
-export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: GalleryLightboxProps) {
+export function GalleryLightbox({
+  entry,
+  plateNumber = 1,
+  slide,
+  onSlideChange,
+  onClose,
+  onNextEntry,
+  nextEntryTitle,
+}: GalleryLightboxProps) {
   const { isChinese, text, localizedPath } = useLanguage();
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -35,8 +47,8 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
-      if (event.key === "ArrowLeft") go(-1);
-      if (event.key === "ArrowRight") go(1);
+      if (event.key === "ArrowLeft" && total > 1) go(-1);
+      if (event.key === "ArrowRight" && total > 1) go(1);
 
       if (event.key === "Tab" && dialogRef.current) {
         const focusable = Array.from(
@@ -60,13 +72,14 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [go, onClose]);
+  }, [go, onClose, total]);
 
-  const media = entry.media[slide];
+  const media = entry.media[slide] ?? entry.media[0];
+  const formattedPlate = String(plateNumber).padStart(2, "0");
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[300] flex bg-background/96 backdrop-blur-md"
+      className="fixed inset-0 z-[300] flex items-center justify-center bg-[#06080d]/92 p-2.5 backdrop-blur-md sm:p-5 md:p-7"
       role="dialog"
       aria-modal="true"
       aria-labelledby="gallery-dialog-title"
@@ -74,155 +87,198 @@ export function GalleryLightbox({ entry, slide, onSlideChange, onClose }: Galler
     >
       <div
         ref={dialogRef}
-        className="mx-auto flex min-h-0 w-full max-w-[1600px] flex-col overflow-hidden px-4 py-4 md:px-8 md:py-6"
+        className="parchment-sheet animate-folio-arc relative flex max-h-[95vh] w-full max-w-[1440px] flex-col overflow-hidden rounded-xs border-[5px] border-[#141720] px-4 py-4 sm:px-7 sm:py-6"
         onClick={(event) => event.stopPropagation()}
       >
-        <header className="relative z-10 flex shrink-0 items-center justify-between gap-4 border-b border-border pb-4">
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <h2 id="gallery-dialog-title" className="font-display text-xl font-semibold tracking-tight md:text-2xl">
-              {entry.title}
-            </h2>
-            <span className="font-mono text-xs text-muted-foreground">
-              {String(slide + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+        <FolioCorners tone="parchment" inset="inset-2 sm:inset-3" />
+
+        {/* Top Archival Specimen Clasp Bar */}
+        <header className="relative z-10 flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-[#8c683a]/40 pb-3">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="font-numeral text-xs font-semibold tracking-[0.2em] text-parchment-muted">
+              {text("SPECIMEN PLATE", "标本图版")} {formattedPlate}
             </span>
+            <span aria-hidden="true" className="text-[#8c683a]/60">·</span>
+            <span className="font-mono text-xs font-medium text-rubric">
+              {text("PASS", "图层")} {String(slide + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+            </span>
+            <span aria-hidden="true" className="hidden text-[#8c683a]/60 sm:inline">·</span>
+            <span className="hidden font-mono text-xs text-parchment-muted sm:inline">{entry.year}</span>
           </div>
+
           <button
             ref={closeRef}
             type="button"
             onClick={onClose}
-            className="shrink-0 cursor-pointer rounded-xs border border-border bg-surface px-3.5 py-2 text-xs font-medium text-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background"
+            className="brass-plaque shrink-0 cursor-pointer rounded-xs px-3.5 py-1.5 font-display text-xs font-bold tracking-wide transition-transform active:scale-95"
           >
-            {text("Close", "关闭")} <span aria-hidden="true">×</span>
+            <span aria-hidden="true" className="mr-1.5">×</span>
+            {text("Return to Salon Wall", "返回画廊墙")}
           </button>
         </header>
 
-        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(320px,360px)] lg:gap-6 lg:overflow-hidden">
-          <section
-            className="relative flex min-h-[48vh] shrink-0 touch-pan-y items-center justify-center overflow-hidden py-4 md:py-6 lg:min-h-0 lg:shrink"
-            aria-label={`${entry.title} media`}
-            onPointerDown={(event) => {
-              pointerStart.current = event.clientX;
-            }}
-            onPointerUp={(event) => {
-              if (pointerStart.current === null) return;
-              const distance = event.clientX - pointerStart.current;
-              pointerStart.current = null;
-              if (Math.abs(distance) > 55) go(distance > 0 ? -1 : 1);
-            }}
-          >
-            {media.type === "image" ? (
-              <img
-                src={media.src}
-                alt={media.alt}
-                className="max-h-[64vh] w-full max-w-full rounded-xs object-contain lg:h-full lg:max-h-full"
-                decoding="async"
-              />
-            ) : (
-              <div className="aspect-video w-full max-w-[1100px] overflow-hidden rounded-xs border border-border bg-black">
-                <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${getYouTubeId(media.url)}`}
-                  title={media.title}
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="h-full w-full"
+        {/* Main 2-Column Specimen Spread */}
+        <div className="relative z-10 mt-4 flex min-h-0 flex-1 flex-col overflow-y-auto lg:grid lg:grid-cols-[minmax(0,1fr)_350px] lg:gap-6 lg:overflow-hidden">
+          {/* Left: Dark Velvet Inspection Stage + Contact-Sheet Pass Strip */}
+          <div className="flex min-h-0 flex-col justify-between gap-3">
+            <section
+              className="relative flex min-h-[42vh] flex-1 touch-pan-y items-center justify-center overflow-hidden rounded-xs border-2 border-[#735329]/65 bg-[#0b0d13] p-2 shadow-[inset_0_0_32px_rgba(0,0,0,0.8)] lg:min-h-0"
+              aria-label={`${entry.title} media`}
+              onPointerDown={(event) => {
+                pointerStart.current = event.clientX;
+              }}
+              onPointerUp={(event) => {
+                if (pointerStart.current === null || total <= 1) return;
+                const distance = event.clientX - pointerStart.current;
+                pointerStart.current = null;
+                if (Math.abs(distance) > 55) go(distance > 0 ? -1 : 1);
+              }}
+            >
+              {media.type === "image" ? (
+                <img
+                  src={media.src}
+                  alt={media.alt}
+                  className="max-h-[56vh] w-full max-w-full rounded-xs object-contain lg:h-full lg:max-h-full"
+                  decoding="async"
                 />
-              </div>
-            )}
+              ) : (
+                <div className="aspect-video w-full max-w-[1080px] overflow-hidden rounded-xs border border-warm/30 bg-black">
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${getYouTubeId(media.url)}`}
+                    title={media.title}
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="h-full w-full"
+                  />
+                </div>
+              )}
 
-            {total > 1 && (
-              <>
-                <button
-                  type="button"
-                  onClick={() => go(-1)}
-                  aria-label={text("Previous image", "上一张图片")}
-                  className="absolute left-1 top-1/2 -translate-y-1/2 cursor-pointer rounded-xs border border-border bg-background/90 px-3 py-2 text-base text-muted-foreground transition-colors hover:border-foreground hover:text-foreground md:left-2"
-                >
-                  ←
-                </button>
-                <button
-                  type="button"
-                  onClick={() => go(1)}
-                  aria-label={text("Next image", "下一张图片")}
-                  className="absolute right-1 top-1/2 -translate-y-1/2 cursor-pointer rounded-xs border border-border bg-background/90 px-3 py-2 text-base text-muted-foreground transition-colors hover:border-foreground hover:text-foreground md:right-2"
-                >
-                  →
-                </button>
-              </>
-            )}
-          </section>
-
-          <aside
-            className="shrink-0 border-t border-border py-6 lg:min-h-0 lg:overflow-y-auto lg:border-l lg:border-t-0 lg:py-6 lg:pl-6 lg:pr-2"
-            aria-label={text("Work details", "作品详情")}
-          >
-            <div className="flex items-center gap-2.5 font-mono text-xs text-muted-foreground">
-              <span>{entry.year}</span>
-              <span aria-hidden="true">·</span>
-              <span>
-                {total} {text(total === 1 ? "frame" : "frames", "项内容")}
-              </span>
-            </div>
-
-            <p className="mt-4 text-[15px] leading-relaxed text-foreground/90">
-              <FormattedText>{entry.description}</FormattedText>
-            </p>
-
-            <div className="mt-6 border-t border-border pt-4">
-              <p className="text-xs font-medium text-foreground/75">{text("What I built", "负责内容")}</p>
-              <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{entry.contribution}</p>
-            </div>
-
-            <div className="mt-6 border-t border-border pt-4">
-              <SoftwareStack software={entry.software} showLabels />
-            </div>
-
-            <div className="mt-6 border-t border-border pt-4">
-              <div className="flex flex-wrap gap-1.5">
-                {entry.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-xs border border-border bg-surface px-2.5 py-1 text-xs text-muted-foreground"
+              {total > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => go(-1)}
+                    aria-label={text("Previous pass", "上一张分解图")}
+                    className="absolute left-2.5 top-1/2 -translate-y-1/2 cursor-pointer rounded-xs border border-[#dfc092]/45 bg-[#0e1017]/88 px-3 py-2 font-numeral text-sm text-[#f3e6ce] shadow-lg backdrop-blur-xs transition-colors hover:border-[#dfc092] hover:bg-[#dfc092] hover:text-[#15120e]"
                   >
-                    {isChinese ? galleryTagZh[tag] : tag}
-                  </span>
-                ))}
-              </div>
-            </div>
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => go(1)}
+                    aria-label={text("Next pass", "下一张分解图")}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 cursor-pointer rounded-xs border border-[#dfc092]/45 bg-[#0e1017]/88 px-3 py-2 font-numeral text-sm text-[#f3e6ce] shadow-lg backdrop-blur-xs transition-colors hover:border-[#dfc092] hover:bg-[#dfc092] hover:text-[#15120e]"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+            </section>
 
-            {entry.projectUrl && (
-              <Link
-                to={localizedPath(entry.projectUrl)}
-                viewTransition
-                className="mt-6 inline-flex items-center gap-2 rounded-xs border border-border bg-surface px-4 py-2.5 text-xs font-medium text-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background"
-              >
-                {isChinese ? "查看完整项目拆解" : entry.projectLabel ?? "Read full case study"} <span aria-hidden="true">→</span>
-              </Link>
-            )}
-
+            {/* Bottom Photographic Contact-Sheet Pass Strip */}
             {total > 1 && (
-              <div className="mt-6 border-t border-border pt-4">
-                <div className="grid grid-cols-4 gap-2" aria-label={text("Choose frame", "选择画面")}>
-                  {entry.media.map((item, index) => (
-                    <button
-                      key={`${item.type}-${index}`}
-                      type="button"
-                      onClick={() => onSlideChange(index)}
-                      aria-label={`${text("View item", "查看第")} ${index + 1}`}
-                      aria-current={index === slide ? "true" : undefined}
-                      className={`aspect-[4/3] cursor-pointer overflow-hidden rounded-xs border bg-muted transition-opacity ${
-                        index === slide ? "border-foreground opacity-100" : "border-border opacity-55 hover:opacity-100"
-                      }`}
-                    >
-                      {item.type === "image" ? (
-                        <img src={item.src} alt="" className="h-full w-full object-cover" loading="lazy" />
-                      ) : (
-                        <span className="flex h-full items-center justify-center font-mono text-[10px]">VIDEO</span>
-                      )}
-                    </button>
-                  ))}
+              <div className="shrink-0 rounded-xs border border-[#8c683a]/45 bg-parchment-deep/65 px-3 py-2">
+                <div className="flex items-center gap-2 overflow-x-auto pb-0.5" aria-label={text("Choose breakdown pass", "切换制作图层")}>
+                  {entry.media.map((item, index) => {
+                    const active = index === slide;
+                    return (
+                      <button
+                        key={`${item.type}-${index}`}
+                        type="button"
+                        onClick={() => onSlideChange(index)}
+                        aria-label={`${text("Pass", "图层")} ${index + 1}`}
+                        aria-current={active ? "true" : undefined}
+                        className={`group relative h-14 w-22 shrink-0 cursor-pointer overflow-hidden rounded-xs border-2 bg-[#0c0e14] transition-all ${
+                          active
+                            ? "border-rubric shadow-[0_3px_10px_rgba(139,38,36,0.35)]"
+                            : "border-[#735329]/40 opacity-72 hover:border-[#735329] hover:opacity-100"
+                        }`}
+                      >
+                        {item.type === "image" ? (
+                          <img src={item.src} alt="" className="h-full w-full object-cover" loading="lazy" />
+                        ) : (
+                          <span className="flex h-full items-center justify-center font-numeral text-[10px] tracking-widest text-[#dfc092]">
+                            ▶ REEL
+                          </span>
+                        )}
+                        <span
+                          className={`absolute left-1 top-1 rounded-xs px-1 py-0.2 font-mono text-[9.5px] font-semibold leading-tight ${
+                            active ? "bg-rubric text-[#faf4e8]" : "bg-[#0e1017]/85 text-[#ece4d4]"
+                          }`}
+                        >
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Right: Parchment Curatorial Ledger & Letterpress Tool Stamps */}
+          <aside
+            className="mt-4 flex shrink-0 flex-col justify-between border-t border-[#8c683a]/40 pt-4 lg:mt-0 lg:min-h-0 lg:overflow-y-auto lg:border-l lg:border-t-0 lg:pl-6 lg:pr-1 lg:pt-0"
+            aria-label={text("Specimen notes", "标本技术说明")}
+          >
+            <div>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h2
+                    id="gallery-dialog-title"
+                    className="font-display text-2xl font-bold leading-tight tracking-tight text-parchment-ink"
+                  >
+                    {entry.title}
+                  </h2>
+                  <p className="mt-1 font-display text-sm italic text-rubric">
+                    {entry.tags.map((tag) => (isChinese ? galleryTagZh[tag] : tag)).join(" · ")}
+                  </p>
+                </div>
+                <CrimsonStamp label="SPECIMEN" className="h-11 w-11 opacity-85" />
+              </div>
+
+              <p className={`mt-4 text-sm leading-relaxed text-parchment-ink/92 ${isChinese ? "zh-readable" : ""}`}>
+                <FormattedText>{entry.description}</FormattedText>
+              </p>
+
+              <div className="mt-4 rounded-xs border border-[#8c683a]/35 bg-parchment-deep/45 px-3.5 py-2.5">
+                <p className="font-numeral text-[10px] tracking-[0.2em] text-parchment-muted uppercase">
+                  {text("Craft & Contribution", "负责模块")}
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-parchment-ink/90">{entry.contribution}</p>
+              </div>
+
+              <BrassRule tone="parchment" className="my-4" />
+
+              <SoftwareStack software={entry.software} showLabels tone="parchment" />
+            </div>
+
+            <div className="mt-6 flex flex-col gap-2 border-t border-[#8c683a]/35 pt-4">
+              {entry.projectUrl && (
+                <Link
+                  to={localizedPath(entry.projectUrl)}
+                  viewTransition
+                  className="inline-flex items-center justify-between rounded-xs bg-[#181513] px-4 py-2.5 font-display text-sm font-semibold text-[#f4ecdc] transition-colors hover:bg-[#2c2520]"
+                >
+                  <span>{isChinese ? "展开关联项目卷宗" : entry.projectLabel ?? "Open Related Case Folio"}</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
+              )}
+
+              {onNextEntry && (
+                <button
+                  type="button"
+                  onClick={onNextEntry}
+                  className="inline-flex cursor-pointer items-center justify-between rounded-xs border border-[#181513]/65 bg-transparent px-4 py-2 font-display text-sm font-semibold text-parchment-ink transition-colors hover:bg-[#181513]/8"
+                >
+                  <span className="truncate pr-2">
+                    {text("Next Specimen Plate", "下一件标本")}
+                    {nextEntryTitle ? ` · ${nextEntryTitle}` : ""}
+                  </span>
+                  <span aria-hidden="true" className="shrink-0">→</span>
+                </button>
+              )}
+            </div>
           </aside>
         </div>
       </div>

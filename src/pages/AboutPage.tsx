@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
+import { BrassRule, CrimsonStamp, FolioCorners } from "../components/AtelierChrome";
+import { FormattedText } from "../components/FormattedText";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
-import { FormattedText } from "../components/FormattedText";
 import { useLanguage } from "../lib/language";
 
 type IconName = "email" | "linkedin" | "itch" | "github";
@@ -36,39 +37,67 @@ function ContactIcon({ name }: { name: IconName }) {
   );
 }
 
-const contactLinks: { label: string; detail: string; detailZh: string; href: string; icon: IconName }[] = [
-  { label: "LinkedIn", detail: "linkedin.com/in/leficious", detailZh: "linkedin.com/in/leficious", href: "https://www.linkedin.com/in/leficious/", icon: "linkedin" },
-  { label: "itch.io", detail: "Playable builds & jam entries", detailZh: "可玩原型与比赛作品", href: "https://leficious.itch.io/", icon: "itch" },
-  { label: "GitHub", detail: "Tools, scripts & source", detailZh: "工具脚本与源码", href: "https://github.com/Leficious", icon: "github" },
+const callingCards: {
+  label: string;
+  detail: string;
+  detailZh: string;
+  href: string;
+  icon: IconName;
+  tilt: string;
+}[] = [
+  {
+    label: "LinkedIn",
+    detail: "Career history & direct messages",
+    detailZh: "职场履历与直接私信",
+    href: "https://www.linkedin.com/in/leficious/",
+    icon: "linkedin",
+    tilt: "sm:-rotate-[0.8deg]",
+  },
+  {
+    label: "itch.io Builds",
+    detail: "Playable prototypes & archives",
+    detailZh: "可玩实机包与独立作品",
+    href: "https://leficious.itch.io/",
+    icon: "itch",
+    tilt: "sm:rotate-[0.7deg]",
+  },
+  {
+    label: "GitHub Tools",
+    detail: "Pipeline scripts, C# & C++ source",
+    detailZh: "Maya 工具脚本与核心源码",
+    href: "https://github.com/Leficious",
+    icon: "github",
+    tilt: "sm:-rotate-[0.5deg]",
+  },
 ];
 
-const outsideEditor = [
+const outsideDisciplines = [
   {
-    number: "01",
-    title: "Music",
-    titleZh: "音乐",
+    roman: "I",
+    title: "Chamber Music",
+    titleZh: "室内乐与管弦乐",
     description:
-      "About 15 years of piano and cello, including orchestra and chamber performances. Long ensemble rehearsals shaped how I think about timing, counterpoint, and when to leave space.",
+      "15 years of piano and cello in orchestra and chamber ensembles—shaping how I tune cadence, counterpoint, and deliberate silence.",
     descriptionZh:
-      "我学了约 15 年钢琴和大提琴，参加过管弦乐团与室内乐演出。长期合奏排练让我对节奏、声部配合和留白一直很敏感。",
+      "约 15 年钢琴与大提琴训练及室内乐合奏经验，直接塑造了我对节奏、声部呼应与“留白”的直觉。",
   },
   {
-    number: "02",
-    title: "Movement",
-    titleZh: "肢体与运动",
+    roman: "II",
+    title: "Figure Skating & Dance",
+    titleZh: "花样滑冰与舞蹈",
     description:
-      "I trained seriously in figure skating, alongside ballet and ballroom dance. That physical sense of weight transfer, balance, anticipation, and follow-through still informs how I tune character feel and combat timing.",
+      "Years of competitive figure skating alongside ballet and ballroom—informing weight transfer, anticipation, and combat frame feel.",
     descriptionZh:
-      "我曾长期训练花样滑冰，也学过芭蕾和标准舞。训练里对重心转移、平衡、预备动作与收势的体会，至今直接影响我调校角色手感与战斗帧数。",
+      "长期花样滑冰、芭蕾与标准舞训练，使我对重心转移、预备动作与收势帧数保持身体层面的敏感。",
   },
   {
-    number: "03",
-    title: "Media & Systems",
-    titleZh: "叙事与社会系统",
+    roman: "III",
+    title: "Touchstones & Systems",
+    titleZh: "机制表达与参考谱系",
     description:
-      "Outside of engines, I gravitate toward stories and essays about how rules, institutions, and spaces shape human behavior — across games, anime, literature, sociology, and modern history.",
+      "Zenless Zone Zero, FE Fates: Conquest, Arknights, Magritte, and Shin Sekai Yori—where mechanics and framing carry the argument without spelling it out.",
     descriptionZh:
-      "在引擎之外，我常关注规则、制度与空间如何改变人的习惯和判断——无论是游戏、动画、文学，还是社会学与近现代史。",
+      "《绝区零》《暗夜王国》《明日方舟》、马格利特与《来自新世界》——用空间构图与规则本身完成表达。",
   },
 ];
 
@@ -81,7 +110,7 @@ export function AboutPage() {
     try {
       await navigator.clipboard.writeText("leficious@gmail.com");
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
+      window.setTimeout(() => setCopied(false), 2400);
     } catch {
       if (!emailRef.current) return;
       const range = document.createRange();
@@ -92,222 +121,275 @@ export function AboutPage() {
     }
   };
 
+  const resumeHref = isChinese
+    ? "/resume/Kevin_Shan_CN_Game_Resume.pdf"
+    : "/resume/Leficious_Technical_Game_Designer_Resume.pdf";
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen text-foreground">
       <Seo
-        title={text("About & Contact | Leficious", "关于与联系 | Leficious")}
+        title={text("Biographical Folio & Contact | Leficious", "个人档案与联络 | Leficious")}
         description={text(
           "About Lefi (Kevin) Shan — M.S. Game Design and Development student at USC School of Cinematic Arts.",
           "关于单凯飞（Leficious）：南加州大学电影艺术学院游戏设计与开发硕士在读。",
         )}
         path={localizedPath("/about")}
       />
-      <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
-        <section className="border-b border-border py-14 md:py-20">
-          <div className="grid min-w-0 grid-cols-1 items-start gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
-            <div className="min-w-0">
-              <p className="text-sm text-muted-foreground">
-                {text("Lefi (Kevin) Shan · Game, Level & Technical Designer", "单凯飞（Kevin Shan） · 游戏、关卡与技术设计师")}
-              </p>
-              <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
-                {text("About", "关于我")}
-              </h1>
 
-              <div className={`mt-7 max-w-2xl space-y-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg ${isChinese ? "zh-readable" : ""}`}>
-                <p>
-                  {text(
-                    "I started out in 3D environment and technical art at Gnomon, building spaces, procedural materials, and Maya tools from the ground up. Over time, I cared more about what players actually do inside those spaces than the static assets alone. Prototyping combat systems, enemy AI, and character feel in Unreal Engine gave me a direct way to tie animation timing and state rules to player decisions.",
-                    "我本科在 Gnomon 学习 3D 环境与技术美术，从零搭建场景、程序化材质与 Maya 工具管线。做得越久，我越关心玩家在空间里的实际行动与判断，于是转向游戏设计。在 Unreal Engine 里制作战斗系统、敌人 AI 与角色操控，让我能把动画时机、状态规则与玩家决策直接联系起来。",
-                  )}
-                </p>
-                <p>
-                  {text(
-                    "Now as an M.S. student at USC's School of Cinematic Arts, my work spans multiphase action-combat prototypes in Unreal and first-person spatial puzzle games in Unity where floorplan structure and player habit carry the argument without dialogue.",
-                    "进入南加州大学（USC）电影艺术学院攻读游戏设计与开发硕士后，我的作品既涵盖 Unreal 多阶段动作 Boss 战原型，也包括在无对白条件下依靠空间动线与玩家习惯推进主题的 Unity 第一人称解谜游戏。",
-                  )}
-                </p>
-              </div>
+      <main id="main-content" tabIndex={-1} className="mx-auto max-w-[1240px] px-5 pt-8 pb-12 sm:px-8 lg:pt-11">
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1.18fr_0.82fr] lg:gap-9">
+          {/* ==================== LEFT: BIOGRAPHICAL RAG-PARCHMENT FOLIO ==================== */}
+          <article className="parchment-sheet relative rounded-xs border-[5px] border-[#151821] px-6 py-7 sm:px-9 sm:py-9">
+            <FolioCorners tone="parchment" />
 
-              <div className="mt-8 border-l-2 border-warm pl-5">
-                <p className="text-xs font-medium text-foreground/80">{text("Design touchstones", "常翻看的参考")}</p>
-                <p className={`mt-1.5 max-w-2xl text-sm leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
-                  <FormattedText>
+            <div className="relative z-10">
+              {/* Top Dossier Stamp + Header */}
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="font-numeral text-[11px] font-semibold tracking-[0.22em] text-parchment-muted">
+                    {text("ARCHITECT DOSSIER · LOS ANGELES", "设计师个人卷宗 · 洛杉矶")}
+                  </p>
+                  <h1 className="mt-1 font-display text-4xl font-bold tracking-tight text-parchment-ink sm:text-5xl">
+                    {text("Lefi Shan", "单凯飞 · Lefi Shan")}
+                  </h1>
+                  <p className="mt-1 font-display text-base italic text-rubric sm:text-lg">
                     {text(
-                      "Zenless Zone Zero for how animation timing, VFX, and graphic UI push the exact same combat attitude; Fire Emblem Fates: Conquest and Arknights for map geometry and compact rule sets; and René Magritte, Lewis Carroll, and Shin Sekai Yori for framing and letting mechanics make an argument without spelling it out.",
-                      "《绝区零》在动画帧数、VFX 与平面 UI 上对打击节奏的高度统一；《火焰之纹章 if：暗夜王国》与《明日方舟》的地图几何与精简规则；以及雷内·马格利特、刘易斯·卡罗尔与《来自新世界》对视角构图和“用机制本身表达观点”的启发。",
+                      "Game, Level & Technical Designer · USC School of Cinematic Arts & Gnomon",
+                      "游戏、关卡与技术设计师 · 南加州大学电影艺术学院 & Gnomon",
                     )}
-                  </FormattedText>
-                </p>
+                  </p>
+                </div>
+                <CrimsonStamp label="ARCHITECT BIO" className="hidden h-14 w-14 opacity-85 sm:block" />
               </div>
-            </div>
 
-            <figure className="mx-auto w-full max-w-[380px] lg:mx-0 lg:justify-self-end">
-              <div className="overflow-hidden rounded-xs border border-border bg-surface">
-                <img
-                  src="/about/lefi-shan-portrait.webp"
-                  alt={text("Portrait of Lefi Shan", "单凯飞（Kevin Shan）肖像")}
-                  width="1000"
-                  height="1000"
-                  className="aspect-[4/5] w-full object-cover object-center"
-                />
-              </div>
-              <figcaption className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
-                <span>{text("Lefi Shan (Kevin Shan)", "单凯飞（Kevin Shan）")}</span>
-                <span className="font-mono text-[11px]">{text("Little Tokyo · Los Angeles", "美国 · 洛杉矶")}</span>
-              </figcaption>
-            </figure>
-          </div>
-        </section>
-
-        <section className="border-b border-border py-14 md:py-20" aria-labelledby="personal-title">
-          <div className="grid gap-10 md:grid-cols-12">
-            <div className="md:col-span-4">
-              <h2 id="personal-title" className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-                {text("Outside the Engine", "引擎之外")}
-              </h2>
-              <p className={`mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
-                {text(
-                  "Most of my instincts around pacing, rhythm, and physical weight come from years of practice outside game engines.",
-                  "我对节奏、结构与肢体反馈的很多直觉，来自游戏引擎之外的长期训练与阅读。",
-                )}
-              </p>
-            </div>
-
-            <div className="divide-y divide-border border-y border-border md:col-span-8">
-              {outsideEditor.map((item) => (
-                <article key={item.number} className="grid gap-2 py-5 sm:grid-cols-[3rem_1fr] sm:gap-4 sm:py-6">
-                  <span className="font-mono text-xs text-warm">{item.number}</span>
-                  <div>
-                    <h3 className="font-display text-lg font-semibold tracking-tight">
-                      {isChinese ? item.titleZh : item.title}
-                    </h3>
-                    <p className={`mt-1.5 text-sm leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
-                      {isChinese ? item.descriptionZh : item.description}
-                    </p>
+              {/* Portrait Plate + Two-Paragraph Editorial Bio */}
+              <div className="mt-6 grid gap-6 sm:grid-cols-[195px_1fr] sm:items-start">
+                <figure className="mx-auto w-full max-w-[210px] sm:mx-0">
+                  <div className="overflow-hidden rounded-xs border-2 border-[#735329]/65 bg-[#0e1017] p-1.5 shadow-md">
+                    <img
+                      src="/about/lefi-shan-portrait.webp"
+                      alt={text("Portrait of Lefi Shan", "单凯飞（Kevin Shan）肖像")}
+                      width="1000"
+                      height="1000"
+                      className="aspect-[4/5] w-full rounded-xs object-cover object-center"
+                    />
                   </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+                  <figcaption className="mt-2 flex items-center justify-between px-0.5 font-numeral text-[10px] tracking-[0.14em] text-parchment-muted">
+                    <span>KEVIN SHAN</span>
+                    <span>LITTLE TOKYO</span>
+                  </figcaption>
+                </figure>
 
-        <section className="border-b border-border py-14 md:py-20" aria-labelledby="education-title">
-          <div className="grid gap-10 md:grid-cols-12">
-            <div className="md:col-span-4">
-              <h2 id="education-title" className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-                {text("Education & Background", "教育与背景")}
-              </h2>
-            </div>
-
-            <div className="divide-y divide-border border-y border-border md:col-span-8">
-              <div className="grid gap-1 py-5 sm:grid-cols-[1fr_auto] sm:items-baseline">
-                <div>
-                  <p className="font-display text-lg font-semibold tracking-tight">
-                    {text("M.S. in Game Design and Development", "游戏设计与开发理学硕士（在读）")}
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {text("USC School of Cinematic Arts", "南加州大学电影艺术学院 (USC School of Cinematic Arts)")}
-                  </p>
-                </div>
-                <p className="font-mono text-xs text-muted-foreground">{text("Expected 2028", "预计 2028")}</p>
-              </div>
-
-              <div className="grid gap-1 py-5 sm:grid-cols-[1fr_auto] sm:items-baseline">
-                <div>
-                  <p className="font-display text-lg font-semibold tracking-tight">
-                    {text("B.F.A. in Digital Production (Games)", "数字制作艺术学士（游戏方向）")}
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
+                <div
+                  className={`space-y-3.5 text-pretty text-sm leading-relaxed text-parchment-ink/92 sm:text-[15px] ${
+                    isChinese ? "zh-readable" : ""
+                  }`}
+                >
+                  <p>
                     {text(
-                      "Gnomon School of Visual Effects · Featured in Gnomon's student reel",
-                      "Gnomon School of Visual Effects · 作品入选学院年度集锦",
+                      "I started out in 3D environment and technical art at Gnomon, building spaces, procedural materials, and Maya tools from the ground up. Over time, I cared more about what players actually do inside those spaces than the static assets alone. Prototyping combat systems, enemy AI, and character feel in Unreal Engine gave me a direct way to tie animation timing and state rules to player decisions.",
+                      "我本科在 Gnomon 学习 3D 环境与技术美术，从零搭建场景、程序化材质与 Maya 工具管线。做得越久，我越关心玩家在空间里的实际行动与判断，于是转向游戏设计。在 Unreal Engine 里制作战斗系统、敌人 AI 与角色操控，让我能把动画时机、状态规则与玩家决策直接联系起来。",
+                    )}
+                  </p>
+                  <p>
+                    {text(
+                      "Now as an M.S. student at USC's School of Cinematic Arts, my work spans multiphase action-combat prototypes in Unreal and first-person spatial puzzle games in Unity where floorplan structure and player habit carry the argument without dialogue.",
+                      "进入南加州大学（USC）电影艺术学院攻读游戏设计与开发硕士后，我的作品既涵盖 Unreal 多阶段动作 Boss 战原型，也包括在无对白条件下依靠空间动线与玩家习惯推进主题的 Unity 第一人称解谜游戏。",
                     )}
                   </p>
                 </div>
-                <p className="font-mono text-xs text-muted-foreground">2025</p>
               </div>
 
-              <div className="grid gap-6 py-5 sm:grid-cols-2">
-                <div>
-                  <p className="text-xs font-medium text-foreground/75">{text("Languages", "语言")}</p>
-                  <p className="mt-1.5 text-sm text-foreground">
-                    {text("English (fluent) · Mandarin Chinese (fluent spoken)", "英语（流利） · 普通话（口语流利）")}
-                  </p>
+              <BrassRule tone="parchment" className="my-6" />
+
+              {/* Outside the Engine — Three Engraved Columns */}
+              <section aria-labelledby="outside-engine-heading">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <h2
+                    id="outside-engine-heading"
+                    className="font-numeral text-xs font-bold tracking-[0.2em] text-parchment-ink uppercase"
+                  >
+                    {text("Outside the Engine — Three Disciplines", "引擎之外 — 三重长期训练")}
+                  </h2>
+                  <span className="font-display text-xs italic text-parchment-muted">
+                    {text("Rhythm, physical weight & compact rules", "节奏、重心与精简规则")}
+                  </span>
                 </div>
-                <div>
-                  <p className="text-xs font-medium text-foreground/75">{text("Work regions", "意向地区")}</p>
-                  <p className="mt-1.5 text-sm text-muted-foreground">
-                    {text("US · Canada · Europe · Japan · China", "美国 · 加拿大 · 欧洲 · 日本 · 中国")}
-                  </p>
+
+                <div className="mt-4 grid gap-4 sm:grid-cols-3">
+                  {outsideDisciplines.map((item) => (
+                    <div
+                      key={item.roman}
+                      className="rounded-xs border border-[#8c683a]/35 bg-parchment-deep/45 p-3.5"
+                    >
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-numeral text-xs font-bold text-rubric">{item.roman}</span>
+                        <h3 className="font-display text-base font-bold leading-snug text-parchment-ink">
+                          {isChinese ? item.titleZh : item.title}
+                        </h3>
+                      </div>
+                      <p className={`mt-2 text-xs leading-relaxed text-parchment-muted ${isChinese ? "zh-readable" : ""}`}>
+                        <FormattedText>{isChinese ? item.descriptionZh : item.description}</FormattedText>
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </article>
+
+          {/* ==================== RIGHT: GUILD CREDENTIALS & CALLING-CARD TRAY ==================== */}
+          <div className="flex flex-col gap-6">
+            {/* Dark-Slate Academic & Guild Credentials Plaque */}
+            <section
+              aria-labelledby="credentials-heading"
+              className="slate-folio relative rounded-xs p-6 transition-transform duration-300 lg:-rotate-[0.6deg] lg:hover:rotate-0 sm:p-7"
+            >
+              <FolioCorners tone="slate" inset="inset-2" />
+
+              <div className="relative z-10">
+                <h2
+                  id="credentials-heading"
+                  className="font-numeral text-xs font-semibold tracking-[0.22em] text-[#dfc092] uppercase"
+                >
+                  {text("Academic & Guild Credentials", "学术履历与背景")}
+                </h2>
+
+                <div className="mt-4 divide-y divide-warm/20 border-y border-warm/20">
+                  <div className="flex items-baseline justify-between gap-4 py-3.5">
+                    <div>
+                      <p className="font-display text-lg font-bold text-foreground">
+                        {text("M.S. in Game Design & Development", "游戏设计与开发理学硕士（在读）")}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {text("USC School of Cinematic Arts", "南加州大学电影艺术学院 (USC SCA)")}
+                      </p>
+                    </div>
+                    <span className="shrink-0 font-numeral text-xs text-warm">{text("2028", "预计 2028")}</span>
+                  </div>
+
+                  <div className="flex items-baseline justify-between gap-4 py-3.5">
+                    <div>
+                      <p className="font-display text-lg font-bold text-foreground">
+                        {text("B.F.A. in Digital Production (Games)", "数字制作艺术学士（游戏方向）")}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {text("Gnomon School of Visual Effects · Student Reel", "Gnomon · 入选学院年度作品集锦")}
+                      </p>
+                    </div>
+                    <span className="shrink-0 font-numeral text-xs text-warm">2025</span>
+                  </div>
+
+                  <div className="grid gap-4 py-3.5 sm:grid-cols-2">
+                    <div>
+                      <p className="font-numeral text-[10px] tracking-[0.18em] text-warm/80 uppercase">
+                        {text("Languages", "语言能力")}
+                      </p>
+                      <p className="mt-1 text-xs leading-relaxed text-foreground/90">
+                        {text("English (Fluent) · Mandarin (Fluent Spoken)", "英语（流利）· 普通话（口语流利）")}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-numeral text-[10px] tracking-[0.18em] text-warm/80 uppercase">
+                        {text("Work Regions", "意向地区")}
+                      </p>
+                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                        {text("US · Canada · Europe · Japan · China", "美国 · 加拿大 · 欧洲 · 日本 · 中国")}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
+            </section>
 
-        <section id="contact" className="scroll-mt-24 pt-14 md:pt-20" aria-labelledby="contact-title">
-          <div className="grid gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-5">
-              <h2 id="contact-title" className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-                {text("Contact", "联系与合作")}
-              </h2>
-              <p className={`mt-3 max-w-md text-sm leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
-                {text(
-                  "Open to internships and roles across game design, level design, combat design, and technical design. Reach out directly by email or LinkedIn.",
-                  "正在寻找游戏设计、关卡策划、战斗设计及技术策划方向的实习与全职机会，欢迎通过邮件或 LinkedIn 直接联系。",
-                )}
-              </p>
-              <a
-                href={isChinese ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"}
-                download
-                className="mt-6 inline-flex items-center gap-2.5 rounded-xs border border-border bg-surface px-4 py-2.5 text-xs font-medium text-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background"
-              >
-                {text("Download game design résumé (PDF)", "下载中文游戏开发简历 (PDF)")} <span aria-hidden="true">↓</span>
-              </a>
-            </div>
+            {/* Correspondence & Letterpress Calling-Card Tray */}
+            <section id="contact" className="scroll-mt-24 space-y-4" aria-labelledby="correspondence-heading">
+              <div className="flex items-baseline justify-between px-1">
+                <h2
+                  id="correspondence-heading"
+                  className="font-numeral text-xs font-semibold tracking-[0.22em] text-warm uppercase"
+                >
+                  {text("Correspondence & Calling Cards", "信函联络与名片盘")}
+                </h2>
+                <span className="font-display text-xs italic text-muted-foreground">
+                  {text("Internships & full-time roles", "开放实习与全职机会")}
+                </span>
+              </div>
 
-            <div className="grid gap-px overflow-hidden rounded-xs border border-border bg-border sm:grid-cols-2 lg:col-span-7">
+              {/* Primary Rag-Parchment Dispatch Card w/ Interactive Crimson Stamp */}
               <button
                 type="button"
                 onClick={copyEmail}
-                className="group flex min-h-28 cursor-pointer flex-col justify-between bg-surface p-5 text-left transition-colors hover:bg-secondary"
+                className="parchment-sheet group relative flex w-full cursor-pointer items-center justify-between gap-4 rounded-xs border-2 border-[#151821] px-5 py-4 text-left transition-transform duration-200 hover:-translate-y-0.5 active:scale-[0.995]"
               >
-                <div className="flex items-center justify-between text-muted-foreground transition-colors group-hover:text-foreground">
-                  <ContactIcon name="email" />
-                  <span className="font-mono text-[11px]">
-                    {copied ? text("Copied", "已复制") : text("Copy", "复制")}
-                  </span>
-                </div>
-                <div className="mt-4">
-                  <p className="font-display text-base font-semibold text-foreground">Email</p>
-                  <span ref={emailRef} className="mt-0.5 block font-mono text-xs text-muted-foreground">
+                <div className="relative z-10 min-w-0">
+                  <div className="flex items-center gap-2 text-rubric">
+                    <ContactIcon name="email" />
+                    <span className="font-numeral text-[10.5px] font-bold tracking-[0.2em] uppercase">
+                      {copied
+                        ? text("Dispatch Address Copied", "信函地址已钤印复制")
+                        : text("Direct Dispatch · Stamp to Copy", "主联络信箱 · 点击钤印复制")}
+                    </span>
+                  </div>
+                  <span
+                    ref={emailRef}
+                    className="mt-1.5 block truncate font-display text-2xl font-bold tracking-tight text-parchment-ink"
+                  >
                     leficious@gmail.com
                   </span>
                 </div>
+
+                <div className="relative z-10 shrink-0">
+                  <CrimsonStamp
+                    label={copied ? "COPIED" : "DISPATCH"}
+                    stamped={copied}
+                    className={`h-13 w-13 transition-opacity ${copied ? "opacity-100" : "opacity-75 group-hover:opacity-100"}`}
+                  />
+                </div>
               </button>
 
-              {contactLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group flex min-h-28 flex-col justify-between bg-surface p-5 transition-colors hover:bg-secondary"
-                >
-                  <div className="flex items-center justify-between text-muted-foreground transition-colors group-hover:text-foreground">
-                    <ContactIcon name={link.icon} />
-                    <span aria-hidden="true" className="font-mono text-xs">↗</span>
-                  </div>
-                  <div className="mt-4">
-                    <p className="font-display text-base font-semibold text-foreground">{link.label}</p>
-                    <p className="mt-0.5 text-xs text-muted-foreground">{isChinese ? link.detailZh : link.detail}</p>
-                  </div>
-                </a>
-              ))}
-            </div>
+              {/* Three Tactile Angled Calling Cards */}
+              <div className="grid gap-3 sm:grid-cols-3">
+                {callingCards.map((card) => (
+                  <a
+                    key={card.label}
+                    href={card.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`slate-folio group relative flex flex-col justify-between rounded-xs border border-warm/35 p-4 transition-all duration-250 hover:-translate-y-1 hover:rotate-0 hover:border-[#dfc092] ${card.tilt}`}
+                  >
+                    <div className="flex items-center justify-between text-warm transition-colors group-hover:text-[#f5e3c0]">
+                      <ContactIcon name={card.icon} />
+                      <span aria-hidden="true" className="font-mono text-xs">↗</span>
+                    </div>
+                    <div className="mt-4">
+                      <p className="font-display text-base font-bold text-foreground group-hover:text-[#f5e3c0]">
+                        {card.label}
+                      </p>
+                      <p className="mt-0.5 text-[11.5px] leading-snug text-muted-foreground">
+                        {isChinese ? card.detailZh : card.detail}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+
+              {/* Brushed-Brass Full Résumé Plaque */}
+              <a
+                href={resumeHref}
+                download
+                className="brass-plaque flex w-full items-center justify-between rounded-xs px-5 py-3.5 font-display text-sm font-bold tracking-wide transition-transform active:scale-[0.99]"
+              >
+                <span>
+                  {text("Download Full Game Design Résumé (PDF)", "下载完整中文游戏开发简历 (PDF)")}
+                </span>
+                <span aria-hidden="true" className="font-mono text-xs">↓</span>
+              </a>
+            </section>
           </div>
-        </section>
+        </div>
       </main>
+
       <SiteFooter />
     </div>
   );

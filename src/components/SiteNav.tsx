@@ -1,99 +1,220 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useLanguage, type Language } from "../lib/language";
-import { BrandCrest, NavbarBrandLockup } from "./BrandMark";
+import { projects } from "../lib/projects";
+import { AstrolabeCrest } from "./AtelierChrome";
 
-export function SiteNav() {
-  const { pathname, hash } = useLocation();
+const ROMAN = ["I", "II", "III", "IV", "V"] as const;
+
+type SiteNavProps = {
+  activeFolioSlug?: string | null;
+  onSelectFolioSlug?: (slug: string) => void;
+};
+
+export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
+  const { pathname } = useLocation();
   const { language, setLanguage, text, localizedPath } = useLanguage();
-  const navClass = (isActive: boolean) =>
-    `relative py-1 transition-colors hover:text-foreground ${
+  const cleanPath = pathname.replace(/^\/zh(?=\/|$)/, "") || "/";
+  const isHome = cleanPath === "/";
+
+  const resumeHref =
+    language === "zh"
+      ? "/resume/Kevin_Shan_CN_Game_Resume.pdf"
+      : "/resume/Leficious_Technical_Game_Designer_Resume.pdf";
+
+  const spineLinkClass = (isActive: boolean) =>
+    `relative flex w-full items-center justify-center py-2 text-[13px] font-display tracking-wide transition-colors ${
       isActive
-        ? "text-foreground after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[1.5px] after:bg-warm"
-        : "text-muted-foreground"
+        ? "bg-gradient-to-r from-[#c59a68]/26 via-[#c59a68]/14 to-transparent text-[#f3e6ce] font-semibold before:absolute before:inset-y-0 before:left-0 before:w-[2.5px] before:bg-[#dfc092]"
+        : "text-muted-foreground hover:text-foreground"
     }`;
 
   return (
-    <header className="site-header sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur-md">
+    <>
       <a
         href="#main-content"
-        className="fixed left-4 top-4 z-[200] -translate-y-24 rounded-xs bg-foreground px-4 py-2 text-sm font-medium text-background transition-transform focus:translate-y-0"
+        className="fixed left-24 top-4 z-[200] -translate-y-24 rounded-xs bg-parchment px-4 py-2 text-sm font-semibold text-parchment-ink transition-transform focus:translate-y-0"
       >
         {text("Skip to content", "跳至主要内容")}
       </a>
-      <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto] items-center gap-x-3 gap-y-2 px-4 py-3 sm:grid-cols-[auto_1fr_auto_auto] sm:gap-x-6 sm:px-6 sm:py-3.5">
+
+      {/* Desktop 76px Fixed Bookcloth & Double-Brass Vertical Spine */}
+      <aside
+        aria-label={text("Atelier Spine Navigation", "工作室侧脊导航")}
+        className="site-header fixed inset-y-0 left-0 z-50 hidden w-[76px] flex-col items-center justify-between bg-spine py-4 select-none lg:flex"
+      >
+        {/* Double vertical brass binding hairlines */}
+        <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-px bg-[#c59a68]/45" />
+        <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-[3px] w-px bg-[#c59a68]/18" />
+
+        {/* Top Crest + Vertical Engraved Wordmark */}
         <Link
           to={localizedPath("/")}
           viewTransition
-          aria-label="Leficious"
-          className="inline-flex items-center py-0.5"
+          aria-label="Leficious — Home"
+          className="group flex flex-col items-center gap-3 pt-1"
         >
-          <NavbarBrandLockup />
+          <AstrolabeCrest className="h-11 w-11 transition-transform duration-500 group-hover:rotate-12" />
+          <span
+            className="font-numeral text-[12px] tracking-[0.28em] text-[#dfc092]/90 transition-colors group-hover:text-[#f6e7c8]"
+            style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+          >
+            LEFICIOUS
+          </span>
         </Link>
-        <nav
-          aria-label={text("Primary", "主导航")}
-          className="col-span-2 row-start-2 flex min-w-0 items-center justify-start gap-6 text-xs sm:col-span-1 sm:col-start-2 sm:row-start-1 sm:justify-self-end sm:gap-7 sm:text-sm"
-        >
-          <NavLink to={localizedPath("/")} end viewTransition className={({ isActive }) => navClass(isActive)}>
-            {text("Work", "项目")}
-          </NavLink>
-          <NavLink to={localizedPath("/gallery")} viewTransition className={({ isActive }) => navClass(isActive)}>
-            {text("Gallery", "作品集")}
-          </NavLink>
-          <NavLink to={localizedPath("/about")} viewTransition className={({ isActive }) => navClass(isActive && hash !== "#contact")}>
-            {text("About", "关于")}
-          </NavLink>
-          <Link
-            to={`${localizedPath("/about")}#contact`}
-            className={navClass((pathname === "/about" || pathname === "/zh/about") && hash === "#contact")}
-            onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-          >
-            {text("Contact", "联系")}
-          </Link>
-          <a
-            href={language === "zh" ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"}
-            download
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            {text("Résumé", "简历")} ↓
-          </a>
+
+        {/* Center Roman Numeral Folio Jumpers (I - V) */}
+        <nav aria-label={text("Case Folios I to V", "档案卷一至五")} className="flex w-full flex-col items-center">
+          <div className="w-9 border-t border-warm/25" />
+          {projects.map((proj, idx) => {
+            const numeral = ROMAN[idx] ?? String(idx + 1);
+            const activeOnHome = isHome && activeFolioSlug === proj.slug;
+            const activeOnProject = cleanPath === `/projects/${proj.slug}`;
+            const active = activeOnHome || activeOnProject;
+
+            if (isHome && onSelectFolioSlug) {
+              return (
+                <button
+                  key={proj.slug}
+                  type="button"
+                  title={proj.title}
+                  onClick={() => onSelectFolioSlug(proj.slug)}
+                  aria-current={active ? "true" : undefined}
+                  className={`relative flex w-full cursor-pointer flex-col items-center py-2 font-numeral text-xs tracking-widest transition-colors ${
+                    active
+                      ? "text-[#f5dfa9] font-semibold after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:border-y-[5px] after:border-r-[6px] after:border-y-transparent after:border-r-[#dfc092]"
+                      : "text-muted-foreground/80 hover:text-foreground"
+                  }`}
+                >
+                  {numeral}
+                  <span aria-hidden="true" className="mt-2 block h-px w-5 bg-warm/18" />
+                </button>
+              );
+            }
+
+            return (
+              <Link
+                key={proj.slug}
+                to={localizedPath(`/projects/${proj.slug}`)}
+                viewTransition
+                title={proj.title}
+                aria-current={active ? "page" : undefined}
+                className={`relative flex w-full flex-col items-center py-2 font-numeral text-xs tracking-widest transition-colors ${
+                  active
+                    ? "text-[#f5dfa9] font-semibold after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:border-y-[5px] after:border-r-[6px] after:border-y-transparent after:border-r-[#dfc092]"
+                    : "text-muted-foreground/80 hover:text-foreground"
+                }`}
+              >
+                {numeral}
+                <span aria-hidden="true" className="mt-2 block h-px w-5 bg-warm/18" />
+              </Link>
+            );
+          })}
         </nav>
-        <div className="hidden h-4 w-px bg-border sm:col-start-3 sm:row-start-1 sm:block" aria-hidden="true" />
-        <div
-          className="col-start-2 row-start-1 flex items-center justify-self-end rounded-xs border border-border bg-surface text-[11px] font-medium sm:col-start-4 sm:row-start-1"
-          aria-label={text("Choose language", "选择语言")}
-        >
-          {(["en", "zh"] as Language[]).map((option) => (
-            <button
-              key={option}
-              type="button"
-              onClick={() => setLanguage(option)}
-              aria-pressed={language === option}
-              lang={option === "zh" ? "zh-CN" : "en"}
-              className={`min-w-9 px-2 py-1 antialiased transition-colors sm:min-w-10 sm:px-2.5 ${
-                language === option
-                  ? "bg-foreground text-background"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {option === "en" ? "EN" : "中文"}
-            </button>
-          ))}
+
+        {/* Bottom Primary Pages, Language Switch & Engraved Brass Résumé Plaque */}
+        <div className="flex w-full flex-col items-center gap-2">
+          <nav aria-label={text("Primary sections", "主要页面")} className="flex w-full flex-col items-center">
+            <NavLink to={localizedPath("/")} end viewTransition className={({ isActive }) => spineLinkClass(isActive)}>
+              {text("Atelier", "案台")}
+            </NavLink>
+            <NavLink to={localizedPath("/gallery")} viewTransition className={({ isActive }) => spineLinkClass(isActive)}>
+              {text("Gallery", "画廊")}
+            </NavLink>
+            <NavLink to={localizedPath("/about")} viewTransition className={({ isActive }) => spineLinkClass(isActive)}>
+              {text("About", "档案")}
+            </NavLink>
+          </nav>
+
+          <div
+            className="mt-1 flex items-center gap-1 text-[10px] text-muted-foreground"
+            aria-label={text("Choose language", "切换语言")}
+          >
+            {(["en", "zh"] as Language[]).map((opt, idx) => (
+              <span key={opt} className="inline-flex items-center gap-1">
+                {idx > 0 && <span aria-hidden="true" className="text-warm/40">/</span>}
+                <button
+                  type="button"
+                  onClick={() => setLanguage(opt)}
+                  aria-pressed={language === opt}
+                  lang={opt === "zh" ? "zh-CN" : "en"}
+                  className={`cursor-pointer px-0.5 py-0.5 transition-colors ${
+                    language === opt ? "font-semibold text-[#dfc092]" : "hover:text-foreground"
+                  }`}
+                >
+                  {opt === "en" ? "EN" : "中文"}
+                </button>
+              </span>
+            ))}
+          </div>
+
+          <a
+            href={resumeHref}
+            download
+            className="brass-plaque mt-1 flex w-[56px] flex-col items-center rounded-xs px-1.5 py-2 text-center font-display text-[11px] font-bold leading-tight transition-transform active:scale-95"
+          >
+            <span>{text("Résumé", "简历")}</span>
+            <span aria-hidden="true" className="mt-0.5 font-mono text-[10px]">↓</span>
+          </a>
         </div>
-      </div>
-    </header>
+      </aside>
+
+      {/* Mobile / Tablet Compact Top Bar (< lg) */}
+      <header className="site-header sticky top-0 z-50 border-b border-warm/30 bg-spine/95 backdrop-blur-md lg:hidden">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-2.5">
+          <Link to={localizedPath("/")} viewTransition className="inline-flex items-center gap-2.5">
+            <AstrolabeCrest className="h-8 w-8" />
+            <span className="font-numeral text-sm tracking-[0.2em] text-[#dfc092]">LEFICIOUS</span>
+          </Link>
+
+          <div className="flex items-center gap-4 text-xs">
+            <NavLink
+              to={localizedPath("/")}
+              end
+              viewTransition
+              className={({ isActive }) => (isActive ? "font-semibold text-[#dfc092]" : "text-muted-foreground")}
+            >
+              {text("Atelier", "案台")}
+            </NavLink>
+            <NavLink
+              to={localizedPath("/gallery")}
+              viewTransition
+              className={({ isActive }) => (isActive ? "font-semibold text-[#dfc092]" : "text-muted-foreground")}
+            >
+              {text("Gallery", "画廊")}
+            </NavLink>
+            <NavLink
+              to={localizedPath("/about")}
+              viewTransition
+              className={({ isActive }) => (isActive ? "font-semibold text-[#dfc092]" : "text-muted-foreground")}
+            >
+              {text("About", "档案")}
+            </NavLink>
+            <button
+              type="button"
+              onClick={() => setLanguage(language === "en" ? "zh" : "en")}
+              className="rounded-xs border border-warm/35 px-2 py-0.5 text-[11px] text-[#dfc092]"
+            >
+              {language === "en" ? "中文" : "EN"}
+            </button>
+            <a href={resumeHref} download className="brass-plaque rounded-xs px-2.5 py-1 text-[11px] font-semibold">
+              {text("CV", "简历")} ↓
+            </a>
+          </div>
+        </div>
+      </header>
+    </>
   );
 }
 
 export function SiteFooter() {
   const { text } = useLanguage();
   return (
-    <footer className="mt-24 border-t border-border">
-      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-9 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-        <p className="inline-flex items-center gap-2.5">
-          <BrandCrest className="h-3.5 w-3.5 opacity-90" />
-          <span>© {new Date().getFullYear()} Lefi Shan · {text("Game, Level & Technical Design", "游戏、关卡与技术设计")}</span>
+    <footer className="mt-16 border-t border-warm/20">
+      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-7 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <p className="font-display text-sm tracking-wide text-foreground/80">
+          © {new Date().getFullYear()} Lefi Shan · {text("Game, Level & Technical Design Atelier", "游戏、关卡与技术设计档案")}
         </p>
-        <p className="font-mono text-[11px] text-muted-foreground/80">Los Angeles, CA</p>
+        <p className="font-numeral text-[11px] tracking-[0.18em] text-warm/80">LOS ANGELES · CA</p>
       </div>
     </footer>
   );

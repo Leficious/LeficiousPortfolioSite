@@ -13,17 +13,23 @@ export function CodeBlock({ language, title, code }: CodeSnippet) {
   };
 
   return (
-    <div className="overflow-hidden rounded-xs border border-border bg-surface">
-      <div className="flex items-center justify-between border-b border-border px-4 py-2 text-xs">
+    <div className="slate-folio overflow-hidden rounded-xs border border-warm/35">
+      <div className="flex items-center justify-between border-b border-warm/25 bg-[#0c0f17]/85 px-4 py-2.5 text-xs">
         <div className="flex items-center gap-3 font-mono">
-          <span className="text-warm">{language === "cpp" ? "C++" : "Python"}</span>
+          <span className="font-numeral text-[11px] font-bold tracking-wider text-warm">
+            {language === "cpp" ? "C++" : "PYTHON"}
+          </span>
           {title && <span className="text-muted-foreground">{title}</span>}
         </div>
-        <button type="button" onClick={copy} className="cursor-pointer font-mono text-muted-foreground transition-colors hover:text-foreground">
+        <button
+          type="button"
+          onClick={copy}
+          className="cursor-pointer font-numeral text-[10.5px] tracking-widest text-muted-foreground uppercase transition-colors hover:text-[#f2dfb9]"
+        >
           {copied ? text("Copied", "已复制") : text("Copy", "复制")}
         </button>
       </div>
-      <pre className="overflow-x-auto p-5 font-mono text-[0.84rem] leading-relaxed text-foreground">
+      <pre className="overflow-x-auto bg-[#0a0c12]/80 p-5 font-mono text-[0.83rem] leading-relaxed text-[#ece4d4]">
         <code>{code}</code>
       </pre>
     </div>

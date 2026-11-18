@@ -1,6 +1,7 @@
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AmbientBackdrop } from "./components/AmbientBackdrop";
+import { InkPlateFilter } from "./components/AtelierChrome";
 import { SiteNav } from "./components/SiteNav";
 import { HomePage } from "./pages/HomePage";
 import { useLanguage } from "./lib/language";
@@ -14,6 +15,13 @@ export function App() {
   const { text } = useLanguage();
   const { pathname, hash } = useLocation();
   const previousLocation = useRef({ pathname, hash });
+  const [activeFolioSlug, setActiveFolioSlug] = useState<string>("still-life");
+  const [dialStep, setDialStep] = useState<number>(0);
+
+  const handleSelectFolio = useCallback((slug: string) => {
+    setActiveFolioSlug(slug);
+    setDialStep((prev) => prev + 1);
+  }, []);
 
   useEffect(() => {
     const previous = previousLocation.current;
@@ -28,28 +36,45 @@ export function App() {
     const scrollToTarget = () => {
       const target = document.getElementById(decodeURIComponent(hash.slice(1)));
       if (!target) return false;
-      target.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
+      target.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+        block: "start",
+      });
       return true;
     };
     if (scrollToTarget()) return;
-    const observer = new MutationObserver(() => { if (scrollToTarget()) observer.disconnect(); });
+    const observer = new MutationObserver(() => {
+      if (scrollToTarget()) observer.disconnect();
+    });
     observer.observe(document.getElementById("root")!, { childList: true, subtree: true });
     return () => observer.disconnect();
   }, [pathname, hash]);
 
+  const homeElement = (
+    <HomePage activeFolioSlug={activeFolioSlug} onSelectFolioSlug={handleSelectFolio} />
+  );
+
   return (
     <div className="relative min-h-screen">
-      <AmbientBackdrop />
-      <div className="relative z-10">
-        <SiteNav />
+      <InkPlateFilter />
+      <AmbientBackdrop dialStep={dialStep} />
+      <SiteNav activeFolioSlug={activeFolioSlug} onSelectFolioSlug={handleSelectFolio} />
+
+      <div className="relative z-10 lg:pl-[76px]">
         <div key={pathname} className="route-stage">
-          <Suspense fallback={<div className="mx-auto min-h-[70vh] max-w-6xl px-6 py-24" aria-live="polite"><span className="sr-only">{text("Loading page", "页面加载中")}</span></div>}>
+          <Suspense
+            fallback={
+              <div className="mx-auto min-h-[70vh] max-w-6xl px-6 py-24" aria-live="polite">
+                <span className="sr-only">{text("Opening folio", "正在展开档案")}</span>
+              </div>
+            }
+          >
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={homeElement} />
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/projects/:slug" element={<ProjectPage />} />
-              <Route path="/zh" element={<HomePage />} />
+              <Route path="/zh" element={homeElement} />
               <Route path="/zh/gallery" element={<GalleryPage />} />
               <Route path="/zh/about" element={<AboutPage />} />
               <Route path="/zh/projects/:slug" element={<ProjectPage />} />

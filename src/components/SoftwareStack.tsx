@@ -33,24 +33,50 @@ const compactNames: Partial<Record<SoftwareName, string>> = {
 type SoftwareStackProps = {
   software: SoftwareName[];
   showLabels?: boolean;
+  tone?: "slate" | "parchment";
 };
 
-export function SoftwareStack({ software, showLabels = false }: SoftwareStackProps) {
+export function SoftwareStack({ software, showLabels = false, tone = "slate" }: SoftwareStackProps) {
   const { text } = useLanguage();
+  const isParchment = tone === "parchment";
+
   return (
     <div aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`}>
-      <p className="text-xs font-medium text-foreground/75">{text("Tools", "软件与工具")}</p>
-      <div className="mt-2 flex flex-wrap gap-1.5">
+      <p
+        className={`font-numeral text-[10.5px] tracking-[0.2em] uppercase ${
+          isParchment ? "text-parchment-muted" : "text-warm/85"
+        }`}
+      >
+        {text("Atelier Instruments", "制作工具与管线")}
+      </p>
+      <div className="mt-2.5 flex flex-wrap gap-1.5">
         {software.map((name) => (
           <span
             key={name}
             title={name}
-            className="inline-flex min-h-7 items-center gap-2 rounded-xs border border-border bg-background/60 px-2.5 py-1 text-xs text-muted-foreground"
+            className={`inline-flex min-h-7 items-center gap-2 rounded-xs border px-2.5 py-1 text-xs transition-colors ${
+              isParchment
+                ? "border-[#8c683a]/55 bg-parchment-deep/65 text-parchment-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]"
+                : "border-warm/30 bg-background/65 text-muted-foreground"
+            }`}
           >
-            <span aria-hidden="true" className="font-mono text-[11px] text-foreground/80">
+            <span
+              aria-hidden="true"
+              className={`font-numeral text-[10.5px] font-bold tracking-wider ${
+                isParchment ? "text-rubric" : "text-[#dfc092]"
+              }`}
+            >
               {abbreviations[name]}
             </span>
-            {showLabels && <span className="border-l border-border pl-2">{name}</span>}
+            {showLabels && (
+              <span
+                className={`border-l pl-2 font-medium ${
+                  isParchment ? "border-[#8c683a]/40 text-parchment-ink" : "border-warm/25 text-foreground/90"
+                }`}
+              >
+                {compactNames[name] ?? name}
+              </span>
+            )}
           </span>
         ))}
       </div>
@@ -65,8 +91,11 @@ export function SoftwareSummary({ software }: Pick<SoftwareStackProps, "software
   const summary = `${visible.join(" · ")}${remaining > 0 ? ` · +${remaining}` : ""}`;
 
   return (
-    <p aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`} className="flex items-baseline gap-2 text-xs text-muted-foreground">
-      <span className="shrink-0 text-foreground/75">{text("Tools", "工具")}</span>
+    <p
+      aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`}
+      className="flex items-baseline gap-2 text-xs text-muted-foreground"
+    >
+      <span className="shrink-0 font-numeral text-[10px] tracking-wider text-warm/80">{text("TOOLS", "工具")}</span>
       <span className="min-w-0 truncate">{summary}</span>
     </p>
   );
