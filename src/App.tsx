@@ -1,8 +1,7 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AmbientBackdrop } from "./components/AmbientBackdrop";
 import { SiteNav } from "./components/SiteNav";
-import { WelcomeIntro } from "./components/WelcomeIntro";
 import { HomePage } from "./pages/HomePage";
 import { useLanguage } from "./lib/language";
 
@@ -14,7 +13,6 @@ const ProjectPage = lazy(() => import("./pages/ProjectPage").then((module) => ({
 export function App() {
   const { text } = useLanguage();
   const { pathname, hash } = useLocation();
-  const [bootActive, setBootActive] = useState(false);
   const previousLocation = useRef({ pathname, hash });
 
   useEffect(() => {
@@ -41,8 +39,7 @@ export function App() {
 
   return (
     <div className="relative min-h-screen">
-      <WelcomeIntro onActiveChange={setBootActive} />
-      <AmbientBackdrop paused={bootActive} />
+      <AmbientBackdrop />
       <div className="relative z-10">
         <SiteNav />
         <div key={pathname} className="route-stage">

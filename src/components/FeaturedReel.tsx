@@ -7,13 +7,12 @@ type FeaturedReelProps = {
   zhId?: string;
   title: string;
   description: string;
-  eyebrow?: string;
   thumbnailSrc?: string;
 };
 
 function PlayIcon() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">
       <path d="M8.25 5.1v13.8L19 12 8.25 5.1Z" />
     </svg>
   );
@@ -25,7 +24,7 @@ export function FeaturedReel({ id, zhId, title, description, thumbnailSrc }: Fea
   const activeId = isChinese && zhId ? zhId : id;
 
   return (
-    <article className="group overflow-hidden rounded-xl border border-border bg-surface/45">
+    <article className="group overflow-hidden rounded-xs border border-border bg-surface">
       <div className="relative aspect-video overflow-hidden bg-black">
         {active ? (
           <iframe
@@ -39,7 +38,7 @@ export function FeaturedReel({ id, zhId, title, description, thumbnailSrc }: Fea
           <button
             type="button"
             onClick={() => setActive(true)}
-            className="absolute inset-0 w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
+            className="absolute inset-0 w-full cursor-pointer text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
             aria-label={`${text("Play", "播放")} ${title}`}
           >
             <img
@@ -50,35 +49,36 @@ export function FeaturedReel({ id, zhId, title, description, thumbnailSrc }: Fea
               loading="eager"
               fetchPriority="high"
               decoding="async"
-              className="h-full w-full object-cover opacity-85 grayscale-[10%] transition duration-500 group-hover:scale-[1.015] group-hover:opacity-100 group-hover:grayscale-0"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.012]"
               onError={(event) => {
                 const fallback = `https://i.ytimg.com/vi/${activeId}/hqdefault.jpg`;
-
                 if (event.currentTarget.src !== fallback) {
                   event.currentTarget.src = fallback;
                 }
               }}
             />
-            <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-background/65 via-transparent to-background/15" />
+            <span aria-hidden="true" className="absolute inset-0 bg-black/15 transition-colors duration-300 group-hover:bg-black/5" />
             <span className="absolute inset-0 grid place-items-center">
-              <span className="grid h-16 w-16 place-items-center rounded-full border border-foreground/35 bg-background/75 pl-1 text-foreground shadow-2xl backdrop-blur transition-all duration-300 group-hover:scale-105 group-hover:border-accent group-hover:text-accent">
+              <span className="inline-flex items-center gap-2.5 rounded-xs border border-foreground/45 bg-background/88 px-5 py-3 text-xs font-medium tracking-wide text-foreground shadow-2xl backdrop-blur-sm transition-colors duration-200 group-hover:border-foreground group-hover:bg-foreground group-hover:text-background">
                 <PlayIcon />
+                <span>{text("Play reel", "播放集锦")}</span>
               </span>
             </span>
-            <span className="absolute bottom-4 left-4 font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/80">{text("Play reel", "播放视频")}</span>
           </button>
         )}
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border/60 p-4 sm:px-6">
-          <p className={`max-w-2xl text-sm leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}><FormattedText>{description}</FormattedText></p>
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border px-5 py-3.5 sm:px-6">
+        <p className={`max-w-2xl text-sm leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
+          <FormattedText>{description}</FormattedText>
+        </p>
         <a
           href={`https://youtu.be/${activeId}`}
           target="_blank"
           rel="noreferrer"
-          className="shrink-0 py-2 text-xs text-muted-foreground transition-colors hover:text-accent"
+          className="shrink-0 text-xs text-muted-foreground transition-colors hover:text-foreground"
         >
-          {text("Open on YouTube", "在 YouTube 打开")} ↗
+          {text("Watch on YouTube", "在 YouTube 打开")} ↗
         </a>
       </div>
     </article>

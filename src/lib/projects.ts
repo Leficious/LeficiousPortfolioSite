@@ -53,7 +53,7 @@ export const projects: Project[] = [
     role: "Solo Game & Level Designer",
     year: "2026",
     summary:
-      "A surrealist first-person puzzle game where animals stand still and silent as counterweights, bridges, and gear wedges while household appliances shiver, flee, and lean into your hand for warmth.",
+      "First-person surrealist puzzle game where motionless animals serve as counterweights, bridges, and gear wedges while a skittish Desk Lamp relies on you for warmth.",
     tags: ["Unity 6", "Game Design", "Level Design", "3D Modeling & Rigging"],
     cover: "/projects/still-life/card-cover.webp",
     heroImage: "/projects/still-life/hero-poster.webp",
@@ -138,7 +138,7 @@ export const projects: Project[] = [
           {
             type: "youtube",
             id: "z71a6UtZ6GY",
-            caption: "thatgamejam #02 soundtrack prompt composed by Jason Grace (0:00 to 0:21 switch click & music box -> Room 1; 0:21 to 0:53 clockwork pulse & strings -> Rooms 2 & 3; 0:53 to 1:06 abrupt cutoff -> Rooms 4 & 5).",
+            caption: "thatgamejam #02 soundtrack prompt composed by Jason Grace (0:00–0:21 switch click & music box → Room 1; 0:21–0:53 clockwork pulse & strings → Rooms 2 & 3; 0:53–1:06 abrupt cutoff → Rooms 4 & 5).",
           },
           {
             type: "image",
@@ -223,7 +223,7 @@ export const projects: Project[] = [
         eyebrow: "04 / Room 2",
         title: "The Three-Story Archive (235 kg full-allocation progression)",
         body: [
-          "Room 2 expands into a three-story vertical hall (1F Courtyard, 2F Mezzanine, and 3F Penthouse) containing 7 animals totaling 235 kg. To prevent leftover items from bypassing later doors, the room uses a 4-stage progression (55 kg -> 115 kg -> 195 kg -> 235 kg) where unlocking each new animal requires simultaneously committing 100% of your currently unlocked weight pool across elevators, gold focus plates, gap bridges, and vault gates with 0 kg left over.",
+          "Room 2 expands into a three-story vertical hall (1F Courtyard, 2F Mezzanine, and 3F Penthouse) containing 7 animals totaling 235 kg. To prevent leftover items from bypassing later doors, the room uses a 4-stage progression (55 kg → 115 kg → 195 kg → 235 kg) where unlocking each new animal requires simultaneously committing 100% of your currently unlocked weight pool across elevators, gold focus plates, gap bridges, and vault gates with 0 kg left over.",
           "The Giraffe acts as a multi-use prop: it can be tipped horizontally across 4.2m floor gaps on 2F and 3F as a walkable bridge, or picked back up to serve as a 60 kg counterweight on vault plates. Once the 40 kg Deer is unlocked in Stage 3, the Giraffe locks permanently across the 3F gap so the player cannot accidentally strand themselves on the top floor during the 235 kg finale.",
         ],
         widget: "still-life-room2-combinatorics",
@@ -368,7 +368,7 @@ export const projects: Project[] = [
         body: [
           "The visual direction was chosen to reinforce the puzzle habit before Room 4 flips it. Animals use flat monochrome cross-hatching and zero idle motion so they read like archival hardware, whereas the Desk Lamp and Chest Mimics use 7 FPS boiling outlines, shivering motion, and warm light falloff.",
           "Inside the multi-story rooms, every pressure plate, focus stand, elevator, and crusher connects to its target through right-angle floor and wall indicator lines (Cyan for gates and lifts, Gold for Focus Stands, and Green for Crusher jammers). That kept three-story cause and effect readable without floating UI icons.",
-          "In playtesting Room 2, requiring 100% of the player's unlocked animal weight pool at each stage (55 kg -> 115 kg -> 195 kg -> 235 kg) solved sequence breaking cleanly: every animal had to be reclaimed and re-routed at each tier, so nothing could be left behind as spare weight.",
+          "In playtesting Room 2, requiring 100% of the player's unlocked animal weight pool at each stage (55 kg → 115 kg → 195 kg → 235 kg) solved sequence breaking cleanly: every animal had to be reclaimed and re-routed at each tier, so nothing could be left behind as spare weight.",
         ],
         widget: "still-life-shader-telemetry",
       },
@@ -380,7 +380,7 @@ export const projects: Project[] = [
     role: "Solo Game & Level Designer",
     year: "2026",
     summary:
-      "A 4-week first-person acoustic exploration and puzzle game built around a single, unchanging echolocation input across three regions that change how the environment responds.",
+      "First-person sightless puzzle game built on one unchanging echolocation input — each region changes what casting a pulse reveals, hides, or shuts.",
     tags: ["Unity 6", "Game Design", "Level Design", "Spatial Wayfinding"],
     cover: "/projects/an-echo-has-no-shape/cover.webp",
     heroImage: "/projects/an-echo-has-no-shape/hero-poster.webp",
@@ -472,7 +472,7 @@ export const projects: Project[] = [
         title: "Flanking safe routes vs. baited decoy shortcuts",
         body: [
           "First-person platforming over water gets repetitive if every visible platform is safe, and frustrating if jumps demand tight execution. The Glacial Ocean puts the challenge on pre-jump route verification.",
-          "Between Checkpoints 1 -> 2 -> 3, platforms are split into permanent anchor islands, hidden solid stepping stones along the flanking arc (revealed in white by the player's E pulse), and non-solid decoy floes placed along direct shortcuts. Three Siren emitters broadcast a 62m magenta wave every 7.0s that tints 35% of solid ice pink, hides 40% back in fog, and lights 70% of non-solid decoys in pink. Players have to pause on safe islands and press E to confirm solid white geometry before jumping.",
+          "Between Checkpoints 1 → 2 → 3, platforms are split into permanent anchor islands, hidden solid stepping stones along the flanking arc (revealed in white by the player's E pulse), and non-solid decoy floes placed along direct shortcuts. Three Siren emitters broadcast a 62m magenta wave every 7.0s that tints 35% of solid ice pink, hides 40% back in fog, and lights 70% of non-solid decoys in pink. Players have to pause on safe islands and press E to confirm solid white geometry before jumping.",
         ],
         widget: "glacier-state-machine",
         media: [
@@ -508,16 +508,16 @@ export const projects: Project[] = [
         eyebrow: "04 / Region 2: Unremembered City",
         title: "3-wing sequential street loop and reset boundary gate",
         body: [
-          "In the Unremembered City, each landmark reveals only one architectural layer of the ruined street grid. No single statue restores the city on its own. To unlock the region, the player must navigate a full clockwise loop across all three city wings in strict sequence (0 -> 1 -> 2 -> 3).",
-          "Interacting with the center plaza tablet reveals the baseline street grid (Stage 0). Three statues in separate wings layer additional architecture onto the city: The Muse (SW, Stage 1) adds courtyard gardens and trees, The Ruler (SE, Stage 2) adds archways and citizen figures, and The Architect (NE, Stage 3 -> 4) adds upper walls and roofs to lock all layers in gold. Activating a statue out of order or crossing the outer boundary before Stage 4 triggers a 45 m/s Reset Wave from the center plaza that wipes unfinished layers back to Stage 0.",
+          "In the Unremembered City, each landmark reveals only one architectural layer of the ruined street grid. No single statue restores the city on its own. To unlock the region, the player must navigate a full clockwise loop across all three city wings in strict sequence (0 → 1 → 2 → 3).",
+          "Interacting with the center plaza tablet reveals the baseline street grid (Stage 0). Three statues in separate wings layer additional architecture onto the city: The Muse (SW, Stage 1) adds courtyard gardens and trees, The Ruler (SE, Stage 2) adds archways and citizen figures, and The Architect (NE, Stage 3 → 4) adds upper walls and roofs to lock all layers in gold. Activating a statue out of order or crossing the outer boundary before Stage 4 triggers a 45 m/s Reset Wave from the center plaza that wipes unfinished layers back to Stage 0.",
         ],
         widget: "city-sequence",
         media: [
           {
             type: "image",
             src: "/projects/an-echo-has-no-shape/map-03-unremembered-city.webp",
-            alt: "Region 2 Street Loop & Reset Boundary Map: Unremembered City showing the 0 -> 1 -> 2 -> 3 street traversal loop",
-            caption: "Region 2 Street Loop & Reset Boundary Map (Unremembered City): Showing the required street traversal loop from Center Plaza (0) -> SW Muse Wing (1) -> SE Ruler Wing (2) -> NE Architect Wing (3) and the outer Reset Boundary.",
+            alt: "Region 2 Street Loop & Reset Boundary Map: Unremembered City showing the 0 → 1 → 2 → 3 street traversal loop",
+            caption: "Region 2 Street Loop & Reset Boundary Map (Unremembered City): Showing the required street traversal loop from Center Plaza (0) → SW Muse Wing (1) → SE Ruler Wing (2) → NE Architect Wing (3) and the outer Reset Boundary.",
             width: 1600,
             height: 1200,
             fullWidth: true,

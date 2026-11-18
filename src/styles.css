@@ -13,14 +13,15 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "DM Sans Variable", system-ui, sans-serif;
-  --font-display: "Space Grotesk Variable", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --font-display: "Schibsted Grotesk Variable", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-xs: 2px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 1px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -46,45 +47,46 @@
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.1875rem;
 
-  /* Dark cool desaturated palette - slate/steel tones */
-  --background: oklch(0.18 0.012 240);
-  --foreground: oklch(0.92 0.008 240);
+  /* Neutral deep carbon/graphite ground — zero blue-slate SaaS cast */
+  --background: #0d0e10;
+  --foreground: #eceeef;
 
-  --surface: oklch(0.22 0.014 240);
-  --surface-foreground: oklch(0.92 0.008 240);
+  --surface: #141619;
+  --surface-foreground: #eceeef;
 
-  --card: oklch(0.22 0.014 240);
-  --card-foreground: oklch(0.92 0.008 240);
+  --card: #141619;
+  --card-foreground: #eceeef;
 
-  --popover: oklch(0.22 0.014 240);
-  --popover-foreground: oklch(0.92 0.008 240);
+  --popover: #141619;
+  --popover-foreground: #eceeef;
 
-  --primary: oklch(0.78 0.04 220);
-  --primary-foreground: oklch(0.18 0.012 240);
+  --primary: #eceeef;
+  --primary-foreground: #0d0e10;
 
-  --secondary: oklch(0.28 0.016 240);
-  --secondary-foreground: oklch(0.92 0.008 240);
+  --secondary: #1c1f24;
+  --secondary-foreground: #eceeef;
 
-  --muted: oklch(0.26 0.014 240);
-  --muted-foreground: oklch(0.62 0.018 240);
+  --muted: #181a1f;
+  --muted-foreground: #989da6;
 
-  --accent: oklch(0.62 0.06 215);
-  --accent-foreground: oklch(0.14 0.012 240);
+  /* Single brand chromatic accent matching P03-E2 crest brass */
+  --accent: #c59a68;
+  --accent-foreground: #0d0e10;
   --warm: #c59a68;
 
-  --destructive: oklch(0.6 0.18 25);
-  --destructive-foreground: oklch(0.98 0.005 240);
+  --destructive: #c4544e;
+  --destructive-foreground: #fafafa;
 
-  --border: oklch(0.32 0.018 240);
-  --input: oklch(0.3 0.016 240);
-  --ring: oklch(0.62 0.06 215);
+  --border: #262930;
+  --input: #262930;
+  --ring: #c59a68;
 }
 
 .dark {
-  --background: oklch(0.18 0.012 240);
-  --foreground: oklch(0.92 0.008 240);
+  --background: #0d0e10;
+  --foreground: #eceeef;
 }
 
 @layer base {
@@ -100,18 +102,17 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4, h5 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.022em;
   }
 
   :focus-visible {
     outline: 2px solid var(--color-ring);
-    outline-offset: 4px;
+    outline-offset: 3px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -131,23 +132,10 @@
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
-  .grain {
-    position: relative;
-  }
-  .grain::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.04;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  }
 }
 
 .ambient-backdrop {
   display: none;
-  view-transition-name: ambient-system;
 }
 
 .site-header {
@@ -159,89 +147,15 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  @keyframes route-content-exit {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-4px); }
-  }
-
-  @keyframes route-content-enter {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes route-fallback-enter {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes route-section-enter {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes language-content-exit {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-3px); }
-  }
-
-  @keyframes language-content-enter {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes route-item-enter {
-    from { opacity: 0; transform: translateY(10px) scale(0.995); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  @keyframes route-ambient-exit {
+  @keyframes route-fade-out {
     from { opacity: 1; }
-    to { opacity: 0.35; }
+    to { opacity: 0; }
   }
 
-  @keyframes route-ambient-enter {
-    from { opacity: 0.28; }
+  @keyframes route-fade-in {
+    from { opacity: 0; }
     to { opacity: 1; }
   }
-
-  @keyframes ambient-map-route-in {
-    from { opacity: 0; }
-    to { opacity: 0.9; }
-  }
-
-  @keyframes ambient-pattern-enter {
-    from { opacity: 0; }
-    to { opacity: 0.18; }
-  }
-
-  .ambient-backdrop__map {
-    animation: ambient-map-route-in 360ms 60ms ease-out both;
-  }
-
-  .route-stage-fallback {
-    animation: route-fallback-enter 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .route-reveal {
-    animation: route-section-enter 340ms var(--route-reveal-delay, 55ms) cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .route-reveal:nth-child(2) { --route-reveal-delay: 90ms; }
-  .route-reveal:nth-child(3) { --route-reveal-delay: 125ms; }
-  .route-reveal:nth-child(4) { --route-reveal-delay: 160ms; }
-  .route-reveal:nth-child(5) { --route-reveal-delay: 195ms; }
-  .route-reveal:nth-child(6) { --route-reveal-delay: 230ms; }
-
-  .route-reveal-list > * {
-    animation: route-item-enter 300ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .route-reveal-list > :nth-child(2) { animation-delay: 145ms; }
-  .route-reveal-list > :nth-child(3) { animation-delay: 170ms; }
-  .route-reveal-list > :nth-child(4) { animation-delay: 195ms; }
-  .route-reveal-list > :nth-child(5) { animation-delay: 220ms; }
-  .route-reveal-list > :nth-child(6) { animation-delay: 245ms; }
-  .route-reveal-list > :nth-child(n + 7) { animation-delay: 270ms; }
 }
 
 ::view-transition-old(root),
@@ -257,62 +171,36 @@
 }
 
 ::view-transition-group(route-content) {
-  animation-duration: 360ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-::view-transition-image-pair(route-content) {
-  isolation: auto;
+  animation-duration: 160ms;
+  animation-timing-function: ease-out;
 }
 
 ::view-transition-old(route-content) {
-  animation: route-content-exit 130ms ease-in both;
+  animation: route-fade-out 90ms ease-out both;
   mix-blend-mode: normal;
 }
 
 ::view-transition-new(route-content) {
-  animation: route-content-enter 270ms 70ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  mix-blend-mode: normal;
-}
-
-::view-transition-old(ambient-system) {
-  animation: route-ambient-exit 150ms ease-in both;
-  mix-blend-mode: normal;
-}
-
-::view-transition-new(ambient-system) {
-  animation: route-ambient-enter 330ms 30ms ease-out both;
+  animation: route-fade-in 140ms 30ms ease-out both;
   mix-blend-mode: normal;
 }
 
 html.language-switching::view-transition-group(route-content),
 html.language-switching::view-transition-group(site-header) {
-  animation-duration: 260ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-duration: 140ms;
+  animation-timing-function: ease-out;
 }
 
 html.language-switching::view-transition-old(route-content),
 html.language-switching::view-transition-old(site-header) {
-  animation: language-content-exit 100ms ease-in both;
+  animation: route-fade-out 80ms ease-out both;
   mix-blend-mode: normal;
 }
 
 html.language-switching::view-transition-new(route-content),
 html.language-switching::view-transition-new(site-header) {
-  animation: language-content-enter 210ms 50ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: route-fade-in 120ms 20ms ease-out both;
   mix-blend-mode: normal;
-}
-
-html.language-switching::view-transition-old(ambient-system),
-html.language-switching::view-transition-new(ambient-system) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-@supports not (view-transition-name: none) {
-  html.language-switching .route-stage {
-    animation: language-content-enter 210ms 50ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -324,75 +212,29 @@ html.language-switching::view-transition-new(ambient-system) {
   }
 }
 
+/* Faint, static relief contour print in wide desktop margins only */
 @media (min-width: 1280px) {
   .ambient-backdrop {
     position: fixed;
     inset: 0;
-    z-index: 20;
+    z-index: 0;
     display: block;
     overflow: hidden;
     pointer-events: none;
   }
 
-  .ambient-backdrop::before,
-  .ambient-backdrop::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent 6%, var(--color-border) 22%, var(--color-border) 78%, transparent 94%);
-    opacity: 0.42;
-  }
-
-  .ambient-backdrop::before { left: calc(50% - 606px); }
-  .ambient-backdrop::after { right: calc(50% - 606px); }
-
-  .ambient-backdrop__pattern,
-  .ambient-backdrop__glow,
   .ambient-backdrop__map {
     position: absolute;
     inset: 0;
-    mask-image: linear-gradient(to right, black 0%, black calc(50% - 650px), transparent calc(50% - 510px), transparent calc(50% + 510px), black calc(50% + 650px), black 100%);
-  }
-
-  .ambient-backdrop__map {
-    opacity: 0.9;
-  }
-
-  .ambient-backdrop__pattern {
-    opacity: 0.18;
-    background-image:
-      linear-gradient(to right, var(--color-border) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--color-border) 1px, transparent 1px),
-      repeating-linear-gradient(135deg, transparent 0 23px, color-mix(in oklch, var(--color-accent) 16%, transparent) 24px, transparent 25px 48px);
-    background-size: 36px 36px, 36px 36px, auto;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .ambient-backdrop__pattern {
-      animation: ambient-pattern-enter 900ms 100ms ease-out both;
-    }
-  }
-
-  .ambient-backdrop__glow {
-    overflow: hidden;
-  }
-
-  .ambient-backdrop__glow-orb {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 760px;
-    height: 760px;
-    transform: translate3d(-9999px, -9999px, 0);
-    will-change: transform;
-    background: radial-gradient(circle, color-mix(in oklch, var(--color-accent) 16%, transparent) 0%, transparent 70%);
+    mask-image:
+      linear-gradient(to right, black 0%, black calc(50% - 630px), transparent calc(50% - 555px), transparent calc(50% + 555px), black calc(50% + 630px), black 100%),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.55) 55%, transparent 94%);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
   }
 }
 
-/* Use native CJK rendering for Chinese prose. Size increases are opt-in so
-   logos, metadata, tags, software names, and other display UI stay unchanged. */
+/* Use native CJK rendering for Chinese prose. */
 html[lang="zh-CN"] body {
   font-family: "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", system-ui, sans-serif;
 }

@@ -2,24 +2,24 @@ import type { SoftwareName } from "../lib/gallery";
 import { useLanguage } from "../lib/language";
 
 const abbreviations: Record<SoftwareName, string> = {
-  "Maya": "MY",
+  Maya: "MY",
   "Substance 3D Designer": "SD",
   "Substance 3D Painter": "SP",
-  "SpeedTree": "ST",
+  SpeedTree: "ST",
   "Unreal Engine": "UE",
-  "Unity": "UN",
+  Unity: "UN",
   "C#": "C#",
-  "Gaea": "GA",
-  "ZBrush": "ZB",
-  "Photoshop": "PS",
-  "Python": "PY",
-  "MEL": "MEL",
-  "Yeti": "YT",
+  Gaea: "GA",
+  ZBrush: "ZB",
+  Photoshop: "PS",
+  Python: "PY",
+  MEL: "MEL",
+  Yeti: "YT",
   "Marmoset Toolbag": "MT",
   "Clip Studio Paint": "CS",
   "V-Ray": "VR",
-  "Houdini": "HO",
-  "Redshift": "RS",
+  Houdini: "HO",
+  Redshift: "RS",
   "Traditional Media": "TM",
 };
 
@@ -39,16 +39,18 @@ export function SoftwareStack({ software, showLabels = false }: SoftwareStackPro
   const { text } = useLanguage();
   return (
     <div aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`}>
-      <p className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">{text("Software / tools", "软件 / 工具")}</p>
+      <p className="text-xs font-medium text-foreground/75">{text("Tools", "软件与工具")}</p>
       <div className="mt-2 flex flex-wrap gap-1.5">
         {software.map((name) => (
           <span
             key={name}
             title={name}
-            className="inline-flex min-h-7 items-center gap-2 rounded border border-border/80 bg-background/45 px-2 font-mono text-[8px] uppercase tracking-[0.1em] text-muted-foreground transition-colors hover:border-foreground/45 hover:text-foreground"
+            className="inline-flex min-h-7 items-center gap-2 rounded-xs border border-border bg-background/60 px-2.5 py-1 text-xs text-muted-foreground"
           >
-            <span aria-hidden="true" className="text-foreground/75">{abbreviations[name]}</span>
-            {showLabels && <span className="border-l border-border/70 pl-2">{name}</span>}
+            <span aria-hidden="true" className="font-mono text-[11px] text-foreground/80">
+              {abbreviations[name]}
+            </span>
+            {showLabels && <span className="border-l border-border pl-2">{name}</span>}
           </span>
         ))}
       </div>
@@ -64,7 +66,7 @@ export function SoftwareSummary({ software }: Pick<SoftwareStackProps, "software
 
   return (
     <p aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`} className="flex items-baseline gap-2 text-xs text-muted-foreground">
-      <span className="shrink-0 text-accent/80">{text("Toolkit", "工具")}</span>
+      <span className="shrink-0 text-foreground/75">{text("Tools", "工具")}</span>
       <span className="min-w-0 truncate">{summary}</span>
     </p>
   );

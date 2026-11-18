@@ -7,14 +7,14 @@ import { FormattedText } from "./FormattedText";
 function ExpandIcon({ close = false }: { close?: boolean }) {
   if (close) {
     return (
-      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-none stroke-current stroke-[1.5]">
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-none stroke-current stroke-[1.5]">
         <path d="m6 6 12 12M18 6 6 18" />
       </svg>
     );
   }
 
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-none stroke-current stroke-[1.5]">
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-3.5 w-3.5 fill-none stroke-current stroke-[1.5]">
       <path d="M9 4H4v5M15 4h5v5M20 15v5h-5M4 15v5h5" />
     </svg>
   );
@@ -42,7 +42,9 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
       }
 
       if (event.key !== "Tab" || !dialogRef.current) return;
-      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>("button, a[href], [tabindex]:not([tabindex='-1'])"));
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>("button, a[href], [tabindex]:not([tabindex='-1'])"),
+      );
       if (!focusable.length) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
@@ -69,7 +71,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
         ref={triggerRef}
         type="button"
         onClick={() => setExpanded(true)}
-        className="group relative block w-full cursor-zoom-in overflow-hidden text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
+        className="group relative block w-full cursor-zoom-in overflow-hidden text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
         aria-label={`${text("Expand image", "放大图片")}: ${item.alt}`}
       >
         <img
@@ -79,19 +81,18 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
           height={item.height ?? 900}
           loading="lazy"
           decoding="async"
-          className={`${item.naturalAspect ? "" : "aspect-video "}h-auto w-full bg-black/20 object-contain transition-[filter,transform] duration-300 group-hover:scale-[1.01] group-hover:brightness-110`}
+          className={`${item.naturalAspect ? "" : "aspect-video "}h-auto w-full bg-black/25 object-contain transition-transform duration-300 group-hover:scale-[1.008]`}
         />
-        <span className="absolute bottom-3 right-3 flex items-center gap-2 rounded-sm border border-foreground/20 bg-background/85 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground opacity-0 shadow-lg backdrop-blur transition-all duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+        <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-xs border border-border bg-background/90 px-2.5 py-1.5 text-xs font-medium text-foreground opacity-0 backdrop-blur-sm transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
           <ExpandIcon />
-          {text("View full size", "查看原图")}
+          {text("Full size", "查看原图")}
         </span>
-        <span aria-hidden="true" className="pointer-events-none absolute inset-3 border border-accent/0 transition-colors duration-200 group-hover:border-accent/35 group-focus-visible:border-accent/35" />
       </button>
 
       {expanded &&
         createPortal(
           <div
-            className="fixed inset-0 z-[120] flex cursor-zoom-out items-center justify-center bg-background/95 p-4 backdrop-blur-xl sm:p-8"
+            className="fixed inset-0 z-[120] flex cursor-zoom-out items-center justify-center bg-background/96 p-4 backdrop-blur-md sm:p-8"
             role="dialog"
             aria-modal="true"
             aria-label={`${text("Expanded image", "放大图片")}: ${item.alt}`}
@@ -100,25 +101,25 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
             }}
           >
             <div ref={dialogRef} className="relative flex max-h-full w-full max-w-[min(96vw,1600px)] cursor-default flex-col items-center gap-3">
-              <div className="absolute -top-1 left-0 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:-top-2">
-                {text("Image inspection", "图片查看")}
-              </div>
               <button
                 ref={closeRef}
                 type="button"
                 onClick={() => setExpanded(false)}
-                className="absolute -top-2 right-0 z-10 grid h-10 w-10 place-items-center rounded-full border border-foreground/20 bg-background/90 text-foreground transition-colors hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:-top-3"
+                className="self-end inline-flex cursor-pointer items-center gap-2 rounded-xs border border-border bg-surface px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background"
                 aria-label={text("Close expanded image", "关闭大图")}
               >
-                <ExpandIcon close />
+                {text("Close", "关闭")} <ExpandIcon close />
               </button>
               <img
                 src={item.src}
                 alt={item.alt}
-                className="mt-10 max-h-[calc(100vh-8rem)] max-w-full rounded-sm border border-border bg-black/20 object-contain shadow-2xl"
+                className="max-h-[calc(100vh-8rem)] max-w-full rounded-xs border border-border bg-black/25 object-contain"
               />
-              {item.caption && <p className="max-w-4xl text-center text-sm text-muted-foreground"><FormattedText>{item.caption}</FormattedText></p>}
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground/70">{text("Click outside or press Esc to close", "点击外部或按 Esc 关闭")}</p>
+              {item.caption && (
+                <p className="max-w-4xl text-center text-sm text-muted-foreground">
+                  <FormattedText>{item.caption}</FormattedText>
+                </p>
+              )}
             </div>
           </div>,
           document.body,
@@ -148,7 +149,7 @@ function YouTubeEmbed({ id, title, thumbnailSrc }: { id: string; title: string; 
     <button
       type="button"
       onClick={() => setActive(true)}
-      className="group absolute inset-0 flex items-center justify-center bg-background"
+      className="group absolute inset-0 flex cursor-pointer items-center justify-center bg-black"
       aria-label={`${text("Play", "播放")} ${title}`}
     >
       <img
@@ -159,10 +160,11 @@ function YouTubeEmbed({ id, title, thumbnailSrc }: { id: string; title: string; 
         loading="lazy"
         decoding="async"
         onError={() => setThumbnail(`https://i.ytimg.com/vi/${id}/hqdefault.jpg`)}
-        className="h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-90"
+        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.012]"
       />
-      <span className="absolute rounded-full border border-foreground/30 bg-background/85 px-5 py-3 font-mono text-xs uppercase tracking-[0.18em] text-foreground backdrop-blur">
-        {text("Play video", "播放视频")}
+      <span aria-hidden="true" className="absolute inset-0 bg-black/15 transition-colors group-hover:bg-black/5" />
+      <span className="relative rounded-xs border border-foreground/45 bg-background/88 px-4 py-2.5 text-xs font-medium text-foreground backdrop-blur-sm transition-colors group-hover:border-foreground group-hover:bg-foreground group-hover:text-background">
+        ▶ {text("Play video", "播放视频")}
       </span>
     </button>
   );
@@ -170,8 +172,8 @@ function YouTubeEmbed({ id, title, thumbnailSrc }: { id: string; title: string; 
 
 export function Media({ item }: { item: MediaItem }) {
   return (
-    <figure className="space-y-2">
-      <div className="overflow-hidden rounded-lg border border-border bg-surface">
+    <figure className="space-y-2.5">
+      <div className="overflow-hidden rounded-xs border border-border bg-surface">
         {item.type === "image" && <ExpandableImage item={item} />}
         {item.type === "video" && <video src={item.src} poster={item.poster} controls playsInline preload="metadata" className="h-auto w-full" />}
         {item.type === "youtube" && (
@@ -180,7 +182,11 @@ export function Media({ item }: { item: MediaItem }) {
           </div>
         )}
       </div>
-      {item.caption && <figcaption className="text-sm text-muted-foreground"><FormattedText>{item.caption}</FormattedText></figcaption>}
+      {item.caption && (
+        <figcaption className="text-xs leading-relaxed text-muted-foreground sm:text-sm">
+          <FormattedText>{item.caption}</FormattedText>
+        </figcaption>
+      )}
     </figure>
   );
 }

@@ -8,7 +8,14 @@ export function NotFoundPage({ message }: { message?: string }) {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Seo title={text("Page not found | Leficious", "未找到页面 | Leficious")} description={text("The requested page could not be found.", "无法找到请求的页面。")} path={window.location.pathname} />
-      <main id="main-content" tabIndex={-1} className="mx-auto max-w-3xl px-6 py-32 text-center"><p className="font-display text-7xl font-bold">404</p><h1 className="mt-4 font-display text-2xl font-semibold">{resolvedMessage}</h1><p className="mt-2 text-muted-foreground">{text("The page doesn't exist or may have moved.", "这个页面不存在，或者已经换了地址。")}</p><Link to={localizedPath("/")} viewTransition className="mt-6 inline-block text-accent hover:underline">← {text("Back to work", "返回项目页")}</Link></main>
+      <main id="main-content" tabIndex={-1} className="mx-auto max-w-3xl px-6 py-32 text-center">
+        <p className="font-mono text-sm text-warm">404</p>
+        <h1 className="mt-3 font-display text-3xl font-semibold tracking-tight">{resolvedMessage}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{text("The page doesn't exist or may have moved.", "这个页面不存在，或者已经换了地址。")}</p>
+        <Link to={localizedPath("/")} viewTransition className="mt-6 inline-block rounded-xs border border-border bg-surface px-4 py-2 text-xs font-medium text-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background">
+          ← {text("Back to work", "返回项目页")}
+        </Link>
+      </main>
     </div>
   );
 }

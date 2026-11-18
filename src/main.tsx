@@ -4,9 +4,13 @@ import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
 import { LanguageProvider } from "./lib/language";
 import "./styles.css";
-import "@fontsource-variable/dm-sans/wght.css";
-import "@fontsource-variable/space-grotesk/wght.css";
-import "@fontsource-variable/jetbrains-mono/wght.css";
+import "@fontsource-variable/schibsted-grotesk/wght.css";
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/400-italic.css";
+import "@fontsource/ibm-plex-sans/500.css";
+import "@fontsource/ibm-plex-sans/600.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
 
 const app = (
   <StrictMode>
