@@ -40,24 +40,26 @@ export function AstrolabeCrest({ className = "h-11 w-11" }: { className?: string
         </clipPath>
       </defs>
 
-      {/* Outer astrolabe degree bezel */}
-      <circle cx="48" cy="48" r="46.8" fill="none" stroke="#c59a68" strokeWidth="1" opacity="0.82" />
-      <circle cx="48" cy="48" r="42.2" fill="none" stroke="#c59a68" strokeWidth="0.6" opacity="0.45" />
-      {ASTROLABE_TICKS.map((t, i) => (
-        <line
-          key={i}
-          x1={t.x1}
-          y1={t.y1}
-          x2={t.x2}
-          y2={t.y2}
-          stroke="#c59a68"
-          strokeWidth={t.major ? "0.95" : "0.55"}
-          opacity={t.major ? "0.85" : "0.45"}
-        />
-      ))}
-      {/* Cardinal diamond finials */}
-      <polygon points="48,0 50,3 48,6 46,3" fill="#dfc092" />
-      <polygon points="48,90 50,93 48,96 46,93" fill="#c59a68" opacity="0.75" />
+      {/* Outer astrolabe degree bezel (rotates subtly on spine crest hover) */}
+      <g className="origin-center transition-transform duration-700 ease-out group-hover:rotate-[30deg]">
+        <circle cx="48" cy="48" r="46.8" fill="none" stroke="#c59a68" strokeWidth="1" opacity="0.82" />
+        <circle cx="48" cy="48" r="42.2" fill="none" stroke="#c59a68" strokeWidth="0.6" opacity="0.45" />
+        {ASTROLABE_TICKS.map((t, i) => (
+          <line
+            key={i}
+            x1={t.x1}
+            y1={t.y1}
+            x2={t.x2}
+            y2={t.y2}
+            stroke="#c59a68"
+            strokeWidth={t.major ? "0.95" : "0.55"}
+            opacity={t.major ? "0.85" : "0.45"}
+          />
+        ))}
+        {/* Cardinal diamond finials */}
+        <polygon points="48,0 50,3 48,6 46,3" fill="#dfc092" />
+        <polygon points="48,90 50,93 48,96 46,93" fill="#c59a68" opacity="0.75" />
+      </g>
 
       {/* Inscribed P03-E2 crest */}
       <g transform="translate(10.5, 11) scale(0.78)">
@@ -118,23 +120,23 @@ export function FolioCorners({
 
 /**
  * Machined brass binding pin + taut suspension threads holding the active folio on Home.
+ * Physically sways with damped pendulum inertia whenever a new folio latches onto the desk.
  */
 export function BrassPinThreads({ animKey }: { animKey?: string }) {
   return (
     <div aria-hidden="true" className="pointer-events-none relative mx-auto -mb-3 h-11 w-72 sm:w-96 z-30">
-      <svg viewBox="0 0 360 46" className="h-full w-full overflow-visible" fill="none">
-        {/* Taut angled brass suspension threads */}
-        <line x1="180" y1="9" x2="44" y2="45" stroke="#c59a68" strokeWidth="1.15" opacity="0.85" />
-        <line x1="180" y1="9" x2="316" y2="45" stroke="#c59a68" strokeWidth="1.15" opacity="0.85" />
-        {/* Grommet eyelets on the folio top edge */}
-        <circle cx="44" cy="45" r="3" fill="#181513" stroke="#b58952" strokeWidth="1.2" />
-        <circle cx="316" cy="45" r="3" fill="#181513" stroke="#b58952" strokeWidth="1.2" />
-      </svg>
+      <div key={animKey} className="animate-pin-pendulum h-full w-full">
+        <svg viewBox="0 0 360 46" className="h-full w-full overflow-visible" fill="none">
+          {/* Taut angled brass suspension threads */}
+          <line x1="180" y1="9" x2="44" y2="45" stroke="#c59a68" strokeWidth="1.2" opacity="0.88" />
+          <line x1="180" y1="9" x2="316" y2="45" stroke="#c59a68" strokeWidth="1.2" opacity="0.88" />
+          {/* Grommet eyelets on the folio top edge */}
+          <circle cx="44" cy="45" r="3" fill="#181513" stroke="#b58952" strokeWidth="1.2" />
+          <circle cx="316" cy="45" r="3" fill="#181513" stroke="#b58952" strokeWidth="1.2" />
+        </svg>
+      </div>
       {/* Central machined brass binding pin */}
-      <div
-        key={animKey}
-        className="animate-pin-latch absolute left-1/2 top-0 -translate-x-1/2 grid h-5 w-5 place-items-center rounded-full border border-[#f3deb9]/70 bg-gradient-to-b from-[#e4c490] to-[#9b713d] shadow-[0_4px_10px_rgba(0,0,0,0.65)]"
-      >
+      <div className="absolute left-1/2 top-0 -translate-x-1/2 grid h-5 w-5 place-items-center rounded-full border border-[#f3deb9]/75 bg-gradient-to-b from-[#ead0a0] to-[#9b713d] shadow-[0_4px_10px_rgba(0,0,0,0.68)]">
         <span className="h-1.5 w-1.5 rounded-full bg-[#3a2610]" />
       </div>
     </div>

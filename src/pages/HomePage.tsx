@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { BrassPinThreads, BrassRule, CrimsonStamp, FolioCorners } from "../components/AtelierChrome";
 import { FormattedText } from "../components/FormattedText";
 import { Seo } from "../components/Seo";
-import { projects } from "../lib/projects";
 import { useLanguage } from "../lib/language";
 import { localizeProject } from "../lib/localizedContent";
+import { projects } from "../lib/projects";
 
 type FolioMeta = {
   roman: string;
@@ -96,59 +96,59 @@ const ORDERED_SLUGS = [
 
 const ALL_BINDER_KEYS = ["reel", ...ORDERED_SLUGS] as const;
 
-/** Crisp mathematical vector emblems etched on background dark-slate folios */
+/** Crisp mathematical vector emblems etched on the exposed wings of background dark-slate folios */
 function SlateFolioEmblem({ kind }: { kind: FolioMeta["emblem"] }) {
   if (kind === "wave") {
     return (
-      <svg viewBox="0 0 200 120" aria-hidden="true" className="h-28 w-44 stroke-[#c59a68]/45" fill="none">
-        {Array.from({ length: 29 }, (_, i) => {
-          const x = 16 + i * 6;
-          const amp = Math.sin((i / 28) * Math.PI) * (i % 2 === 0 ? 44 : 24);
-          return <line key={i} x1={x} y1={60 - amp} x2={x} y2={60 + amp} strokeWidth="1" />;
+      <svg viewBox="0 0 120 150" aria-hidden="true" className="h-32 w-24 stroke-[#c59a68]/55 transition-colors group-hover:stroke-[#ebd1a3]" fill="none">
+        {Array.from({ length: 19 }, (_, i) => {
+          const y = 16 + i * 6.5;
+          const amp = Math.sin((i / 18) * Math.PI) * (i % 2 === 0 ? 38 : 20);
+          return <line key={i} x1={60 - amp} y1={y} x2={60 + amp} y2={y} strokeWidth="1.05" />;
         })}
-        <line x1="8" y1="60" x2="192" y2="60" strokeWidth="0.7" opacity="0.6" />
+        <line x1="60" y1="8" x2="60" y2="142" strokeWidth="0.75" opacity="0.65" />
       </svg>
     );
   }
   if (kind === "valkyrie") {
     return (
-      <svg viewBox="0 0 180 140" aria-hidden="true" className="h-32 w-40 stroke-[#c59a68]/42" fill="none">
-        <line x1="30" y1="125" x2="150" y2="15" strokeWidth="1.2" />
-        <polygon points="150,15 138,20 145,27" fill="#c59a68" opacity="0.4" />
-        <line x1="150" y1="125" x2="30" y2="15" strokeWidth="1.2" />
-        <polygon points="30,15 42,20 35,27" fill="#c59a68" opacity="0.4" />
-        <path d="M52 25 C105 45 105 95 52 115" strokeWidth="1.15" />
-        <circle cx="90" cy="70" r="34" strokeWidth="0.8" strokeDasharray="4 4" />
+      <svg viewBox="0 0 120 150" aria-hidden="true" className="h-32 w-24 stroke-[#c59a68]/55 transition-colors group-hover:stroke-[#ebd1a3]" fill="none">
+        <line x1="22" y1="128" x2="98" y2="22" strokeWidth="1.25" />
+        <polygon points="98,22 87,27 93,34" fill="#c59a68" opacity="0.5" />
+        <line x1="98" y1="128" x2="22" y2="22" strokeWidth="1.25" />
+        <polygon points="22,22 33,27 27,34" fill="#c59a68" opacity="0.5" />
+        <circle cx="60" cy="75" r="32" strokeWidth="0.9" strokeDasharray="4 4" />
+        <polygon points="60,36 66,75 60,114 54,75" strokeWidth="0.9" />
       </svg>
     );
   }
   if (kind === "scales") {
     return (
-      <svg viewBox="0 0 180 130" aria-hidden="true" className="h-28 w-40 stroke-[#c59a68]/45" fill="none">
-        <line x1="90" y1="18" x2="90" y2="112" strokeWidth="1.2" />
-        <line x1="36" y1="42" x2="144" y2="34" strokeWidth="1.2" />
-        <path d="M36 42 L22 76 H50 Z" strokeWidth="1" />
-        <path d="M144 34 L130 68 H158 Z" strokeWidth="1" />
-        <line x1="64" y1="112" x2="116" y2="112" strokeWidth="1.4" />
+      <svg viewBox="0 0 120 150" aria-hidden="true" className="h-32 w-24 stroke-[#c59a68]/55 transition-colors group-hover:stroke-[#ebd1a3]" fill="none">
+        <line x1="60" y1="20" x2="60" y2="128" strokeWidth="1.25" />
+        <line x1="22" y1="48" x2="98" y2="38" strokeWidth="1.2" />
+        <path d="M22 48 L10 82 H34 Z" strokeWidth="1" />
+        <path d="M98 38 L86 72 H110 Z" strokeWidth="1" />
+        <line x1="38" y1="128" x2="82" y2="128" strokeWidth="1.4" />
       </svg>
     );
   }
   if (kind === "shrine") {
     return (
-      <svg viewBox="0 0 180 130" aria-hidden="true" className="h-28 w-40 stroke-[#c59a68]/45" fill="none">
-        <path d="M32 34 Q90 22 148 34" strokeWidth="1.5" />
-        <line x1="42" y1="48" x2="138" y2="48" strokeWidth="1.1" />
-        <line x1="56" y1="34" x2="52" y2="112" strokeWidth="1.3" />
-        <line x1="124" y1="34" x2="128" y2="112" strokeWidth="1.3" />
-        <polygon points="90,64 98,74 90,84 82,74" strokeWidth="1" />
+      <svg viewBox="0 0 120 150" aria-hidden="true" className="h-32 w-24 stroke-[#c59a68]/55 transition-colors group-hover:stroke-[#ebd1a3]" fill="none">
+        <path d="M16 40 Q60 28 104 40" strokeWidth="1.5" />
+        <line x1="24" y1="54" x2="96" y2="54" strokeWidth="1.1" />
+        <line x1="36" y1="40" x2="32" y2="126" strokeWidth="1.3" />
+        <line x1="84" y1="40" x2="88" y2="126" strokeWidth="1.3" />
+        <polygon points="60,72 68,84 60,96 52,84" strokeWidth="1.05" />
       </svg>
     );
   }
   return (
-    <svg viewBox="0 0 160 130" aria-hidden="true" className="h-28 w-36 stroke-[#c59a68]/45" fill="none">
-      <circle cx="80" cy="65" r="44" strokeWidth="1" />
-      <circle cx="80" cy="65" r="28" strokeWidth="0.75" strokeDasharray="3 3" />
-      <polygon points="80,16 86,59 128,65 86,71 80,114 74,71 32,65 74,59" strokeWidth="0.95" />
+    <svg viewBox="0 0 120 150" aria-hidden="true" className="h-32 w-24 stroke-[#c59a68]/55 transition-colors group-hover:stroke-[#ebd1a3]" fill="none">
+      <circle cx="60" cy="75" r="38" strokeWidth="1.05" />
+      <circle cx="60" cy="75" r="24" strokeWidth="0.75" strokeDasharray="3 3" />
+      <polygon points="60,26 66,69 106,75 66,81 60,124 54,81 14,75 54,69" strokeWidth="1" />
     </svg>
   );
 }
@@ -218,7 +218,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
       <Seo
         title={text("Leficious | Game, Level & Technical Designer", "Leficious | 游戏、关卡与技术设计师")}
         description={text(
-          "Game, level, and technical design atelier of Lefi (Kevin) Shan — playable spatial puzzle architecture, multiphase combat systems, and 3D environments.",
+          "Game, level, and technical design atelier of Lefi (Kevin) Shan — playable spatial puzzle worlds, multiphase combat systems, and 3D environments.",
           "单凯飞（Leficious）的游戏、关卡与技术设计作品集：空间解谜、多阶段 Boss 战与风格化 3D 环境。",
         )}
         path={localizedPath("/")}
@@ -258,26 +258,35 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
       </div>
 
       {/* Main Center Desk Stage */}
-      <main id="main-content" tabIndex={-1} className="relative my-auto mx-auto w-full max-w-[980px] pt-2 lg:pt-4">
-        {/* Background Fanned Dark-Slate Folios (Desktop) */}
-        <div className="pointer-events-none absolute inset-x-0 -top-2 hidden h-[430px] md:block">
+      <main id="main-content" tabIndex={-1} className="relative my-auto mx-auto w-full max-w-[1020px] pt-2 lg:pt-4">
+        {/* Background Fanned Dark-Slate Folios w/ Exposed Outer Emblems & Cursor Parallax */}
+        <div
+          className="pointer-events-none absolute inset-x-0 -top-1 hidden h-[440px] md:block"
+          style={{
+            transform: "translate3d(calc(var(--mx) * -9px), calc(var(--my) * -5px), 0)",
+          }}
+        >
           {/* Left Angled Background Slate Folio */}
           <button
             type="button"
             onClick={() => selectBinder(leftBgProject.slug)}
             aria-label={`${text("Bring forward", "切换至")} ${leftBgProject.title}`}
-            className="slate-folio pointer-events-auto group absolute -left-5 top-2 flex h-[340px] w-[47%] -rotate-[5.5deg] cursor-pointer flex-col justify-between rounded-xs p-6 text-left transition-transform duration-300 hover:-translate-y-2 hover:-rotate-[4deg]"
+            className="slate-folio pointer-events-auto group absolute -left-4 top-2 flex h-[370px] w-[48%] -rotate-[6.5deg] cursor-pointer flex-col justify-between rounded-xs p-5 text-left transition-all duration-300 hover:-translate-x-2.5 hover:-translate-y-2 hover:-rotate-[8deg] hover:border-[#dfc092]/55 xl:-left-12"
           >
             <div>
-              <p className="font-numeral text-sm tracking-[0.14em] text-foreground/80 transition-colors group-hover:text-[#dfc092]">
+              <p className="font-numeral text-xs tracking-[0.16em] text-foreground/85 transition-colors group-hover:text-[#f2dab0] sm:text-sm">
                 {text("FOLIO", "卷")} {leftBgMeta.roman} — {leftBgProject.title.toUpperCase()}
               </p>
               <p className="mt-1 font-display text-xs italic text-muted-foreground">
                 {isChinese ? leftBgMeta.subtitleZh : leftBgMeta.subtitleEn}
               </p>
             </div>
-            <div className="my-auto self-center opacity-80 transition-opacity group-hover:opacity-100">
+            {/* Positioned in exposed left wing so emblem peeks visibly out from behind front parchment */}
+            <div className="mb-3 ml-0.5 self-start opacity-85 transition-all duration-300 group-hover:scale-105 group-hover:opacity-100">
               <SlateFolioEmblem kind={leftBgMeta.emblem} />
+              <span className="mt-1 block font-numeral text-[9.5px] tracking-[0.22em] text-warm/70 group-hover:text-[#ebd1a3]">
+                {text("PULL FOLIO", "抽出卷宗")} ↗
+              </span>
             </div>
           </button>
 
@@ -286,240 +295,260 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
             type="button"
             onClick={() => selectBinder(rightBgProject.slug)}
             aria-label={`${text("Bring forward", "切换至")} ${rightBgProject.title}`}
-            className="slate-folio pointer-events-auto group absolute -right-5 top-3 flex h-[340px] w-[47%] rotate-[5deg] cursor-pointer flex-col justify-between rounded-xs p-6 text-right transition-transform duration-300 hover:-translate-y-2 hover:rotate-[3.5deg]"
+            className="slate-folio pointer-events-auto group absolute -right-4 top-3 flex h-[370px] w-[48%] rotate-[6deg] cursor-pointer flex-col justify-between rounded-xs p-5 text-right transition-all duration-300 hover:translate-x-2.5 hover:-translate-y-2 hover:rotate-[7.5deg] hover:border-[#dfc092]/55 xl:-right-12"
           >
             <div>
-              <p className="font-numeral text-sm tracking-[0.14em] text-foreground/80 transition-colors group-hover:text-[#dfc092]">
+              <p className="font-numeral text-xs tracking-[0.16em] text-foreground/85 transition-colors group-hover:text-[#f2dab0] sm:text-sm">
                 {text("FOLIO", "卷")} {rightBgMeta.roman} — {rightBgProject.title.toUpperCase()}
               </p>
               <p className="mt-1 font-display text-xs italic text-muted-foreground">
                 {isChinese ? rightBgMeta.subtitleZh : rightBgMeta.subtitleEn}
               </p>
             </div>
-            <div className="my-auto self-center opacity-80 transition-opacity group-hover:opacity-100">
+            {/* Positioned in exposed right wing so emblem peeks visibly out from behind front parchment */}
+            <div className="mb-3 mr-0.5 self-end opacity-85 transition-all duration-300 group-hover:scale-105 group-hover:opacity-100">
               <SlateFolioEmblem kind={rightBgMeta.emblem} />
+              <span className="mt-1 block font-numeral text-[9.5px] tracking-[0.22em] text-warm/70 group-hover:text-[#ebd1a3]">
+                ↖ {text("PULL FOLIO", "抽出卷宗")}
+              </span>
             </div>
           </button>
         </div>
 
-        {/* Machined Brass Pin & Taut Suspension Threads */}
+        {/* Machined Brass Pin & Damped Pendulum Suspension Threads */}
         <BrassPinThreads animKey={activeFolioSlug} />
 
-        {/* Front Active Rag-Parchment Folio */}
-        <article
-          key={activeFolioSlug}
-          className="parchment-sheet animate-folio-arc relative z-20 mx-auto w-full max-w-[850px] rounded-xs border-[5px] border-[#151821] px-5 py-6 sm:px-9 sm:py-7"
+        {/* Front Active Rag-Parchment Folio w/ Subtle Foreground Parallax */}
+        <div
+          style={{
+            transform: "translate3d(calc(var(--mx) * 3.5px), calc(var(--my) * 2.5px), 0)",
+          }}
         >
-          <FolioCorners tone="parchment" />
+          <article
+            key={activeFolioSlug}
+            className="parchment-sheet animate-folio-arc relative z-20 mx-auto w-full max-w-[856px] rounded-xs border-[5px] border-[#151821] px-5 py-6 sm:px-9 sm:py-7"
+          >
+            <FolioCorners tone="parchment" />
 
-          {isReelActive ? (
-            /* ==================== 00 · MASTER REEL FOLIO ==================== */
-            <div className="relative z-10">
-              <header className="text-center">
-                <p className="font-numeral text-[11px] tracking-[0.24em] text-parchment-muted">
-                  {text("ATELIER SHOWCASE · 2026", "年度实机集锦 · 2026")}
-                </p>
-                <h1 className="mt-1 font-display text-2xl font-bold tracking-tight text-parchment-ink sm:text-3xl">
-                  {text("Game, Level & Technical Design Reel", "游戏、关卡与技术设计作品集锦")}
-                </h1>
-                <p className="mt-0.5 font-display text-base italic text-rubric sm:text-lg">
-                  {text(
-                    "Lefi (Kevin) Shan · USC School of Cinematic Arts & Gnomon",
-                    "单凯飞 Lefi Shan · 南加州大学电影艺术学院 & Gnomon",
-                  )}
-                </p>
-              </header>
-
-              <div className="mt-4 overflow-hidden rounded-xs border border-[#8c683a]/60 bg-[#0b0d12] p-1.5 shadow-lg">
-                <div className="relative aspect-video w-full overflow-hidden bg-black">
-                  {playingAudioEmbed ? (
-                    <iframe
-                      src="https://www.youtube-nocookie.com/embed/hphiglctUCw?autoplay=1"
-                      title={text("Game Design Reel 2026", "2026 游戏设计作品集锦")}
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="absolute inset-0 h-full w-full"
-                    />
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => setPlayingAudioEmbed(true)}
-                      className="group relative block h-full w-full cursor-pointer text-left"
-                      aria-label={text("Play full 2026 Game Design Reel with sound", "播放带音效完整 2026 作品集锦")}
-                    >
-                      <video
-                        src="/loops/reel-montage.mp4"
-                        poster="/reels/game-design-reel-2026.webp"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="h-full w-full object-cover"
-                      />
-                      <span className="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/5" />
-                      <span className="absolute inset-0 grid place-items-center">
-                        <span className="brass-plaque inline-flex items-center gap-2.5 rounded-xs px-5 py-2.5 font-display text-sm font-bold tracking-wide transition-transform group-hover:scale-[1.03]">
-                          <span aria-hidden="true">▶</span>
-                          {text("Play Full 2026 Reel (Audio)", "播放完整 2026 作品集锦")}
-                        </span>
-                      </span>
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-                <div className="flex flex-wrap gap-1.5">
-                  {orderedProjects.map((proj) => (
-                    <button
-                      key={proj.slug}
-                      type="button"
-                      onClick={() => selectBinder(proj.slug)}
-                      className="cursor-pointer rounded-xs border border-[#8c683a]/45 bg-parchment-deep/55 px-2.5 py-1 font-display text-xs font-semibold text-parchment-ink transition-colors hover:bg-[#181513] hover:text-[#f4ecdc]"
-                    >
-                      {FOLIO_META[proj.slug].roman} · {proj.title}
-                    </button>
-                  ))}
-                </div>
-                <a
-                  href={isChinese ? "/resume/Kevin_Shan_CN_Game_Resume.pdf" : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"}
-                  download
-                  className="inline-flex items-center gap-2 rounded-xs bg-[#181513] px-4 py-2 font-display text-sm font-semibold text-[#f4ecdc] transition-colors hover:bg-[#2c2622]"
-                >
-                  {text("Download Résumé (PDF)", "下载游戏设计简历")} <span aria-hidden="true">↓</span>
-                </a>
-              </div>
-            </div>
-          ) : (
-            /* ==================== I–V · PROJECT CASE FOLIO ==================== */
-            <div className="relative z-10">
-              <header className="relative text-center sm:px-14">
-                <CrimsonStamp
-                  label={`FOLIO ${activeMeta.roman}`}
-                  className="pointer-events-none absolute -top-1.5 right-0 hidden h-12 w-12 opacity-80 sm:block"
-                />
-                <h1 className="font-display text-xl font-bold tracking-tight text-parchment-ink sm:text-[26px]">
-                  <span className="font-numeral text-[0.88em] tracking-wider">
-                    {text("FOLIO", "卷")} {activeMeta.roman}
-                  </span>{" "}
-                  — {activeProject.title.toUpperCase()}
-                  <span className="hidden font-normal text-parchment-muted md:inline">
-                    {" "}
-                    · {isChinese ? activeMeta.subtitleZh : activeMeta.subtitleEn}
-                  </span>
-                </h1>
-                <p className="mt-0.5 font-display text-base italic text-rubric sm:text-[17px]">
-                  {activeProject.role} · {activeProject.tags[0]} · {activeProject.year}
-                </p>
-              </header>
-
-              {/* Dual-Plate Spread: Left = Live Engine Loop, Right = Inked Architectural Cutaway */}
-              <div className="mt-4 grid gap-4 md:grid-cols-[1.06fr_0.94fr] md:items-stretch">
-                {/* Left Plate: Live Moving Gameplay Window */}
-                <div className="flex flex-col justify-between">
-                  <div className="overflow-hidden rounded-xs border border-[#735329]/55 bg-[#0c0e13] p-1.5 shadow-[0_10px_24px_rgba(0,0,0,0.28)]">
-                    <div className="relative aspect-video w-full overflow-hidden bg-black">
-                      {playingAudioEmbed ? (
-                        <iframe
-                          src={`https://www.youtube-nocookie.com/embed/${leadYoutubeId}?autoplay=1`}
-                          title={activeProject.title}
-                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          className="absolute inset-0 h-full w-full"
-                        />
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => setPlayingAudioEmbed(true)}
-                          className="group relative block h-full w-full cursor-pointer text-left"
-                          aria-label={`${text("Play trailer with audio", "播放有声演示")}: ${activeProject.title}`}
-                        >
-                          <video
-                            key={activeMeta.loopSrc}
-                            src={activeMeta.loopSrc}
-                            poster={activeProject.heroImage ?? activeProject.cover}
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            className="h-full w-full object-cover"
-                          />
-                          <span className="absolute bottom-2 right-2 rounded-xs border border-[#dfc092]/50 bg-[#0e1017]/85 px-2.5 py-1 font-display text-xs font-semibold text-[#f3e7cf] opacity-90 backdrop-blur-xs transition-colors group-hover:bg-[#dfc092] group-hover:text-[#15120e]">
-                            ▶ {text("Play w/ Audio", "播放完整视频")}
-                          </span>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                  <p className={`mt-3 text-xs leading-relaxed text-parchment-muted sm:text-[13.5px] ${isChinese ? "zh-readable" : ""}`}>
-                    <FormattedText>{activeProject.summary}</FormattedText>
+            {isReelActive ? (
+              /* ==================== 00 · MASTER REEL FOLIO ==================== */
+              <div className="relative z-10">
+                <header className="text-center">
+                  <p className="font-numeral text-[11px] tracking-[0.24em] text-parchment-muted">
+                    {text("ATELIER SHOWCASE · 2026", "年度实机集锦 · 2026")}
                   </p>
+                  <h1 className="mt-1 font-display text-2xl font-bold tracking-tight text-parchment-ink sm:text-3xl">
+                    {text("Game, Level & Technical Design Reel", "游戏、关卡与技术设计作品集锦")}
+                  </h1>
+                  <p className="mt-0.5 font-display text-base italic text-rubric sm:text-lg">
+                    {text(
+                      "Lefi (Kevin) Shan · USC School of Cinematic Arts & Gnomon",
+                      "单凯飞 Lefi Shan · 南加州大学电影艺术学院 & Gnomon",
+                    )}
+                  </p>
+                </header>
+
+                <div className="mt-4 overflow-hidden rounded-xs border border-[#8c683a]/60 bg-[#0b0d12] p-1.5 shadow-lg">
+                  <div className="relative aspect-video w-full overflow-hidden bg-black">
+                    {playingAudioEmbed ? (
+                      <iframe
+                        src="https://www.youtube-nocookie.com/embed/hphiglctUCw?autoplay=1"
+                        title={text("Game Design Reel 2026", "2026 游戏设计作品集锦")}
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="absolute inset-0 h-full w-full"
+                      />
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setPlayingAudioEmbed(true)}
+                        className="group relative block h-full w-full cursor-pointer text-left"
+                        aria-label={text("Play full 2026 Game Design Reel with sound", "播放带音效完整 2026 作品集锦")}
+                      >
+                        <video
+                          src="/loops/reel-montage.mp4"
+                          poster="/reels/game-design-reel-2026.webp"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="h-full w-full object-cover"
+                        />
+                        <span className="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/5" />
+                        <span className="absolute inset-0 grid place-items-center">
+                          <span className="brass-plaque inline-flex items-center gap-2.5 rounded-xs px-5 py-2.5 font-display text-sm font-bold tracking-wide transition-transform group-hover:scale-[1.03]">
+                            <span aria-hidden="true">▶</span>
+                            {text("Play Full 2026 Reel (Audio)", "播放完整 2026 作品集锦")}
+                          </span>
+                        </span>
+                      </button>
+                    )}
+                  </div>
                 </div>
 
-                {/* Right Plate: Ink-Engraved Architectural Floorplan / Breakdown */}
-                <Link
-                  to={localizedPath(`/projects/${activeProject.slug}`)}
-                  viewTransition
-                  className="group flex flex-col justify-between rounded-xs border border-[#8c683a]/40 bg-parchment-deep/35 p-2.5 transition-colors hover:border-[#8b2624]/60"
-                >
-                  <div className="relative aspect-video w-full overflow-hidden rounded-xs border border-[#8c683a]/30 bg-[#e7dcc4]">
-                    <img
-                      src={plateImage}
-                      alt={isChinese ? activeMeta.plateLabelZh : activeMeta.plateLabelEn}
-                      loading="eager"
-                      decoding="async"
-                      className="ink-engraving h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                    />
+                <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex flex-wrap gap-1.5">
+                    {orderedProjects.map((proj) => (
+                      <button
+                        key={proj.slug}
+                        type="button"
+                        onClick={() => selectBinder(proj.slug)}
+                        className="cursor-pointer rounded-xs border border-[#8c683a]/45 bg-parchment-deep/55 px-2.5 py-1 font-display text-xs font-semibold text-parchment-ink transition-colors hover:bg-[#181513] hover:text-[#f4ecdc]"
+                      >
+                        {FOLIO_META[proj.slug].roman} · {proj.title}
+                      </button>
+                    ))}
                   </div>
-                  <div className="mt-2.5 flex items-baseline justify-between gap-2 px-0.5">
-                    <span className="font-display text-xs italic text-parchment-muted">
-                      {isChinese ? activeMeta.plateLabelZh : activeMeta.plateLabelEn}
-                    </span>
-                    <span className="shrink-0 font-mono text-[10px] text-rubric opacity-85 group-hover:opacity-100">
-                      {text("Inspect →", "拆解 →")}
-                    </span>
-                  </div>
-                </Link>
+                  <a
+                    href={
+                      isChinese
+                        ? "/resume/Kevin_Shan_CN_Game_Resume.pdf"
+                        : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"
+                    }
+                    download
+                    className="inline-flex items-center gap-2 rounded-xs bg-[#181513] px-4 py-2 font-display text-sm font-semibold text-[#f4ecdc] transition-colors hover:bg-[#2c2622]"
+                  >
+                    {text("Download Résumé (PDF)", "下载游戏设计简历")} <span aria-hidden="true">↓</span>
+                  </a>
+                </div>
               </div>
+            ) : (
+              /* ==================== I–V · PROJECT CASE FOLIO ==================== */
+              <div className="relative z-10">
+                <header className="relative text-center sm:px-14">
+                  <CrimsonStamp
+                    label={`FOLIO ${activeMeta.roman}`}
+                    className="pointer-events-none absolute -top-1.5 right-0 hidden h-12 w-12 opacity-80 sm:block"
+                  />
+                  {/* Balanced single-line headline across all Folios I-V */}
+                  <h1 className="font-display text-xl font-bold tracking-tight text-parchment-ink sm:text-[27px]">
+                    <span className="font-numeral text-[0.86em] tracking-wider">
+                      {text("FOLIO", "卷")} {activeMeta.roman}
+                    </span>{" "}
+                    — {activeProject.title.toUpperCase()}
+                  </h1>
+                  <p className="mt-0.5 font-display text-base italic text-rubric sm:text-[17.5px]">
+                    {isChinese ? activeMeta.subtitleZh : activeMeta.subtitleEn} · {activeProject.role} · {activeProject.year}
+                  </p>
+                </header>
 
-              <BrassRule tone="parchment" className="my-4" />
+                {/* Dual-Plate Spread: Left = Live Engine Loop, Right = Inked Architectural Cutaway */}
+                <div className="mt-4 grid gap-4 md:grid-cols-[1.06fr_0.94fr] md:items-stretch">
+                  {/* Left Plate: Live Moving Gameplay Window */}
+                  <div className="flex flex-col justify-between">
+                    <div className="overflow-hidden rounded-xs border border-[#735329]/55 bg-[#0c0e13] p-1.5 shadow-[0_10px_24px_rgba(0,0,0,0.28)]">
+                      <div className="relative aspect-video w-full overflow-hidden bg-black">
+                        {playingAudioEmbed ? (
+                          <iframe
+                            src={`https://www.youtube-nocookie.com/embed/${leadYoutubeId}?autoplay=1`}
+                            title={activeProject.title}
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="absolute inset-0 h-full w-full"
+                          />
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => setPlayingAudioEmbed(true)}
+                            className="group relative block h-full w-full cursor-pointer text-left"
+                            aria-label={`${text("Play trailer with audio", "播放有声演示")}: ${activeProject.title}`}
+                          >
+                            <video
+                              key={activeMeta.loopSrc}
+                              src={activeMeta.loopSrc}
+                              poster={activeProject.heroImage ?? activeProject.cover}
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                            />
+                            <span className="absolute bottom-2 right-2 rounded-xs border border-[#dfc092]/55 bg-[#0e1017]/88 px-2.5 py-1 font-display text-xs font-semibold text-[#f3e7cf] opacity-95 backdrop-blur-xs transition-all group-hover:scale-[1.03] group-hover:bg-[#dfc092] group-hover:text-[#15120e]">
+                              ▶ {text("Play w/ Audio", "播放完整视频")}
+                            </span>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                    <p
+                      className={`mt-3 text-[14.5px] leading-relaxed text-parchment-ink/88 sm:text-[15px] ${
+                        isChinese ? "zh-readable" : ""
+                      }`}
+                    >
+                      <FormattedText>{activeProject.summary}</FormattedText>
+                    </p>
+                  </div>
 
-              {/* Folio Footer Actions */}
-              <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-between">
-                <p className="hidden text-xs text-parchment-muted sm:block">
-                  {activeProject.tags.join(" · ")}
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-3">
+                  {/* Right Plate: Ink-Engraved Architectural Floorplan / Breakdown */}
                   <Link
                     to={localizedPath(`/projects/${activeProject.slug}`)}
                     viewTransition
-                    className="inline-flex items-center gap-2 rounded-xs bg-[#181513] px-5 py-2.5 font-display text-sm font-semibold tracking-wide text-[#f4ecdc] shadow-sm transition-colors hover:bg-[#2c2520]"
+                    className="group flex flex-col justify-between rounded-xs border border-[#8c683a]/45 bg-parchment-deep/38 p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#8b2624]/65 hover:shadow-md"
                   >
-                    {text("Open Full Folio", "展开完整卷宗")} <span aria-hidden="true">→</span>
+                    <div className="relative aspect-video w-full overflow-hidden rounded-xs border border-[#8c683a]/35 bg-[#e7dcc4]">
+                      <img
+                        src={plateImage}
+                        alt={isChinese ? activeMeta.plateLabelZh : activeMeta.plateLabelEn}
+                        loading="eager"
+                        decoding="async"
+                        className="ink-engraving h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                      {/* Subtle surveyor corner reticles */}
+                      <span aria-hidden="true" className="pointer-events-none absolute left-2 top-2 h-2.5 w-2.5 border-l border-t border-[#181513]/40" />
+                      <span aria-hidden="true" className="pointer-events-none absolute right-2 top-2 h-2.5 w-2.5 border-r border-t border-[#181513]/40" />
+                      <span aria-hidden="true" className="pointer-events-none absolute bottom-2 left-2 h-2.5 w-2.5 border-b border-l border-[#181513]/40" />
+                      <span aria-hidden="true" className="pointer-events-none absolute bottom-2 right-2 h-2.5 w-2.5 border-b border-r border-[#181513]/40" />
+                    </div>
+                    <div className="mt-2.5 flex items-baseline justify-between gap-2 px-0.5">
+                      <span className="font-display text-[13px] italic text-parchment-muted">
+                        {isChinese ? activeMeta.plateLabelZh : activeMeta.plateLabelEn}
+                      </span>
+                      <span className="shrink-0 font-numeral text-[10px] font-bold tracking-wider text-rubric transition-transform group-hover:translate-x-0.5">
+                        {text("INSPECT →", "拆解 →")}
+                      </span>
+                    </div>
                   </Link>
-                  {activeProject.externalLink ? (
-                    <a
-                      href={activeProject.externalLink.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-xs border border-[#181513]/65 bg-transparent px-4 py-2.5 font-display text-sm font-semibold text-parchment-ink transition-colors hover:bg-[#181513]/8"
-                    >
-                      {activeProject.externalLink.label} <span aria-hidden="true">↗</span>
-                    </a>
-                  ) : (
+                </div>
+
+                <BrassRule tone="parchment" className="my-4" />
+
+                {/* Folio Footer Actions */}
+                <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-between">
+                  <p className="hidden font-numeral text-[10.5px] tracking-[0.14em] text-parchment-muted uppercase sm:block">
+                    {activeProject.tags.join(" · ")}
+                  </p>
+                  <div className="flex flex-wrap items-center justify-center gap-3">
                     <Link
-                      to={localizedPath(`/gallery`)}
+                      to={localizedPath(`/projects/${activeProject.slug}`)}
                       viewTransition
-                      className="inline-flex items-center gap-1.5 rounded-xs border border-[#181513]/65 bg-transparent px-4 py-2.5 font-display text-sm font-semibold text-parchment-ink transition-colors hover:bg-[#181513]/8"
+                      className="inline-flex items-center gap-2 rounded-xs bg-[#181513] px-5 py-2.5 font-display text-sm font-semibold tracking-wide text-[#f4ecdc] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#2c2520]"
                     >
-                      {text("View in Atelier Gallery", "查看画廊组图")} <span aria-hidden="true">→</span>
+                      {text("Open Full Folio", "展开完整卷宗")} <span aria-hidden="true">→</span>
                     </Link>
-                  )}
+                    {activeProject.externalLink ? (
+                      <a
+                        href={activeProject.externalLink.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-xs border border-[#181513]/65 bg-transparent px-4 py-2.5 font-display text-sm font-semibold text-parchment-ink transition-colors hover:bg-[#181513]/8"
+                      >
+                        {activeProject.externalLink.label} <span aria-hidden="true">↗</span>
+                      </a>
+                    ) : (
+                      <Link
+                        to={localizedPath(`/gallery`)}
+                        viewTransition
+                        className="inline-flex items-center gap-1.5 rounded-xs border border-[#181513]/65 bg-transparent px-4 py-2.5 font-display text-sm font-semibold text-parchment-ink transition-colors hover:bg-[#181513]/8"
+                      >
+                        {text("View in Atelier Gallery", "查看画廊组图")} <span aria-hidden="true">→</span>
+                      </Link>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-        </article>
+            )}
+          </article>
+        </div>
       </main>
 
       {/* Bottom Master Reel Trigger Pill */}
@@ -529,7 +558,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
           onClick={() =>
             isReelActive ? selectBinder("still-life", false) : selectBinder("reel", true)
           }
-          className="cursor-pointer rounded-full border border-warm/55 bg-[#11141d]/90 px-6 py-2 font-display text-sm font-semibold tracking-wide text-[#ece4d4] shadow-[0_6px_20px_rgba(0,0,0,0.45)] transition-all hover:border-[#dfc092] hover:bg-[#1a1f2d] hover:text-[#f7e7c8]"
+          className="cursor-pointer rounded-full border border-warm/55 bg-[#11141d]/90 px-6 py-2 font-display text-sm font-semibold tracking-wide text-[#ece4d4] shadow-[0_6px_20px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:border-[#dfc092] hover:bg-[#1a1f2d] hover:text-[#f7e7c8]"
         >
           {isReelActive ? (
             <>← {text("Return to Case Folios (I–V)", "返回作品卷宗 (I–V)")}</>
@@ -562,10 +591,10 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               type="button"
               onClick={() => selectBinder(key)}
               aria-current={active ? "true" : undefined}
-              className={`group relative flex cursor-pointer items-center justify-center rounded-l-sm border-y border-l py-3.5 transition-all duration-250 ${
+              className={`group relative flex cursor-pointer items-center justify-center rounded-l-sm border-y border-l py-3.5 transition-all duration-250 active:scale-95 ${
                 active
-                  ? "w-11 -translate-x-0 border-[#8c683a]/60 border-r-[3px] border-r-rubric bg-parchment text-rubric shadow-[-8px_6px_20px_rgba(0,0,0,0.48)]"
-                  : "w-9 translate-x-0.5 border-warm/25 bg-[#c8bca4] text-[#241f19] opacity-85 shadow-[-4px_4px_12px_rgba(0,0,0,0.35)] hover:w-10 hover:bg-[#dfd4be] hover:opacity-100"
+                  ? "w-11.5 -translate-x-0 border-[#8c683a]/70 border-r-[3.5px] border-r-rubric bg-parchment text-rubric shadow-[-10px_6px_22px_rgba(0,0,0,0.52)]"
+                  : "w-9 translate-x-0.5 border-warm/30 bg-[#cbbda3] text-[#241f19] opacity-88 shadow-[-4px_4px_12px_rgba(0,0,0,0.35)] hover:-translate-x-1 hover:w-10.5 hover:bg-[#e5d9c2] hover:opacity-100"
               }`}
             >
               <span

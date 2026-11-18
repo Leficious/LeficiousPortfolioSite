@@ -7,10 +7,8 @@ import "./styles.css";
 import "@fontsource-variable/cormorant/wght.css";
 import "@fontsource-variable/cormorant/wght-italic.css";
 import "@fontsource-variable/cinzel/wght.css";
-import "@fontsource/ibm-plex-sans/400.css";
-import "@fontsource/ibm-plex-sans/400-italic.css";
-import "@fontsource/ibm-plex-sans/500.css";
-import "@fontsource/ibm-plex-sans/600.css";
+import "@fontsource-variable/newsreader/opsz.css";
+import "@fontsource-variable/newsreader/opsz-italic.css";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 

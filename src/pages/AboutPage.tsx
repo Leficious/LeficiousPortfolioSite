@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { BrassRule, CrimsonStamp, FolioCorners } from "../components/AtelierChrome";
+import { handleTactileCardMove, resetTactileCard } from "../lib/atelierMotion";
 import { FormattedText } from "../components/FormattedText";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
@@ -43,7 +44,6 @@ const callingCards: {
   detailZh: string;
   href: string;
   icon: IconName;
-  tilt: string;
 }[] = [
   {
     label: "LinkedIn",
@@ -51,7 +51,6 @@ const callingCards: {
     detailZh: "职场履历与直接私信",
     href: "https://www.linkedin.com/in/leficious/",
     icon: "linkedin",
-    tilt: "sm:-rotate-[0.8deg]",
   },
   {
     label: "itch.io Builds",
@@ -59,7 +58,6 @@ const callingCards: {
     detailZh: "可玩实机包与独立作品",
     href: "https://leficious.itch.io/",
     icon: "itch",
-    tilt: "sm:rotate-[0.7deg]",
   },
   {
     label: "GitHub Tools",
@@ -67,14 +65,13 @@ const callingCards: {
     detailZh: "Maya 工具脚本与核心源码",
     href: "https://github.com/Leficious",
     icon: "github",
-    tilt: "sm:-rotate-[0.5deg]",
   },
 ];
 
 const outsideDisciplines = [
   {
     roman: "I",
-    title: "Chamber Music",
+    title: "Piano & Cello",
     titleZh: "室内乐与管弦乐",
     description:
       "15 years of piano and cello in orchestra and chamber ensembles—shaping how I tune cadence, counterpoint, and deliberate silence.",
@@ -83,7 +80,7 @@ const outsideDisciplines = [
   },
   {
     roman: "II",
-    title: "Figure Skating & Dance",
+    title: "Skating & Dance",
     titleZh: "花样滑冰与舞蹈",
     description:
       "Years of competitive figure skating alongside ballet and ballroom—informing weight transfer, anticipation, and combat frame feel.",
@@ -92,12 +89,12 @@ const outsideDisciplines = [
   },
   {
     roman: "III",
-    title: "Touchstones & Systems",
-    titleZh: "机制表达与参考谱系",
+    title: "Touchstones",
+    titleZh: "机制与参考谱系",
     description:
-      "Zenless Zone Zero, FE Fates: Conquest, Arknights, Magritte, and Shin Sekai Yori—where mechanics and framing carry the argument without spelling it out.",
+      "Zenless Zone Zero, Fire Emblem Fates: Conquest, Arknights, Magritte, and Shin Sekai Yori—where mechanics and framing carry the argument without spelling it out.",
     descriptionZh:
-      "《绝区零》《暗夜王国》《明日方舟》、马格利特与《来自新世界》——用空间构图与规则本身完成表达。",
+      "《绝区零》《火焰之纹章 if：暗夜王国》《明日方舟》、马格利特与《来自新世界》——用空间构图与规则本身完成表达。",
   },
 ];
 
@@ -128,7 +125,7 @@ export function AboutPage() {
   return (
     <div className="min-h-screen text-foreground">
       <Seo
-        title={text("Biographical Folio & Contact | Leficious", "个人档案与联络 | Leficious")}
+        title={text("Dossier & Contact | Leficious", "个人档案与联络 | Leficious")}
         description={text(
           "About Lefi (Kevin) Shan — M.S. Game Design and Development student at USC School of Cinematic Arts.",
           "关于单凯飞（Leficious）：南加州大学电影艺术学院游戏设计与开发硕士在读。",
@@ -138,7 +135,7 @@ export function AboutPage() {
 
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-[1240px] px-5 pt-8 pb-12 sm:px-8 lg:pt-11">
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1.18fr_0.82fr] lg:gap-9">
-          {/* ==================== LEFT: BIOGRAPHICAL RAG-PARCHMENT FOLIO ==================== */}
+          {/* ==================== LEFT: BIOGRAPHICAL RAG-PARCHMENT DOSSIER ==================== */}
           <article className="parchment-sheet relative rounded-xs border-[5px] border-[#151821] px-6 py-7 sm:px-9 sm:py-9">
             <FolioCorners tone="parchment" />
 
@@ -147,7 +144,7 @@ export function AboutPage() {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="font-numeral text-[11px] font-semibold tracking-[0.22em] text-parchment-muted">
-                    {text("ARCHITECT DOSSIER · LOS ANGELES", "设计师个人卷宗 · 洛杉矶")}
+                    {text("DOSSIER · LOS ANGELES", "个人档案卷宗 · 洛杉矶")}
                   </p>
                   <h1 className="mt-1 font-display text-4xl font-bold tracking-tight text-parchment-ink sm:text-5xl">
                     {text("Lefi Shan", "单凯飞 · Lefi Shan")}
@@ -159,10 +156,10 @@ export function AboutPage() {
                     )}
                   </p>
                 </div>
-                <CrimsonStamp label="ARCHITECT BIO" className="hidden h-14 w-14 opacity-85 sm:block" />
+                <CrimsonStamp label="PERSONAL DOSSIER" className="hidden h-14 w-14 opacity-85 sm:block" />
               </div>
 
-              {/* Portrait Plate + Two-Paragraph Editorial Bio */}
+              {/* Portrait Plate + Two-Paragraph Literary Bio */}
               <div className="mt-6 grid gap-6 sm:grid-cols-[195px_1fr] sm:items-start">
                 <figure className="mx-auto w-full max-w-[210px] sm:mx-0">
                   <div className="overflow-hidden rounded-xs border-2 border-[#735329]/65 bg-[#0e1017] p-1.5 shadow-md">
@@ -171,7 +168,7 @@ export function AboutPage() {
                       alt={text("Portrait of Lefi Shan", "单凯飞（Kevin Shan）肖像")}
                       width="1000"
                       height="1000"
-                      className="aspect-[4/5] w-full rounded-xs object-cover object-center"
+                      className="aspect-[4/5] w-full rounded-xs object-cover object-center transition-transform duration-500 hover:scale-[1.02]"
                     />
                   </div>
                   <figcaption className="mt-2 flex items-center justify-between px-0.5 font-numeral text-[10px] tracking-[0.14em] text-parchment-muted">
@@ -181,7 +178,7 @@ export function AboutPage() {
                 </figure>
 
                 <div
-                  className={`space-y-3.5 text-pretty text-sm leading-relaxed text-parchment-ink/92 sm:text-[15px] ${
+                  className={`space-y-4 text-pretty text-[15.5px] leading-[1.68] text-parchment-ink/92 sm:text-[16.5px] ${
                     isChinese ? "zh-readable" : ""
                   }`}
                 >
@@ -202,7 +199,7 @@ export function AboutPage() {
 
               <BrassRule tone="parchment" className="my-6" />
 
-              {/* Outside the Engine — Three Engraved Columns */}
+              {/* Outside the Engine — Three Balanced Single-Line Discipline Plates */}
               <section aria-labelledby="outside-engine-heading">
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <h2
@@ -216,19 +213,23 @@ export function AboutPage() {
                   </span>
                 </div>
 
-                <div className="mt-4 grid gap-4 sm:grid-cols-3">
+                <div className="mt-4 grid gap-3.5 sm:grid-cols-3">
                   {outsideDisciplines.map((item) => (
                     <div
                       key={item.roman}
-                      className="rounded-xs border border-[#8c683a]/35 bg-parchment-deep/45 p-3.5"
+                      className="rounded-xs border border-[#8c683a]/40 bg-parchment-deep/48 p-3.5 transition-colors hover:border-[#8c683a]/75"
                     >
                       <div className="flex items-baseline gap-2">
                         <span className="font-numeral text-xs font-bold text-rubric">{item.roman}</span>
-                        <h3 className="font-display text-base font-bold leading-snug text-parchment-ink">
+                        <h3 className="font-display text-[17px] font-bold leading-snug whitespace-nowrap text-parchment-ink">
                           {isChinese ? item.titleZh : item.title}
                         </h3>
                       </div>
-                      <p className={`mt-2 text-xs leading-relaxed text-parchment-muted ${isChinese ? "zh-readable" : ""}`}>
+                      <p
+                        className={`mt-2 text-[13.5px] leading-relaxed text-parchment-muted ${
+                          isChinese ? "zh-readable" : ""
+                        }`}
+                      >
                         <FormattedText>{isChinese ? item.descriptionZh : item.description}</FormattedText>
                       </p>
                     </div>
@@ -243,7 +244,9 @@ export function AboutPage() {
             {/* Dark-Slate Academic & Guild Credentials Plaque */}
             <section
               aria-labelledby="credentials-heading"
-              className="slate-folio relative rounded-xs p-6 transition-transform duration-300 lg:-rotate-[0.6deg] lg:hover:rotate-0 sm:p-7"
+              onPointerMove={(e) => handleTactileCardMove(e, 1.8)}
+              onPointerLeave={resetTactileCard}
+              className="slate-folio tactile-tilt relative rounded-xs p-6 sm:p-7"
             >
               <FolioCorners tone="slate" inset="inset-2" />
 
@@ -261,7 +264,7 @@ export function AboutPage() {
                       <p className="font-display text-lg font-bold text-foreground">
                         {text("M.S. in Game Design & Development", "游戏设计与开发理学硕士（在读）")}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-[13.5px] text-muted-foreground">
                         {text("USC School of Cinematic Arts", "南加州大学电影艺术学院 (USC SCA)")}
                       </p>
                     </div>
@@ -273,7 +276,7 @@ export function AboutPage() {
                       <p className="font-display text-lg font-bold text-foreground">
                         {text("B.F.A. in Digital Production (Games)", "数字制作艺术学士（游戏方向）")}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-[13.5px] text-muted-foreground">
                         {text("Gnomon School of Visual Effects · Student Reel", "Gnomon · 入选学院年度作品集锦")}
                       </p>
                     </div>
@@ -285,7 +288,7 @@ export function AboutPage() {
                       <p className="font-numeral text-[10px] tracking-[0.18em] text-warm/80 uppercase">
                         {text("Languages", "语言能力")}
                       </p>
-                      <p className="mt-1 text-xs leading-relaxed text-foreground/90">
+                      <p className="mt-1 text-[13.5px] leading-relaxed text-foreground/90">
                         {text("English (Fluent) · Mandarin (Fluent Spoken)", "英语（流利）· 普通话（口语流利）")}
                       </p>
                     </div>
@@ -293,7 +296,7 @@ export function AboutPage() {
                       <p className="font-numeral text-[10px] tracking-[0.18em] text-warm/80 uppercase">
                         {text("Work Regions", "意向地区")}
                       </p>
-                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                      <p className="mt-1 text-[13.5px] leading-relaxed text-muted-foreground">
                         {text("US · Canada · Europe · Japan · China", "美国 · 加拿大 · 欧洲 · 日本 · 中国")}
                       </p>
                     </div>
@@ -311,7 +314,7 @@ export function AboutPage() {
                 >
                   {text("Correspondence & Calling Cards", "信函联络与名片盘")}
                 </h2>
-                <span className="font-display text-xs italic text-muted-foreground">
+                <span className="font-display text-sm italic text-muted-foreground">
                   {text("Internships & full-time roles", "开放实习与全职机会")}
                 </span>
               </div>
@@ -320,7 +323,7 @@ export function AboutPage() {
               <button
                 type="button"
                 onClick={copyEmail}
-                className="parchment-sheet group relative flex w-full cursor-pointer items-center justify-between gap-4 rounded-xs border-2 border-[#151821] px-5 py-4 text-left transition-transform duration-200 hover:-translate-y-0.5 active:scale-[0.995]"
+                className="parchment-sheet group relative flex w-full cursor-pointer items-center justify-between gap-4 rounded-xs border-2 border-[#151821] px-5 py-4 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.99]"
               >
                 <div className="relative z-10 min-w-0">
                   <div className="flex items-center gap-2 text-rubric">
@@ -348,7 +351,7 @@ export function AboutPage() {
                 </div>
               </button>
 
-              {/* Three Tactile Angled Calling Cards */}
+              {/* Three Tactile 3D-Tilting Foil Calling Cards */}
               <div className="grid gap-3 sm:grid-cols-3">
                 {callingCards.map((card) => (
                   <a
@@ -356,17 +359,21 @@ export function AboutPage() {
                     href={card.href}
                     target="_blank"
                     rel="noreferrer"
-                    className={`slate-folio group relative flex flex-col justify-between rounded-xs border border-warm/35 p-4 transition-all duration-250 hover:-translate-y-1 hover:rotate-0 hover:border-[#dfc092] ${card.tilt}`}
+                    onPointerMove={(e) => handleTactileCardMove(e, 4)}
+                    onPointerLeave={resetTactileCard}
+                    className="slate-folio tactile-tilt group relative flex flex-col justify-between overflow-hidden rounded-xs border border-warm/35 p-4 hover:border-[#dfc092]"
                   >
-                    <div className="flex items-center justify-between text-warm transition-colors group-hover:text-[#f5e3c0]">
+                    <div className="relative z-10 flex items-center justify-between text-warm transition-colors group-hover:text-[#f5e3c0]">
                       <ContactIcon name={card.icon} />
-                      <span aria-hidden="true" className="font-mono text-xs">↗</span>
+                      <span aria-hidden="true" className="font-mono text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                        ↗
+                      </span>
                     </div>
-                    <div className="mt-4">
+                    <div className="relative z-10 mt-4">
                       <p className="font-display text-base font-bold text-foreground group-hover:text-[#f5e3c0]">
                         {card.label}
                       </p>
-                      <p className="mt-0.5 text-[11.5px] leading-snug text-muted-foreground">
+                      <p className="mt-0.5 text-[12.5px] leading-snug text-muted-foreground">
                         {isChinese ? card.detailZh : card.detail}
                       </p>
                     </div>
@@ -378,7 +385,7 @@ export function AboutPage() {
               <a
                 href={resumeHref}
                 download
-                className="brass-plaque flex w-full items-center justify-between rounded-xs px-5 py-3.5 font-display text-sm font-bold tracking-wide transition-transform active:scale-[0.99]"
+                className="brass-plaque flex w-full items-center justify-between rounded-xs px-5 py-3.5 font-display text-sm font-bold tracking-wide transition-all hover:-translate-y-0.5 active:scale-[0.99]"
               >
                 <span>
                   {text("Download Full Game Design Résumé (PDF)", "下载完整中文游戏开发简历 (PDF)")}

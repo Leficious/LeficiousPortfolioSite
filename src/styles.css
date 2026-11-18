@@ -8,12 +8,11 @@
   .gallery-layout > [data-wide="true"] { grid-column: span 2; }
 }
 .gallery-layout--packed { display: block; }
-.gallery-layout--packed > * { position: absolute; }
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "IBM Plex Sans", "PingFang SC", "Microsoft YaHei UI", system-ui, sans-serif;
+  --font-sans: "Newsreader Variable", "Songti SC", "STSong", "PingFang SC", Georgia, serif;
   --font-display: "Cormorant Variable", "Songti SC", "STSong", "SimSun", Georgia, serif;
   --font-numeral: "Cinzel Variable", "Cormorant Variable", Georgia, serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -55,6 +54,10 @@
 
 :root {
   --radius: 0.125rem;
+  --mx: 0;
+  --my: 0;
+  --spot-x: 52vw;
+  --spot-y: 44vh;
 
   /* Nocturnal clocktower celestial drafting desk */
   --background: #0e1017;
@@ -63,8 +66,8 @@
   /* Cotton rag-parchment folio stock */
   --parchment: #ede4d0;
   --parchment-deep: #e2d5ba;
-  --parchment-ink: #181513;
-  --parchment-muted: #564e43;
+  --parchment-ink: #171412;
+  --parchment-muted: #52493e;
   --rubric: #8b2624;
 
   /* Bookcloth spine & dark-slate specimen plates */
@@ -83,7 +86,7 @@
   --secondary-foreground: #ece4d4;
 
   --muted: #181c28;
-  --muted-foreground: #a49c8e;
+  --muted-foreground: #aba293;
 
   /* Burnished antique brass */
   --accent: #c59a68;
@@ -116,6 +119,9 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-optical-sizing: auto;
+    font-size: 16.5px;
+    line-height: 1.66;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -149,16 +155,21 @@
   .font-numeral { font-family: var(--font-numeral); }
 }
 
-/* Cotton rag-parchment tactile sheet using real scanned handmade paper fiber */
+/* Cotton rag-parchment tactile sheet using real scanned handmade paper fiber + warm top-lit sheen */
 .parchment-sheet {
   position: relative;
   background-color: var(--parchment);
+  background-image: radial-gradient(
+    ellipse at 50% 18%,
+    rgba(255, 251, 240, 0.52) 0%,
+    rgba(237, 228, 208, 0) 72%
+  );
   color: var(--parchment-ink);
   box-shadow:
-    0 24px 64px rgba(3, 5, 10, 0.62),
-    0 4px 14px rgba(0, 0, 0, 0.35),
-    inset 0 0 44px rgba(132, 102, 60, 0.13),
-    inset 0 0 0 1px rgba(145, 110, 62, 0.36);
+    0 26px 68px rgba(3, 5, 10, 0.64),
+    0 4px 14px rgba(0, 0, 0, 0.36),
+    inset 0 0 46px rgba(132, 102, 60, 0.13),
+    inset 0 0 0 1px rgba(145, 110, 62, 0.38);
 }
 
 .parchment-sheet::before {
@@ -174,11 +185,70 @@
 
 /* Dark-slate linen folio / specimen card */
 .slate-folio {
-  background: linear-gradient(165deg, #1b202e 0%, #121620 100%);
+  background: linear-gradient(165deg, #1d2231 0%, #121620 100%);
   color: var(--foreground);
   box-shadow:
     0 18px 48px rgba(3, 5, 10, 0.56),
-    inset 0 0 0 1px rgba(197, 154, 104, 0.25);
+    inset 0 0 0 1px rgba(197, 154, 104, 0.26);
+}
+
+/* Tactile 3D tilt + metallic brass glint on interactive cards */
+.tactile-tilt {
+  --card-rx: 0deg;
+  --card-ry: 0deg;
+  --glint-x: 50%;
+  --glint-y: 50%;
+  transform: perspective(920px) rotateX(var(--card-rx)) rotateY(var(--card-ry));
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms ease, border-color 220ms ease;
+}
+
+.tactile-tilt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    280px circle at var(--glint-x) var(--glint-y),
+    rgba(245, 222, 180, 0.16),
+    transparent 70%
+  );
+  transition: opacity 220ms ease;
+}
+
+.tactile-tilt:hover::after {
+  opacity: 1;
+}
+
+/* Stacked multi-pass under-lip for Gallery specimen plates */
+.specimen-stack-parchment {
+  box-shadow:
+    0 24px 60px rgba(3, 5, 10, 0.62),
+    5px 5px 0 -1px #dfd2b6,
+    6px 6px 0 0 rgba(122, 92, 52, 0.65);
+}
+
+.specimen-stack-parchment:hover {
+  box-shadow:
+    0 28px 68px rgba(3, 5, 10, 0.72),
+    7px 7px 0 -1px #dfd2b6,
+    8px 8px 0 0 rgba(139, 38, 36, 0.7);
+}
+
+.specimen-stack-slate {
+  box-shadow:
+    0 18px 48px rgba(3, 5, 10, 0.56),
+    inset 0 0 0 1px rgba(197, 154, 104, 0.26),
+    5px 5px 0 -1px #10131c,
+    6px 6px 0 0 rgba(197, 154, 104, 0.38);
+}
+
+.specimen-stack-slate:hover {
+  box-shadow:
+    0 24px 56px rgba(3, 5, 10, 0.72),
+    inset 0 0 0 1px rgba(223, 192, 146, 0.58),
+    7px 7px 0 -1px #131722,
+    8px 8px 0 0 rgba(223, 192, 146, 0.55);
 }
 
 /* Ensure packed gallery cards (both parchment-sheet & slate-folio) position absolutely inside GalleryLayout */
@@ -192,22 +262,22 @@
 
 /* Brushed antique brass plaque */
 .brass-plaque {
-  background: linear-gradient(180deg, #d3b17e 0%, #b58952 100%);
+  background: linear-gradient(180deg, #d7b582 0%, #b58952 100%);
   color: #16120d;
   box-shadow:
     0 3px 10px rgba(0, 0, 0, 0.38),
-    inset 0 1px 0 rgba(255, 245, 224, 0.48),
+    inset 0 1px 0 rgba(255, 245, 224, 0.52),
     inset 0 -1px 0 rgba(74, 50, 22, 0.45);
 }
 
 .brass-plaque:hover {
-  background: linear-gradient(180deg, #dec090 0%, #c1955d 100%);
+  background: linear-gradient(180deg, #e2c495 0%, #c4985f 100%);
 }
 
 /* Duotone engraving look for architectural blueprints on rag-parchment */
 .ink-engraving {
   filter: url(#atelier-ink-plate) contrast(1.08);
-  transition: filter 320ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: filter 340ms ease, transform 440ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .group:hover .ink-engraving,
@@ -229,10 +299,31 @@
 }
 
 /* ============================================================================
- * F-01 TACTILE MOTION & PAGE TRANSITIONS (380ms - 500ms, ZERO SCROLL LOCK)
+ * F-01 TACTILE MOTION, CLOCKWORK DRIFT & PAGE TRANSITIONS (ZERO SCROLL LOCK)
  * ========================================================================== */
 
 @media (prefers-reduced-motion: no-preference) {
+  /* Continuous clockwork astrolabe drift */
+  @keyframes astrolabe-cw {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes astrolabe-ccw {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+  }
+
+  .animate-astrolabe-cw {
+    transform-origin: 500px 500px;
+    animation: astrolabe-cw 220s linear infinite;
+  }
+
+  .animate-astrolabe-ccw {
+    transform-origin: 500px 500px;
+    animation: astrolabe-ccw 155s linear infinite;
+  }
+
   /* 01. Route Swap: Desk Clear & Deal */
   @keyframes desk-sheet-clear {
     from {
@@ -256,7 +347,7 @@
     }
   }
 
-  /* 02. Binder Shuffle: Pin Unlatch & Folio Arc */
+  /* 02. Binder Shuffle: Pin Pendulum Sway & Folio Arc */
   @keyframes folio-arc-in {
     0% {
       opacity: 0.45;
@@ -272,9 +363,11 @@
     }
   }
 
-  @keyframes pin-latch-drop {
-    0% { transform: translateY(-7px) scale(1.08); }
-    100% { transform: translateY(0) scale(1); }
+  @keyframes pin-pendulum-sway {
+    0% { transform: rotate(-2.1deg) translateY(-4px); }
+    38% { transform: rotate(1.25deg) translateY(0); }
+    72% { transform: rotate(-0.45deg); }
+    100% { transform: rotate(0deg); }
   }
 
   /* 03. Case-Study Dive: Unfolding Architectural Folio + Brass Hairline Draw */
@@ -296,10 +389,16 @@
     to { transform: scaleX(1); opacity: 1; }
   }
 
+  /* Specimen Pass Switch Crossfade */
+  @keyframes pass-plate-settle {
+    from { opacity: 0.35; transform: scale(0.988); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
   /* Crimson letterpress stamp press */
   @keyframes stamp-press {
-    0% { transform: scale(1.22) rotate(-8deg); opacity: 0.6; }
-    55% { transform: scale(0.94) rotate(-3deg); opacity: 1; }
+    0% { transform: scale(1.28) rotate(-9deg); opacity: 0.55; }
+    52% { transform: scale(0.92) rotate(-2.5deg); opacity: 1; }
     100% { transform: scale(1) rotate(-4deg); opacity: 1; }
   }
 
@@ -307,8 +406,9 @@
     animation: folio-arc-in 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  .animate-pin-latch {
-    animation: pin-latch-drop 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  .animate-pin-pendulum {
+    transform-origin: 50% 6px;
+    animation: pin-pendulum-sway 540ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .animate-folio-unfold {
@@ -320,8 +420,12 @@
     animation: brass-rule-draw 520ms 90ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
+  .animate-pass-settle {
+    animation: pass-plate-settle 230ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
   .animate-stamp-press {
-    animation: stamp-press 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: stamp-press 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
 
@@ -377,7 +481,7 @@ html.language-switching::view-transition-new(route-content) {
 
 /* Native CJK editorial rendering for Chinese routes */
 html[lang="zh-CN"] body {
-  font-family: "PingFang SC", "Microsoft YaHei UI", "Noto Sans CJK SC", system-ui, sans-serif;
+  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "PingFang SC", "Microsoft YaHei UI", serif;
 }
 
 html[lang="zh-CN"] h1,

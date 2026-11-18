@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { FolioCorners } from "../components/AtelierChrome";
+import { handleTactileCardMove, resetTactileCard } from "../lib/atelierMotion";
 import { FeaturedReel } from "../components/FeaturedReel";
 import { GalleryLayout } from "../components/GalleryLayout";
 import { GalleryLightbox } from "../components/GalleryLightbox";
@@ -116,7 +117,7 @@ export function GalleryPage() {
               <h1 className="mt-1.5 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 {text("Atelier Archive & Visual Studies", "视觉美术与技术拆解画廊")}
               </h1>
-              <p className="mt-1 font-display text-base italic text-[#d58278] sm:text-lg">
+              <p className="mt-1 font-display text-base italic text-[#d8897f] sm:text-lg">
                 {text(
                   "Realtime 3D Environments, Character Rigging, Shaders & Maya Pipeline Tooling",
                   "实时 3D 场景、角色绑定毛发、程序化材质与 Maya 工具管线",
@@ -130,7 +131,7 @@ export function GalleryPage() {
                 type="button"
                 onClick={() => setReelExpanded((prev) => !prev)}
                 aria-expanded={reelExpanded}
-                className="slate-folio group flex cursor-pointer items-center gap-3.5 rounded-xs border border-warm/45 p-2 pr-4 text-left transition-colors hover:border-[#dfc092]"
+                className="slate-folio group flex cursor-pointer items-center gap-3.5 rounded-xs border border-warm/45 p-2 pr-4 text-left transition-all hover:-translate-y-0.5 hover:border-[#dfc092]"
               >
                 <span className="relative block h-12 w-21 shrink-0 overflow-hidden rounded-xs border border-warm/35 bg-black">
                   <video
@@ -162,7 +163,7 @@ export function GalleryPage() {
                 <a
                   href="/resume/Leficious_3D_Environment_Artist_Resume.pdf"
                   download
-                  className="brass-plaque inline-flex items-center gap-2 rounded-xs px-4 py-3 font-display text-xs font-bold tracking-wide transition-transform active:scale-95"
+                  className="brass-plaque inline-flex items-center gap-2 rounded-xs px-4 py-3 font-display text-xs font-bold tracking-wide transition-transform hover:-translate-y-0.5 active:scale-95"
                 >
                   <span>3D Art Résumé</span>
                   <span aria-hidden="true">↓</span>
@@ -187,11 +188,20 @@ export function GalleryPage() {
             </section>
           )}
 
-          {/* Stepped Physical File-Folder Filter Tabs Sitting on Horizontal Brass Rule */}
-          <section className="mt-8 pb-12 md:mt-10" aria-label={text("Archive", "全部作品")}>
-            <div className="mb-8 flex flex-wrap items-end justify-between gap-3 border-b border-warm/45">
+          {/* Recessed Atelier Discipline Index Tray (4-Sided Riveted Slips — Zero Wrapping Cutoff) */}
+          <section className="mt-7 pb-12 md:mt-9" aria-label={text("Archive", "全部作品")}>
+            <div className="mb-8 rounded-xs border border-warm/35 bg-[#0a0d15]/88 p-3 shadow-[inset_0_2px_14px_rgba(0,0,0,0.55)] sm:px-4 sm:py-3.5">
+              <div className="mb-2.5 flex items-center justify-between gap-4 border-b border-warm/20 pb-2">
+                <span className="font-numeral text-[10px] font-semibold tracking-[0.22em] text-muted-foreground uppercase">
+                  {text("Discipline Index", "按专业类别筛选")}
+                </span>
+                <span className="font-numeral text-[10.5px] font-semibold tracking-[0.2em] text-warm" aria-live="polite">
+                  {visibleEntries.length} {text(visibleEntries.length === 1 ? "SPECIMEN" : "SPECIMENS", "件标本")}
+                </span>
+              </div>
+
               <div
-                className="flex flex-wrap items-end gap-1"
+                className="flex flex-wrap items-center gap-1.5 sm:gap-2"
                 role="group"
                 aria-label={text("Filter by discipline", "按类别筛选")}
               >
@@ -204,35 +214,32 @@ export function GalleryPage() {
                       type="button"
                       aria-pressed={active}
                       onClick={() => setActiveTag(tag)}
-                      className={`relative -mb-px inline-flex cursor-pointer items-center gap-2 rounded-t-sm px-3.5 py-2 font-display text-xs font-bold tracking-wide transition-all sm:px-4 sm:text-[13px] ${
+                      className={`inline-flex cursor-pointer items-center gap-1.5 rounded-xs border px-3 py-1.5 font-display text-xs font-bold tracking-wide transition-all duration-200 active:scale-97 sm:px-3.5 sm:text-[13.5px] ${
                         active
-                          ? "parchment-sheet z-10 border-x border-t-2 border-[#8c683a]/65 border-t-rubric py-2.5 text-parchment-ink"
-                          : "border-x border-t border-warm/25 bg-[#141822]/90 text-muted-foreground hover:bg-[#1c2130] hover:text-foreground"
+                          ? "parchment-sheet -translate-y-0.5 border-[#8c683a] border-l-[3px] border-l-rubric text-parchment-ink shadow-[0_6px_16px_rgba(0,0,0,0.45)]"
+                          : "border-warm/28 bg-[#151924] text-muted-foreground hover:-translate-y-0.5 hover:border-[#dfc092]/60 hover:bg-[#1c2231] hover:text-foreground"
                       }`}
                     >
-                      {active && <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-rubric" />}
-                      <span>{label}</span>
+                      {active && <span aria-hidden="true" className="relative z-10 h-1.5 w-1.5 rounded-full bg-rubric" />}
+                      <span className="relative z-10">{label}</span>
                       <span
-                        className={`font-mono text-[10.5px] font-normal ${
-                          active ? "text-parchment-muted" : "text-muted-foreground/75"
+                        className={`relative z-10 font-mono text-[10.5px] font-normal ${
+                          active ? "text-rubric" : "text-muted-foreground/70"
                         }`}
                       >
-                        ({tagCounts[tag] ?? 0})
+                        {tagCounts[tag] ?? 0}
                       </span>
                     </button>
                   );
                 })}
               </div>
-
-              <p className="pb-2 font-numeral text-[11px] tracking-[0.18em] text-warm/80" aria-live="polite">
-                {visibleEntries.length} {text(visibleEntries.length === 1 ? "SPECIMEN" : "SPECIMENS", "件标本")}
-              </p>
             </div>
 
             {/* Mixed-Stock Salon Specimen Wall (Parchment Pinned Plates + Dark-Slate Specimen Cards) */}
             <GalleryLayout>
               {visibleEntries.map((entry, index) => {
                 const isPinned = Boolean(entry.pinned);
+                const multiPass = entry.media.length > 1;
                 const plateLabel = `PLATE ${String(index + 1).padStart(2, "0")}`;
                 const caption = galleryCaptions[entry.id]?.[isChinese ? 1 : 0] ?? entry.contribution;
 
@@ -242,14 +249,20 @@ export function GalleryPage() {
                     data-wide={wideGalleryEntries.has(entry.id)}
                     type="button"
                     onClick={() => openEntry(entry)}
+                    onPointerMove={(e) => handleTactileCardMove(e, 1.8)}
+                    onPointerLeave={resetTactileCard}
                     aria-label={`${text("Inspect", "检视图版")} ${entry.title}, ${entry.media.length} ${text(
                       entry.media.length === 1 ? "pass" : "passes",
                       "张分解图",
                     )}`}
-                    className={`gallery-card group flex w-full cursor-pointer flex-col overflow-hidden rounded-xs p-3 text-left transition-transform duration-300 hover:-translate-y-1 sm:p-3.5 ${
+                    className={`gallery-card tactile-tilt group flex w-full cursor-pointer flex-col overflow-hidden rounded-xs p-3 text-left sm:p-3.5 ${
                       isPinned
-                        ? "parchment-sheet border-[3px] border-[#151821]"
-                        : "slate-folio hover:shadow-[0_22px_54px_rgba(3,5,10,0.72),inset_0_0_0_1px_rgba(223,192,146,0.52)]"
+                        ? `parchment-sheet border-[3px] border-[#151821] ${multiPass ? "specimen-stack-parchment" : ""}`
+                        : `slate-folio ${
+                            multiPass
+                              ? "specimen-stack-slate"
+                              : "hover:shadow-[0_22px_54px_rgba(3,5,10,0.72),inset_0_0_0_1px_rgba(223,192,146,0.52)]"
+                          }`
                     }`}
                   >
                     <FolioCorners tone={isPinned ? "parchment" : "slate"} inset="inset-1.5" />
@@ -264,8 +277,8 @@ export function GalleryPage() {
                         {plateLabel} · {entry.year}
                       </span>
                       <span
-                        className={`font-mono text-[10.5px] ${
-                          isPinned ? "text-rubric" : "text-muted-foreground group-hover:text-[#dfc092]"
+                        className={`font-mono text-[10.5px] transition-transform duration-200 group-hover:translate-x-0.5 ${
+                          isPinned ? "font-medium text-rubric" : "text-muted-foreground group-hover:text-[#dfc092]"
                         }`}
                       >
                         {entry.media.length} {text(entry.media.length === 1 ? "PASS" : "PASSES", "图层")} →
@@ -285,7 +298,7 @@ export function GalleryPage() {
                         height="675"
                         loading={index < 4 ? "eager" : "lazy"}
                         decoding="async"
-                        className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.018]"
+                        className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.022]"
                       />
                       {entry.id === "tenebria-character-rig" && (
                         <img
@@ -302,7 +315,7 @@ export function GalleryPage() {
                     {/* Curatorial Plate Caption */}
                     <div className="relative z-10 flex w-full flex-col px-1 pt-3 pb-0.5">
                       <h2
-                        className={`font-display text-lg font-bold leading-snug tracking-tight transition-colors sm:text-[19px] ${
+                        className={`font-display text-lg font-bold leading-snug tracking-tight transition-colors sm:text-[19.5px] ${
                           isPinned
                             ? "text-parchment-ink group-hover:text-rubric"
                             : "text-foreground group-hover:text-[#dfc092]"
@@ -311,7 +324,7 @@ export function GalleryPage() {
                         {entry.title}
                       </h2>
                       <p
-                        className={`mt-1 text-xs leading-relaxed sm:text-[13px] ${
+                        className={`mt-1 text-[13.5px] leading-relaxed sm:text-[14px] ${
                           isPinned ? "text-parchment-muted" : "text-muted-foreground"
                         }`}
                       >

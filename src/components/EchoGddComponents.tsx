@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { useLanguage } from "../lib/language";
+import { useInViewOnce } from "../lib/atelierMotion";
 
 export type EchoGddWidgetId =
   | "traveler-arc"
@@ -56,8 +57,15 @@ function DiagramFrame({
   subtitle?: string;
   children: ReactNode;
 }) {
+  const { ref, inView } = useInViewOnce<HTMLElement>();
+
   return (
-    <figure className="slate-folio my-8 overflow-hidden rounded-xs border border-warm/35">
+    <figure
+      ref={ref}
+      className={`slate-folio my-8 overflow-hidden rounded-xs border border-warm/35 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        inView ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+      }`}
+    >
       <figcaption className="flex flex-col gap-1 border-b border-warm/25 bg-[#0c0f17]/80 px-4 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:px-5">
         <span className="font-display text-base font-bold tracking-tight text-[#f2e8d5]">{title}</span>
         {subtitle && <span className="font-mono text-[11px] text-warm/85">{subtitle}</span>}
@@ -357,12 +365,13 @@ function CitySequenceDiagram() {
 
 function WoodsTimelineDiagram() {
   const { text } = useLanguage();
+  const { ref, inView } = useInViewOnce<HTMLDivElement>();
   return (
     <DiagramFrame
       title={text("Region 3 — 8.0s Input Cadence & Choke-Point Gates", "区域 3 — 8.0 秒输入时序与岔口虚幻门锁")}
       subtitle={text("3.0s silence window tuned across 6 playtest cohorts", "经 6 轮试玩调优的 3.0s 静默等待窗口")}
     >
-      <div className="space-y-4">
+      <div ref={ref} className="space-y-4">
         <div>
           <div className="mb-1.5 flex justify-between font-mono text-[11px] text-muted-foreground">
             <span>0.0s ({text("Cast E", "按 E")})</span>
@@ -371,7 +380,14 @@ function WoodsTimelineDiagram() {
             <span>5.0s ({text("Cooldown up", "冷却完毕")})</span>
             <span>8.0s</span>
           </div>
-          <div className="grid grid-cols-[17.5fr_20fr_62.5fr] gap-px overflow-hidden rounded-xs border border-border bg-border text-xs">
+          <div
+            style={{
+              transformOrigin: "left center",
+              transform: inView ? "scaleX(1)" : "scaleX(0)",
+              transition: "transform 640ms cubic-bezier(0.22, 1, 0.36, 1)",
+            }}
+            className="grid grid-cols-[17.5fr_20fr_62.5fr] gap-px overflow-hidden rounded-xs border border-border bg-border text-xs"
+          >
             <div className="bg-secondary px-2.5 py-2.5">
               <p className="font-medium text-foreground">{text("White Pulse", "玩家白波")}</p>
               <p className="mt-0.5 text-[11px] text-muted-foreground">{text("False walls look solid", "假墙被照亮如死胡同")}</p>
@@ -751,30 +767,42 @@ function StillLifeRoom2AllocationDiagram() {
     },
   ];
 
+  const { ref: barsRef, inView: barsInView } = useInViewOnce<HTMLDivElement>();
+
   return (
     <DiagramFrame
       title={text("Room 2 — Four-Stage Zero-Slack Weight Progression", "2 号房 — 四阶段 100% 满额配重预算（0 kg 剩余）")}
       subtitle={text("7 animals · 235 kg total pool · 1F / 2F / 3F", "7 只动物 · 总配重池 235 kg · 三层立体联动")}
     >
-      <div className="space-y-4">
-        {phases.map((p) => (
+      <div ref={barsRef} className="space-y-4">
+        {phases.map((p, phaseIdx) => (
           <div key={p.phase} className="space-y-1.5">
             <div className="flex flex-wrap items-baseline justify-between gap-2 text-xs">
-              <span className="font-display font-semibold text-foreground">
-                {p.phase} <span className="ml-1.5 font-mono font-normal text-muted-foreground">({p.pool} / 235 kg)</span>
+              <span className="font-display text-sm font-bold text-foreground">
+                {p.phase} <span className="ml-1.5 font-mono text-xs font-normal text-muted-foreground">({p.pool} / 235 kg)</span>
               </span>
               <span className="font-mono text-[11px] text-warm">{p.unlock}</span>
             </div>
             <div className="flex h-7 w-full overflow-hidden rounded-xs border border-border bg-background/80 font-mono text-[11px] font-medium">
-              {p.segments.map((seg, idx) => (
-                <div
-                  key={idx}
-                  style={{ width: `${seg.pct.toFixed(2)}%` }}
-                  className={`flex items-center justify-center border-r border-background/40 ${seg.tone}`}
-                >
-                  {seg.label}
-                </div>
-              ))}
+              <div
+                style={{
+                  width: "100%",
+                  transformOrigin: "left center",
+                  transform: barsInView ? "scaleX(1)" : "scaleX(0)",
+                  transition: `transform 620ms ${phaseIdx * 95}ms cubic-bezier(0.22, 1, 0.36, 1)`,
+                }}
+                className="flex h-full w-full"
+              >
+                {p.segments.map((seg, idx) => (
+                  <div
+                    key={idx}
+                    style={{ width: `${seg.pct.toFixed(2)}%` }}
+                    className={`flex items-center justify-center border-r border-background/40 ${seg.tone}`}
+                  >
+                    {seg.label}
+                  </div>
+                ))}
+              </div>
             </div>
             <p className="font-mono text-[11px] text-muted-foreground">{p.equation}</p>
           </div>

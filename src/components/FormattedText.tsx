@@ -65,10 +65,10 @@ export function FormattedText({ children }: { children: string }) {
         href={href}
         target="_blank"
         rel="noreferrer"
-        className="text-foreground underline decoration-accent/65 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+        className="font-semibold text-current underline decoration-current/45 underline-offset-4 transition-opacity hover:opacity-75"
       >
         {renderItalicTitles(label, `lt-${match.index}`)}
-        <span aria-hidden="true" className="ml-0.5 font-mono text-[0.8em] text-accent">↗</span>
+        <span aria-hidden="true" className="ml-0.5 font-mono text-[0.78em] opacity-80">↗</span>
       </a>,
     );
     lastIndex = match.index + match[0].length;

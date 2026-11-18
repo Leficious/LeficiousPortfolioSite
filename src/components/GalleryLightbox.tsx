@@ -122,7 +122,7 @@ export function GalleryLightbox({
           {/* Left: Dark Velvet Inspection Stage + Contact-Sheet Pass Strip */}
           <div className="flex min-h-0 flex-col justify-between gap-3">
             <section
-              className="relative flex min-h-[42vh] flex-1 touch-pan-y items-center justify-center overflow-hidden rounded-xs border-2 border-[#735329]/65 bg-[#0b0d13] p-2 shadow-[inset_0_0_32px_rgba(0,0,0,0.8)] lg:min-h-0"
+              className="relative flex min-h-[42vh] flex-1 touch-pan-y items-center justify-center overflow-hidden rounded-xs border-2 border-[#735329]/65 bg-[#0b0d13] p-2.5 shadow-[inset_0_0_32px_rgba(0,0,0,0.8)] lg:min-h-0"
               aria-label={`${entry.title} media`}
               onPointerDown={(event) => {
                 pointerStart.current = event.clientX;
@@ -136,13 +136,17 @@ export function GalleryLightbox({
             >
               {media.type === "image" ? (
                 <img
+                  key={`${entry.id}-img-${slide}`}
                   src={media.src}
                   alt={media.alt}
-                  className="max-h-[56vh] w-full max-w-full rounded-xs object-contain lg:h-full lg:max-h-full"
+                  className="animate-pass-settle max-h-[54vh] w-full max-w-full rounded-xs object-contain lg:h-full lg:max-h-full"
                   decoding="async"
                 />
               ) : (
-                <div className="aspect-video w-full max-w-[1080px] overflow-hidden rounded-xs border border-warm/30 bg-black">
+                <div
+                  key={`${entry.id}-vid-${slide}`}
+                  className="animate-pass-settle aspect-video max-h-[52vh] w-full max-w-[min(100%,calc(52vh*16/9))] overflow-hidden rounded-xs border border-warm/30 bg-black lg:h-full lg:max-h-full lg:w-auto lg:max-w-full"
+                >
                   <iframe
                     src={`https://www.youtube-nocookie.com/embed/${getYouTubeId(media.url)}`}
                     title={media.title}
@@ -159,7 +163,7 @@ export function GalleryLightbox({
                     type="button"
                     onClick={() => go(-1)}
                     aria-label={text("Previous pass", "上一张分解图")}
-                    className="absolute left-2.5 top-1/2 -translate-y-1/2 cursor-pointer rounded-xs border border-[#dfc092]/45 bg-[#0e1017]/88 px-3 py-2 font-numeral text-sm text-[#f3e6ce] shadow-lg backdrop-blur-xs transition-colors hover:border-[#dfc092] hover:bg-[#dfc092] hover:text-[#15120e]"
+                    className="absolute left-2.5 top-1/2 z-20 -translate-y-1/2 cursor-pointer rounded-xs border border-[#dfc092]/50 bg-[#0e1017]/90 px-3 py-2 font-numeral text-sm text-[#f3e6ce] shadow-lg backdrop-blur-xs transition-colors hover:border-[#dfc092] hover:bg-[#dfc092] hover:text-[#15120e]"
                   >
                     ‹
                   </button>
@@ -167,7 +171,7 @@ export function GalleryLightbox({
                     type="button"
                     onClick={() => go(1)}
                     aria-label={text("Next pass", "下一张分解图")}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 cursor-pointer rounded-xs border border-[#dfc092]/45 bg-[#0e1017]/88 px-3 py-2 font-numeral text-sm text-[#f3e6ce] shadow-lg backdrop-blur-xs transition-colors hover:border-[#dfc092] hover:bg-[#dfc092] hover:text-[#15120e]"
+                    className="absolute right-2.5 top-1/2 z-20 -translate-y-1/2 cursor-pointer rounded-xs border border-[#dfc092]/50 bg-[#0e1017]/90 px-3 py-2 font-numeral text-sm text-[#f3e6ce] shadow-lg backdrop-blur-xs transition-colors hover:border-[#dfc092] hover:bg-[#dfc092] hover:text-[#15120e]"
                   >
                     ›
                   </button>
@@ -178,7 +182,10 @@ export function GalleryLightbox({
             {/* Bottom Photographic Contact-Sheet Pass Strip */}
             {total > 1 && (
               <div className="shrink-0 rounded-xs border border-[#8c683a]/45 bg-parchment-deep/65 px-3 py-2">
-                <div className="flex items-center gap-2 overflow-x-auto pb-0.5" aria-label={text("Choose breakdown pass", "切换制作图层")}>
+                <div
+                  className="flex items-center gap-2 overflow-x-auto pb-0.5"
+                  aria-label={text("Choose breakdown pass", "切换制作图层")}
+                >
                   {entry.media.map((item, index) => {
                     const active = index === slide;
                     return (
@@ -190,7 +197,7 @@ export function GalleryLightbox({
                         aria-current={active ? "true" : undefined}
                         className={`group relative h-14 w-22 shrink-0 cursor-pointer overflow-hidden rounded-xs border-2 bg-[#0c0e14] transition-all ${
                           active
-                            ? "border-rubric shadow-[0_3px_10px_rgba(139,38,36,0.35)]"
+                            ? "-translate-y-0.5 border-rubric shadow-[0_3px_10px_rgba(139,38,36,0.35)]"
                             : "border-[#735329]/40 opacity-72 hover:border-[#735329] hover:opacity-100"
                         }`}
                       >
@@ -237,7 +244,7 @@ export function GalleryLightbox({
                 <CrimsonStamp label="SPECIMEN" className="h-11 w-11 opacity-85" />
               </div>
 
-              <p className={`mt-4 text-sm leading-relaxed text-parchment-ink/92 ${isChinese ? "zh-readable" : ""}`}>
+              <p className={`mt-4 text-[15px] leading-relaxed text-parchment-ink/92 ${isChinese ? "zh-readable" : ""}`}>
                 <FormattedText>{entry.description}</FormattedText>
               </p>
 
@@ -245,7 +252,7 @@ export function GalleryLightbox({
                 <p className="font-numeral text-[10px] tracking-[0.2em] text-parchment-muted uppercase">
                   {text("Craft & Contribution", "负责模块")}
                 </p>
-                <p className="mt-1 text-xs leading-relaxed text-parchment-ink/90">{entry.contribution}</p>
+                <p className="mt-1 text-[13.5px] leading-relaxed text-parchment-ink/90">{entry.contribution}</p>
               </div>
 
               <BrassRule tone="parchment" className="my-4" />

@@ -53,7 +53,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           aria-label="Leficious — Home"
           className="group flex flex-col items-center gap-3 pt-1"
         >
-          <AstrolabeCrest className="h-11 w-11 transition-transform duration-500 group-hover:rotate-12" />
+          <AstrolabeCrest className="h-11 w-11" />
           <span
             className="font-numeral text-[12px] tracking-[0.28em] text-[#dfc092]/90 transition-colors group-hover:text-[#f6e7c8]"
             style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}

@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react"
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AmbientBackdrop } from "./components/AmbientBackdrop";
 import { InkPlateFilter } from "./components/AtelierChrome";
+import { useDeskParallax } from "./lib/atelierMotion";
 import { SiteNav } from "./components/SiteNav";
 import { HomePage } from "./pages/HomePage";
 import { useLanguage } from "./lib/language";
@@ -17,6 +18,8 @@ export function App() {
   const previousLocation = useRef({ pathname, hash });
   const [activeFolioSlug, setActiveFolioSlug] = useState<string>("still-life");
   const [dialStep, setDialStep] = useState<number>(0);
+
+  useDeskParallax();
 
   const handleSelectFolio = useCallback((slug: string) => {
     setActiveFolioSlug(slug);
