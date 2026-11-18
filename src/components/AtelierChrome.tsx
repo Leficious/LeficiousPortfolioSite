@@ -78,6 +78,47 @@ export function AstrolabeCrest({ className = "h-11 w-11" }: { className?: string
 }
 
 /**
+ * Four heavy machined triangular brass corner clasps with rivets
+ * for the panoramic Velvet Cinema Plate on the Home detective board.
+ */
+export function BrassCornerClasps() {
+  const Clasp = ({ pos, rot }: { pos: string; rot: string }) => (
+    <svg
+      viewBox="0 0 44 44"
+      aria-hidden="true"
+      className={`pointer-events-none absolute z-20 h-9 w-9 sm:h-11 sm:w-11 ${pos} ${rot}`}
+    >
+      <defs>
+        <linearGradient id="brass-clasp-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#ebd09e" />
+          <stop offset="55%" stopColor="#c2945a" />
+          <stop offset="100%" stopColor="#886130" />
+        </linearGradient>
+      </defs>
+      <polygon
+        points="0,0 42,0 34,8 8,8 8,34 0,42"
+        fill="url(#brass-clasp-grad)"
+        stroke="#4b3316"
+        strokeWidth="0.9"
+      />
+      <polyline points="2.5,36 2.5,2.5 36,2.5" fill="none" stroke="#fff3d6" strokeWidth="0.7" opacity="0.55" />
+      <circle cx="5" cy="5" r="1.7" fill="#3b260e" stroke="#f5dfb3" strokeWidth="0.5" />
+      <circle cx="26" cy="4.2" r="1.3" fill="#3b260e" />
+      <circle cx="4.2" cy="26" r="1.3" fill="#3b260e" />
+    </svg>
+  );
+
+  return (
+    <>
+      <Clasp pos="-left-1 -top-1" rot="rotate-0" />
+      <Clasp pos="-right-1 -top-1" rot="rotate-90" />
+      <Clasp pos="-right-1 -bottom-1" rot="rotate-180" />
+      <Clasp pos="-left-1 -bottom-1" rot="-rotate-90" />
+    </>
+  );
+}
+
+/**
  * Symmetrical geometric Art-Nouveau / Art-Deco double-hairline corner filigree
  * for rag-parchment folios and dark-slate specimen plates.
  */
