@@ -248,7 +248,7 @@ export function GalleryPage() {
                       className={`group relative inline-flex cursor-pointer p-[1.5px] transition-colors duration-200 ${
                         active
                           ? "bg-gradient-to-b from-[#fff2d4] to-[#cfa363] shadow-[0_6px_16px_rgba(0,0,0,0.68)]"
-                          : "bg-gradient-to-b from-[#dfb97c]/78 to-[#8f6836]/62 shadow-[0_3px_10px_rgba(0,0,0,0.55)] hover:from-[#f6deb0] hover:to-[#b58749]"
+                          : "bg-gradient-to-b from-[#ecc98e]/92 to-[#9e743c]/80 shadow-[0_3px_10px_rgba(0,0,0,0.55)] hover:from-[#fff0cc] hover:to-[#c29352]"
                       }`}
                     >
                       <span

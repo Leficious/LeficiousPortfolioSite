@@ -175,7 +175,7 @@ export function ProjectPage() {
                       href={project.externalLink.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="victorian-ticket inline-flex items-center gap-1.5 border-2 border-[#140d09] bg-[#140d09] px-4.5 py-2.5 font-numeral text-xs font-bold tracking-[0.12em] text-[#f6eedc] uppercase shadow-[0_4px_12px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-0.5 hover:border-[#2c1e15] hover:bg-[#2c1e15]"
+                      className="victorian-ticket victorian-ticket-ink inline-flex items-center gap-1.5 bg-[#140d09] px-4.5 py-2.5 font-numeral text-xs font-bold tracking-[0.12em] text-[#f6eedc] uppercase transition-all hover:-translate-y-0.5 hover:bg-[#2c1e15]"
                     >
                       {project.externalLink.label} <span aria-hidden="true">↗</span>
                     </a>
@@ -185,7 +185,7 @@ export function ProjectPage() {
                       key={item.url}
                       href={item.url}
                       download
-                      className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center gap-1.5 border-2 border-[#140d09] bg-parchment-deep/75 px-4 py-2.5 font-numeral text-xs font-bold tracking-[0.1em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
+                      className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center gap-1.5 bg-parchment-deep/75 px-4.5 py-2.5 font-numeral text-xs font-bold tracking-[0.1em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
                     >
                       {item.label} <span aria-hidden="true">↓</span>
                     </a>

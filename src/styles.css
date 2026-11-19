@@ -202,45 +202,155 @@
     inset 0 0 0 1px rgba(224, 184, 122, 0.52);
 }
 
-/* Chamfered Victorian apothecary / ledger ticket (with diagonal corner border completion) */
-.victorian-ticket {
-  --ticket-border: transparent;
-  position: relative;
-  clip-path: polygon(
-    7px 0,
-    calc(100% - 7px) 0,
-    100% 7px,
-    100% calc(100% - 7px),
-    calc(100% - 7px) 100%,
-    7px 100%,
-    0 calc(100% - 7px),
-    0 7px
-  );
-}
+/* Chamfered Victorian apothecary / ledger tickets & sculpted brass plaques
+ * Uses an even-odd 8-sided polygon ring in ::after so all 4 diagonal 45° corners
+ * carry the exact same stroke thickness as the horizontal/vertical edges. */
+@layer components {
+  .victorian-ticket {
+    --ticket-cut: 7px;
+    --ticket-stroke: 1.5px;
+    --ticket-border: linear-gradient(180deg, rgba(232, 196, 136, 0.86) 0%, rgba(146, 105, 52, 0.72) 100%);
+    position: relative;
+    clip-path: polygon(
+      var(--ticket-cut) 0,
+      calc(100% - var(--ticket-cut)) 0,
+      100% var(--ticket-cut),
+      100% calc(100% - var(--ticket-cut)),
+      calc(100% - var(--ticket-cut)) 100%,
+      var(--ticket-cut) 100%,
+      0 calc(100% - var(--ticket-cut)),
+      0 var(--ticket-cut)
+    );
+  }
 
-.victorian-ticket::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  pointer-events: none;
-  background:
-    linear-gradient(135deg, var(--ticket-border) 5.9px, transparent 6.35px) top left / 9px 9px no-repeat,
-    linear-gradient(225deg, var(--ticket-border) 5.9px, transparent 6.35px) top right / 9px 9px no-repeat,
-    linear-gradient(315deg, var(--ticket-border) 5.9px, transparent 6.35px) bottom right / 9px 9px no-repeat,
-    linear-gradient(45deg, var(--ticket-border) 5.9px, transparent 6.35px) bottom left / 9px 9px no-repeat;
-}
+  .victorian-ticket::after {
+    --_k: calc(var(--ticket-cut) + var(--ticket-stroke) * 0.4142);
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background: var(--ticket-border);
+    clip-path: polygon(
+      evenodd,
+      0 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 50%,
+      var(--ticket-stroke) 50%,
+      var(--ticket-stroke) var(--_k),
+      var(--_k) var(--ticket-stroke),
+      calc(100% - var(--_k)) var(--ticket-stroke),
+      calc(100% - var(--ticket-stroke)) var(--_k),
+      calc(100% - var(--ticket-stroke)) calc(100% - var(--_k)),
+      calc(100% - var(--_k)) calc(100% - var(--ticket-stroke)),
+      var(--_k) calc(100% - var(--ticket-stroke)),
+      var(--ticket-stroke) calc(100% - var(--_k)),
+      var(--ticket-stroke) 50%,
+      0 50%,
+      0 0
+    );
+  }
 
-.victorian-ticket-heavy {
-  --ticket-border: #140d09;
-}
+  .victorian-ticket-sm {
+    --ticket-cut: 5px;
+    --ticket-stroke: 1.25px;
+  }
 
-.victorian-ticket-heavy::after {
-  inset: -2px;
-  background:
-    linear-gradient(135deg, var(--ticket-border) 6.85px, transparent 7.35px) top left / 10px 10px no-repeat,
-    linear-gradient(225deg, var(--ticket-border) 6.85px, transparent 7.35px) top right / 10px 10px no-repeat,
-    linear-gradient(315deg, var(--ticket-border) 6.85px, transparent 7.35px) bottom right / 10px 10px no-repeat,
-    linear-gradient(45deg, var(--ticket-border) 6.85px, transparent 7.35px) bottom left / 10px 10px no-repeat;
+  .victorian-ticket-vellum {
+    --ticket-stroke: 1.5px;
+    --ticket-border: linear-gradient(180deg, #755025 0%, #4a3014 100%);
+  }
+
+  .victorian-ticket-vellum-interactive:hover {
+    --ticket-border: linear-gradient(180deg, #edd09b 0%, #9e7339 100%);
+  }
+
+  .victorian-ticket-heavy {
+    --ticket-stroke: 2px;
+    --ticket-border: #140d09;
+  }
+
+  .victorian-ticket-heavy:hover {
+    --ticket-border: linear-gradient(180deg, #edd09b 0%, #9e7339 100%);
+  }
+
+  .victorian-ticket-ink {
+    --ticket-stroke: 1.5px;
+    --ticket-border: linear-gradient(180deg, rgba(232, 196, 136, 0.84) 0%, rgba(146, 105, 52, 0.68) 100%);
+  }
+
+  .victorian-ticket-ink:hover {
+    --ticket-border: linear-gradient(180deg, #fff0cf 0%, #cfa160 100%);
+  }
+
+  .victorian-ticket-oxblood {
+    --ticket-stroke: 1.5px;
+    --ticket-border: linear-gradient(180deg, rgba(244, 214, 162, 0.92) 0%, rgba(178, 134, 74, 0.78) 100%);
+  }
+
+  .victorian-ticket-oxblood:hover {
+    --ticket-border: #fff4dc;
+  }
+
+  .brass-plaque {
+    --plaque-cut: 6px;
+    --plaque-stroke: 1.5px;
+    position: relative;
+    background: linear-gradient(180deg, #deb97e 0%, #b3874c 48%, #825d2d 100%);
+    color: #120b05;
+    text-shadow: 0 1px 0 rgba(255, 238, 198, 0.42);
+    clip-path: polygon(
+      var(--plaque-cut) 0,
+      calc(100% - var(--plaque-cut)) 0,
+      100% var(--plaque-cut),
+      100% calc(100% - var(--plaque-cut)),
+      calc(100% - var(--plaque-cut)) 100%,
+      var(--plaque-cut) 100%,
+      0 calc(100% - var(--plaque-cut)),
+      0 var(--plaque-cut)
+    );
+  }
+
+  .brass-plaque::after {
+    --_pk: calc(var(--plaque-cut) + var(--plaque-stroke) * 0.4142);
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 248, 224, 0.9) 0%,
+      rgba(86, 55, 21, 0.72) 52%,
+      rgba(28, 16, 5, 0.92) 100%
+    );
+    clip-path: polygon(
+      evenodd,
+      0 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 50%,
+      var(--plaque-stroke) 50%,
+      var(--plaque-stroke) var(--_pk),
+      var(--_pk) var(--plaque-stroke),
+      calc(100% - var(--_pk)) var(--plaque-stroke),
+      calc(100% - var(--plaque-stroke)) var(--_pk),
+      calc(100% - var(--plaque-stroke)) calc(100% - var(--_pk)),
+      calc(100% - var(--_pk)) calc(100% - var(--plaque-stroke)),
+      var(--_pk) calc(100% - var(--plaque-stroke)),
+      var(--plaque-stroke) calc(100% - var(--_pk)),
+      var(--plaque-stroke) 50%,
+      0 50%,
+      0 0
+    );
+  }
+
+  .brass-plaque:hover {
+    background: linear-gradient(180deg, #eac88f 0%, #c19558 48%, #916935 100%);
+  }
 }
 
 /* Embossed letterpress ticket relief on rag-vellum */
@@ -266,32 +376,6 @@
     contrast(1.22)
     drop-shadow(0px 1.2px 0px rgba(255, 251, 240, 0.95))
     drop-shadow(0px -0.8px 0.6px rgba(24, 12, 4, 0.38));
-}
-
-/* Chased burnished antique-bronze plaque w/ sculpted 3D bevel & chamfered corners */
-.brass-plaque {
-  background: linear-gradient(180deg, #deb97e 0%, #b3874c 48%, #825d2d 100%);
-  color: #120b05;
-  text-shadow: 0 1px 0 rgba(255, 238, 198, 0.42);
-  clip-path: polygon(
-    6px 0,
-    calc(100% - 6px) 0,
-    100% 6px,
-    100% calc(100% - 6px),
-    calc(100% - 6px) 100%,
-    6px 100%,
-    0 calc(100% - 6px),
-    0 6px
-  );
-  box-shadow:
-    inset 0 1.5px 0 rgba(255, 246, 220, 0.72),
-    inset 0 -2px 0 rgba(34, 19, 6, 0.82),
-    inset 0 0 0 2px rgba(42, 26, 10, 0.4),
-    0 6px 16px rgba(0, 0, 0, 0.62);
-}
-
-.brass-plaque:hover {
-  background: linear-gradient(180deg, #eac88f 0%, #c19558 48%, #916935 100%);
 }
 
 /* Tactile 3D tilt + warm bronze candle-glint on interactive cards */

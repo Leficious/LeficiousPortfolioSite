@@ -25,7 +25,7 @@ export function CodeBlock({ language, title, code }: CodeSnippet) {
         <button
           type="button"
           onClick={copy}
-          className="victorian-ticket cursor-pointer border border-warm/45 bg-[#1d1510] px-2.5 py-0.5 font-numeral text-[10px] font-bold tracking-widest text-[#e2be84] uppercase transition-colors [--ticket-border:rgba(200,157,98,0.45)] hover:bg-[#c89d62] hover:text-[#120b05] hover:[--ticket-border:#c89d62]"
+          className="victorian-ticket victorian-ticket-sm cursor-pointer bg-[#1d1510] px-2.5 py-1 font-numeral text-[10px] font-bold tracking-widest text-[#e2be84] uppercase transition-colors hover:bg-[#c89d62] hover:text-[#120b05]"
         >
           {copied ? text("✓ Copied", "✓ 已复制") : text("Copy", "复制")}
         </button>

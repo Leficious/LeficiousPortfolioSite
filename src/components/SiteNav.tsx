@@ -199,7 +199,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           <a
             href={resumeHref}
             download
-            className="victorian-ticket flex w-[72px] items-center justify-center gap-1 border border-[#e2be84]/75 bg-gradient-to-b from-[#7a1616] to-[#470b0b] px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.1em] text-[#fbf3e4] uppercase shadow-[0_4px_10px_rgba(0,0,0,0.82),inset_0_1px_0_rgba(255,228,184,0.32)] transition-all [--ticket-border:rgba(226,190,132,0.75)] hover:border-[#fff2d6] hover:from-[#8f1b1b] hover:to-[#570e0e] hover:[--ticket-border:#fff2d6] active:scale-95"
+            className="victorian-ticket victorian-ticket-oxblood flex w-[72px] items-center justify-center gap-1 bg-gradient-to-b from-[#7a1616] to-[#470b0b] px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.1em] text-[#fbf3e4] uppercase transition-all hover:from-[#8f1b1b] hover:to-[#570e0e] active:scale-95"
           >
             <span>{text("Résumé", "简历")}</span>
             <span aria-hidden="true" className="text-[10px] text-[#ebd09e]">↓</span>
@@ -245,7 +245,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
             >
               {language === "en" ? "中文" : "EN"}
             </button>
-            <a href={resumeHref} download className="brass-plaque victorian-ticket px-2.5 py-1 text-xs font-bold">
+            <a href={resumeHref} download className="brass-plaque px-2.5 py-1 text-xs font-bold">
               {text("CV", "简历")} ↓
             </a>
           </div>

@@ -29,7 +29,7 @@ export function NotFoundPage({ message }: { message?: string }) {
             <Link
               to={localizedPath("/")}
               viewTransition
-              className="victorian-ticket mt-6 inline-flex items-center gap-2 bg-[#140d09] px-5 py-2.5 font-numeral text-xs font-bold tracking-[0.12em] text-[#f6eedc] uppercase transition-colors hover:bg-[#2c1e15]"
+              className="victorian-ticket victorian-ticket-ink mt-6 inline-flex items-center gap-2 bg-[#140d09] px-5 py-2.5 font-numeral text-xs font-bold tracking-[0.12em] text-[#f6eedc] uppercase transition-colors hover:bg-[#2c1e15]"
             >
               ← {text("Return to Atelier Desk", "返回案台卷宗")}
             </Link>

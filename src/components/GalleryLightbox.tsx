@@ -245,7 +245,7 @@ export function GalleryLightbox({
                 <FormattedText>{entry.description}</FormattedText>
               </p>
 
-              <div className="victorian-ticket embossed-ticket mt-4 border border-[#61411d]/75 bg-parchment-deep/80 px-3.5 py-2.5 [--ticket-border:rgba(97,65,29,0.75)]">
+              <div className="victorian-ticket victorian-ticket-vellum embossed-ticket mt-4 bg-parchment-deep/80 px-3.5 py-2.5">
                 <p className="font-numeral text-[10px] font-bold tracking-[0.2em] text-parchment-muted uppercase">
                   {text("Craft & Contribution", "负责模块")}
                 </p>
@@ -262,7 +262,7 @@ export function GalleryLightbox({
                 <Link
                   to={localizedPath(entry.projectUrl)}
                   viewTransition
-                  className="victorian-ticket inline-flex items-center justify-between bg-[#191310] px-4 py-2.5 font-numeral text-xs font-semibold tracking-[0.1em] text-[#f2e8d5] uppercase transition-colors hover:bg-[#2e231d]"
+                  className="victorian-ticket victorian-ticket-ink inline-flex items-center justify-between bg-[#191310] px-4 py-2.5 font-numeral text-xs font-semibold tracking-[0.1em] text-[#f2e8d5] uppercase transition-colors hover:bg-[#2e231d]"
                 >
                   <span>{isChinese ? "展开关联项目卷宗" : entry.projectLabel ?? "Open Related Case Folio"}</span>
                   <span aria-hidden="true">→</span>
@@ -273,7 +273,7 @@ export function GalleryLightbox({
                 <button
                   type="button"
                   onClick={onNextEntry}
-                  className="victorian-ticket inline-flex cursor-pointer items-center justify-between border border-[#191310]/70 bg-transparent px-4 py-2 font-display text-sm font-semibold text-parchment-ink transition-colors [--ticket-border:rgba(25,19,16,0.7)] hover:bg-[#191310]/8"
+                  className="victorian-ticket victorian-ticket-vellum inline-flex cursor-pointer items-center justify-between bg-transparent px-4 py-2 font-display text-sm font-semibold text-parchment-ink transition-colors hover:bg-[#191310]/8"
                 >
                   <span className="truncate pr-2">
                     {text("Next Specimen Plate", "下一件标本")}

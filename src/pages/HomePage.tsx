@@ -526,7 +526,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                                 key={proj.slug}
                                 type="button"
                                 onClick={() => selectBinder(proj.slug)}
-                                className="victorian-ticket embossed-ticket cursor-pointer border border-[#61411d]/85 bg-parchment-deep/90 px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.03em] whitespace-nowrap text-parchment-ink transition-colors [--ticket-border:#61411d] hover:bg-[#140d09] hover:text-[#f6eedc] hover:[--ticket-border:#140d09]"
+                                className="victorian-ticket victorian-ticket-vellum victorian-ticket-vellum-interactive embossed-ticket cursor-pointer bg-parchment-deep/90 px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.03em] whitespace-nowrap text-parchment-ink transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
                               >
                                 {shortLabel}
                               </button>
@@ -691,7 +691,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                       {telemetry.map((spec) => (
                         <div
                           key={spec}
-                          className="victorian-ticket embossed-ticket flex items-center justify-center gap-1.5 border border-[#61411d]/85 bg-parchment-deep/90 px-2 py-2 text-center [--ticket-border:#61411d]"
+                          className="victorian-ticket victorian-ticket-vellum embossed-ticket flex items-center justify-center gap-1.5 bg-parchment-deep/90 px-2 py-2 text-center"
                         >
                           <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-rubric" />
                           <span className="whitespace-nowrap font-numeral text-[9.5px] font-bold tracking-[0.07em] text-parchment-ink uppercase xl:text-[10px]">
@@ -787,7 +787,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                       <Link
                         to={localizedPath(`/projects/${activeProject.slug}`)}
                         viewTransition
-                        className="victorian-ticket inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap border-2 border-[#140d09] bg-[#140d09] px-3 py-2 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-[#f6eedc] uppercase shadow-[0_4px_12px_rgba(0,0,0,0.35)] transition-colors hover:border-[#2c1e15] hover:bg-[#2c1e15] 2xl:gap-2 2xl:px-4 2xl:py-2.5 2xl:text-xs"
+                        className="victorian-ticket victorian-ticket-ink inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap bg-[#140d09] px-3.5 py-2.5 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-[#f6eedc] uppercase transition-colors hover:bg-[#2c1e15] 2xl:gap-2 2xl:px-4 2xl:text-xs"
                       >
                         <span>{text("Open Full Folio", "展开完整卷宗")}</span>
                         <span aria-hidden="true">→</span>
@@ -798,7 +798,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                           href={activeProject.externalLink.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center justify-center gap-1.5 whitespace-nowrap border-2 border-[#140d09] bg-parchment-deep/65 px-3 py-2 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc] 2xl:px-4 2xl:py-2.5 2xl:text-xs"
+                          className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center justify-center gap-1.5 whitespace-nowrap bg-parchment-deep/65 px-3.5 py-2.5 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc] 2xl:px-4 2xl:text-xs"
                         >
                           <span>{activeProject.externalLink.label}</span>
                           <span aria-hidden="true">↗</span>
@@ -807,7 +807,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                         <Link
                           to={localizedPath("/gallery")}
                           viewTransition
-                          className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center justify-center gap-1.5 whitespace-nowrap border-2 border-[#140d09] bg-parchment-deep/65 px-3 py-2 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc] 2xl:px-4 2xl:py-2.5 2xl:text-xs"
+                          className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center justify-center gap-1.5 whitespace-nowrap bg-parchment-deep/65 px-3.5 py-2.5 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc] 2xl:px-4 2xl:text-xs"
                         >
                           <span>{text("Gallery", "画廊拆解")}</span>
                           <span aria-hidden="true">→</span>
