@@ -188,18 +188,45 @@ export function CrimsonStamp({
 }
 
 /**
- * Top-center melted crimson wax seal & short swallowtail silk ribbon tab mounted
- * rigidly to the folio header (zero independent pendulum wobble, zero stretched diagonal cords).
+ * Taut burnished-brass suspension wires + recessed brass grommet eyelets + central melted
+ * crimson wax seal, locked rigidly to the folio header (zero wobble, exact 1:1 SVG aspect,
+ * and 7.4px clear below the FolioCorners top rule).
  */
 export function BrassPinThreads({ animKey }: { animKey?: string }) {
   void animKey;
+  const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const wireGradId = `wire-g-${uid}`;
+
   return (
-    <div aria-hidden="true" className="pointer-events-none relative z-30 mx-auto -mb-7 flex h-14 w-16 flex-col items-center justify-start select-none">
-      {/* Short folded crimson-and-gold silk ribbon tail tucked cleanly above FolioCorners */}
-      <svg viewBox="0 0 24 18" fill="none" className="absolute bottom-0.5 h-4 w-6 [filter:drop-shadow(0_2px_3px_rgba(0,0,0,0.55))]">
-        <polygon points="3,0 21,0 21,16 12,11.5 3,16" fill="#6b1114" stroke="#d4ad73" strokeWidth="0.9" />
+    <div
+      aria-hidden="true"
+      className="pointer-events-none relative z-30 mx-auto -mb-[29px] h-[51px] w-[300px] select-none sm:-mb-[38px] sm:h-[68px] sm:w-[400px]"
+    >
+      <svg
+        viewBox="0 0 400 68"
+        fill="none"
+        className="h-full w-full overflow-visible [filter:drop-shadow(0_1.5px_1.2px_rgba(0,0,0,0.45))]"
+      >
+        <defs>
+          <linearGradient id={wireGradId} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#c79c5e" />
+            <stop offset="50%" stopColor="#f2d7a4" />
+            <stop offset="100%" stopColor="#c79c5e" />
+          </linearGradient>
+        </defs>
+
+        {/* Taut brass suspension wires from beneath the wax seal out to the vellum grommets */}
+        <line x1="200" y1="24" x2="28" y2="60" stroke={`url(#${wireGradId})`} strokeWidth="1.45" />
+        <line x1="200" y1="24" x2="372" y2="60" stroke={`url(#${wireGradId})`} strokeWidth="1.45" />
+
+        {/* Left & right sculpted brass grommet eyelets (cleanly below FolioCorners top rule) */}
+        <circle cx="28" cy="60" r="4.2" fill="#d8b274" stroke="#5c3e1b" strokeWidth="0.9" />
+        <circle cx="28" cy="60" r="2.1" fill="#14100c" />
+        <circle cx="372" cy="60" r="4.2" fill="#d8b274" stroke="#5c3e1b" strokeWidth="0.9" />
+        <circle cx="372" cy="60" r="2.1" fill="#14100c" />
       </svg>
-      <CrimsonStamp className="relative z-10 h-13 w-13 rotate-0 sm:h-14 sm:w-14" />
+
+      <CrimsonStamp className="absolute left-1/2 top-[2px] z-10 h-11 w-11 -translate-x-1/2 rotate-0 sm:h-14 sm:w-14" />
     </div>
   );
 }
