@@ -25,7 +25,8 @@ export function GalleryLayout({ children }: { children: ReactNode }) {
         const wantsWide = card.dataset.wide === "true" && columns > 1;
 
         // Only allow a 2-column span when two adjacent columns sit within 40px of each other
-        // (e.g. top hero row y=0, or naturally aligned columns) so we never trap empty holes!
+        // AND within 60px of the shortest column so wide cards never stack down one side leaving an empty column.
+        const minBottom = Math.min(...bottoms);
         let chosenSpan = 1;
         let chosenCol = 0;
         let chosenTop = Infinity;
@@ -34,7 +35,7 @@ export function GalleryLayout({ children }: { children: ReactNode }) {
           for (let start = 0; start <= columns - 2; start++) {
             const diff = Math.abs(bottoms[start] - bottoms[start + 1]);
             const candidateTop = Math.max(bottoms[start], bottoms[start + 1]);
-            if ((idx === 0 || diff <= 40) && candidateTop < chosenTop) {
+            if (diff <= 40 && candidateTop <= minBottom + 60 && candidateTop < chosenTop) {
               chosenSpan = 2;
               chosenCol = start;
               chosenTop = candidateTop;

@@ -28,7 +28,7 @@ export function FeaturedReel({ id, zhId, title, description, thumbnailSrc, autoS
   return (
     <article className="slate-folio group relative overflow-hidden border border-warm/40 p-2">
       <div className="relative aspect-video overflow-hidden border border-warm/30 bg-black">
-        <BrassCornerClasps sizeClass="h-10 w-10 sm:h-13 sm:w-13" />
+        <BrassCornerClasps sizeClass="h-7 w-7 sm:h-8 sm:w-8" />
         {active ? (
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${activeId}?autoplay=1`}

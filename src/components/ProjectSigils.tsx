@@ -19,13 +19,13 @@ const HIGHLIGHT_PALETTES: Record<
     intaglioAccent: string;
   }
 > = {
-  // Option A: Victorian Malachite & Verdigris Patina (HSL ~152°, direct complement to Crimson & Oxblood)
+  // Option A: Museum Malachite & Aged Verdigris Patina (harmonized to champagne gold & cordovan leather)
   verdigris: {
-    enamelLight: "#7ee8b5",
-    enamelMid: "#2d8f62",
-    enamelDark: "#13452e",
-    specular: "#bcfce0",
-    intaglioAccent: "#216b49",
+    enamelLight: "#6dc49a",
+    enamelMid: "#297a55",
+    enamelDark: "#123b29",
+    specular: "#ace6c9",
+    intaglioAccent: "#226345",
   },
   // Option B: Horological Prussian Cobalt-Teal Cloisonné (HSL ~204°, direct 180° complement to Saddle-Cognac & Gold)
   peacock: {

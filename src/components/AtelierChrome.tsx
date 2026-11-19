@@ -43,8 +43,8 @@ export function AstrolabeCrest({ className = "h-11 w-11" }: { className?: string
       </defs>
 
       <g className="origin-center transition-transform duration-700 ease-out group-hover:rotate-[30deg]">
-        <circle cx="48" cy="48" r="46.8" fill="none" stroke="#d8b274" strokeWidth="1.1" opacity="0.92" />
-        <circle cx="48" cy="48" r="42.2" fill="none" stroke="#c89d62" strokeWidth="0.7" opacity="0.58" />
+        <circle cx="48" cy="48" r="46.8" fill="none" stroke="#e2be84" strokeWidth="1.1" opacity="0.92" />
+        <circle cx="48" cy="48" r="42.2" fill="none" stroke="#d4ad73" strokeWidth="0.7" opacity="0.55" />
         {ASTROLABE_TICKS.map((t, i) => (
           <line
             key={i}
@@ -52,106 +52,96 @@ export function AstrolabeCrest({ className = "h-11 w-11" }: { className?: string
             y1={t.y1}
             x2={t.x2}
             y2={t.y2}
-            stroke="#d8b274"
+            stroke="#e2be84"
             strokeWidth={t.major ? "1.05" : "0.6"}
-            opacity={t.major ? "0.92" : "0.52"}
+            opacity={t.major ? "0.9" : "0.48"}
           />
         ))}
-        <polygon points="48,0 50.2,3.2 48,6.4 45.8,3.2" fill="#ebd09e" />
-        <polygon points="48,89.6 50.2,92.8 48,96 45.8,92.8" fill="#c89d62" opacity="0.85" />
+        <polygon points="48,0 50.2,3.2 48,6.4 45.8,3.2" fill="#f3dfb9" />
+        <polygon points="48,89.6 50.2,92.8 48,96 45.8,92.8" fill="#d4ad73" opacity="0.85" />
       </g>
 
       <g transform="translate(10.5, 11) scale(0.78)">
-        <path d={FRAME_MAIN_D} fill="#f4ead6" />
-        <path d={FRAME_UR_D} fill="#f4ead6" />
-        <g clipPath={`url(#${clipId})`} fill="none" stroke="#c89d62" strokeWidth="2.4">
+        <path d={FRAME_MAIN_D} fill="#f7f0e2" />
+        <path d={FRAME_UR_D} fill="#f7f0e2" />
+        <g clipPath={`url(#${clipId})`} fill="none" stroke="#d4ad73" strokeWidth="2.4">
           <circle cx="47" cy="50.2" r="10.8" />
           <circle cx="47" cy="50.2" r="18.0" />
           <circle cx="47" cy="50.2" r="25.2" />
         </g>
-        <polygon points={CHEVRON_POINTS} fill="#c89d62" />
-        <path d={L_MONOLITH_D} fill="#e2be84" />
+        <polygon points={CHEVRON_POINTS} fill="#d4ad73" />
+        <path d={L_MONOLITH_D} fill="#ebd09e" />
       </g>
     </svg>
   );
 }
 
 /**
- * Four ornate chased Victorian antique-bronze acanthus scrollwork corner brackets
- * with crisp embossed hardware bevel & contact occlusion.
+ * Airy, precision-beveled vector brass L-corner mounts (~88% open negative space,
+ * zero dense raster noise, crisp at every zoom level).
  */
-export function BrassCornerClasps({ sizeClass = "h-12 w-12 sm:h-15 sm:w-15" }: { sizeClass?: string }) {
-  const hwShadow =
-    "select-none [filter:contrast(1.14)_brightness(1.06)_drop-shadow(0_3px_6px_rgba(0,0,0,0.88))_drop-shadow(0_1px_1px_rgba(0,0,0,0.95))]";
+export function BrassCornerClasps({ sizeClass = "h-7 w-7 sm:h-8 sm:w-8" }: { sizeClass?: string }) {
+  const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const gradId = `bc-grad-${uid}`;
+
+  const Clasp = ({ rotate, pos }: { rotate: string; pos: string }) => (
+    <svg
+      viewBox="0 0 36 36"
+      fill="none"
+      aria-hidden="true"
+      className={`absolute ${pos} ${rotate} ${sizeClass} [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.82))]`}
+    >
+      <path d="M0 32 V0 H32 L28.8 3.2 H3.2 V28.8 Z" fill={`url(#${gradId})`} />
+      <path d="M0.5 31 V0.5 H31" stroke="#fff4da" strokeWidth="0.7" opacity="0.75" />
+      <path d="M3.2 14.5 A11.3 11.3 0 0 0 14.5 3.2" stroke={`url(#${gradId})`} strokeWidth="1.1" opacity="0.9" />
+      <polygon points="0,0 5.6,0 0,5.6" fill="#fff0cc" opacity="0.85" />
+      <circle cx="24.5" cy="1.6" r="0.9" fill="#2a190b" />
+      <circle cx="1.6" cy="24.5" r="0.9" fill="#2a190b" />
+    </svg>
+  );
+
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-20">
-      <img
-        src="/ornaments/bronze-corner.webp"
-        alt=""
-        className={`absolute -left-[2px] -top-[2px] ${hwShadow} ${sizeClass}`}
-      />
-      <img
-        src="/ornaments/bronze-corner.webp"
-        alt=""
-        className={`absolute -right-[2px] -top-[2px] rotate-90 ${hwShadow} ${sizeClass}`}
-      />
-      <img
-        src="/ornaments/bronze-corner.webp"
-        alt=""
-        className={`absolute -bottom-[2px] -right-[2px] rotate-180 ${hwShadow} ${sizeClass}`}
-      />
-      <img
-        src="/ornaments/bronze-corner.webp"
-        alt=""
-        className={`absolute -bottom-[2px] -left-[2px] -rotate-90 ${hwShadow} ${sizeClass}`}
-      />
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-20 select-none">
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#f7e3ba" />
+            <stop offset="52%" stopColor="#d4ad73" />
+            <stop offset="100%" stopColor="#8c6330" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <Clasp pos="-left-[1px] -top-[1px]" rotate="rotate-0" />
+      <Clasp pos="-right-[1px] -top-[1px]" rotate="rotate-90" />
+      <Clasp pos="-bottom-[1px] -right-[1px]" rotate="rotate-180" />
+      <Clasp pos="-bottom-[1px] -left-[1px]" rotate="-rotate-90" />
     </div>
   );
 }
 
 /**
- * Symmetrical embossed Victorian multi-scroll acanthus & Gothic rosette corner spandrels
- * with double-line blind-debossed plate-mark border.
+ * Clean 19th-century Chiswick-Press stepped plate-mark corner spandrels.
+ * Uses only 2 open architectural strokes + 1 tiny diamond finial so corners stay
+ * light, crisp, and breathable even at small card sizes.
  */
 export function FolioCorners({
   tone = "parchment",
   inset = "inset-2.5 sm:inset-3.5",
-  sizeClass = "h-10 w-10 sm:h-12 sm:w-12",
+  sizeClass = "h-7 w-7 sm:h-8 sm:w-8",
 }: {
   tone?: "parchment" | "slate";
   inset?: string;
   sizeClass?: string;
 }) {
   const isParchment = tone === "parchment";
-  const stroke = isParchment ? "#684720" : "#d4ae73";
-  const highlight = isParchment ? "rgba(255,252,242,0.88)" : "rgba(255,236,194,0.28)";
-  const accent = isParchment ? "#8f1616" : "#e5c287";
+  const stroke = isParchment ? "#704e26" : "#d8b47c";
+  const accent = isParchment ? "#8a181a" : "#f0d5a3";
 
   const Corner = ({ rotate }: { rotate: string }) => (
-    <svg
-      viewBox="0 0 52 52"
-      aria-hidden="true"
-      className={`${sizeClass} ${rotate}`}
-      fill="none"
-      style={{
-        filter: isParchment
-          ? "drop-shadow(0px 1px 0px rgba(255,252,242,0.9))"
-          : "drop-shadow(0px 2px 3px rgba(0,0,0,0.85))",
-      }}
-    >
-      {/* Outer & inner corner miters */}
-      <path d="M1 50 V1 H50" stroke={stroke} strokeWidth="1.5" />
-      <path d="M6 42 V6 H42" stroke={stroke} strokeWidth="0.95" opacity="0.9" />
-      {/* Diagonal filigree brace & Victorian volute scrolls */}
-      <path d="M1 19 L19 1" stroke={stroke} strokeWidth="0.95" opacity="0.85" />
-      <path d="M6 30 C16 30 22 24 24 17 C25 13 22 10 19 12 C17 13 17 16 20 17" stroke={stroke} strokeWidth="1.05" />
-      <path d="M30 6 C30 16 24 22 17 24 C13 25 10 22 12 19 C13 17 16 17 17 20" stroke={stroke} strokeWidth="1.05" />
-      <path d="M6 16 C11 16 16 11 16 6" stroke={stroke} strokeWidth="0.9" opacity="0.85" />
-      {/* Corner crimson/gold diamond cabochon & finial dots */}
-      <polygon points="6,6 11.5,6 6,11.5" fill={accent} />
-      <circle cx="14.5" cy="14.5" r="1.6" fill={accent} />
-      <circle cx="35" cy="6" r="1.2" fill={stroke} />
-      <circle cx="6" cy="35" r="1.2" fill={stroke} />
+    <svg viewBox="0 0 32 32" aria-hidden="true" className={`${sizeClass} ${rotate}`} fill="none">
+      <path d="M0.6 26 V0.6 H26" stroke={stroke} strokeWidth="1.2" />
+      <path d="M4.6 15.5 V7.6 H7.6 V4.6 H15.5" stroke={stroke} strokeWidth="0.95" opacity="0.82" />
+      <polygon points="4.6,2.8 6.4,4.6 4.6,6.4 2.8,4.6" fill={accent} />
     </svg>
   );
 
@@ -160,14 +150,7 @@ export function FolioCorners({
       <div
         className="absolute inset-0 border"
         style={{
-          borderColor: isParchment ? "rgba(104, 71, 32, 0.48)" : "rgba(212, 174, 115, 0.42)",
-          boxShadow: `inset 0 1px 0 ${highlight}, 0 1px 0 ${highlight}`,
-        }}
-      />
-      <div
-        className="absolute inset-[4px] border"
-        style={{
-          borderColor: isParchment ? "rgba(104, 71, 32, 0.28)" : "rgba(212, 174, 115, 0.22)",
+          borderColor: isParchment ? "rgba(112, 78, 38, 0.32)" : "rgba(216, 180, 124, 0.26)",
         }}
       />
       <div className="absolute left-0 top-0"><Corner rotate="rotate-0" /></div>
@@ -178,61 +161,87 @@ export function FolioCorners({
   );
 }
 
-/**
- * Taut burnished-bronze suspension cords + embossed Deep-Crimson Sealing-Wax Stamp
- * straddling the top-center border of the active folio.
- */
-export function BrassPinThreads({ animKey }: { animKey?: string }) {
-  return (
-    <div aria-hidden="true" className="pointer-events-none relative z-30 mx-auto -mb-6 h-16 w-80 sm:w-[460px]">
-      <div key={animKey} className="animate-pin-pendulum h-full w-full">
-        <svg viewBox="0 0 460 62" className="h-full w-full overflow-visible" fill="none">
-          <line x1="230" y1="19" x2="52" y2="57" stroke="#c89d62" strokeWidth="1.4" opacity="0.9" />
-          <line x1="230" y1="19" x2="408" y2="57" stroke="#c89d62" strokeWidth="1.4" opacity="0.9" />
-          <circle cx="52" cy="57" r="3.4" fill="#140d09" stroke="#deb97e" strokeWidth="1.35" />
-          <circle cx="408" cy="57" r="3.4" fill="#140d09" stroke="#deb97e" strokeWidth="1.35" />
-        </svg>
-      </div>
-      <img
-        src="/ornaments/crimson-wax-seal.webp"
-        alt=""
-        width="68"
-        height="68"
-        className="absolute left-1/2 top-0.5 h-14 w-14 -translate-x-1/2 select-none [filter:contrast(1.12)_saturate(1.12)_drop-shadow(0_7px_14px_rgba(0,0,0,0.82))_drop-shadow(0_2px_3px_rgba(0,0,0,0.92))] sm:h-15 sm:w-15"
-      />
-    </div>
-  );
-}
+// Shared organic 12-lobe pressed sealing-wax silhouette around center (32, 32)
+const WAX_RIM_D =
+  "M32 3.2 C36.2 3.2 38.8 5.4 42.6 5.9 C46.5 6.4 50.2 8.2 52.4 11.5 C54.6 14.8 55.2 18.6 57.3 21.9 C59.4 25.2 60.8 28.4 60.6 32.3 C60.4 36.2 58.3 39.2 57.4 43.0 C56.5 46.8 54.5 50.6 51.1 52.8 C47.7 55.0 43.9 55.6 40.3 57.5 C36.7 59.4 33.6 60.8 29.7 60.5 C25.8 60.2 22.8 58.1 19.0 57.1 C15.2 56.1 11.4 54.2 9.3 50.8 C7.2 47.4 6.7 43.6 4.8 40.1 C2.9 36.6 3.1 32.6 3.5 28.8 C3.9 25.0 5.8 21.8 6.9 18.1 C8.0 14.4 10.2 10.6 13.7 8.5 C17.2 6.4 21.1 6.1 24.8 4.5 C27.4 3.4 29.5 3.2 32 3.2 Z";
 
 /**
- * Authentic embossed Deep-Crimson Sealing-Wax Stamp (`#7D1518`) with crisp relief shadow.
+ * Crisp sculpted vector Deep-Crimson Sealing-Wax Stamp with embossed L-monolith.
+ * Replaces blurry raster wax seals so both small (34px) and large (56px) stamps read cleanly.
  */
 export function CrimsonStamp({
-  className = "h-13 w-13",
+  className = "h-12 w-12",
   stamped = false,
 }: {
   label?: string;
   className?: string;
   stamped?: boolean;
 }) {
+  const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const outerId = `wax-out-${uid}`;
+  const wellId = `wax-well-${uid}`;
+
   return (
-    <img
-      src="/ornaments/crimson-wax-seal.webp"
-      alt=""
+    <svg
+      viewBox="0 0 64 64"
+      fill="none"
       aria-hidden="true"
-      width="96"
-      height="96"
-      className={`shrink-0 select-none object-contain [filter:contrast(1.12)_saturate(1.12)_drop-shadow(0_5px_10px_rgba(0,0,0,0.62))_drop-shadow(0_1.5px_2px_rgba(0,0,0,0.85))] ${
+      className={`shrink-0 select-none overflow-visible [filter:drop-shadow(0_5px_10px_rgba(0,0,0,0.68))_drop-shadow(0_1.5px_2px_rgba(0,0,0,0.85))] ${
         stamped ? "animate-stamp-press" : "-rotate-3"
       } ${className}`}
-    />
+    >
+      <defs>
+        <radialGradient id={outerId} cx="34%" cy="28%" r="72%">
+          <stop offset="0%" stopColor="#b82529" />
+          <stop offset="52%" stopColor="#821417" />
+          <stop offset="100%" stopColor="#4a090b" />
+        </radialGradient>
+        <linearGradient id={wellId} x1="20%" y1="15%" x2="82%" y2="88%">
+          <stop offset="0%" stopColor="#630d10" />
+          <stop offset="55%" stopColor="#851518" />
+          <stop offset="100%" stopColor="#a62024" />
+        </linearGradient>
+      </defs>
+
+      <path d={WAX_RIM_D} fill={`url(#${outerId})`} stroke="#3b0608" strokeWidth="1" />
+      <circle cx="32" cy="32" r="21.5" fill={`url(#${wellId})`} stroke="#45080a" strokeWidth="1.4" />
+      <circle cx="32" cy="32" r="19.2" stroke="#d96b68" strokeWidth="0.7" opacity="0.45" />
+      <circle cx="32" cy="32" r="16.8" stroke="#3b0608" strokeWidth="0.75" strokeDasharray="2 2" opacity="0.65" />
+
+      {/* Embossed central Leficious L-monolith in crimson wax relief */}
+      <path
+        d="M26.5 20.5 L31.2 17.8 V37.2 H42.5 L39.8 41.8 H28.5 L26.5 38.4 Z"
+        fill="#a82226"
+        stroke="#3b0608"
+        strokeWidth="0.9"
+      />
+      <path d="M27.2 20.8 L30.8 18.7 V36.8 H41.6" stroke="#eba09b" strokeWidth="0.75" opacity="0.55" />
+    </svg>
   );
 }
 
 /**
- * Ornamental Victorian horizontal divider.
- * When `ornate` is true, mounts the chased antique-bronze & Venetian garnet filigree centerpiece;
- * otherwise mounts an embossed double-rule & fleur-de-lis diamond motif.
+ * Taut burnished-bronze suspension cords + sculpted Deep-Crimson Sealing-Wax Stamp
+ * straddling the top-center border of the active folio.
+ */
+export function BrassPinThreads({ animKey }: { animKey?: string }) {
+  return (
+    <div aria-hidden="true" className="pointer-events-none relative z-30 mx-auto -mb-6 h-15 w-80 sm:w-[440px]">
+      <div key={animKey} className="animate-pin-pendulum h-full w-full">
+        <svg viewBox="0 0 440 58" className="h-full w-full overflow-visible" fill="none">
+          <line x1="220" y1="18" x2="54" y2="53" stroke="#d4ad73" strokeWidth="1.25" opacity="0.82" />
+          <line x1="220" y1="18" x2="386" y2="53" stroke="#d4ad73" strokeWidth="1.25" opacity="0.82" />
+          <circle cx="54" cy="53" r="3" fill="#14100c" stroke="#e8c88e" strokeWidth="1.25" />
+          <circle cx="386" cy="53" r="3" fill="#14100c" stroke="#e8c88e" strokeWidth="1.25" />
+        </svg>
+      </div>
+      <CrimsonStamp className="absolute left-1/2 top-0.5 h-13 w-13 -translate-x-1/2 rotate-0 sm:h-14 sm:w-14" />
+    </div>
+  );
+}
+
+/**
+ * Clean, airy horological & editorial divider rule (zero muddy raster centerpiece).
  */
 export function BrassRule({
   tone = "parchment",
@@ -244,76 +253,58 @@ export function BrassRule({
   className?: string;
 }) {
   const isParchment = tone === "parchment";
+  const stroke = isParchment ? "#755228" : "#d8b47c";
+  const gem = isParchment ? "#8a181a" : "#f0d5a3";
 
   if (ornate) {
     return (
       <div aria-hidden="true" className={`flex items-center gap-3 ${className}`}>
-        <div className="flex flex-1 items-center">
-          <span
-            className={`h-[1.5px] flex-1 ${
-              isParchment
-                ? "bg-gradient-to-r from-transparent via-[#6d4b22]/65 to-[#6d4b22] shadow-[0_1px_0_rgba(255,252,242,0.85)]"
-                : "bg-gradient-to-r from-transparent via-[#c89d62]/55 to-[#e2be84]"
-            }`}
-          />
-          <span
-            className={`h-1.5 w-1.5 rotate-45 ${
-              isParchment ? "bg-[#8f1616]" : "bg-[#e2be84]"
-            }`}
-          />
-        </div>
-
-        <img
-          src="/ornaments/bronze-divider.webp"
-          alt=""
-          width="260"
-          height="56"
-          className={`h-6 w-auto shrink-0 select-none object-contain sm:h-7 ${
+        <span
+          className={`h-px flex-1 ${
             isParchment
-              ? "[filter:contrast(1.14)_drop-shadow(0_2px_3px_rgba(24,12,4,0.45))_drop-shadow(0_1px_0_rgba(255,252,242,0.85))]"
-              : "[filter:contrast(1.16)_brightness(1.08)_drop-shadow(0_4px_10px_rgba(0,0,0,0.9))]"
+              ? "bg-gradient-to-r from-transparent via-[#755228]/50 to-[#755228]/85"
+              : "bg-gradient-to-r from-transparent via-[#d4ad73]/45 to-[#e5c58d]/85"
           }`}
         />
 
-        <div className="flex flex-1 items-center">
-          <span
-            className={`h-1.5 w-1.5 rotate-45 ${
-              isParchment ? "bg-[#8f1616]" : "bg-[#e2be84]"
-            }`}
-          />
-          <span
-            className={`h-[1.5px] flex-1 ${
-              isParchment
-                ? "bg-gradient-to-l from-transparent via-[#6d4b22]/65 to-[#6d4b22] shadow-[0_1px_0_rgba(255,252,242,0.85)]"
-                : "bg-gradient-to-l from-transparent via-[#c89d62]/55 to-[#e2be84]"
-            }`}
-          />
-        </div>
+        <svg viewBox="0 0 92 16" fill="none" className="h-4 w-[92px] shrink-0 overflow-visible">
+          <line x1="0" y1="8" x2="26" y2="8" stroke={stroke} strokeWidth="1" opacity="0.8" />
+          <line x1="66" y1="8" x2="92" y2="8" stroke={stroke} strokeWidth="1" opacity="0.8" />
+          <polygon points="18,8 21,5.6 24,8 21,10.4" fill={stroke} opacity="0.85" />
+          <polygon points="68,8 71,5.6 74,8 71,10.4" fill={stroke} opacity="0.85" />
+          <polygon points="30,8 46,1.6 62,8 46,14.4" stroke={stroke} strokeWidth="1.15" />
+          <circle cx="46" cy="8" r="3.6" stroke={stroke} strokeWidth="0.95" opacity="0.85" />
+          <polygon points="46,5.8 48.2,8 46,10.2 43.8,8" fill={gem} />
+        </svg>
+
+        <span
+          className={`h-px flex-1 ${
+            isParchment
+              ? "bg-gradient-to-l from-transparent via-[#755228]/50 to-[#755228]/85"
+              : "bg-gradient-to-l from-transparent via-[#d4ad73]/45 to-[#e5c58d]/85"
+          }`}
+        />
       </div>
     );
   }
 
-  const line = isParchment
-    ? "bg-[#6d4b22]/55 shadow-[0_1px_0_rgba(255,252,242,0.85)]"
-    : "bg-warm/45";
-  const gem = isParchment ? "border-[#6d4b22] bg-[#8f1616]" : "border-[#e2be84] bg-[#8f1616]";
-  const sideDot = isParchment ? "bg-[#6d4b22]" : "bg-[#d4ae73]";
+  const line = isParchment ? "bg-[#755228]/42" : "bg-warm/38";
 
   return (
-    <div aria-hidden="true" className={`flex items-center gap-2 ${className}`}>
-      <span className={`h-[1.2px] flex-1 ${line}`} />
-      <span className={`h-1.5 w-1.5 rotate-45 ${sideDot}`} />
-      <span className={`h-2.5 w-2.5 rotate-45 border ${gem}`} />
-      <span className={`h-1.5 w-1.5 rotate-45 ${sideDot}`} />
-      <span className={`h-[1.2px] flex-1 ${line}`} />
+    <div aria-hidden="true" className={`flex items-center gap-2.5 ${className}`}>
+      <span className={`h-px flex-1 ${line}`} />
+      <span className="h-1.5 w-1.5 rotate-45" style={{ backgroundColor: stroke }} />
+      <span className="h-2 w-2 rotate-45 border" style={{ borderColor: stroke, backgroundColor: gem }} />
+      <span className="h-1.5 w-1.5 rotate-45" style={{ backgroundColor: stroke }} />
+      <span className={`h-px flex-1 ${line}`} />
     </div>
   );
 }
 
 /**
  * Unified top Victorian Archival Header Rail shared across Atelier, Gallery, Project, and Dossier routes.
- * Docks the 3 die-cut Rag-Vellum, Cordovan & Cognac folder tabs directly onto the bottom gold rule
- * alongside the embossed antique-bronze action plaque at top-right.
+ * Docks 3 cohesive ebony-morocco & sunlit-vellum folder tabs directly onto the header rule
+ * alongside the brushed champagne-brass action plaque at top-right.
  */
 export function AtelierHeaderRail({
   eyebrow = "LEFICIOUS",
@@ -339,33 +330,32 @@ export function AtelierHeaderRail({
       roman: "I",
       label: text("Atelier & Reel", "作品案台与集锦"),
       to: localizedPath("/"),
-      idleStock: "from-[#5d3a24] via-[#432818] to-[#2c190f]",
     },
     {
       id: "gallery" as const,
       roman: "II",
       label: text("Salon Gallery · 29", "视觉与技术画廊 · 29"),
       to: localizedPath("/gallery"),
-      idleStock: "from-[#64221f] via-[#481715] to-[#2e0e0d]",
     },
     {
       id: "about" as const,
       roman: "III",
       label: text("About & Dossier", "个人档案与信函"),
       to: localizedPath("/about"),
-      idleStock: "from-[#4a3121] via-[#342116] to-[#22140d]",
     },
   ];
 
   return (
     <div className={`relative z-30 mx-auto w-full ${maxWidthClass}`}>
-      <header className="relative flex w-full flex-wrap items-end justify-between gap-3 border-b-[1.5px] border-[#c89d62]/52 pb-3 shadow-[0_1px_0_rgba(0,0,0,0.85)] xl:flex-nowrap">
+      <header className="relative flex w-full flex-wrap items-end justify-between gap-3 border-b border-[#d4ad73]/48 pb-3 shadow-[0_1px_0_rgba(0,0,0,0.85)] xl:flex-nowrap">
         <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-3 gap-y-0.5 xl:flex-nowrap">
-          <p className="shrink-0 font-display text-xl font-bold tracking-[0.18em] text-[#f7eedc] uppercase sm:text-[21px]">
+          <p className="shrink-0 font-display text-xl font-bold tracking-[0.18em] text-[#f7f0e2] uppercase sm:text-[21px]">
             {eyebrow}
           </p>
-          <span aria-hidden="true" className="hidden h-1.5 w-1.5 shrink-0 rotate-45 bg-[#b82222] sm:inline-block" />
-          <p className="truncate font-display text-[15px] font-medium italic text-[#e38e84] sm:text-[16.5px]">{subtitle}</p>
+          <span aria-hidden="true" className="hidden h-1.5 w-1.5 shrink-0 rotate-45 bg-[#d4ad73] sm:inline-block" />
+          <p className="truncate font-display text-[15px] font-medium italic text-[#dfd2bc] sm:text-[16.5px]">
+            {subtitle}
+          </p>
         </div>
 
         <div className="flex shrink-0 items-end gap-3 2xl:gap-4">
@@ -386,28 +376,22 @@ export function AtelierHeaderRail({
                   }}
                   className={`group relative inline-flex p-[1.5px] pb-0 transition-colors duration-200 ${
                     active
-                      ? "z-20 bg-gradient-to-b from-[#fff2d4] via-[#d8b173] to-[#b58749] shadow-[0_-4px_14px_rgba(0,0,0,0.75)]"
-                      : "z-10 bg-gradient-to-b from-[#e5c287]/78 to-[#8a6534]/60 shadow-[0_-3px_10px_rgba(0,0,0,0.7)] hover:from-[#fff0c8] hover:to-[#c89d62]"
+                      ? "z-20 bg-gradient-to-b from-[#fff3d6] via-[#dfb97b] to-[#b5894b] shadow-[0_-4px_14px_rgba(0,0,0,0.75)]"
+                      : "z-10 bg-gradient-to-b from-[#e5c489]/72 to-[#8c6736]/55 shadow-[0_-3px_10px_rgba(0,0,0,0.7)] hover:from-[#fff0cc] hover:to-[#c89d62]"
                   }`}
                 >
                   <span
                     style={{
                       clipPath: "polygon(7.7px 0, calc(100% - 7.7px) 0, 100% 100%, 0 100%)",
                     }}
-                    className={`inline-flex items-center gap-1.5 px-3 py-2 transition-colors 2xl:px-4 ${
+                    className={`inline-flex items-center gap-2 px-3.5 py-2 transition-colors 2xl:px-4 ${
                       active
-                        ? "bg-gradient-to-b from-[#fbf3e2] to-[#e7d8ba] text-[#110b07]"
-                        : `bg-gradient-to-b ${item.idleStock} text-[#f4ead6] group-hover:text-white`
+                        ? "bg-gradient-to-b from-[#fbf5e6] to-[#eae0c8] text-[#14100c]"
+                        : "bg-gradient-to-b from-[#211913] via-[#17110d] to-[#100c09] text-[#ede2cf] group-hover:from-[#2c2119] group-hover:to-[#18120e] group-hover:text-white"
                     }`}
                   >
-                    <span
-                      aria-hidden="true"
-                      className={`h-1.5 w-1.5 shrink-0 rotate-45 ${
-                        active ? "bg-[#2d8f62]" : "bg-[#e5c287]/85 group-hover:bg-[#7ee8b5]"
-                      }`}
-                    />
                     <span className="font-display text-[12px] font-bold tracking-[0.09em] uppercase whitespace-nowrap 2xl:text-[13.5px]">
-                      <span className={active ? "text-rubric" : "text-[#ebc88d]"}>{item.roman}</span> · {item.label}
+                      <span className={active ? "text-rubric" : "text-[#e8c78c]"}>{item.roman}</span> · {item.label}
                     </span>
                   </span>
                 </Link>
@@ -440,18 +424,9 @@ export type SheafTabSpec = {
   to?: string;
 };
 
-const DIVIDER_PRESETS = [
-  { idleW: "w-[38px]", padY: "py-4", stock: "bg-[#eadcc2]", overlap: "mt-0", tilt: "-rotate-[0.35deg]" },
-  { idleW: "w-[33px]", padY: "py-3.5", stock: "bg-[#ded0b3]", overlap: "-mt-1.5", tilt: "rotate-[0.45deg]" },
-  { idleW: "w-[41px]", padY: "py-4.5", stock: "bg-[#e5d6b9]", overlap: "mt-1.5", tilt: "-rotate-[0.3deg]" },
-  { idleW: "w-[35px]", padY: "py-3.5", stock: "bg-[#d7c5a4]", overlap: "-mt-2", tilt: "rotate-[0.35deg]" },
-  { idleW: "w-[39px]", padY: "py-4", stock: "bg-[#e1d2b4]", overlap: "-mt-1.5", tilt: "-rotate-[0.4deg]" },
-  { idleW: "w-[36px]", padY: "py-3.5", stock: "bg-[#dbc9a8]", overlap: "mt-1", tilt: "rotate-[0.3deg]" },
-] as const;
-
 /**
  * Shared Right-Edge 4-Ply Layered Archival Paper Sheaf with an upper swallowtail
- * Venetian-oxblood bookmark flag and asymmetrical shingled die-cut paper separator dividers.
+ * Venetian-carmine bookmark flag and cleanly aligned die-cut rag-vellum index tabs.
  */
 export function ArchivalPaperSheaf({
   ariaLabel,
@@ -469,16 +444,15 @@ export function ArchivalPaperSheaf({
   const renderFlagInner = (active: boolean, label: string) => (
     <span
       style={{
-        clipPath: "polygon(0 0, 100% 5px, 100% calc(100% - 9px), 52% calc(100% - 1px), 0 100%)",
+        clipPath: "polygon(0 0, 100% 5px, 100% calc(100% - 8px), 50% calc(100% - 1px), 0 100%)",
       }}
-      className={`relative flex flex-col items-center gap-1.5 py-3.5 transition-all duration-250 ${
+      className={`relative flex flex-col items-center gap-1.5 py-3.5 transition-all duration-200 ${
         active
-          ? "w-[44px] border-r-[3.5px] border-r-[#d8b274] bg-gradient-to-r from-[#6e1515] to-[#8f1b1b] text-[#fbf3e4]"
-          : "w-[34px] bg-gradient-to-r from-[#4b1010] to-[#681616] text-[#e6d2b2] group-hover:w-[38px] group-hover:from-[#611414] group-hover:to-[#821a1a] group-hover:text-[#fbf3e4]"
+          ? "w-[40px] border-r-[3px] border-r-[#ebd09e] bg-gradient-to-r from-[#6b1416] to-[#8c1a1d] text-[#faf3e6]"
+          : "w-[34px] bg-gradient-to-r from-[#450e10] to-[#611417] text-[#ead8bc] group-hover:w-[37px] group-hover:from-[#5c1315] group-hover:to-[#7a191c] group-hover:text-[#faf3e6]"
       }`}
     >
-      <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-[3px] w-px bg-[#e2be84]/35" />
-      <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#e2be84]" />
+      <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#ebd09e]" />
       <span
         className="font-numeral text-[10.5px] font-bold tracking-[0.16em] uppercase whitespace-nowrap"
         style={{ writingMode: "vertical-rl" }}
@@ -491,40 +465,32 @@ export function ArchivalPaperSheaf({
   return (
     <nav
       aria-label={ariaLabel}
-      className="fixed right-2.5 top-6 bottom-8 z-40 hidden w-[64px] select-none xl:block 2xl:right-4"
+      className="fixed right-2.5 top-6 bottom-8 z-40 hidden w-[60px] select-none xl:block 2xl:right-4"
     >
       {/* 4-Ply Layered Ledger Paper Sheaf Fore-Edge */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 w-[15px] shadow-[-14px_6px_28px_rgba(0,0,0,0.9)]"
+        className="pointer-events-none absolute inset-y-0 left-0 w-[14px] shadow-[-12px_6px_26px_rgba(0,0,0,0.9)]"
       >
-        <span className="absolute top-3.5 bottom-2.5 left-[9px] w-[5px] border-y border-r border-[#5c4324]/60 bg-[#b8a27e]" />
-        <span className="absolute top-1.5 bottom-4 left-[6px] w-[5px] border-y border-r border-[#684c29]/65 bg-[#c9b490] shadow-[1px_0_2px_rgba(0,0,0,0.55)]" />
-        <span className="absolute top-2.5 bottom-1 left-[3px] w-[5px] border-y border-r border-[#73552f]/70 bg-[#dac7a5] shadow-[1px_0_2px_rgba(0,0,0,0.5)]" />
-        <span
-          className="absolute inset-y-0 left-0 w-[5px] border border-[#684720]/80 bg-[#ebd9ba] shadow-[2px_0_4px_rgba(0,0,0,0.55)]"
-          style={{
-            backgroundImage: 'url("/textures/rag-paper-tile.webp")',
-            backgroundSize: "180px 180px",
-          }}
-        />
-        {anyTabActive && <span className="absolute inset-y-2 left-[1px] w-[3.5px] bg-[#f8efdc]" />}
+        <span className="absolute top-3.5 bottom-2.5 left-[9px] w-[4px] border-y border-r border-[#5c4324]/55 bg-[#b8a382]" />
+        <span className="absolute top-1.5 bottom-4 left-[6px] w-[4px] border-y border-r border-[#684c29]/60 bg-[#cab695] shadow-[1px_0_2px_rgba(0,0,0,0.5)]" />
+        <span className="absolute top-2.5 bottom-1 left-[3px] w-[4px] border-y border-r border-[#73552f]/65 bg-[#dccba9] shadow-[1px_0_2px_rgba(0,0,0,0.45)]" />
+        <span className="absolute inset-y-0 left-0 w-[4px] border border-[#684720]/75 bg-[#eee1c6] shadow-[2px_0_4px_rgba(0,0,0,0.5)]" />
+        {anyTabActive && <span className="absolute inset-y-2 left-[1px] w-[2.5px] bg-[#faf3e4]" />}
         {typeof progressPct === "number" && (
           <span
             style={{ height: `${Math.max(2, Math.min(100, progressPct)).toFixed(1)}%` }}
-            className="absolute top-0 left-0 w-[2.5px] bg-gradient-to-b from-[#8f1616] via-[#b82222] to-[#d8b274] transition-[height] duration-150"
+            className="absolute top-0 left-0 w-[2.5px] bg-gradient-to-b from-[#8a181a] via-[#b82225] to-[#e2be84] transition-[height] duration-150"
           />
         )}
       </div>
 
-      {/* Asymmetrical Top-Indexed Cascade */}
-      <div className="relative z-10 flex h-full flex-col items-start pt-5 pl-[11px]">
+      {/* Clean Architecturally Aligned Index Cascade */}
+      <div className="relative z-10 flex h-full flex-col items-start pt-5 pl-[10px]">
         {topFlag &&
           (() => {
-            const flagClass = `group relative cursor-pointer transition-all duration-250 [filter:drop-shadow(2px_5px_7px_rgba(0,0,0,0.82))] active:scale-97 ${
-              topFlag.active
-                ? "z-30 translate-x-1 rotate-0"
-                : "z-20 -rotate-[1deg] hover:translate-x-1 hover:rotate-0"
+            const flagClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(2px_4px_6px_rgba(0,0,0,0.8))] ${
+              topFlag.active ? "z-30" : "z-20 hover:translate-x-0.5"
             }`;
             if (topFlag.to) {
               return (
@@ -552,54 +518,26 @@ export function ArchivalPaperSheaf({
             );
           })()}
 
-        <div className={`${topFlag ? "mt-6" : "mt-2"} flex flex-col items-start`}>
+        <div className={`${topFlag ? "mt-5" : "mt-2"} flex flex-col items-start gap-1`}>
           {tabs.map((tab, idx) => {
             const active = Boolean(tab.active);
-            const preset = DIVIDER_PRESETS[idx % DIVIDER_PRESETS.length];
-            const wrapperClass = `group relative cursor-pointer transition-all duration-250 [filter:drop-shadow(2px_5px_7px_rgba(0,0,0,0.78))_drop-shadow(0_1px_1px_rgba(0,0,0,0.65))] active:scale-97 ${
-              idx === 0 ? "mt-0" : preset.overlap
-            } ${
-              active
-                ? "translate-x-0.5 rotate-0"
-                : `${preset.tilt} hover:z-30 hover:translate-x-1 hover:rotate-0`
+            const wrapperClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(2px_4px_6px_rgba(0,0,0,0.75))] ${
+              active ? "" : "hover:z-30 hover:translate-x-0.5"
             }`;
 
             const tabInner = (
               <span
                 style={{
-                  clipPath: "polygon(0 0, 100% 11px, 100% calc(100% - 11px), 0 100%)",
-                  backgroundImage: 'url("/textures/rag-paper-tile.webp")',
-                  backgroundSize: "220px 220px",
+                  clipPath: "polygon(0 0, 100% 9px, 100% calc(100% - 9px), 0 100%)",
                 }}
-                className={`relative flex flex-col items-center justify-center gap-1.5 transition-all duration-250 ${
+                className={`relative flex flex-col items-center justify-center py-3.5 transition-all duration-200 ${
                   active
-                    ? "w-[48px] border-r-[4px] border-r-rubric bg-[#f7edd8] py-4.5 text-rubric"
-                    : `${preset.idleW} ${preset.padY} ${preset.stock} border-r border-r-[#684720]/65 text-[#1b130d] group-hover:w-[43px] group-hover:bg-[#f2e6cd]`
+                    ? "w-[42px] border-r-[3px] border-r-rubric bg-[#f7efe0] text-rubric"
+                    : "w-[34px] border-r border-r-[#755228]/60 bg-[#e4d7be] text-[#1c140e] group-hover:w-[37px] group-hover:bg-[#f2e8d4]"
                 }`}
               >
                 <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 left-[3px] w-px bg-[#684720]/35 shadow-[1px_0_0_rgba(255,252,242,0.75)]"
-                />
-                <span
-                  aria-hidden="true"
-                  className={`pointer-events-none absolute top-3.5 bottom-3.5 right-[4px] w-px ${
-                    active ? "bg-rubric/30" : "bg-[#684720]/25"
-                  }`}
-                />
-                <span
-                  aria-hidden="true"
-                  style={{ borderRadius: "50%" }}
-                  className={`h-2 w-2 shrink-0 border ${
-                    active
-                      ? "border-rubric bg-[#c89d62]"
-                      : "border-[#5c3e1b] bg-[#18110c]/75 group-hover:bg-[#c89d62]"
-                  }`}
-                />
-                <span
-                  className={`max-h-[118px] overflow-hidden font-display text-[12px] tracking-wide whitespace-nowrap ${
-                    active ? "font-bold" : "font-semibold"
-                  }`}
+                  className="max-h-[118px] overflow-hidden font-display text-[12px] font-bold tracking-wide whitespace-nowrap"
                   style={{ writingMode: "vertical-rl" }}
                 >
                   {tab.label}

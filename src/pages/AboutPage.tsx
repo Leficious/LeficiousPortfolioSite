@@ -159,8 +159,8 @@ export function AboutPage() {
               <div className="relative z-10">
                 <div className="grid gap-7 sm:grid-cols-[205px_1fr] sm:items-start">
                   <figure className="mx-auto w-full max-w-[215px] sm:mx-0">
-                    <div className="relative border-2 border-[#4d3417] bg-[#0a0705] p-1.5 shadow-[0_14px_32px_rgba(0,0,0,0.52)]">
-                      <BrassCornerClasps sizeClass="h-9 w-9" />
+                    <div className="relative border border-[#5c3f1e] bg-[#0a0806] p-1.5 shadow-[0_14px_32px_rgba(0,0,0,0.52)]">
+                      <BrassCornerClasps sizeClass="h-6.5 w-6.5" />
                       <img
                         src="/about/lefi-shan-portrait.webp"
                         alt={text("Portrait of Lefi Shan", "单凯飞（Kevin Shan）肖像")}
@@ -242,31 +242,30 @@ export function AboutPage() {
             </article>
           </div>
 
-          {/* ==================== RIGHT: SADDLE-COGNAC CREDENTIALS & MIXED-STOCK CALLING-CARD TRAY ==================== */}
+          {/* ==================== RIGHT: EBONY-MOROCCO CREDENTIALS & LETTERPRESS CALLING-CARD TRAY ==================== */}
           <div className="flex flex-col gap-6 lg:pt-8">
             <section
               id="credentials"
               aria-labelledby="credentials-heading"
               onPointerMove={(e) => handleTactileCardMove(e, 1.6)}
               onPointerLeave={resetTactileCard}
-              className="tactile-tilt relative scroll-mt-20 border-[1.5px] border-[#ebc88d]/80 bg-gradient-to-br from-[#563521] via-[#3d2517] to-[#27160d] p-6 shadow-[4px_4px_0_0_#eadbc0,5px_5px_0_0_#140d09,7px_7px_0_0_#cbb58c,0_26px_58px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(255,236,198,0.38)] sm:p-7"
+              className="slate-folio tactile-tilt relative scroll-mt-20 border border-[#d8b47c]/60 p-6 shadow-[4px_4px_0_0_#e8dcc2,5px_5px_0_0_#0e0906,7px_7px_0_0_#c8b28b,0_26px_58px_rgba(0,0,0,0.92)] sm:p-7"
             >
-              <BrassCornerClasps sizeClass="h-10 w-10" />
-              <FolioCorners tone="slate" inset="inset-2.5" sizeClass="h-8 w-8" />
+              <FolioCorners tone="slate" inset="inset-2" sizeClass="h-6 w-6" />
 
               <div className="relative z-10 text-center">
                 <div className="inline-flex items-center justify-center gap-2.5">
-                  <span aria-hidden="true" className="h-2 w-2 rotate-45 border border-[#ebc88d] bg-[#2d8f62]" />
+                  <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#e8c78c]" />
                   <h2
                     id="credentials-heading"
-                    className="font-numeral text-xs font-bold tracking-[0.22em] text-[#f0d29c] uppercase"
+                    className="font-numeral text-xs font-bold tracking-[0.22em] text-[#e8c78c] uppercase"
                   >
                     {text("Academic & Guild Credentials", "学术履历与背景")}
                   </h2>
-                  <span aria-hidden="true" className="h-2 w-2 rotate-45 border border-[#ebc88d] bg-[#2d8f62]" />
+                  <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#e8c78c]" />
                 </div>
 
-                <div className="mt-4 space-y-3 border-y border-warm/30 py-4 text-[16px]">
+                <div className="mt-4 space-y-3 border-y border-warm/28 py-4 text-[16px]">
                   <div>
                     <p className="font-display font-semibold text-foreground">
                       {text("M.S. in Game Design & Development", "游戏设计与开发理学硕士（在读）")}
@@ -288,13 +287,13 @@ export function AboutPage() {
 
                 <div className="mt-3.5 space-y-1 text-[15px] text-muted-foreground">
                   <p>
-                    <span className="font-numeral text-[11px] font-semibold tracking-[0.14em] text-[#e2be84] uppercase">
+                    <span className="font-numeral text-[11px] font-semibold tracking-[0.14em] text-[#e8c78c] uppercase">
                       {text("Languages: ", "语言：")}
                     </span>
                     {text("English · Mandarin Chinese (Spoken)", "英语 · 普通话（口语流利）")}
                   </p>
                   <p>
-                    <span className="font-numeral text-[11px] font-semibold tracking-[0.14em] text-[#e2be84] uppercase">
+                    <span className="font-numeral text-[11px] font-semibold tracking-[0.14em] text-[#e8c78c] uppercase">
                       {text("Regions: ", "意向地区：")}
                     </span>
                     {text("US · Canada · Europe · Japan · China", "美国 · 加拿大 · 欧洲 · 日本 · 中国")}
@@ -303,7 +302,7 @@ export function AboutPage() {
               </div>
             </section>
 
-            {/* Correspondence & Mixed-Stock Letterpress Calling-Card Tray */}
+            {/* Correspondence & Cohesive Ebony-Gilt Letterpress Calling-Card Tray */}
             <section id="contact" className="scroll-mt-24 space-y-4" aria-labelledby="correspondence-heading">
               <BrassRule ornate tone="slate" />
 
@@ -311,9 +310,9 @@ export function AboutPage() {
               <button
                 type="button"
                 onClick={copyEmail}
-                className="parchment-sheet group relative flex w-full cursor-pointer items-center justify-between gap-4 border-[3px] border-[#110b07] px-6 py-5 text-left shadow-[0_22px_52px_rgba(0,0,0,0.82),5px_5px_0_-1px_#dfd0b2,7px_7px_0_0_#110b07] transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.99]"
+                className="parchment-sheet group relative flex w-full cursor-pointer items-center justify-between gap-4 border-[3px] border-[#14100c] px-6 py-5 text-left shadow-[0_22px_52px_rgba(0,0,0,0.84),5px_5px_0_-1px_#dfd2b7,7px_7px_0_0_#14100c] transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.99]"
               >
-                <FolioCorners tone="parchment" inset="inset-1.5" sizeClass="h-5 w-5" />
+                <FolioCorners tone="parchment" inset="inset-1.5" sizeClass="h-4.5 w-4.5" />
                 <div className="relative z-10 min-w-0">
                   <span
                     ref={emailRef}
@@ -329,57 +328,32 @@ export function AboutPage() {
                 </div>
 
                 <div className="relative z-10 flex shrink-0 flex-col items-center">
-                  <CrimsonStamp stamped={copied} className="h-15 w-15 transition-transform group-hover:scale-106" />
+                  <CrimsonStamp stamped={copied} className="h-14 w-14 transition-transform group-hover:scale-106" />
                   <span className="mt-1 font-display text-[11px] italic text-parchment-muted">
                     {copied ? text("[ Copied ]", "[ 已复制 ]") : text("[ Stamp & Copy ]", "[ 钤印复制 ]")}
                   </span>
                 </div>
               </button>
 
-              {/* 3 Mixed-Stock Victorian Letterpress Calling Cards */}
+              {/* 3 Unified Ebony-Gilt Letterpress Calling Cards */}
               <div className="grid gap-3 sm:grid-cols-3">
-                {callingCards.map((card) => {
-                  const isVellum = card.stock === "vellum";
-                  const isOxblood = card.stock === "oxblood";
-                  return (
-                    <a
-                      key={card.label}
-                      href={card.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      onPointerMove={(e) => handleTactileCardMove(e, 3.5)}
-                      onPointerLeave={resetTactileCard}
-                      className={`tactile-tilt group relative flex min-h-[84px] flex-col items-center justify-center px-2.5 py-3.5 text-center transition-all hover:-translate-y-0.5 ${
-                        isVellum
-                          ? "parchment-sheet border-2 border-[#110b07]"
-                          : isOxblood
-                            ? "border-[1.5px] border-[#ebc88d]/75 bg-gradient-to-bl from-[#64221f] via-[#481715] to-[#2c0d0c] shadow-[0_14px_32px_rgba(0,0,0,0.82)]"
-                            : "border-[1.5px] border-[#ebc88d]/75 bg-gradient-to-br from-[#593722] via-[#3f2617] to-[#28170e] shadow-[0_14px_32px_rgba(0,0,0,0.82)]"
-                      }`}
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={`pointer-events-none absolute inset-1.5 border ${
-                          isVellum
-                            ? "border-[#684720]/48"
-                            : isOxblood
-                              ? "border-[#d4ae73]/38"
-                              : "border-warm/32"
-                        }`}
-                      />
-                      <span
-                        className={`relative z-10 whitespace-nowrap font-display text-[14.5px] font-semibold leading-snug ${
-                          isVellum
-                            ? "text-parchment-ink group-hover:text-rubric"
-                            : "text-[#f6eedc] group-hover:text-[#ebd09e]"
-                        }`}
-                      >
-                        {isChinese ? card.labelZh : card.label}{" "}
-                        <span aria-hidden="true" className="font-numeral text-[0.82em]">↗</span>
-                      </span>
-                    </a>
-                  );
-                })}
+                {callingCards.map((card) => (
+                  <a
+                    key={card.label}
+                    href={card.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    onPointerMove={(e) => handleTactileCardMove(e, 3.2)}
+                    onPointerLeave={resetTactileCard}
+                    className="slate-folio tactile-tilt group relative flex min-h-[76px] flex-col items-center justify-center border border-[#d8b47c]/55 px-2.5 py-3 text-center transition-all hover:-translate-y-0.5 hover:border-[#f3dfb9]"
+                  >
+                    <span aria-hidden="true" className="pointer-events-none absolute inset-1.5 border border-warm/22" />
+                    <span className="relative z-10 whitespace-nowrap font-display text-[14.5px] font-semibold leading-snug text-[#f7f0e2] transition-colors group-hover:text-[#f5dfb2]">
+                      {isChinese ? card.labelZh : card.label}{" "}
+                      <span aria-hidden="true" className="font-numeral text-[0.82em] text-[#e8c78c]">↗</span>
+                    </span>
+                  </a>
+                ))}
               </div>
 
               {/* Chamfered Antique-Bronze Full Résumé Bar */}

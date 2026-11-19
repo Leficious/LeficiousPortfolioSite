@@ -199,7 +199,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           <a
             href={resumeHref}
             download
-            className="victorian-ticket victorian-ticket-oxblood flex w-[72px] items-center justify-center gap-1 bg-gradient-to-b from-[#7a1616] to-[#470b0b] px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.1em] text-[#fbf3e4] uppercase transition-all hover:from-[#8f1b1b] hover:to-[#570e0e] active:scale-95"
+            className="victorian-ticket victorian-ticket-oxblood flex w-[72px] items-center justify-center gap-1 bg-gradient-to-b from-[#261c15] to-[#140e0a] px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.1em] text-[#f4e4c3] uppercase transition-all hover:from-[#5e1517] hover:to-[#3b0c0e] hover:text-white active:scale-95"
           >
             <span>{text("Résumé", "简历")}</span>
             <span aria-hidden="true" className="text-[10px] text-[#ebd09e]">↓</span>

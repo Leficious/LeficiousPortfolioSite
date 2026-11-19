@@ -71,7 +71,7 @@ export function useDeskParallax() {
  * Fires once when an element enters the viewport so GDD bars and chapters deal in crisply.
  * Defaults to visible during SSR and reduced-motion so content is never locked hidden.
  */
-export function useInViewOnce<T extends HTMLElement = HTMLDivElement>(rootMargin = "0px 0px -8% 0px") {
+export function useInViewOnce<T extends HTMLElement = HTMLDivElement>(rootMargin = "120px 0px 80px 0px") {
   const ref = useRef<T | null>(null);
   const [inView, setInView] = useState<boolean>(() => {
     if (typeof window === "undefined") return true;
@@ -87,6 +87,12 @@ export function useInViewOnce<T extends HTMLElement = HTMLDivElement>(rootMargin
       return;
     }
 
+    const rect = node.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 120 && rect.bottom > -80) {
+      setInView(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {
@@ -94,7 +100,7 @@ export function useInViewOnce<T extends HTMLElement = HTMLDivElement>(rootMargin
           observer.disconnect();
         }
       },
-      { threshold: 0.08, rootMargin },
+      { threshold: 0, rootMargin },
     );
 
     observer.observe(node);

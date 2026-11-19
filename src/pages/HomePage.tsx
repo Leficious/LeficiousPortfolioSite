@@ -318,30 +318,30 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               transform: "translate3d(calc(var(--mx) * -9px), calc(var(--my) * -5px), 0)",
             }}
           >
-            {/* Left Backing Case-Folder — Burnished Saddle-Cognac Morocco Leather + Cream Vellum Fore-Edge */}
+            {/* Left Backing Case-Folder — Dark Havana Morocco Leather + Cream Vellum Fore-Edge */}
             <button
               type="button"
               onClick={() => selectBinder(leftBgProject.slug)}
               aria-label={`${text("Inspect Folio", "切换至")} ${leftBgMeta.roman}: ${leftBgProject.title}`}
-              className="pointer-events-auto group absolute left-0 top-8 bottom-9 flex w-[255px] -rotate-[4.8deg] cursor-pointer flex-col justify-between border-[1.5px] border-[#ebc88d]/85 bg-gradient-to-br from-[#5d3a24] via-[#432818] to-[#2b180e] px-3.5 py-4 text-left shadow-[-3px_2px_0_0_#eadbc0,-4px_3px_0_0_#140d09,-6px_5px_0_0_#cbb58c,-22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,236,198,0.4)] transition-all duration-300 hover:-translate-x-2.5 hover:-translate-y-1.5 hover:-rotate-[5.8deg] hover:border-[#fff0c8] xl:left-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:left-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
+              className="pointer-events-auto group absolute left-0 top-8 bottom-9 flex w-[255px] -rotate-[4.8deg] cursor-pointer flex-col justify-between border border-[#d8b47c]/70 bg-gradient-to-br from-[#342116] via-[#23150d] to-[#140c08] px-3.5 py-4 text-left shadow-[-3px_2px_0_0_#eadcc2,-4px_3px_0_0_#0e0906,-6px_5px_0_0_#c8b28b,-22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,236,198,0.28)] transition-all duration-300 hover:-translate-x-2.5 hover:-translate-y-1.5 hover:-rotate-[5.8deg] hover:border-[#f5dfb2] xl:left-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:left-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
             >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <img
                   src={leftBgMeta.cinemaThumbSrc}
                   alt=""
                   loading="lazy"
-                  className="h-full w-full object-cover opacity-14 mix-blend-soft-light transition-opacity duration-500 group-hover:opacity-26"
+                  className="h-full w-full object-cover opacity-12 mix-blend-soft-light transition-opacity duration-500 group-hover:opacity-22"
                 />
               </div>
-              <span aria-hidden="true" className="pointer-events-none absolute inset-2.5 border border-[#e5c287]/38" />
+              <span aria-hidden="true" className="pointer-events-none absolute inset-2.5 border border-[#d8b47c]/28" />
 
               {/* Dedicated Exposed Outer-Wing Column — guarantees zero tangency with foreground vellum border */}
               <div className="relative z-10 flex h-full w-[100px] flex-col justify-between xl:w-[108px] 2xl:w-[126px]">
                 <div>
-                  <p className="font-numeral text-[10px] font-bold tracking-[0.22em] text-[#f0d29c]">
+                  <p className="font-numeral text-[10px] font-bold tracking-[0.22em] text-[#e8c78c]">
                     {text("FOLIO", "卷")} {leftBgMeta.roman}
                   </p>
-                  <p className="mt-1 font-display text-[13px] font-semibold leading-snug text-[#fbf4e6] group-hover:text-white 2xl:text-[14.5px]">
+                  <p className="mt-1 font-display text-[13px] font-semibold leading-snug text-[#f7f0e2] group-hover:text-white 2xl:text-[14.5px]">
                     {leftBgProject.title}
                   </p>
                 </div>
@@ -355,40 +355,40 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                 </div>
 
                 <div className="flex items-baseline gap-2">
-                  <span className="font-numeral text-2xl font-semibold tracking-wider text-[#f0d29c] transition-colors group-hover:text-[#fff6df] xl:text-3xl">
+                  <span className="font-numeral text-2xl font-semibold tracking-wider text-[#e8c78c] transition-colors group-hover:text-[#fff6df] xl:text-3xl">
                     {leftBgMeta.roman}
                   </span>
-                  <span className="font-numeral text-[10px] tracking-[0.16em] text-[#dec292]/80 group-hover:text-[#fff6df]">
+                  <span className="font-numeral text-[10px] tracking-[0.16em] text-[#d6c29f]/80 group-hover:text-[#fff6df]">
                     →
                   </span>
                 </div>
               </div>
             </button>
 
-            {/* Right Backing Case-Folder — Venetian Cordovan-Oxblood Bookcloth + Cream Vellum Fore-Edge */}
+            {/* Right Backing Case-Folder — Deep Venetian Cordovan Morocco + Cream Vellum Fore-Edge */}
             <button
               type="button"
               onClick={() => selectBinder(rightBgProject.slug)}
               aria-label={`${text("Inspect Folio", "切换至")} ${rightBgMeta.roman}: ${rightBgProject.title}`}
-              className="pointer-events-auto group absolute right-0 top-12 bottom-6 flex w-[255px] rotate-[3.6deg] cursor-pointer flex-col justify-between border-[1.5px] border-[#ebc88d]/85 bg-gradient-to-bl from-[#64221f] via-[#481715] to-[#2c0d0c] px-3.5 py-4 text-right shadow-[3px_2px_0_0_#eadbc0,4px_3px_0_0_#140d09,6px_5px_0_0_#cbb58c,22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,232,196,0.36)] transition-all duration-300 hover:translate-x-2.5 hover:-translate-y-1.5 hover:rotate-[4.6deg] hover:border-[#fff0c8] xl:right-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:right-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
+              className="pointer-events-auto group absolute right-0 top-12 bottom-6 flex w-[255px] rotate-[3.6deg] cursor-pointer flex-col justify-between border border-[#d8b47c]/70 bg-gradient-to-bl from-[#421515] via-[#2c0d0e] to-[#190708] px-3.5 py-4 text-right shadow-[3px_2px_0_0_#eadcc2,4px_3px_0_0_#0e0906,6px_5px_0_0_#c8b28b,22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,232,196,0.26)] transition-all duration-300 hover:translate-x-2.5 hover:-translate-y-1.5 hover:rotate-[4.6deg] hover:border-[#f5dfb2] xl:right-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:right-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
             >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <img
                   src={rightBgMeta.cinemaThumbSrc}
                   alt=""
                   loading="lazy"
-                  className="h-full w-full object-cover opacity-14 mix-blend-soft-light transition-opacity duration-500 group-hover:opacity-26"
+                  className="h-full w-full object-cover opacity-12 mix-blend-soft-light transition-opacity duration-500 group-hover:opacity-22"
                 />
               </div>
-              <span aria-hidden="true" className="pointer-events-none absolute inset-2.5 border border-[#e5c287]/38" />
+              <span aria-hidden="true" className="pointer-events-none absolute inset-2.5 border border-[#d8b47c]/28" />
 
               {/* Dedicated Exposed Outer-Wing Column — guarantees zero tangency with foreground vellum border */}
               <div className="relative z-10 ml-auto flex h-full w-[100px] flex-col justify-between xl:w-[108px] 2xl:w-[126px]">
                 <div>
-                  <p className="font-numeral text-[10px] font-bold tracking-[0.22em] text-[#f0d29c]">
+                  <p className="font-numeral text-[10px] font-bold tracking-[0.22em] text-[#e8c78c]">
                     {text("FOLIO", "卷")} {rightBgMeta.roman}
                   </p>
-                  <p className="mt-1 font-display text-[13px] font-semibold leading-snug text-[#fbf4e6] group-hover:text-white 2xl:text-[14.5px]">
+                  <p className="mt-1 font-display text-[13px] font-semibold leading-snug text-[#f7f0e2] group-hover:text-white 2xl:text-[14.5px]">
                     {rightBgProject.title}
                   </p>
                 </div>
@@ -402,10 +402,10 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                 </div>
 
                 <div className="flex items-baseline justify-end gap-2">
-                  <span className="font-numeral text-[10px] tracking-[0.16em] text-[#dec292]/80 group-hover:text-[#fff6df]">
+                  <span className="font-numeral text-[10px] tracking-[0.16em] text-[#d6c29f]/80 group-hover:text-[#fff6df]">
                     ←
                   </span>
-                  <span className="font-numeral text-2xl font-semibold tracking-wider text-[#f0d29c] transition-colors group-hover:text-[#fff6df] xl:text-3xl">
+                  <span className="font-numeral text-2xl font-semibold tracking-wider text-[#e8c78c] transition-colors group-hover:text-[#fff6df] xl:text-3xl">
                     {rightBgMeta.roman}
                   </span>
                 </div>
@@ -473,9 +473,9 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.16fr_0.84fr] lg:items-stretch lg:gap-6 xl:gap-7">
                       {/* LEFT WING: Primary 2026 Reel Stage + 5 Case-Folio Quick-Open Tickets */}
                       <div className="flex flex-col justify-between gap-3.5">
-                        <div className="relative border-2 border-[#4d3417] bg-[#090604] p-2 shadow-[0_16px_38px_rgba(0,0,0,0.52)]">
-                          <BrassCornerClasps sizeClass="h-11 w-11 sm:h-13 sm:w-13" />
-                          <div className="relative aspect-video w-full overflow-hidden border border-[#c89d62]/48 bg-black">
+                        <div className="relative border border-[#5c3f1e] bg-[#0a0806] p-2 shadow-[0_16px_38px_rgba(0,0,0,0.52)]">
+                          <BrassCornerClasps sizeClass="h-7 w-7 sm:h-8 sm:w-8" />
+                          <div className="relative aspect-video w-full overflow-hidden border border-[#d4ad73]/40 bg-black">
                             {playingVideo ? (
                               <iframe
                                 src={`https://www.youtube-nocookie.com/embed/${primaryReelId}?autoplay=1`}
@@ -502,7 +502,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.018]"
                                 />
                                 <span className="absolute inset-0 bg-gradient-to-t from-black/52 via-transparent to-black/14 transition-opacity group-hover:opacity-72" />
-                                <span className="brass-plaque absolute bottom-4 left-10 inline-flex items-center gap-2 px-4 py-2 font-display text-xs font-bold tracking-[0.14em] uppercase transition-transform duration-200 group-hover:scale-104 sm:bottom-4.5 sm:left-11 sm:px-5">
+                                <span className="brass-plaque absolute bottom-4 left-4 inline-flex items-center gap-2 px-4 py-2 font-display text-xs font-bold tracking-[0.14em] uppercase transition-transform duration-200 group-hover:scale-103 sm:px-5">
                                   <span aria-hidden="true">▶</span>
                                   <span>
                                     {isDesignReel
@@ -526,7 +526,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                                 key={proj.slug}
                                 type="button"
                                 onClick={() => selectBinder(proj.slug)}
-                                className="victorian-ticket victorian-ticket-vellum victorian-ticket-vellum-interactive embossed-ticket cursor-pointer bg-parchment-deep/90 px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.03em] whitespace-nowrap text-parchment-ink transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
+                                className="victorian-ticket victorian-ticket-vellum victorian-ticket-vellum-interactive embossed-ticket cursor-pointer bg-[#fcf7eb] px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.03em] whitespace-nowrap text-parchment-ink transition-colors hover:bg-[#15100c] hover:text-[#f7f0e2]"
                               >
                                 {shortLabel}
                               </button>
@@ -535,8 +535,8 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                         </div>
                       </div>
 
-                      {/* RIGHT WING: Companion Reel Switcher + Organic Doors into Salon Gallery & Dossier */}
-                      <div className="flex flex-col justify-between gap-3.5 lg:border-l lg:border-[#684720]/48 lg:pl-6 xl:pl-7">
+                      {/* RIGHT WING: Companion Reel Switcher + Cohesive Ebony-Morocco Doors into Salon Gallery & Dossier */}
+                      <div className="flex flex-col justify-between gap-3.5 lg:border-l lg:border-[#6e4c24]/40 lg:pl-6 xl:pl-7">
                         {/* Companion Reel Plate (displays the other 2026 Reel's proper YouTube thumbnail) */}
                         <button
                           type="button"
@@ -544,10 +544,10 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                             setPlayingVideo(false);
                             setActiveReelKind(isDesignReel ? "environment" : "design");
                           }}
-                          className="embossed-ticket group relative block w-full cursor-pointer border border-[#684720]/80 bg-parchment-deep/75 p-2 text-left transition-colors hover:border-rubric"
+                          className="embossed-ticket group relative block w-full cursor-pointer border border-[#6e4c24]/70 bg-[#fcf7eb]/85 p-2 text-left transition-colors hover:border-rubric"
                         >
                           <CrimsonStamp className="pointer-events-none absolute right-3.5 -top-3 z-30 h-8.5 w-8.5" />
-                          <div className="relative aspect-[16/8.2] w-full overflow-hidden border border-[#684720]/55 bg-[#090604]">
+                          <div className="relative aspect-[16/8.2] w-full overflow-hidden border border-[#6e4c24]/48 bg-[#090705]">
                             <img
                               src={companionThumb}
                               alt={companionLabel}
@@ -558,8 +558,8 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                             />
                             <span className="absolute inset-0 bg-gradient-to-t from-black/68 via-transparent to-transparent" />
-                            <span className="absolute bottom-2 left-2.5 inline-flex items-center gap-1.5 border border-[#ebc88d]/75 bg-[#140d09]/90 px-2.5 py-0.5 font-display text-[11px] font-bold tracking-[0.12em] text-[#f6eedc] uppercase">
-                              <span aria-hidden="true" className="text-[#ebc88d]">⇄</span>
+                            <span className="absolute bottom-2 left-2.5 inline-flex items-center gap-1.5 border border-[#e5c489]/70 bg-[#140f0b]/92 px-2.5 py-0.5 font-display text-[11px] font-bold tracking-[0.12em] text-[#f7f0e2] uppercase">
+                              <span aria-hidden="true" className="text-[#e8c78c]">⇄</span>
                               {text("Companion Reel", "副卷集锦")}
                             </span>
                           </div>
@@ -573,26 +573,26 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                           </div>
                         </button>
 
-                        {/* Organic Atelier Doorways into Salon Gallery (29 Plates) & About / Dossier */}
+                        {/* Cohesive Museum Ebony-Morocco Doorways into Salon Gallery (29 Plates) & About / Dossier */}
                         <div className="flex flex-col gap-2.5">
                           <Link
                             to={localizedPath("/gallery")}
                             viewTransition
-                            className="group relative flex items-center justify-between gap-3 border-[1.5px] border-[#ebc88d]/85 bg-gradient-to-r from-[#5e201d] via-[#461614] to-[#2e0d0c] px-4 py-3 text-left shadow-[3px_3px_0_0_#140d09,0_10px_22px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:border-[#fff0c8]"
+                            className="slate-folio group relative flex items-center justify-between gap-3 border border-[#d8b47c]/62 px-4 py-3 text-left shadow-[3px_3px_0_0_#14100c,0_10px_22px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:border-[#f5dfb2]"
                           >
                             <div className="min-w-0">
-                              <p className="flex items-center gap-1.5 font-display text-[14px] font-bold tracking-[0.1em] whitespace-nowrap text-[#fbf3e4] uppercase group-hover:text-white">
-                                <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-[#7ee8b5]" />
+                              <p className="flex items-center gap-2 font-display text-[14px] font-bold tracking-[0.1em] whitespace-nowrap text-[#f7f0e2] uppercase group-hover:text-white">
+                                <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-[#e8c78c]" />
                                 {text("Salon Gallery · 29 Plates", "视觉与技术标本画廊 · 29 件")}
                               </p>
-                              <p className="mt-0.5 truncate font-display text-[13.5px] italic text-[#e8d5b5]/90">
+                              <p className="mt-0.5 truncate font-display text-[13.5px] italic text-[#d6c8b2]">
                                 {text(
                                   "3D environments, shaders, character rigs & Maya tools",
                                   "实时 3D 场景、程序化材质、绑定与 Maya 工具",
                                 )}
                               </p>
                             </div>
-                            <span className="shrink-0 font-display text-base font-bold text-[#ebc88d] transition-transform group-hover:translate-x-1">
+                            <span className="shrink-0 font-display text-base font-bold text-[#e8c78c] transition-transform group-hover:translate-x-1">
                               →
                             </span>
                           </Link>
@@ -600,21 +600,21 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                           <Link
                             to={localizedPath("/about")}
                             viewTransition
-                            className="group relative flex items-center justify-between gap-3 border-[1.5px] border-[#ebc88d]/85 bg-gradient-to-r from-[#593722] via-[#412718] to-[#2b180e] px-4 py-3 text-left shadow-[3px_3px_0_0_#140d09,0_10px_22px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:border-[#fff0c8]"
+                            className="slate-folio group relative flex items-center justify-between gap-3 border border-[#d8b47c]/62 px-4 py-3 text-left shadow-[3px_3px_0_0_#14100c,0_10px_22px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:border-[#f5dfb2]"
                           >
                             <div className="min-w-0">
-                              <p className="flex items-center gap-1.5 font-display text-[14px] font-bold tracking-[0.1em] whitespace-nowrap text-[#fbf3e4] uppercase group-hover:text-white">
-                                <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-[#7ee8b5]" />
+                              <p className="flex items-center gap-2 font-display text-[14px] font-bold tracking-[0.1em] whitespace-nowrap text-[#f7f0e2] uppercase group-hover:text-white">
+                                <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-[#e8c78c]" />
                                 {text("About, Dossier & Dispatch", "个人档案、履历与联络信函")}
                               </p>
-                              <p className="mt-0.5 truncate font-display text-[13.5px] italic text-[#e8d5b5]/90">
+                              <p className="mt-0.5 truncate font-display text-[13.5px] italic text-[#d6c8b2]">
                                 {text(
                                   "USC SCA & Gnomon credentials, direct email & CV",
                                   "南加大与 Gnomon 学术背景、直达信箱与简历",
                                 )}
                               </p>
                             </div>
-                            <span className="shrink-0 font-display text-base font-bold text-[#ebc88d] transition-transform group-hover:translate-x-1">
+                            <span className="shrink-0 font-display text-base font-bold text-[#e8c78c] transition-transform group-hover:translate-x-1">
                               →
                             </span>
                           </Link>
@@ -645,12 +645,12 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
 
                 {/* Height-Matched 2-Wing Spread */}
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.14fr_0.86fr] lg:items-stretch lg:gap-6 xl:gap-7">
-                  {/* LEFT WING: Ornate Bronze-Clamped Gameplay Plate + 3 Embossed Telemetry Tickets */}
+                  {/* LEFT WING: Brass-Mounted Gameplay Plate + 3-Column Typographic Specification Ledger */}
                   <div className="flex flex-col justify-between gap-3.5">
-                    <div className="relative border-2 border-[#4d3417] bg-[#090604] p-2 shadow-[0_16px_38px_rgba(0,0,0,0.52)]">
-                      <BrassCornerClasps sizeClass="h-11 w-11 sm:h-13 sm:w-13" />
+                    <div className="relative border border-[#5c3f1e] bg-[#0a0806] p-2 shadow-[0_16px_38px_rgba(0,0,0,0.52)]">
+                      <BrassCornerClasps sizeClass="h-7 w-7 sm:h-8 sm:w-8" />
 
-                      <div className="relative aspect-video w-full overflow-hidden border border-[#c89d62]/48 bg-black">
+                      <div className="relative aspect-video w-full overflow-hidden border border-[#d4ad73]/40 bg-black">
                         {playingVideo ? (
                           <iframe
                             src={`https://www.youtube-nocookie.com/embed/${leadYoutubeId}?autoplay=1`}
@@ -677,7 +677,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                             />
                             <span className="absolute inset-0 bg-gradient-to-t from-black/62 via-transparent to-black/18 transition-opacity group-hover:opacity-78" />
 
-                            <span className="brass-plaque absolute bottom-4 left-10 inline-flex items-center gap-2 px-4 py-2 font-numeral text-[11px] font-bold tracking-[0.12em] uppercase transition-transform duration-200 group-hover:scale-104 sm:bottom-4.5 sm:left-11 sm:px-4.5">
+                            <span className="brass-plaque absolute bottom-4 left-4 inline-flex items-center gap-2 px-4 py-2 font-numeral text-[11px] font-bold tracking-[0.12em] uppercase transition-transform duration-200 group-hover:scale-103 sm:px-4.5">
                               <span aria-hidden="true">▶</span>
                               <span>{text("Play Walkthrough", "播放实机演示")}</span>
                             </span>
@@ -686,15 +686,15 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                       </div>
                     </div>
 
-                    {/* 3 High-Contrast Embossed Victorian Apothecary Telemetry Tickets */}
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                    {/* 3-Column Typographic Ledger Strip (distinct from clickable buttons) */}
+                    <div className="grid grid-cols-1 divide-y divide-[#6e4c24]/28 border-y border-[#6e4c24]/42 bg-[#efe5ce]/55 py-2 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
                       {telemetry.map((spec) => (
                         <div
                           key={spec}
-                          className="victorian-ticket victorian-ticket-vellum embossed-ticket flex items-center justify-center gap-1.5 bg-parchment-deep/90 px-2 py-2 text-center"
+                          className="flex items-center justify-center gap-1.5 px-2 py-1 text-center sm:py-0.5"
                         >
                           <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-rubric" />
-                          <span className="whitespace-nowrap font-numeral text-[9.5px] font-bold tracking-[0.07em] text-parchment-ink uppercase xl:text-[10px]">
+                          <span className="whitespace-nowrap font-numeral text-[10.5px] font-bold tracking-[0.07em] text-parchment-ink uppercase">
                             {spec}
                           </span>
                         </div>

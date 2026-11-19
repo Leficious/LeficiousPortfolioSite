@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ArchivalPaperSheaf,
   AtelierHeaderRail,
-  BrassCornerClasps,
   BrassRule,
   FolioCorners,
 } from "../components/AtelierChrome";
@@ -167,10 +166,10 @@ export function GalleryPage() {
               type="button"
               onClick={() => setReelExpanded((prev) => !prev)}
               aria-expanded={reelExpanded}
-              className="group relative flex cursor-pointer items-center gap-3.5 border-[1.5px] border-[#ebc88d]/80 bg-gradient-to-bl from-[#5e201d] via-[#421513] to-[#290c0b] p-2.5 pr-5 text-left shadow-[3px_3px_0_0_#eadbc0,4px_4px_0_0_#140d09,0_18px_40px_rgba(0,0,0,0.85)] transition-all hover:-translate-y-0.5 hover:border-[#fff0c8]"
+              className="slate-folio group relative flex cursor-pointer items-center gap-3.5 border border-[#d8b47c]/55 p-2.5 pr-5 text-left shadow-[3px_3px_0_0_#e8dcc2,4px_4px_0_0_#0e0906,0_18px_40px_rgba(0,0,0,0.88)] transition-all hover:-translate-y-0.5 hover:border-[#f3dfb9]"
             >
-              <BrassCornerClasps sizeClass="h-7 w-7" />
-              <span className="relative block h-12 w-21 shrink-0 overflow-hidden border border-warm/40 bg-[#090706]">
+              <FolioCorners tone="slate" inset="inset-1" sizeClass="h-4 w-4" />
+              <span className="relative z-10 block h-12 w-21 shrink-0 overflow-hidden border border-warm/40 bg-[#090706]">
                 <img
                   src="/reels/environment-props-reel-2026.jpg"
                   alt=""
@@ -180,12 +179,12 @@ export function GalleryPage() {
                   decoding="async"
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <span className="absolute inset-0 grid place-items-center bg-black/30 text-xs text-[#f2dfc0] transition-colors group-hover:bg-black/10">
+                <span className="absolute inset-0 grid place-items-center bg-black/30 text-xs text-[#f7f0e2] transition-colors group-hover:bg-black/10">
                   {reelExpanded ? "−" : "▶"}
                 </span>
               </span>
-              <span>
-                <span className="block font-display text-sm font-semibold text-foreground transition-colors group-hover:text-[#ebd09e]">
+              <span className="relative z-10">
+                <span className="block font-display text-sm font-semibold text-foreground transition-colors group-hover:text-[#f3dfb9]">
                   {text("Environment & Props Reel 2026", "2026 环境与道具作品集锦")}
                 </span>
                 <span className="block font-display text-xs italic text-muted-foreground">
@@ -198,7 +197,7 @@ export function GalleryPage() {
           </div>
 
           {reelExpanded && (
-            <section className="animate-folio-unfold mt-6 border border-[#d4ae73]/48 bg-[#120d0a] p-3 shadow-2xl sm:p-4">
+            <section className="animate-folio-unfold mt-6 border border-[#d4ad73]/48 bg-[#120d0a] p-3 shadow-2xl sm:p-4">
               <FeaturedReel
                 id="t5MchABcd3c"
                 thumbnailSrc="/reels/environment-props-reel-2026.jpg"
@@ -213,22 +212,22 @@ export function GalleryPage() {
 
           <BrassRule ornate tone="slate" className="mt-6" />
 
-          {/* Recessed Smoked-Mahogany Discipline Index Tray w/ Bronze Corner Clasps & Embossed Tickets */}
+          {/* Recessed Obsidian-Espresso Discipline Index Tray w/ Stepped Corner Spandrels & Chamfered Plaques */}
           <section className="mt-6 pb-12 md:mt-7" aria-label={text("Archive", "全部作品")}>
-            <div className="relative mb-8 border-[1.5px] border-[#d4ae73]/68 bg-gradient-to-b from-[#2b1b12]/96 to-[#180f0a]/96 p-3.5 shadow-[0_18px_42px_rgba(0,0,0,0.82),inset_0_1px_0_rgba(246,214,158,0.28)] sm:px-5 sm:py-4">
-              <BrassCornerClasps sizeClass="h-8 w-8 sm:h-9 sm:w-9" />
-              <div className="mb-2.5 flex items-center justify-between gap-4 border-b border-warm/32 pb-2">
-                <span className="inline-flex items-center gap-2 font-numeral text-[10.5px] font-bold tracking-[0.22em] text-[#e8d5b5] uppercase">
-                  <span aria-hidden="true" className="h-2 w-2 rotate-45 border border-[#ebc88d] bg-[#2d8f62]" />
+            <div className="relative mb-8 border border-[#d8b47c]/52 bg-gradient-to-b from-[#1a1410]/96 to-[#0f0c09]/96 p-3.5 shadow-[0_18px_42px_rgba(0,0,0,0.86),inset_0_1px_0_rgba(248,222,174,0.22)] sm:px-5 sm:py-4">
+              <FolioCorners tone="slate" inset="inset-1.5" sizeClass="h-5 w-5" />
+              <div className="relative z-10 mb-2.5 flex items-center justify-between gap-4 border-b border-warm/28 pb-2">
+                <span className="inline-flex items-center gap-2 font-numeral text-[10.5px] font-bold tracking-[0.22em] text-[#ede2cf] uppercase">
+                  <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#e8c78c]" />
                   {text("Discipline Index", "按专业类别筛选")}
                 </span>
-                <span className="font-numeral text-[10.5px] font-bold tracking-[0.2em] text-[#f0d29c]" aria-live="polite">
+                <span className="font-numeral text-[10.5px] font-bold tracking-[0.2em] text-[#e8c78c]" aria-live="polite">
                   {visibleEntries.length} {text(visibleEntries.length === 1 ? "SPECIMEN" : "SPECIMENS", "件标本")}
                 </span>
               </div>
 
               <div
-                className="flex flex-wrap items-center gap-1.5 sm:gap-2"
+                className="relative z-10 flex flex-wrap items-center gap-1.5 sm:gap-2"
                 role="group"
                 aria-label={text("Filter by discipline", "按类别筛选")}
               >
@@ -247,8 +246,8 @@ export function GalleryPage() {
                       }}
                       className={`group relative inline-flex cursor-pointer p-[1.5px] transition-colors duration-200 ${
                         active
-                          ? "bg-gradient-to-b from-[#fff2d4] to-[#cfa363] shadow-[0_6px_16px_rgba(0,0,0,0.68)]"
-                          : "bg-gradient-to-b from-[#ecc98e]/92 to-[#9e743c]/80 shadow-[0_3px_10px_rgba(0,0,0,0.55)] hover:from-[#fff0cc] hover:to-[#c29352]"
+                          ? "bg-gradient-to-b from-[#fff4d8] to-[#cfa464] shadow-[0_6px_16px_rgba(0,0,0,0.68)]"
+                          : "bg-gradient-to-b from-[#e5c489]/82 to-[#966e38]/68 shadow-[0_3px_10px_rgba(0,0,0,0.55)] hover:from-[#fff0cc] hover:to-[#c29352]"
                       }`}
                     >
                       <span
@@ -258,14 +257,14 @@ export function GalleryPage() {
                         }}
                         className={`inline-flex items-center gap-1.5 px-3 py-1.5 font-display text-xs font-semibold tracking-wide transition-colors sm:px-3.5 sm:text-[14px] ${
                           active
-                            ? "bg-gradient-to-b from-[#fbf3e2] to-[#e6d6b8] text-parchment-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]"
-                            : "bg-gradient-to-b from-[#2e1f15] to-[#1c120d] text-[#e2d4be] group-hover:from-[#3a271b] group-hover:to-[#241811] group-hover:text-[#fbf3e4]"
+                            ? "bg-gradient-to-b from-[#fcf6e8] to-[#eae0c8] text-parchment-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.92)]"
+                            : "bg-gradient-to-b from-[#231b15] to-[#140f0c] text-[#ede2cf] group-hover:from-[#2e231b] group-hover:to-[#1b1410] group-hover:text-white"
                         }`}
                       >
                         <span>{label}</span>
                         <span
                           className={`font-numeral text-[11px] font-semibold tabular-nums ${
-                            active ? "text-rubric" : "text-[#c0ad92] group-hover:text-[#ebd09e]"
+                            active ? "text-rubric" : "text-[#cabb9f] group-hover:text-[#f0d5a3]"
                           }`}
                         >
                           ({tagCounts[tag] ?? 0})
@@ -311,19 +310,19 @@ export function GalleryPage() {
                           }`
                     }`}
                   >
-                    <FolioCorners tone={isPinned ? "parchment" : "slate"} inset="inset-1.5" sizeClass="h-5 w-5" />
+                    <FolioCorners tone={isPinned ? "parchment" : "slate"} inset="inset-1.5" sizeClass="h-4 w-4" />
 
                     <div className="relative z-10 mb-2 flex w-full items-center justify-between px-2.5">
                       <span
                         className={`font-numeral text-[10.5px] font-bold tracking-[0.18em] ${
-                          isPinned ? "text-parchment-muted" : "text-[#e2be84]"
+                          isPinned ? "text-parchment-muted" : "text-[#e8c78c]"
                         }`}
                       >
                         {plateLabel} · {entry.year}
                       </span>
                       <span
                         className={`font-numeral text-[10px] tracking-[0.12em] uppercase transition-transform duration-200 group-hover:translate-x-0.5 ${
-                          isPinned ? "font-bold text-rubric" : "text-muted-foreground group-hover:text-[#ebd09e]"
+                          isPinned ? "font-bold text-rubric" : "text-muted-foreground group-hover:text-[#f3dfb9]"
                         }`}
                       >
                         {entry.media.length} {text(entry.media.length === 1 ? "PASS" : "PASSES", "图层")} →
@@ -332,16 +331,15 @@ export function GalleryPage() {
 
                     <div
                       className={`relative z-10 w-full shrink-0 overflow-hidden border bg-[#0b0806] ${
-                        isPinned ? "border-[#684720]/70" : "border-warm/35"
+                        isPinned ? "border-[#6e4c24]/65" : "border-warm/32"
                       }`}
                     >
-                      {index === 0 && <BrassCornerClasps sizeClass="h-10 w-10 sm:h-12 sm:w-12" />}
                       <img
                         src={entry.cover}
                         alt={entry.coverAlt}
                         width={entry.aspect === "portrait" ? 900 : entry.aspect === "square" ? 1000 : 1200}
                         height={entry.aspect === "portrait" ? 1200 : entry.aspect === "square" ? 1000 : 675}
-                        loading={index < 6 ? "eager" : "lazy"}
+                        loading={index < 9 ? "eager" : "lazy"}
                         decoding="async"
                         className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.02]"
                       />

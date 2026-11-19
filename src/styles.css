@@ -61,51 +61,51 @@
   --spot-x: 52vw;
   --spot-y: 44vh;
 
-  /* Nocturnal Victorian obsidian-mahogany & soot drafting desk (high contrast, ZERO blue!) */
-  --background: #080605;
-  --foreground: #f6eedc;
+  /* Nocturnal Victorian obsidian-ebony drafting desk (high contrast, zero milk-chocolate mud, zero blue) */
+  --background: #080706;
+  --foreground: #f7f0e2;
 
-  /* Sunlit aged cotton rag-vellum stock + deep lampblack-walnut ink */
-  --parchment: #f0e5cd;
-  --parchment-deep: #e2d3b4;
-  --parchment-ink: #110b07;
-  --parchment-muted: #493626;
-  --rubric: #8f1616;
+  /* Luminous museum cotton rag-vellum stock + deep iron-gall ink */
+  --parchment: #f5eddc;
+  --parchment-deep: #eae0c9;
+  --parchment-ink: #14100c;
+  --parchment-muted: #523e2c;
+  --rubric: #8a181a;
 
-  /* Ebony bookbinding spine & smoked walnut-umber leather folios */
-  --spine: #060403;
-  --surface: #18120e;
-  --surface-foreground: #f6eedc;
-  --card: #18120e;
-  --card-foreground: #f6eedc;
-  --popover: #18120e;
-  --popover-foreground: #f6eedc;
+  /* Ebony bookbinding spine & deep smoked-espresso morocco folios */
+  --spine: #060504;
+  --surface: #15110e;
+  --surface-foreground: #f7f0e2;
+  --card: #15110e;
+  --card-foreground: #f7f0e2;
+  --popover: #15110e;
+  --popover-foreground: #f7f0e2;
 
-  --primary: #f6eedc;
-  --primary-foreground: #080605;
+  --primary: #f7f0e2;
+  --primary-foreground: #080706;
 
-  --secondary: #251c16;
-  --secondary-foreground: #f6eedc;
+  --secondary: #211a15;
+  --secondary-foreground: #f7f0e2;
 
-  --muted: #1c1511;
-  --muted-foreground: #c4b39c;
+  --muted: #1a1410;
+  --muted-foreground: #d2c4ae;
 
-  /* Burnished antique bronze & gilt brass (high contrast, NEVER canary yellow) */
-  --accent: #c89d62;
-  --accent-foreground: #080605;
-  --warm: #c89d62;
+  /* Champagne antique brass & gilt leaf (clean warm metallic, zero greenish mud) */
+  --accent: #d4ad73;
+  --accent-foreground: #080706;
+  --warm: #d4ad73;
 
   --destructive: #9c1c1c;
   --destructive-foreground: #faf3e6;
 
-  --border: rgba(200, 157, 98, 0.4);
-  --input: rgba(200, 157, 98, 0.4);
-  --ring: #c89d62;
+  --border: rgba(212, 173, 115, 0.38);
+  --input: rgba(212, 173, 115, 0.38);
+  --ring: #d4ad73;
 }
 
 .dark {
-  --background: #080605;
-  --foreground: #f6eedc;
+  --background: #080706;
+  --foreground: #f7f0e2;
 }
 
 @layer base {
@@ -161,23 +161,23 @@
   }
 }
 
-/* Cotton rag-vellum sheet using real scanned handmade paper fiber + high-contrast candlelit deckle edge */
+/* Luminous museum cotton rag-vellum sheet with subtle paper fiber & crisp shadow depth */
 .parchment-sheet {
   position: relative;
   background-color: var(--parchment);
   background-image: radial-gradient(
-    ellipse at 50% 20%,
-    rgba(255, 251, 240, 0.72) 0%,
-    rgba(240, 229, 205, 0.22) 60%,
-    rgba(196, 172, 134, 0.28) 100%
+    ellipse at 50% 18%,
+    rgba(255, 253, 246, 0.85) 0%,
+    rgba(245, 237, 220, 0.35) 64%,
+    rgba(214, 196, 164, 0.24) 100%
   );
   color: var(--parchment-ink);
   box-shadow:
-    0 34px 82px rgba(2, 1, 0, 0.88),
-    0 8px 22px rgba(0, 0, 0, 0.6),
-    inset 0 1.5px 0 rgba(255, 252, 244, 0.85),
-    inset 0 0 58px rgba(102, 70, 32, 0.22),
-    inset 0 0 0 1.5px rgba(118, 82, 38, 0.56);
+    0 34px 82px rgba(2, 1, 0, 0.9),
+    0 8px 22px rgba(0, 0, 0, 0.62),
+    inset 0 1.5px 0 rgba(255, 253, 248, 0.92),
+    inset 0 0 42px rgba(108, 76, 36, 0.09),
+    inset 0 0 0 1px rgba(112, 80, 40, 0.42);
 }
 
 .parchment-sheet::before {
@@ -185,21 +185,21 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.2;
+  opacity: 0.11;
   mix-blend-mode: multiply;
   background-image: url("/textures/rag-paper-tile.webp");
   background-size: 360px 360px;
 }
 
-/* Burnished walnut-cognac morocco leather folio with gilded top-bevel rim */
+/* Deep museum ebony-morocco folio with crisp gilt top-bevel rim (high contrast for cream & gold type) */
 .slate-folio {
-  background: linear-gradient(158deg, #3f281a 0%, #2a1a11 52%, #1b100b 100%);
+  background: linear-gradient(162deg, #1e1712 0%, #14100c 56%, #0d0a08 100%);
   color: var(--foreground);
   box-shadow:
-    0 24px 58px rgba(2, 1, 0, 0.88),
-    inset 0 1px 0 rgba(246, 214, 158, 0.44),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.78),
-    inset 0 0 0 1px rgba(224, 184, 122, 0.52);
+    0 24px 58px rgba(2, 1, 0, 0.9),
+    inset 0 1px 0 rgba(248, 222, 174, 0.34),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.82),
+    inset 0 0 0 1px rgba(212, 173, 115, 0.42);
 }
 
 /* Chamfered Victorian apothecary / ledger tickets & sculpted brass plaques
@@ -209,7 +209,7 @@
   .victorian-ticket {
     --ticket-cut: 7px;
     --ticket-stroke: 1.5px;
-    --ticket-border: linear-gradient(180deg, rgba(232, 196, 136, 0.86) 0%, rgba(146, 105, 52, 0.72) 100%);
+    --ticket-border: linear-gradient(180deg, rgba(236, 204, 146, 0.88) 0%, rgba(154, 112, 56, 0.72) 100%);
     position: relative;
     clip-path: polygon(
       var(--ticket-cut) 0,
@@ -259,48 +259,49 @@
   }
 
   .victorian-ticket-vellum {
-    --ticket-stroke: 1.5px;
-    --ticket-border: linear-gradient(180deg, #755025 0%, #4a3014 100%);
+    --ticket-stroke: 1.4px;
+    --ticket-border: linear-gradient(180deg, #6e4c24 0%, #462e14 100%);
   }
 
   .victorian-ticket-vellum-interactive:hover {
-    --ticket-border: linear-gradient(180deg, #edd09b 0%, #9e7339 100%);
+    --ticket-border: linear-gradient(180deg, #f2d59c 0%, #a67a3e 100%);
   }
 
   .victorian-ticket-heavy {
-    --ticket-stroke: 2px;
-    --ticket-border: #140d09;
+    --ticket-stroke: 1.75px;
+    --ticket-border: #1b130d;
   }
 
   .victorian-ticket-heavy:hover {
-    --ticket-border: linear-gradient(180deg, #edd09b 0%, #9e7339 100%);
+    --ticket-border: linear-gradient(180deg, #f2d59c 0%, #a67a3e 100%);
   }
 
   .victorian-ticket-ink {
     --ticket-stroke: 1.5px;
-    --ticket-border: linear-gradient(180deg, rgba(232, 196, 136, 0.84) 0%, rgba(146, 105, 52, 0.68) 100%);
+    --ticket-border: linear-gradient(180deg, rgba(238, 206, 150, 0.88) 0%, rgba(154, 112, 56, 0.72) 100%);
   }
 
   .victorian-ticket-ink:hover {
-    --ticket-border: linear-gradient(180deg, #fff0cf 0%, #cfa160 100%);
+    --ticket-border: linear-gradient(180deg, #fff3d6 0%, #d4a664 100%);
   }
 
   .victorian-ticket-oxblood {
-    --ticket-stroke: 1.5px;
-    --ticket-border: linear-gradient(180deg, rgba(244, 214, 162, 0.92) 0%, rgba(178, 134, 74, 0.78) 100%);
+    --ticket-stroke: 1.4px;
+    --ticket-border: linear-gradient(180deg, rgba(242, 212, 160, 0.88) 0%, rgba(164, 122, 66, 0.72) 100%);
   }
 
   .victorian-ticket-oxblood:hover {
     --ticket-border: #fff4dc;
   }
 
+  /* Luminous brushed champagne-brass plaque (~10.8:1 ink contrast across full glyph height) */
   .brass-plaque {
     --plaque-cut: 6px;
     --plaque-stroke: 1.5px;
     position: relative;
-    background: linear-gradient(180deg, #deb97e 0%, #b3874c 48%, #825d2d 100%);
-    color: #120b05;
-    text-shadow: 0 1px 0 rgba(255, 238, 198, 0.42);
+    background: linear-gradient(180deg, #f6e2b8 0%, #dfb97b 52%, #c59856 100%);
+    color: #130c06;
+    text-shadow: 0 1px 0 rgba(255, 248, 228, 0.55);
     clip-path: polygon(
       var(--plaque-cut) 0,
       calc(100% - var(--plaque-cut)) 0,
@@ -322,9 +323,9 @@
     z-index: 2;
     background: linear-gradient(
       180deg,
-      rgba(255, 248, 224, 0.9) 0%,
-      rgba(86, 55, 21, 0.72) 52%,
-      rgba(28, 16, 5, 0.92) 100%
+      rgba(255, 251, 236, 0.94) 0%,
+      rgba(124, 84, 36, 0.72) 54%,
+      rgba(56, 34, 12, 0.9) 100%
     );
     clip-path: polygon(
       evenodd,
@@ -349,33 +350,33 @@
   }
 
   .brass-plaque:hover {
-    background: linear-gradient(180deg, #eac88f 0%, #c19558 48%, #916935 100%);
+    background: linear-gradient(180deg, #fff0cf 0%, #e9c68b 52%, #cfa361 100%);
   }
 }
 
 /* Embossed letterpress ticket relief on rag-vellum */
 .embossed-ticket {
   box-shadow:
-    inset 0 1.5px 0 rgba(255, 252, 242, 0.88),
-    inset 0 -1.5px 0 rgba(92, 62, 28, 0.42),
-    0 2px 6px rgba(20, 12, 5, 0.18);
+    inset 0 1px 0 rgba(255, 253, 246, 0.92),
+    inset 0 -1px 0 rgba(96, 66, 30, 0.28),
+    0 2px 6px rgba(20, 12, 5, 0.12);
 }
 
 /* Raised 3D gold-foil die-stamping relief for copperplate emblems on dark leather/wood */
 .embossed-gilt {
   filter:
-    contrast(1.14)
-    drop-shadow(-0.8px -0.8px 0px rgba(255, 242, 202, 0.52))
-    drop-shadow(1.5px 2.2px 1.2px rgba(0, 0, 0, 0.96))
-    drop-shadow(0 8px 18px rgba(0, 0, 0, 0.86));
+    contrast(1.12)
+    drop-shadow(-0.8px -0.8px 0px rgba(255, 242, 202, 0.48))
+    drop-shadow(1.5px 2.2px 1.2px rgba(0, 0, 0, 0.94))
+    drop-shadow(0 8px 18px rgba(0, 0, 0, 0.84));
 }
 
 /* Debossed intaglio plate-bite relief for copperplate ink medallions on vellum */
 .debossed-intaglio {
   filter:
-    contrast(1.22)
-    drop-shadow(0px 1.2px 0px rgba(255, 251, 240, 0.95))
-    drop-shadow(0px -0.8px 0.6px rgba(24, 12, 4, 0.38));
+    contrast(1.18)
+    drop-shadow(0px 1px 0px rgba(255, 252, 244, 0.95))
+    drop-shadow(0px -0.6px 0.5px rgba(24, 12, 4, 0.32));
 }
 
 /* Tactile 3D tilt + warm bronze candle-glint on interactive cards */
@@ -396,7 +397,7 @@
   opacity: 0;
   background: radial-gradient(
     280px circle at var(--glint-x) var(--glint-y),
-    rgba(218, 178, 118, 0.16),
+    rgba(226, 190, 132, 0.13),
     transparent 70%
   );
   transition: opacity 220ms ease;
@@ -409,38 +410,38 @@
 /* Stacked multi-pass under-lip for Gallery specimen plates */
 .specimen-stack-parchment {
   box-shadow:
-    0 24px 60px rgba(4, 2, 1, 0.72),
-    5px 5px 0 -1px #d6c8ab,
+    0 24px 60px rgba(4, 2, 1, 0.78),
+    5px 5px 0 -1px #dfd2b7,
     6px 6px 0 0 rgba(108, 78, 42, 0.72);
 }
 
 .specimen-stack-parchment:hover {
   box-shadow:
-    0 28px 68px rgba(4, 2, 1, 0.82),
-    7px 7px 0 -1px #d6c8ab,
-    8px 8px 0 0 rgba(125, 25, 25, 0.8);
+    0 28px 68px rgba(4, 2, 1, 0.86),
+    7px 7px 0 -1px #dfd2b7,
+    8px 8px 0 0 rgba(138, 24, 26, 0.82);
 }
 
 .specimen-stack-slate {
   box-shadow:
-    0 20px 50px rgba(4, 2, 1, 0.84),
-    inset 0 1px 0 rgba(246, 214, 158, 0.44),
-    inset 0 0 0 1px rgba(224, 184, 122, 0.5),
-    4px 4px 0 -1px #e6d7b9,
-    5px 5px 0 0 #140d09,
-    7px 7px 0 -1px #362216,
-    8px 8px 0 0 rgba(216, 178, 118, 0.58);
+    0 20px 50px rgba(4, 2, 1, 0.88),
+    inset 0 1px 0 rgba(248, 222, 174, 0.34),
+    inset 0 0 0 1px rgba(212, 173, 115, 0.44),
+    4px 4px 0 -1px #e8dcc2,
+    5px 5px 0 0 #0c0907,
+    7px 7px 0 -1px #241b15,
+    8px 8px 0 0 rgba(212, 173, 115, 0.52);
 }
 
 .specimen-stack-slate:hover {
   box-shadow:
-    0 26px 58px rgba(4, 2, 1, 0.9),
-    inset 0 1px 0 rgba(255, 232, 188, 0.58),
-    inset 0 0 0 1px rgba(238, 204, 148, 0.78),
-    5px 5px 0 -1px #efe2c6,
-    6px 6px 0 0 #140d09,
-    9px 9px 0 -1px #42291a,
-    10px 10px 0 0 rgba(232, 194, 134, 0.72);
+    0 26px 58px rgba(4, 2, 1, 0.92),
+    inset 0 1px 0 rgba(255, 236, 196, 0.5),
+    inset 0 0 0 1px rgba(238, 204, 148, 0.76),
+    5px 5px 0 -1px #f2e6ce,
+    6px 6px 0 0 #0c0907,
+    9px 9px 0 -1px #2e221a,
+    10px 10px 0 0 rgba(236, 200, 140, 0.68);
 }
 
 /* Ensure packed gallery cards position absolutely inside GalleryLayout */
@@ -452,14 +453,14 @@
   position: absolute;
 }
 
-/* GPU-native ink-engraving & sepia daguerreotype treatments for folio plates (zero SVG filter blanking, zero slate flash) */
+/* Crisp sepia-ink architectural linework & warm daguerreotype plate treatments */
 .ink-engraving {
-  filter: grayscale(1) brightness(1.36) invert(1) contrast(2.05) sepia(0.42);
+  filter: grayscale(1) invert(1) brightness(1.04) contrast(1.52) sepia(0.38);
   mix-blend-mode: multiply;
 }
 
 .daguerreotype-plate {
-  filter: sepia(0.48) contrast(1.14) brightness(0.96) saturate(0.75);
+  filter: sepia(0.38) contrast(1.1) brightness(0.98) saturate(0.78);
 }
 
 /* Persistent shell & route transition names */

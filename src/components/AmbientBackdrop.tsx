@@ -41,49 +41,49 @@ void main() {
   float height = tex.b;
   float motifMask = smoothstep(0.03, 0.38, height);
 
-  // 1. Nocturnal Victorian smoked-mahogany & obsidian wall vignette (ZERO blue channel)
+  // 1. Nocturnal Victorian obsidian-espresso wall vignette (deep calm ground, ZERO blue channel)
   vec2 vigDelta = (uvScreen - vec2(0.53, 0.46)) * vec2(1.15, 1.05);
   float vig = clamp(1.0 - dot(vigDelta, vigDelta) * 0.95, 0.0, 1.0);
-  vec3 baseWall = mix(vec3(0.022, 0.015, 0.012), vec3(0.072, 0.046, 0.031), pow(vig, 1.25));
+  vec3 baseWall = mix(vec3(0.018, 0.014, 0.011), vec3(0.052, 0.036, 0.025), pow(vig, 1.3));
 
-  // 2. Subtle faded blind-tooled ornament across the unlit wall (~4.5% atmospheric relief)
+  // 2. Whisper-quiet blind-tooled ornament across the unlit wall (~2.8% relief so UI & type stay crisp)
   vec3 ambLight = normalize(vec3(-0.35, -0.72, 0.60));
   float ambDiff = clamp(dot(N, ambLight), 0.0, 1.0);
   float ambCrevice = clamp(dot(N, -ambLight), 0.0, 1.0);
   vec3 col = baseWall;
-  col += motifMask * (ambDiff * vec3(0.042, 0.029, 0.016) + height * vec3(0.013, 0.009, 0.005));
-  col -= motifMask * ambCrevice * vec3(0.016, 0.011, 0.008);
+  col += motifMask * (ambDiff * vec3(0.027, 0.019, 0.011) + height * vec3(0.008, 0.006, 0.003));
+  col -= motifMask * ambCrevice * vec3(0.012, 0.009, 0.006);
 
   // 3. Interactive cursor grazing candlelight & restrained 3D embossed shading
   vec2 toLight = uPointer - fragPx;
   float dist = length(toLight);
-  float falloff = pow(smoothstep(620.0, 28.0, dist), 1.75) * uHoverAlpha;
+  float falloff = pow(smoothstep(580.0, 32.0, dist), 1.85) * uHoverAlpha;
 
   // Soft trailing candle-wake for sweeping motion feel
   float trailDist = length(uTrail - fragPx);
-  float trailFalloff = pow(smoothstep(500.0, 40.0, trailDist), 1.9) * uHoverAlpha * 0.38;
-  float totalAura = clamp(falloff + trailFalloff * 0.6, 0.0, 1.0);
+  float trailFalloff = pow(smoothstep(460.0, 40.0, trailDist), 1.95) * uHoverAlpha * 0.34;
+  float totalAura = clamp(falloff + trailFalloff * 0.55, 0.0, 1.0);
 
-  // Grazing 3D light vector (height = 170px above wall -> crisp directional highlight & opposite-edge shadow)
-  vec3 L = normalize(vec3(toLight, 170.0));
+  // Grazing 3D light vector (height = 175px above wall -> crisp directional highlight & opposite-edge shadow)
+  vec3 L = normalize(vec3(toLight, 175.0));
   float nDotL = dot(N, L);
   float litSlope = clamp(nDotL, 0.0, 1.0);
   float shadowSlope = clamp(-nDotL, 0.0, 1.0);
 
   vec3 H = normalize(L + vec3(0.0, 0.0, 1.0));
-  float spec = pow(max(dot(N, H), 0.0), 22.0) * smoothstep(0.08, 0.62, height);
+  float spec = pow(max(dot(N, H), 0.0), 24.0) * smoothstep(0.08, 0.62, height);
 
-  // Warm ambient mahogany/oxblood wall glow under the candle
-  col += totalAura * vec3(0.026, 0.014, 0.009);
+  // Warm ambient espresso wall glow under the candle
+  col += totalAura * vec3(0.019, 0.012, 0.007);
 
-  // Restrained gilded antique-bronze 3D bas-relief shading on the scrollwork
-  vec3 giltDiffuse = vec3(0.172, 0.120, 0.064) * litSlope;
-  vec3 giltSpec = vec3(0.265, 0.198, 0.106) * spec;
-  vec3 velvetLift = vec3(0.046, 0.026, 0.014) * height;
+  // Restrained gilded champagne-bronze 3D bas-relief shading on the scrollwork
+  vec3 giltDiffuse = vec3(0.128, 0.092, 0.050) * litSlope;
+  vec3 giltSpec = vec3(0.195, 0.148, 0.082) * spec;
+  vec3 velvetLift = vec3(0.032, 0.020, 0.011) * height;
   col += motifMask * totalAura * (giltDiffuse + giltSpec + velvetLift);
 
   // Self-shadowing relief crease on the side of each scroll facing away from the cursor
-  col -= motifMask * falloff * shadowSlope * vec3(0.042, 0.028, 0.019);
+  col -= motifMask * falloff * shadowSlope * vec3(0.032, 0.022, 0.015);
 
   gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
 }

@@ -250,8 +250,8 @@ export function ProjectPage() {
               thumbnailSrc={leadVideo.thumbnailSrc ?? heroVisual}
             />
           ) : (
-            <div className="slate-folio relative overflow-hidden border border-[#d4ae73]/52 p-2 shadow-[0_24px_56px_rgba(0,0,0,0.82)]">
-              <BrassCornerClasps sizeClass="h-11 w-11 sm:h-14 sm:w-14" />
+            <div className="slate-folio relative overflow-hidden border border-[#d8b47c]/52 p-2 shadow-[0_24px_56px_rgba(0,0,0,0.82)]">
+              <BrassCornerClasps sizeClass="h-7 w-7 sm:h-8 sm:w-8" />
               <div className="aspect-video overflow-hidden border border-warm/30 bg-[#090706]">
                 <img
                   src={heroVisual}
@@ -291,7 +291,7 @@ export function ProjectPage() {
                     >
                       {toRoman(sectionIndex + 1)}
                     </span>
-                    <span className={`font-display text-sm ${isCurrent ? "font-bold" : "font-normal"}`}>
+                    <span className="font-display text-sm font-semibold">
                       {section.title}
                     </span>
                   </Link>
@@ -301,15 +301,14 @@ export function ProjectPage() {
             <span
               aria-hidden="true"
               style={{ width: `${scrollProgress.toFixed(1)}%` }}
-              className="pointer-events-none absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#8f1616] via-[#c89d62] to-[#ebd09e] transition-[width] duration-150"
+              className="pointer-events-none absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#8a181a] via-[#d4ad73] to-[#f3dfb9] transition-[width] duration-150"
             />
           </nav>
         )}
 
-        {/* ==================== 4. FRAMED SMOKED-MAHOGANY PROLOGUE & RAG-VELLUM DESIGNER'S NOTE ==================== */}
-        <ScrollReveal className="slate-folio relative mt-10 border border-[#d4ae73]/48 p-6 shadow-[0_24px_56px_rgba(0,0,0,0.82)] sm:p-9">
-          <BrassCornerClasps sizeClass="h-9 w-9 sm:h-11 sm:w-11" />
-          <FolioCorners tone="slate" inset="inset-2.5" sizeClass="h-7 w-7" />
+        {/* ==================== 4. FRAMED EBONY-MOROCCO PROLOGUE & RAG-VELLUM DESIGNER'S NOTE ==================== */}
+        <ScrollReveal className="slate-folio relative mt-10 border border-[#d8b47c]/48 p-6 shadow-[0_24px_56px_rgba(0,0,0,0.86)] sm:p-9">
+          <FolioCorners tone="slate" inset="inset-2.5" sizeClass="h-6 w-6" />
 
           <div className="relative z-10 grid gap-8 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-3">
