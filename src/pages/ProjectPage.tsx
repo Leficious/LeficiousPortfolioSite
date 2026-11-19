@@ -15,6 +15,7 @@ import { EchoGddWidget } from "../components/EchoGddComponents";
 import { FeaturedReel } from "../components/FeaturedReel";
 import { FormattedText } from "../components/FormattedText";
 import { Media } from "../components/Media";
+import { ProjectSigil } from "../components/ProjectSigils";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
 import { handleTactileCardMove, resetTactileCard } from "../lib/atelierMotion";
@@ -39,14 +40,6 @@ const SHEAF_FOLIO_LABELS: Record<string, { en: string; zh: string }> = {
   "fallen-valkyrie": { en: "III. Fallen Valkyrie", zh: "III · 堕落女武神" },
   starshore: { en: "IV. Starshore", zh: "IV · 星岸" },
   "sacred-forest": { en: "V. Sacred Forest", zh: "V · 圣域森林" },
-};
-
-const PROJECT_EMBLEMS: Record<string, { ink: string; gold: string }> = {
-  "still-life": { ink: "/emblems/still-life-ink.webp", gold: "/emblems/still-life-gold.webp" },
-  "an-echo-has-no-shape": { ink: "/emblems/echo-ink.webp", gold: "/emblems/echo-gold.webp" },
-  "fallen-valkyrie": { ink: "/emblems/valkyrie-ink.webp", gold: "/emblems/valkyrie-gold.webp" },
-  starshore: { ink: "/emblems/starshore-ink.webp", gold: "/emblems/starshore-gold.webp" },
-  "sacred-forest": { ink: "/emblems/sacred-forest-ink.webp", gold: "/emblems/sacred-forest-gold.webp" },
 };
 
 function toRoman(n: number): string {
@@ -100,9 +93,6 @@ export function ProjectPage() {
   const next = localizeProject(orderedProjects[nextIdx], isChinese);
   const nextRoman = toRoman(nextIdx + 1);
 
-  const emblemPair = PROJECT_EMBLEMS[project.slug] ?? PROJECT_EMBLEMS["still-life"];
-  const nextEmblemPair = PROJECT_EMBLEMS[next.slug] ?? PROJECT_EMBLEMS["still-life"];
-
   const relatedGallery = galleryEntries
     .filter((entry) => project.relatedGalleryIds?.includes(entry.id))
     .map((entry) => localizeGalleryEntry(entry, isChinese));
@@ -142,23 +132,19 @@ export function ProjectPage() {
         <header className="parchment-sheet animate-folio-arc relative overflow-hidden border-[5px] border-[#110b07] px-6 pt-9 pb-8 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-10 sm:pt-10 sm:pb-9">
           <FolioCorners tone="parchment" />
 
-          <img
-            src={emblemPair.ink}
-            alt=""
-            aria-hidden="true"
-            className="debossed-intaglio pointer-events-none absolute right-6 bottom-6 hidden h-48 w-48 object-contain opacity-[0.12] mix-blend-multiply select-none md:block"
+          <ProjectSigil
+            slug={project.slug}
+            variant="intaglio"
+            className="pointer-events-none absolute right-8 bottom-7 hidden h-44 w-44 opacity-[0.08] md:block"
           />
 
           <div className="relative z-10 grid gap-8 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-8">
-              <div className="flex items-center gap-3.5">
-                <img
-                  src={emblemPair.ink}
-                  alt=""
-                  aria-hidden="true"
-                  width="46"
-                  height="46"
-                  className="debossed-intaglio hidden h-11 w-11 shrink-0 object-contain opacity-90 sm:block"
+              <div className="flex items-center gap-4">
+                <ProjectSigil
+                  slug={project.slug}
+                  variant="intaglio"
+                  className="hidden h-12 w-12 shrink-0 opacity-90 sm:block"
                 />
                 <div>
                   <p className="font-numeral text-[11px] font-bold tracking-[0.24em] text-parchment-muted uppercase">
@@ -353,7 +339,7 @@ export function ProjectPage() {
 
               {project.authorNote && (
                 <aside className="parchment-sheet relative mt-6 border-[3px] border-[#110b07] px-5 py-4 shadow-[0_14px_32px_rgba(0,0,0,0.65),4px_4px_0_-1px_#dfd0b2,6px_6px_0_0_#110b07] sm:px-6">
-                  <CrimsonStamp className="pointer-events-none absolute -right-2.5 -top-2.5 h-10 w-10" />
+                  <CrimsonStamp className="pointer-events-none absolute right-5 -top-3.5 h-9.5 w-9.5" />
                   <p className="relative z-10 font-numeral text-[10.5px] font-bold tracking-[0.2em] text-rubric uppercase">
                     {text("Designer's Note — Why I Built This", "设计师手记 — 制作初衷")}
                   </p>
@@ -527,13 +513,10 @@ export function ProjectPage() {
             className="parchment-sheet group relative inline-flex items-center gap-5 border-[4px] border-[#110b07] px-6 py-4 text-right shadow-[0_24px_54px_rgba(0,0,0,0.85),5px_5px_0_-1px_#dfd0b2,7px_7px_0_0_#110b07] transition-transform hover:-translate-y-1"
           >
             <FolioCorners tone="parchment" inset="inset-1.5" sizeClass="h-5 w-5" />
-            <img
-              src={nextEmblemPair.ink}
-              alt=""
-              aria-hidden="true"
-              width="52"
-              height="52"
-              className="debossed-intaglio relative z-10 h-12 w-12 shrink-0 object-contain opacity-90 transition-transform duration-300 group-hover:scale-108"
+            <ProjectSigil
+              slug={next.slug}
+              variant="intaglio"
+              className="relative z-10 h-12 w-12 shrink-0 opacity-90 transition-transform duration-300 group-hover:scale-108"
             />
             <div className="relative z-10">
               <span className="block font-numeral text-[10px] font-bold tracking-[0.2em] text-rubric uppercase">
