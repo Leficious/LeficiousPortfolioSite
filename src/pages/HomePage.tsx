@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   ArchivalPaperSheaf,
   AtelierHeaderRail,
@@ -10,7 +10,7 @@ import {
   FolioCorners,
 } from "../components/AtelierChrome";
 import { FormattedText } from "../components/FormattedText";
-import { ProjectSigil } from "../components/ProjectSigils";
+import { ProjectSigil, type SigilHighlight } from "../components/ProjectSigils";
 import { Seo } from "../components/Seo";
 import { useLanguage } from "../lib/language";
 import { localizeProject } from "../lib/localizedContent";
@@ -126,6 +126,10 @@ type HomePageProps = {
 
 export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) {
   const { isChinese, text, localizedPath } = useLanguage();
+  const [searchParams] = useSearchParams();
+  const rawEmblemParam = searchParams.get("emblem");
+  const sigilHighlight: SigilHighlight =
+    rawEmblemParam === "peacock" || rawEmblemParam === "amethyst" ? rawEmblemParam : "verdigris";
   const [playingVideo, setPlayingVideo] = useState(false);
   const lastProjectSlugRef = useRef<string>("still-life");
   const blueprintBoxRef = useRef<HTMLDivElement>(null);
@@ -291,7 +295,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               type="button"
               onClick={() => selectBinder(leftBgProject.slug)}
               aria-label={`${text("Inspect Folio", "切换至")} ${leftBgMeta.roman}: ${leftBgProject.title}`}
-              className="pointer-events-auto group absolute left-1 top-8 bottom-9 flex w-[245px] -rotate-[4.8deg] cursor-pointer flex-col justify-between border-[1.5px] border-[#ebc88d]/85 bg-gradient-to-br from-[#5d3a24] via-[#432818] to-[#2b180e] px-3.5 py-4 text-left shadow-[-3px_2px_0_0_#eadbc0,-4px_3px_0_0_#140d09,-6px_5px_0_0_#cbb58c,-22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,236,198,0.4)] transition-all duration-300 hover:-translate-x-2.5 hover:-translate-y-1.5 hover:-rotate-[5.8deg] hover:border-[#fff0c8] xl:left-2 xl:w-[265px] xl:px-4 xl:py-4.5 2xl:w-[295px] 2xl:px-4.5 2xl:py-5"
+              className="pointer-events-auto group absolute left-0 top-8 bottom-9 flex w-[255px] -rotate-[4.8deg] cursor-pointer flex-col justify-between border-[1.5px] border-[#ebc88d]/85 bg-gradient-to-br from-[#5d3a24] via-[#432818] to-[#2b180e] px-3.5 py-4 text-left shadow-[-3px_2px_0_0_#eadbc0,-4px_3px_0_0_#140d09,-6px_5px_0_0_#cbb58c,-22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,236,198,0.4)] transition-all duration-300 hover:-translate-x-2.5 hover:-translate-y-1.5 hover:-rotate-[5.8deg] hover:border-[#fff0c8] xl:left-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:left-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
             >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <img
@@ -304,7 +308,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               <span aria-hidden="true" className="pointer-events-none absolute inset-2.5 border border-[#e5c287]/38" />
 
               {/* Dedicated Exposed Outer-Wing Column — guarantees zero tangency with foreground vellum border */}
-              <div className="relative z-10 flex h-full w-[94px] flex-col justify-between xl:w-[100px] 2xl:w-[116px]">
+              <div className="relative z-10 flex h-full w-[100px] flex-col justify-between xl:w-[108px] 2xl:w-[126px]">
                 <div>
                   <p className="font-numeral text-[10px] font-bold tracking-[0.22em] text-[#f0d29c]">
                     {text("FOLIO", "卷")} {leftBgMeta.roman}
@@ -318,7 +322,8 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   <ProjectSigil
                     slug={leftBgProject.slug}
                     variant="gilt"
-                    className="h-[72px] w-[72px] transition-transform duration-300 group-hover:scale-106 xl:h-[76px] xl:w-[76px] 2xl:h-[88px] 2xl:w-[88px]"
+                    highlight={sigilHighlight}
+                    className="h-[82px] w-[82px] transition-transform duration-300 group-hover:scale-106 xl:h-[90px] xl:w-[90px] 2xl:h-[104px] 2xl:w-[104px]"
                   />
                 </div>
 
@@ -338,7 +343,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               type="button"
               onClick={() => selectBinder(rightBgProject.slug)}
               aria-label={`${text("Inspect Folio", "切换至")} ${rightBgMeta.roman}: ${rightBgProject.title}`}
-              className="pointer-events-auto group absolute right-1 top-12 bottom-6 flex w-[245px] rotate-[3.6deg] cursor-pointer flex-col justify-between border-[1.5px] border-[#ebc88d]/85 bg-gradient-to-bl from-[#64221f] via-[#481715] to-[#2c0d0c] px-3.5 py-4 text-right shadow-[3px_2px_0_0_#eadbc0,4px_3px_0_0_#140d09,6px_5px_0_0_#cbb58c,22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,232,196,0.36)] transition-all duration-300 hover:translate-x-2.5 hover:-translate-y-1.5 hover:rotate-[4.6deg] hover:border-[#fff0c8] xl:right-2 xl:w-[265px] xl:px-4 xl:py-4.5 2xl:w-[295px] 2xl:px-4.5 2xl:py-5"
+              className="pointer-events-auto group absolute right-0 top-12 bottom-6 flex w-[255px] rotate-[3.6deg] cursor-pointer flex-col justify-between border-[1.5px] border-[#ebc88d]/85 bg-gradient-to-bl from-[#64221f] via-[#481715] to-[#2c0d0c] px-3.5 py-4 text-right shadow-[3px_2px_0_0_#eadbc0,4px_3px_0_0_#140d09,6px_5px_0_0_#cbb58c,22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,232,196,0.36)] transition-all duration-300 hover:translate-x-2.5 hover:-translate-y-1.5 hover:rotate-[4.6deg] hover:border-[#fff0c8] xl:right-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:right-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
             >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <img
@@ -351,7 +356,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               <span aria-hidden="true" className="pointer-events-none absolute inset-2.5 border border-[#e5c287]/38" />
 
               {/* Dedicated Exposed Outer-Wing Column — guarantees zero tangency with foreground vellum border */}
-              <div className="relative z-10 ml-auto flex h-full w-[94px] flex-col justify-between xl:w-[100px] 2xl:w-[116px]">
+              <div className="relative z-10 ml-auto flex h-full w-[100px] flex-col justify-between xl:w-[108px] 2xl:w-[126px]">
                 <div>
                   <p className="font-numeral text-[10px] font-bold tracking-[0.22em] text-[#f0d29c]">
                     {text("FOLIO", "卷")} {rightBgMeta.roman}
@@ -365,7 +370,8 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   <ProjectSigil
                     slug={rightBgProject.slug}
                     variant="gilt"
-                    className="h-[72px] w-[72px] transition-transform duration-300 group-hover:scale-106 xl:h-[76px] xl:w-[76px] 2xl:h-[88px] 2xl:w-[88px]"
+                    highlight={sigilHighlight}
+                    className="h-[82px] w-[82px] transition-transform duration-300 group-hover:scale-106 xl:h-[90px] xl:w-[90px] 2xl:h-[104px] 2xl:w-[104px]"
                   />
                 </div>
 
@@ -383,7 +389,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
 
           {/* Foreground Architecturally Level (0deg) Grand Rag-Vellum Case-Folio */}
           <div
-            className="relative z-20 mx-auto w-full lg:max-w-[940px] xl:max-w-[1010px] 2xl:max-w-[1080px]"
+            className="relative z-20 mx-auto w-full lg:max-w-[936px] xl:max-w-[1002px] 2xl:max-w-[1068px]"
             style={{
               transform: "translate3d(calc(var(--mx) * 3.5px), calc(var(--my) * 2.5px), 0)",
             }}
