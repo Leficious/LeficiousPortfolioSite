@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { Link } from "react-router-dom";
 import {
   BrassCornerClasps,
@@ -125,6 +125,8 @@ const ORDERED_SLUGS = [
 ] as const;
 
 const ALL_BINDER_KEYS = ["reel", ...ORDERED_SLUGS] as const;
+const LOUPE_RADIUS = 62;
+const LOUPE_ZOOM = 2.35;
 
 type HomePageProps = {
   activeFolioSlug: string;
@@ -135,6 +137,9 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
   const { isChinese, text, localizedPath } = useLanguage();
   const [playingVideo, setPlayingVideo] = useState(false);
   const lastProjectSlugRef = useRef<string>("still-life");
+  const blueprintBoxRef = useRef<HTMLDivElement>(null);
+  const loupeRef = useRef<HTMLDivElement>(null);
+  const loupeImgRef = useRef<HTMLImageElement>(null);
 
   const orderedProjects = ORDERED_SLUGS.map((slug) => {
     const found = projects.find((p) => p.slug === slug) ?? projects[0];
@@ -152,34 +157,56 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
   const activeProject = orderedProjects[currentProjectIndex];
   const activeMeta = BOARD_META[activeProject.slug] ?? BOARD_META["still-life"];
 
-  // Symmetrical smoked-mahogany backing folios peeking out on left & right
   const leftBgProject = orderedProjects[(currentProjectIndex + 1) % orderedProjects.length];
-  const rightBgProject =
-    orderedProjects[(currentProjectIndex + orderedProjects.length - 1) % orderedProjects.length];
   const leftBgMeta = BOARD_META[leftBgProject.slug];
+  const rightBgProject = orderedProjects[(currentProjectIndex + orderedProjects.length - 1) % orderedProjects.length];
   const rightBgMeta = BOARD_META[rightBgProject.slug];
 
   const selectBinder = (key: string) => {
+    if (key === activeFolioSlug) return;
     setPlayingVideo(false);
     onSelectFolioSlug(key);
   };
 
   useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
-      if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
-      const cur = ALL_BINDER_KEYS.indexOf(activeFolioSlug as (typeof ALL_BINDER_KEYS)[number]);
-      const safeCur = cur === -1 ? 1 : cur;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      const idx = ALL_BINDER_KEYS.indexOf(activeFolioSlug as (typeof ALL_BINDER_KEYS)[number]);
+      if (idx === -1) return;
       const nextIdx =
-        event.key === "ArrowRight"
-          ? (safeCur + 1) % ALL_BINDER_KEYS.length
-          : (safeCur - 1 + ALL_BINDER_KEYS.length) % ALL_BINDER_KEYS.length;
+        e.key === "ArrowRight"
+          ? (idx + 1) % ALL_BINDER_KEYS.length
+          : (idx - 1 + ALL_BINDER_KEYS.length) % ALL_BINDER_KEYS.length;
       setPlayingVideo(false);
       onSelectFolioSlug(ALL_BINDER_KEYS[nextIdx]);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [activeFolioSlug, onSelectFolioSlug]);
+
+  const handleBlueprintPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "touch") return;
+    const box = blueprintBoxRef.current;
+    const loupe = loupeRef.current;
+    const loupeImg = loupeImgRef.current;
+    if (!box || !loupe || !loupeImg) return;
+
+    const rect = box.getBoundingClientRect();
+    const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+    const y = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
+
+    loupe.style.opacity = "1";
+    loupe.style.transform = `translate3d(${(x - LOUPE_RADIUS).toFixed(1)}px, ${(y - LOUPE_RADIUS).toFixed(1)}px, 0)`;
+    loupeImg.style.width = `${(rect.width * LOUPE_ZOOM).toFixed(1)}px`;
+    loupeImg.style.height = `${(rect.height * LOUPE_ZOOM).toFixed(1)}px`;
+    loupeImg.style.transform = `translate3d(${(LOUPE_RADIUS - x * LOUPE_ZOOM).toFixed(1)}px, ${(LOUPE_RADIUS - y * LOUPE_ZOOM).toFixed(1)}px, 0)`;
+  };
+
+  const handleBlueprintPointerLeave = () => {
+    if (!loupeRef.current) return;
+    loupeRef.current.style.opacity = "0";
+  };
 
   const leadYoutubeId = activeProject.media.find((m) => m.type === "youtube")?.id ?? "hphiglctUCw";
   const plateImage = isChinese && activeMeta.plateSrcZh ? activeMeta.plateSrcZh : activeMeta.plateSrc;
@@ -190,20 +217,20 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
       <Seo
         title={text("Leficious | Game, Level & Technical Designer", "Leficious | 游戏、关卡与技术设计师")}
         description={text(
-          "Game, level, and technical design atelier of Lefi (Kevin) Shan — playable spatial puzzle worlds, multiphase combat systems, and 3D environments.",
-          "单凯飞（Leficious）的游戏、关卡与技术设计作品集：空间解谜、多阶段 Boss 战与风格化 3D 环境。",
+          "Game, level, and technical design atelier of Leficious — playable spatial puzzle worlds, multiphase combat systems, and 3D environments.",
+          "Leficious 的游戏、关卡与技术设计作品集：空间解谜、多阶段 Boss 战与风格化 3D 环境。",
         )}
         path={localizedPath("/")}
       />
 
       {/* ==================== 1. ALIGNED VICTORIAN ARCHIVAL HEADER RAIL ==================== */}
-      <header className="relative z-20 mx-auto flex w-full max-w-[1340px] flex-wrap items-center justify-between gap-4 border-b border-warm/28 pb-3.5">
+      <header className="relative z-20 mx-auto flex w-full max-w-[1340px] flex-wrap items-center justify-between gap-4 border-b border-warm/42 pb-3.5 shadow-[0_1px_0_rgba(0,0,0,0.8)]">
         <div className="flex flex-wrap items-baseline gap-x-3.5 gap-y-1">
-          <p className="font-numeral text-lg font-semibold tracking-[0.18em] text-[#ece2d0] sm:text-xl">
-            {text("LEFI SHAN", "单凯飞 · LEFI SHAN")}
+          <p className="font-numeral text-lg font-bold tracking-[0.22em] text-[#f7eedc] sm:text-xl">
+            LEFICIOUS
           </p>
-          <span aria-hidden="true" className="hidden h-1.5 w-1.5 rotate-45 bg-[#7d1919] sm:inline-block" />
-          <p className="font-display text-sm italic text-[#c97268] sm:text-base">
+          <span aria-hidden="true" className="hidden h-1.5 w-1.5 rotate-45 bg-[#b82222] sm:inline-block" />
+          <p className="font-display text-sm italic text-[#de8278] sm:text-base">
             {text(
               "Game, Level & Technical Designer · USC School of Cinematic Arts & Gnomon",
               "游戏、关卡与技术设计师 · 南加州大学电影艺术学院 & Gnomon",
@@ -250,8 +277,8 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               onClick={() => selectBinder(key)}
               className={`victorian-ticket cursor-pointer border px-3.5 py-1.5 font-display text-xs font-semibold transition-all ${
                 active
-                  ? "border-[#7d1919] bg-parchment text-parchment-ink"
-                  : "border-warm/30 bg-surface text-muted-foreground hover:text-foreground"
+                  ? "border-[#8f1616] bg-parchment text-parchment-ink"
+                  : "border-warm/40 bg-surface text-muted-foreground hover:text-foreground"
               }`}
             >
               {label}
@@ -262,7 +289,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
 
       {/* ==================== 2. SPATIALLY LOCKED CASE-DESK STAGE ==================== */}
       <main id="main-content" tabIndex={-1} className="relative my-auto mx-auto w-full max-w-[1340px] py-3 lg:py-4">
-        {/* Symmetrical Fanning Smoked-Mahogany Backing Folios w/ Antique-Bronze Copperplate Crests */}
+        {/* Symmetrical Fanning Smoked-Mahogany Backing Folios w/ 3D Embossed Gilt-Foil Crests */}
         <div
           className="pointer-events-none absolute inset-x-0 top-9 bottom-3 hidden lg:block"
           style={{
@@ -274,21 +301,22 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
             type="button"
             onClick={() => selectBinder(leftBgProject.slug)}
             aria-label={`${text("Inspect Folio", "切换至")} ${leftBgMeta.roman}: ${leftBgProject.title}`}
-            className="slate-folio pointer-events-auto group absolute -left-2 xl:-left-5 inset-y-3 flex w-[36%] -rotate-[4deg] cursor-pointer flex-col justify-between overflow-hidden border border-warm/35 p-4 text-left transition-all duration-300 hover:-translate-x-2.5 hover:-translate-y-1.5 hover:-rotate-[5.2deg] hover:border-[#c6a06a]/75 xl:p-5"
+            className="slate-folio pointer-events-auto group absolute -left-2 xl:-left-5 inset-y-3 flex w-[36%] -rotate-[4deg] cursor-pointer flex-col justify-between overflow-hidden border border-[#d4ae73]/55 p-4 text-left transition-all duration-300 hover:-translate-x-3 hover:-translate-y-1.5 hover:-rotate-[5.2deg] hover:border-[#ebd09e] xl:p-5"
           >
             <img
               src={leftBgMeta.cinemaThumbSrc}
               alt=""
               loading="lazy"
-              className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-14 mix-blend-luminosity transition-opacity duration-500 group-hover:opacity-28"
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-18 mix-blend-luminosity transition-opacity duration-500 group-hover:opacity-32"
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#120d0a]/92 via-[#19130f]/88 to-[#1c1511]/96" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#16100c]/92 via-[#1d1510]/88 to-[#221913]/96" />
+            <span aria-hidden="true" className="pointer-events-none absolute inset-2 border border-[#c89d62]/26" />
 
-            <div className="relative z-10 max-w-[104px] xl:max-w-[132px]">
-              <p className="font-numeral text-[10px] tracking-[0.2em] text-warm">
+            <div className="relative z-10 max-w-[106px] xl:max-w-[134px]">
+              <p className="font-numeral text-[10px] font-semibold tracking-[0.22em] text-[#e2be84]">
                 {text("FOLIO", "卷")} {leftBgMeta.roman}
               </p>
-              <p className="mt-0.5 font-display text-[13.5px] font-semibold leading-snug text-foreground/90 group-hover:text-[#f2dfc0] xl:text-[15px]">
+              <p className="mt-0.5 font-display text-[13.5px] font-semibold leading-snug text-[#f6eedc] group-hover:text-[#fff6e5] xl:text-[15px]">
                 {leftBgProject.title}
               </p>
             </div>
@@ -297,17 +325,17 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               <img
                 src={leftBgMeta.emblemGoldSrc}
                 alt=""
-                width="156"
-                height="156"
-                className="h-26 w-26 object-contain opacity-88 drop-shadow-[0_6px_16px_rgba(0,0,0,0.85)] transition-all duration-300 group-hover:scale-106 group-hover:opacity-100 xl:h-34 xl:w-34"
+                width="160"
+                height="160"
+                className="embossed-gilt h-27 w-27 object-contain opacity-95 transition-transform duration-300 group-hover:scale-108 xl:h-35 xl:w-35"
               />
             </div>
 
-            <div className="relative z-10 flex max-w-[104px] items-baseline gap-2 xl:max-w-[132px]">
-              <span className="font-numeral text-3xl font-semibold tracking-wider text-warm/80 transition-colors group-hover:text-[#d8b47c] xl:text-4xl">
+            <div className="relative z-10 flex max-w-[106px] items-baseline gap-2 xl:max-w-[134px]">
+              <span className="font-numeral text-3xl font-semibold tracking-wider text-[#e2be84] transition-colors group-hover:text-[#fff2d6] xl:text-4xl">
                 {leftBgMeta.roman}
               </span>
-              <span className="font-numeral text-[10px] tracking-[0.16em] text-muted-foreground group-hover:text-[#d8b47c]">
+              <span className="font-numeral text-[10px] tracking-[0.16em] text-muted-foreground group-hover:text-[#e2be84]">
                 →
               </span>
             </div>
@@ -318,21 +346,22 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
             type="button"
             onClick={() => selectBinder(rightBgProject.slug)}
             aria-label={`${text("Inspect Folio", "切换至")} ${rightBgMeta.roman}: ${rightBgProject.title}`}
-            className="slate-folio pointer-events-auto group absolute -right-2 xl:-right-5 inset-y-3 flex w-[36%] rotate-[4deg] cursor-pointer flex-col justify-between overflow-hidden border border-warm/35 p-4 text-right transition-all duration-300 hover:translate-x-2.5 hover:-translate-y-1.5 hover:rotate-[5.2deg] hover:border-[#c6a06a]/75 xl:p-5"
+            className="slate-folio pointer-events-auto group absolute -right-2 xl:-right-5 inset-y-3 flex w-[36%] rotate-[4deg] cursor-pointer flex-col justify-between overflow-hidden border border-[#d4ae73]/55 p-4 text-right transition-all duration-300 hover:translate-x-3 hover:-translate-y-1.5 hover:rotate-[5.2deg] hover:border-[#ebd09e] xl:p-5"
           >
             <img
               src={rightBgMeta.cinemaThumbSrc}
               alt=""
               loading="lazy"
-              className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-14 mix-blend-luminosity transition-opacity duration-500 group-hover:opacity-28"
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-18 mix-blend-luminosity transition-opacity duration-500 group-hover:opacity-32"
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-[#120d0a]/92 via-[#19130f]/88 to-[#1c1511]/96" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-[#16100c]/92 via-[#1d1510]/88 to-[#221913]/96" />
+            <span aria-hidden="true" className="pointer-events-none absolute inset-2 border border-[#c89d62]/26" />
 
-            <div className="relative z-10 ml-auto max-w-[104px] xl:max-w-[132px]">
-              <p className="font-numeral text-[10px] tracking-[0.2em] text-warm">
+            <div className="relative z-10 ml-auto max-w-[106px] xl:max-w-[134px]">
+              <p className="font-numeral text-[10px] font-semibold tracking-[0.22em] text-[#e2be84]">
                 {text("FOLIO", "卷")} {rightBgMeta.roman}
               </p>
-              <p className="mt-0.5 font-display text-[13.5px] font-semibold leading-snug text-foreground/90 group-hover:text-[#f2dfc0] xl:text-[15px]">
+              <p className="mt-0.5 font-display text-[13.5px] font-semibold leading-snug text-[#f6eedc] group-hover:text-[#fff6e5] xl:text-[15px]">
                 {rightBgProject.title}
               </p>
             </div>
@@ -341,17 +370,17 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               <img
                 src={rightBgMeta.emblemGoldSrc}
                 alt=""
-                width="156"
-                height="156"
-                className="h-26 w-26 object-contain opacity-88 drop-shadow-[0_6px_16px_rgba(0,0,0,0.85)] transition-all duration-300 group-hover:scale-106 group-hover:opacity-100 xl:h-34 xl:w-34"
+                width="160"
+                height="160"
+                className="embossed-gilt h-27 w-27 object-contain opacity-95 transition-transform duration-300 group-hover:scale-108 xl:h-35 xl:w-35"
               />
             </div>
 
-            <div className="relative z-10 ml-auto flex max-w-[104px] items-baseline justify-end gap-2 xl:max-w-[132px]">
-              <span className="font-numeral text-[10px] tracking-[0.16em] text-muted-foreground group-hover:text-[#d8b47c]">
+            <div className="relative z-10 ml-auto flex max-w-[106px] items-baseline justify-end gap-2 xl:max-w-[134px]">
+              <span className="font-numeral text-[10px] tracking-[0.16em] text-muted-foreground group-hover:text-[#e2be84]">
                 ←
               </span>
-              <span className="font-numeral text-3xl font-semibold tracking-wider text-warm/80 transition-colors group-hover:text-[#d8b47c] xl:text-4xl">
+              <span className="font-numeral text-3xl font-semibold tracking-wider text-[#e2be84] transition-colors group-hover:text-[#fff2d6] xl:text-4xl">
                 {rightBgMeta.roman}
               </span>
             </div>
@@ -370,7 +399,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
         >
           <article
             key={activeFolioSlug}
-            className="parchment-sheet animate-folio-arc relative overflow-hidden border-[5px] border-[#15100d] px-5 pt-8 pb-6 shadow-[0_32px_76px_rgba(0,0,0,0.85),6px_6px_0_-1px_#d6c8ab,7px_7px_0_0_#15100d] sm:px-9 sm:pt-9 sm:pb-7"
+            className="parchment-sheet animate-folio-arc relative overflow-hidden border-[5px] border-[#110b07] px-5 pt-8 pb-6 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-9 sm:pt-8.5 sm:pb-7"
           >
             <FolioCorners tone="parchment" />
 
@@ -378,7 +407,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               /* ==================== 00 · MASTER DESIGN REEL FOLIO ==================== */
               <div className="relative z-10">
                 <header className="text-center">
-                  <p className="font-numeral text-[11px] font-semibold tracking-[0.26em] text-parchment-muted uppercase">
+                  <p className="font-numeral text-[11px] font-bold tracking-[0.26em] text-parchment-muted uppercase">
                     {text("ATELIER SHOWCASE · MMXXVI", "年度实机集锦 · 2026")}
                   </p>
                   <h1 className="mt-1 font-display text-2xl font-semibold tracking-tight text-parchment-ink sm:text-4xl">
@@ -386,13 +415,15 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   </h1>
                   <p className="mt-1 font-display text-base italic text-rubric sm:text-lg">
                     {text(
-                      "Lefi (Kevin) Shan · USC School of Cinematic Arts & Gnomon",
-                      "单凯飞 Lefi Shan · 南加州大学电影艺术学院 & Gnomon",
+                      "Leficious · USC School of Cinematic Arts & Gnomon",
+                      "Leficious · 南加州大学电影艺术学院 & Gnomon",
                     )}
                   </p>
                 </header>
 
-                <div className="relative mt-5 border-2 border-[#5c401e] bg-[#0b0806] p-2 shadow-2xl">
+                <BrassRule ornate tone="parchment" className="my-3.5" />
+
+                <div className="relative border-2 border-[#4d3417] bg-[#0a0705] p-2 shadow-2xl">
                   <BrassCornerClasps sizeClass="h-12 w-12 sm:h-16 sm:w-16" />
                   <div className="relative aspect-video w-full overflow-hidden bg-black">
                     {playingVideo ? (
@@ -438,7 +469,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                         key={proj.slug}
                         type="button"
                         onClick={() => selectBinder(proj.slug)}
-                        className="victorian-ticket cursor-pointer border border-[#7a582e]/65 bg-parchment-deep/75 px-3.5 py-1.5 font-display text-xs font-semibold text-parchment-ink transition-colors hover:bg-[#191310] hover:text-[#f2e8d5]"
+                        className="victorian-ticket embossed-ticket cursor-pointer border border-[#684720]/80 bg-parchment-deep/85 px-3.5 py-1.5 font-display text-xs font-semibold text-parchment-ink transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
                       >
                         {BOARD_META[proj.slug].roman} · {proj.title}
                       </button>
@@ -451,7 +482,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                         : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"
                     }
                     download
-                    className="inline-flex items-center gap-2 bg-[#191310] px-4.5 py-2 font-numeral text-xs font-semibold tracking-[0.12em] text-[#f2e8d5] uppercase transition-colors hover:bg-[#2e231d]"
+                    className="victorian-ticket inline-flex items-center gap-2 bg-[#140d09] px-4.5 py-2 font-numeral text-xs font-semibold tracking-[0.12em] text-[#f6eedc] uppercase transition-colors hover:bg-[#2a1d15]"
                   >
                     {text("Download Résumé (PDF)", "下载游戏设计简历")} <span aria-hidden="true">↓</span>
                   </a>
@@ -460,37 +491,58 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
             ) : (
               /* ==================== I–V · LOCKED TWO-WING VICTORIAN CASE DIPTYCH ==================== */
               <div className="relative z-10">
-                {/* Subtle Sepia Copperplate Watermark on the Right Wing */}
+                {/* Debossed Intaglio Copperplate Watermark on the Right Wing */}
                 <img
                   src={activeMeta.emblemInkSrc}
                   alt=""
                   aria-hidden="true"
-                  className="pointer-events-none absolute right-6 top-1/2 hidden h-64 w-64 -translate-y-1/2 object-contain opacity-[0.06] mix-blend-multiply select-none lg:block"
+                  className="debossed-intaglio pointer-events-none absolute right-5 top-1/2 hidden h-64 w-64 -translate-y-1/2 object-contain opacity-[0.11] mix-blend-multiply select-none lg:block"
                 />
 
-                {/* Centered Victorian Case Header */}
-                <header className="text-center">
-                  <h1 className="font-display text-2xl font-semibold tracking-tight text-parchment-ink sm:text-[31px]">
-                    <span className="font-numeral text-[0.86em] tracking-[0.08em]">
-                      {text("FOLIO", "卷")} {activeMeta.roman}
-                    </span>{" "}
-                    — {activeProject.title}
-                  </h1>
-                  <p className="mt-0.5 font-display text-[15px] italic text-rubric sm:text-[17px]">
-                    {isChinese ? activeMeta.subtitleZh : activeMeta.subtitleEn} · {activeProject.role} · {activeProject.year}
-                  </p>
+                {/* Centered Victorian Case Header w/ Debossed Intaglio Crest Medallions */}
+                <header className="flex items-center justify-center gap-4 text-center sm:gap-5">
+                  <img
+                    src={activeMeta.emblemInkSrc}
+                    alt=""
+                    aria-hidden="true"
+                    width="48"
+                    height="48"
+                    className="debossed-intaglio hidden h-11 w-11 shrink-0 object-contain opacity-88 sm:block"
+                  />
+
+                  <div>
+                    <h1 className="font-display text-2xl font-bold tracking-tight text-parchment-ink sm:text-[31px]">
+                      <span className="font-numeral text-[0.86em] tracking-[0.08em]">
+                        {text("FOLIO", "卷")} {activeMeta.roman}
+                      </span>{" "}
+                      — {activeProject.title}
+                    </h1>
+                    <p className="mt-0.5 font-display text-[15px] font-medium italic text-rubric sm:text-[17px]">
+                      {isChinese ? activeMeta.subtitleZh : activeMeta.subtitleEn} · {activeProject.role} · {activeProject.year}
+                    </p>
+                  </div>
+
+                  <img
+                    src={activeMeta.emblemInkSrc}
+                    alt=""
+                    aria-hidden="true"
+                    width="48"
+                    height="48"
+                    className="debossed-intaglio hidden h-11 w-11 shrink-0 object-contain opacity-88 sm:block"
+                  />
                 </header>
 
-                <BrassRule tone="parchment" className="my-4" />
+                {/* Sculpted Chased-Bronze & Venetian Garnet Filigree Divider */}
+                <BrassRule ornate tone="parchment" className="my-3.5" />
 
-                {/* Height-Matched 2-Wing Spread: Left = Bronze-Clamped Cinema + 3 Telemetry Tickets; Right = Pitch + Wax-Sealed Blueprint + CTAs */}
+                {/* Height-Matched 2-Wing Spread */}
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.18fr_0.82fr] lg:items-stretch lg:gap-7">
-                  {/* LEFT WING: Ornate Bronze-Clamped Gameplay Plate + 3 Chamfered Telemetry Tickets */}
+                  {/* LEFT WING: Ornate Bronze-Clamped Gameplay Plate + 3 Embossed Telemetry Tickets */}
                   <div className="flex flex-col justify-between gap-3.5">
-                    <div className="relative border-2 border-[#5c401e] bg-[#0b0806] p-2 shadow-[0_14px_34px_rgba(0,0,0,0.42)]">
-                      <BrassCornerClasps sizeClass="h-11 w-11 sm:h-14 sm:w-14" />
+                    <div className="relative border-2 border-[#4d3417] bg-[#090604] p-2 shadow-[0_16px_38px_rgba(0,0,0,0.52)]">
+                      <BrassCornerClasps sizeClass="h-12 w-12 sm:h-15 sm:w-15" />
 
-                      <div className="relative aspect-video w-full overflow-hidden border border-[#a88452]/40 bg-black">
+                      <div className="relative aspect-video w-full overflow-hidden border border-[#c89d62]/48 bg-black">
                         {playingVideo ? (
                           <iframe
                             src={`https://www.youtube-nocookie.com/embed/${leadYoutubeId}?autoplay=1`}
@@ -515,7 +567,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                               decoding="async"
                               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                             />
-                            <span className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/15 transition-opacity group-hover:opacity-75" />
+                            <span className="absolute inset-0 bg-gradient-to-t from-black/62 via-transparent to-black/18 transition-opacity group-hover:opacity-78" />
 
                             <span className="brass-plaque absolute bottom-3.5 left-3.5 inline-flex items-center gap-2 px-4 py-2 font-numeral text-[11px] font-bold tracking-[0.12em] uppercase transition-transform duration-200 group-hover:scale-104 sm:bottom-4 sm:left-4 sm:px-4.5">
                               <span aria-hidden="true">▶</span>
@@ -526,13 +578,14 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                       </div>
                     </div>
 
-                    {/* 3 Chamfered Victorian Apothecary Telemetry Tickets */}
+                    {/* 3 High-Contrast Embossed Victorian Apothecary Telemetry Tickets */}
                     <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                       {telemetry.map((spec) => (
                         <div
                           key={spec}
-                          className="victorian-ticket border border-[#7a582e]/65 bg-parchment-deep/70 px-2.5 py-2 text-center shadow-[inset_0_0_0_2px_rgba(232,220,196,0.75)]"
+                          className="victorian-ticket embossed-ticket flex items-center justify-center gap-1.5 border border-[#61411d]/85 bg-parchment-deep/90 px-2.5 py-2 text-center"
                         >
+                          <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-rubric" />
                           <span className="font-numeral text-[10.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase">
                             {spec}
                           </span>
@@ -541,26 +594,30 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                     </div>
                   </div>
 
-                  {/* RIGHT WING: Literary Case Summary + Wax-Sealed Architectural Blueprint + CTAs */}
-                  <div className="flex flex-col justify-between gap-4 lg:border-l lg:border-[#7a582e]/35 lg:pl-7">
+                  {/* RIGHT WING: Literary Case Summary + Loupe-Inspectable Blueprint + CTAs */}
+                  <div className="flex flex-col justify-between gap-4 lg:border-l lg:border-[#684720]/48 lg:pl-7">
                     <p
-                      className={`text-pretty text-[16px] leading-[1.6] text-parchment-ink/94 sm:text-[17px] ${
+                      className={`text-pretty text-[16.5px] leading-[1.6] text-parchment-ink sm:text-[17.5px] ${
                         isChinese ? "zh-readable" : ""
                       }`}
                     >
                       <FormattedText>{activeProject.summary}</FormattedText>
                     </p>
 
-                    {/* Wax-Sealed Ink-Engraved Orthographic Blueprint Plate */}
+                    {/* Wax-Sealed Blueprint Plate w/ Interactive 2.35x Brass Optical Magnifying Loupe */}
                     <Link
                       to={localizedPath(`/projects/${activeProject.slug}`)}
                       viewTransition
-                      className="group relative block border border-[#7a582e]/60 bg-parchment-deep/55 p-2.5 shadow-[inset_0_0_0_2px_rgba(232,220,196,0.7)] transition-colors hover:border-rubric/75"
+                      className="embossed-ticket relative block border border-[#684720]/80 bg-parchment-deep/75 p-2.5 transition-colors hover:border-rubric"
                     >
-                      {/* Petite Red Sealing-Wax Stamp on the Blueprint Corner */}
-                      <CrimsonStamp className="pointer-events-none absolute -right-2.5 -top-2.5 z-20 h-9 w-9" />
+                      <CrimsonStamp className="pointer-events-none absolute -right-2.5 -top-2.5 z-30 h-9.5 w-9.5" />
 
-                      <div className="overflow-hidden border border-[#7a582e]/40 bg-[#dfd2b7]">
+                      <div
+                        ref={blueprintBoxRef}
+                        onPointerMove={handleBlueprintPointerMove}
+                        onPointerLeave={handleBlueprintPointerLeave}
+                        className="relative cursor-crosshair overflow-hidden border border-[#684720]/55 bg-[#e4d6b8]"
+                      >
                         <img
                           src={plateImage}
                           alt={isChinese ? activeMeta.plateLabelZh : activeMeta.plateLabelEn}
@@ -570,26 +627,59 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                           fetchPriority="high"
                           className={`${
                             activeMeta.plateMode === "ink" ? "ink-engraving" : "daguerreotype-plate"
-                          } aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]`}
+                          } aspect-[16/9] w-full object-cover`}
                         />
+
+                        {/* Interactive 2.35x Chased-Bronze & Sunlit-Crystal Sepia Optical Loupe */}
+                        <div
+                          ref={loupeRef}
+                          aria-hidden="true"
+                          style={{
+                            width: `${LOUPE_RADIUS * 2}px`,
+                            height: `${LOUPE_RADIUS * 2}px`,
+                            borderRadius: "50%",
+                            opacity: 0,
+                            transform: "translate3d(0px, 0px, 0)",
+                            transition: "opacity 150ms ease",
+                            boxShadow:
+                              "0 14px 30px rgba(18,10,4,0.68), 0 0 0 3px #d4ae73, 0 0 0 5px #22150c, inset 0 0 14px rgba(84,54,22,0.32), inset 0 2px 5px rgba(255,252,242,0.85)",
+                          }}
+                          className="pointer-events-none absolute left-0 top-0 z-20 hidden overflow-hidden bg-[#f8efdc] lg:block"
+                        >
+                          <img
+                            ref={loupeImgRef}
+                            src={plateImage}
+                            alt=""
+                            className={`max-w-none select-none object-cover ${
+                              activeMeta.plateMode === "ink" ? "ink-engraving" : "daguerreotype-plate"
+                            }`}
+                          />
+                          {/* Brass surveyor crosshair & inner bevel ring inside the crystal lens */}
+                          <span className="absolute inset-x-3 top-1/2 h-px -translate-y-1/2 bg-[#8f1616]/28" />
+                          <span className="absolute inset-y-3 left-1/2 w-px -translate-x-1/2 bg-[#8f1616]/28" />
+                          <span
+                            style={{ borderRadius: "50%" }}
+                            className="absolute inset-1.5 border border-[#b3874c]/55"
+                          />
+                        </div>
                       </div>
 
                       <div className="mt-2 flex items-baseline justify-between gap-2 px-0.5">
-                        <span className="truncate font-display text-[13px] italic text-parchment-muted">
+                        <span className="truncate font-display text-[13px] font-medium italic text-parchment-muted">
                           {isChinese ? activeMeta.plateLabelZh : activeMeta.plateLabelEn}
                         </span>
-                        <span className="shrink-0 font-numeral text-[10px] font-bold tracking-[0.14em] text-rubric uppercase transition-transform group-hover:translate-x-0.5">
-                          {text("Inspect →", "拆解 →")}
+                        <span className="shrink-0 font-numeral text-[10px] font-bold tracking-[0.14em] text-rubric uppercase">
+                          {text("Loupe / Inspect →", "放大镜 / 拆解 →")}
                         </span>
                       </div>
                     </Link>
 
-                    {/* Sharp Architectural CTAs */}
+                    {/* Sharp High-Contrast Architectural CTAs */}
                     <div className="flex flex-wrap items-center gap-2.5 pt-0.5">
                       <Link
                         to={localizedPath(`/projects/${activeProject.slug}`)}
                         viewTransition
-                        className="victorian-ticket inline-flex flex-1 items-center justify-center gap-2 bg-[#191310] px-4.5 py-2.5 font-numeral text-xs font-semibold tracking-[0.12em] text-[#f2e8d5] uppercase transition-colors hover:bg-[#2f231d]"
+                        className="victorian-ticket inline-flex flex-1 items-center justify-center gap-2 bg-[#140d09] px-4.5 py-2.5 font-numeral text-xs font-bold tracking-[0.12em] text-[#f6eedc] uppercase shadow-[0_4px_12px_rgba(0,0,0,0.35)] transition-colors hover:bg-[#2c1e15]"
                       >
                         <span>{text("Open Full Folio", "展开完整卷宗")}</span>
                         <span aria-hidden="true">→</span>
@@ -600,7 +690,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                           href={activeProject.externalLink.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="victorian-ticket inline-flex items-center justify-center gap-1.5 border border-[#191310]/75 bg-transparent px-4 py-2.5 font-numeral text-xs font-semibold tracking-[0.1em] text-parchment-ink uppercase transition-colors hover:bg-[#191310] hover:text-[#f2e8d5]"
+                          className="victorian-ticket embossed-ticket inline-flex items-center justify-center gap-1.5 border-2 border-[#140d09] bg-parchment-deep/65 px-4 py-2.5 font-numeral text-xs font-bold tracking-[0.1em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
                         >
                           <span>{activeProject.externalLink.label}</span>
                           <span aria-hidden="true">↗</span>
@@ -609,7 +699,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                         <Link
                           to={localizedPath("/gallery")}
                           viewTransition
-                          className="victorian-ticket inline-flex items-center justify-center gap-1.5 border border-[#191310]/75 bg-transparent px-4 py-2.5 font-numeral text-xs font-semibold tracking-[0.1em] text-parchment-ink uppercase transition-colors hover:bg-[#191310] hover:text-[#f2e8d5]"
+                          className="victorian-ticket embossed-ticket inline-flex items-center justify-center gap-1.5 border-2 border-[#140d09] bg-parchment-deep/65 px-4 py-2.5 font-numeral text-xs font-bold tracking-[0.1em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
                         >
                           <span>{text("Gallery", "画廊拆解")}</span>
                           <span aria-hidden="true">→</span>
@@ -624,23 +714,26 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
         </div>
       </main>
 
-      {/* Bottom Subtle Folio Index Bar */}
-      <div className="relative z-20 mt-4 flex items-center justify-center gap-3 text-xs text-muted-foreground/80">
-        <span className="font-numeral text-[10.5px] tracking-[0.22em] text-warm uppercase">
+      {/* Bottom Folio & Cartography Hint Bar */}
+      <div className="relative z-20 mt-4 flex items-center justify-center gap-3 text-xs text-muted-foreground">
+        <span className="font-numeral text-[10.5px] font-semibold tracking-[0.22em] text-warm uppercase">
           {text("CASE INDEX", "卷宗索引")} {isReelActive ? "00" : activeMeta.roman} / V
         </span>
-        <span aria-hidden="true" className="h-1 w-1 rotate-45 bg-rubric" />
+        <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-rubric" />
         <span className="hidden font-display italic sm:inline">
-          {text("Switch folios via right-edge ledger tabs, flanking folios, or ← / → keys", "可通过右侧书签、两侧底卷或方向键 ← / → 翻阅")}
+          {text(
+            "Sweep desk contours or hover blueprint loupe · Switch folios via ledger tabs or ← / →",
+            "划过背景等高线或悬停蓝图放大镜 · 通过右侧书签或 ← / → 切换卷宗",
+          )}
         </span>
       </div>
 
       {/* ==================== 3. RIGHT-EDGE BOUND VELLUM LEDGER SPINE & TABS (Desktop xl+) ==================== */}
       <nav
         aria-label={text("Folio Binder Tabs", "卷宗侧边索引签")}
-        className="fixed inset-y-0 right-0 z-40 hidden w-12 flex-col justify-center gap-1.5 border-l border-warm/25 bg-[#090706]/85 py-6 select-none xl:flex"
+        className="fixed inset-y-0 right-0 z-40 hidden w-12 flex-col justify-center gap-1.5 border-l border-warm/38 bg-[#060403]/92 py-6 select-none xl:flex"
       >
-        <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-[3px] w-px bg-warm/12" />
+        <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-[3px] w-px bg-warm/18" />
         {ALL_BINDER_KEYS.map((key) => {
           const active = activeFolioSlug === key;
           const label =
@@ -658,12 +751,12 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               aria-current={active ? "true" : undefined}
               className={`group relative ml-auto flex cursor-pointer items-center justify-center border-y border-l py-3.5 transition-all duration-250 active:scale-97 ${
                 active
-                  ? "w-13 -translate-x-1 border-[#7a582e] border-r-[4px] border-r-rubric bg-parchment text-rubric shadow-[-10px_6px_22px_rgba(0,0,0,0.68)]"
-                  : "w-10 border-warm/30 bg-[#cbbda3] text-[#1d1611] opacity-88 shadow-[-4px_4px_12px_rgba(0,0,0,0.45)] hover:-translate-x-1 hover:w-11 hover:bg-[#e4d7be] hover:opacity-100"
+                  ? "w-13 -translate-x-1 border-[#684720] border-r-[4px] border-r-rubric bg-parchment text-rubric shadow-[-10px_6px_22px_rgba(0,0,0,0.82)]"
+                  : "w-10 border-warm/38 bg-[#d6c6a9] text-[#140e09] opacity-92 shadow-[-4px_4px_12px_rgba(0,0,0,0.58)] hover:-translate-x-1 hover:w-11 hover:bg-[#efe3ca] hover:opacity-100"
               }`}
             >
               <span
-                className="font-display text-[13px] font-semibold tracking-wide whitespace-nowrap"
+                className="font-display text-[13px] font-bold tracking-wide whitespace-nowrap"
                 style={{ writingMode: "vertical-rl" }}
               >
                 {label}

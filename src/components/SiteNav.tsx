@@ -31,7 +31,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
   const spineLinkClass = (isActive: boolean) =>
     `relative flex w-full items-center justify-center py-2 text-[13px] font-display tracking-wide transition-colors ${
       isActive
-        ? "bg-gradient-to-r from-[#7d1919]/40 via-[#a88452]/14 to-transparent text-[#efe3cc] font-semibold before:absolute before:inset-y-0 before:left-0 before:w-[2.5px] before:bg-[#a62323]"
+        ? "bg-gradient-to-r from-[#8f1818]/52 via-[#c89d62]/18 to-transparent text-[#f7eedc] font-semibold before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-[#c42828]"
         : "text-muted-foreground hover:text-foreground"
     }`;
 
@@ -44,14 +44,14 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
         {text("Skip to content", "跳至主要内容")}
       </a>
 
-      {/* Desktop 76px Fixed Bookcloth & Double-Bronze Vertical Spine */}
+      {/* Desktop 76px Fixed Bookcloth & Double-Gilded Vertical Spine */}
       <aside
         aria-label={text("Atelier Spine Navigation", "工作室侧脊导航")}
-        className="site-header fixed inset-y-0 left-0 z-50 hidden w-[76px] flex-col items-center justify-between bg-spine py-4 select-none lg:flex"
+        className="site-header fixed inset-y-0 left-0 z-50 hidden w-[76px] flex-col items-center justify-between bg-spine py-4 shadow-[6px_0_24px_rgba(0,0,0,0.85)] select-none lg:flex"
       >
-        {/* Double vertical antique-bronze binding hairlines */}
-        <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-px bg-[#a88452]/45" />
-        <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-[3px] w-px bg-[#a88452]/18" />
+        {/* Double vertical burnished-bronze binding hairlines */}
+        <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-px bg-[#c89d62]/62" />
+        <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-[3px] w-px bg-[#c89d62]/26" />
 
         {/* Top Crest + Vertical Engraved Wordmark */}
         <Link
@@ -60,9 +60,9 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           aria-label="Leficious — Home"
           className="group flex flex-col items-center gap-3 pt-1"
         >
-          <AstrolabeCrest className="h-11 w-11" />
+          <AstrolabeCrest className="h-11 w-11 drop-shadow-[0_3px_8px_rgba(0,0,0,0.85)]" />
           <span
-            className="font-numeral text-[12px] tracking-[0.28em] text-[#c59e68]/90 transition-colors group-hover:text-[#efe3cc]"
+            className="font-numeral text-[12px] font-semibold tracking-[0.28em] text-[#dec089] transition-colors group-hover:text-[#fbf3e4]"
             style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
           >
             LEFICIOUS
@@ -71,7 +71,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
 
         {/* Center Roman Numeral Folio Jumpers (I - V) */}
         <nav aria-label={text("Case Folios I to V", "档案卷一至五")} className="flex w-full flex-col items-center">
-          <div className="w-9 border-t border-warm/25" />
+          <div className="w-10 border-t border-warm/40" />
           {FOLIO_SLUGS.map((slug) => projects.find((p) => p.slug === slug) ?? projects[0]).map((proj, idx) => {
             const numeral = ROMAN[idx] ?? String(idx + 1);
             const activeOnHome = isHome && activeFolioSlug === proj.slug;
@@ -88,12 +88,12 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
                   aria-current={active ? "true" : undefined}
                   className={`relative flex w-full cursor-pointer flex-col items-center py-2 font-numeral text-xs tracking-widest transition-colors ${
                     active
-                      ? "text-[#efe3cc] font-bold after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:border-y-[5px] after:border-r-[6px] after:border-y-transparent after:border-r-[#a62323]"
-                      : "text-muted-foreground/80 hover:text-foreground"
+                      ? "text-[#fbf3e4] font-bold after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:border-y-[5px] after:border-r-[6px] after:border-y-transparent after:border-r-[#c42828]"
+                      : "text-muted-foreground/85 hover:text-[#f2dfc0]"
                   }`}
                 >
                   {numeral}
-                  <span aria-hidden="true" className="mt-2 block h-px w-5 bg-warm/18" />
+                  <span aria-hidden="true" className="mt-2 block h-px w-5 bg-warm/28" />
                 </button>
               );
             }
@@ -107,18 +107,18 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
                 aria-current={active ? "page" : undefined}
                 className={`relative flex w-full flex-col items-center py-2 font-numeral text-xs tracking-widest transition-colors ${
                   active
-                    ? "text-[#efe3cc] font-bold after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:border-y-[5px] after:border-r-[6px] after:border-y-transparent after:border-r-[#a62323]"
-                    : "text-muted-foreground/80 hover:text-foreground"
+                    ? "text-[#fbf3e4] font-bold after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:border-y-[5px] after:border-r-[6px] after:border-y-transparent after:border-r-[#c42828]"
+                    : "text-muted-foreground/85 hover:text-[#f2dfc0]"
                 }`}
               >
                 {numeral}
-                <span aria-hidden="true" className="mt-2 block h-px w-5 bg-warm/18" />
+                <span aria-hidden="true" className="mt-2 block h-px w-5 bg-warm/28" />
               </Link>
             );
           })}
         </nav>
 
-        {/* Bottom Primary Pages, Language Switch & Engraved Bronze Résumé Plaque */}
+        {/* Bottom Primary Pages, Language Switch & Embossed Bronze Résumé Plaque */}
         <div className="flex w-full flex-col items-center gap-2">
           <nav aria-label={text("Primary sections", "主要页面")} className="flex w-full flex-col items-center">
             <NavLink to={localizedPath("/")} end viewTransition className={({ isActive }) => spineLinkClass(isActive)}>
@@ -138,14 +138,14 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           >
             {(["en", "zh"] as Language[]).map((opt, idx) => (
               <span key={opt} className="inline-flex items-center gap-1">
-                {idx > 0 && <span aria-hidden="true" className="text-warm/40">/</span>}
+                {idx > 0 && <span aria-hidden="true" className="text-warm/50">/</span>}
                 <button
                   type="button"
                   onClick={() => setLanguage(opt)}
                   aria-pressed={language === opt}
                   lang={opt === "zh" ? "zh-CN" : "en"}
                   className={`cursor-pointer px-0.5 py-0.5 transition-colors ${
-                    language === opt ? "font-semibold text-[#d4af77]" : "hover:text-foreground"
+                    language === opt ? "font-bold text-[#e5c287]" : "hover:text-foreground"
                   }`}
                 >
                   {opt === "en" ? "EN" : "中文"}
@@ -166,11 +166,11 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
       </aside>
 
       {/* Mobile / Tablet Compact Top Bar (< lg) */}
-      <header className="site-header sticky top-0 z-50 border-b border-warm/35 bg-spine/95 backdrop-blur-md lg:hidden">
+      <header className="site-header sticky top-0 z-50 border-b border-warm/45 bg-spine/95 backdrop-blur-md lg:hidden">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-2.5">
           <Link to={localizedPath("/")} viewTransition className="inline-flex items-center gap-2.5">
             <AstrolabeCrest className="h-8 w-8" />
-            <span className="font-numeral text-sm tracking-[0.2em] text-[#d4af77]">LEFICIOUS</span>
+            <span className="font-numeral text-sm font-semibold tracking-[0.2em] text-[#e5c287]">LEFICIOUS</span>
           </Link>
 
           <div className="flex items-center gap-4 text-xs">
@@ -178,28 +178,28 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
               to={localizedPath("/")}
               end
               viewTransition
-              className={({ isActive }) => (isActive ? "font-semibold text-[#efe3cc]" : "text-muted-foreground")}
+              className={({ isActive }) => (isActive ? "font-semibold text-[#fbf3e4]" : "text-muted-foreground")}
             >
               {text("Atelier", "案台")}
             </NavLink>
             <NavLink
               to={localizedPath("/gallery")}
               viewTransition
-              className={({ isActive }) => (isActive ? "font-semibold text-[#efe3cc]" : "text-muted-foreground")}
+              className={({ isActive }) => (isActive ? "font-semibold text-[#fbf3e4]" : "text-muted-foreground")}
             >
               {text("Gallery", "画廊")}
             </NavLink>
             <NavLink
               to={localizedPath("/about")}
               viewTransition
-              className={({ isActive }) => (isActive ? "font-semibold text-[#efe3cc]" : "text-muted-foreground")}
+              className={({ isActive }) => (isActive ? "font-semibold text-[#fbf3e4]" : "text-muted-foreground")}
             >
               {text("About", "档案")}
             </NavLink>
             <button
               type="button"
               onClick={() => setLanguage(language === "en" ? "zh" : "en")}
-              className="border border-warm/35 px-2 py-0.5 font-numeral text-[11px] text-[#d4af77]"
+              className="border border-warm/45 px-2 py-0.5 font-numeral text-[11px] text-[#e5c287]"
             >
               {language === "en" ? "中文" : "EN"}
             </button>
@@ -216,12 +216,12 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
 export function SiteFooter() {
   const { text } = useLanguage();
   return (
-    <footer className="mt-16 border-t border-warm/25">
+    <footer className="mt-16 border-t border-warm/35">
       <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-7 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-display text-sm tracking-wide text-foreground/85">
-          © {new Date().getFullYear()} Lefi Shan · {text("Game, Level & Technical Design Atelier", "游戏、关卡与技术设计档案")}
+        <p className="font-display text-sm tracking-wide text-foreground/90">
+          © {new Date().getFullYear()} Leficious · {text("Game, Level & Technical Design Atelier", "游戏、关卡与技术设计档案")}
         </p>
-        <p className="font-numeral text-[11px] tracking-[0.18em] text-warm/85">LOS ANGELES · CA</p>
+        <p className="font-numeral text-[11px] font-semibold tracking-[0.18em] text-warm">LOS ANGELES · CA</p>
       </div>
     </footer>
   );

@@ -24,11 +24,12 @@ const setMeta = (selector: string, attribute: "name" | "property", value: string
 const buildStructuredData = (title: string, description: string, path: string, image: string) => {
   const url = new URL(path, "https://leficious.com").toString();
   const contentPath = path.replace(/^\/zh(?=\/|$)/, "") || "/";
+  const isAbout = contentPath === "/about";
   const person = {
     "@type": "Person",
     "@id": "https://leficious.com/#person",
-    name: "Lefi (Kevin) Shan",
-    alternateName: "Leficious",
+    name: isAbout ? "Lefi (Kevin) Shan" : "Leficious",
+    ...(isAbout ? { alternateName: "Leficious" } : {}),
     url: "https://leficious.com/",
     jobTitle: "Game, Level & Technical Designer",
     sameAs: ["https://www.linkedin.com/in/leficious/", "https://github.com/Leficious", "https://leficious.itch.io/"],

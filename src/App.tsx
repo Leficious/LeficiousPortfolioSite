@@ -3,11 +3,11 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { AmbientBackdrop } from "./components/AmbientBackdrop";
 import { useDeskParallax } from "./lib/atelierMotion";
 import { SiteNav } from "./components/SiteNav";
+import { AboutPage } from "./pages/AboutPage";
+import { GalleryPage } from "./pages/GalleryPage";
 import { HomePage } from "./pages/HomePage";
 import { useLanguage } from "./lib/language";
 
-const AboutPage = lazy(() => import("./pages/AboutPage").then((module) => ({ default: module.AboutPage })));
-const GalleryPage = lazy(() => import("./pages/GalleryPage").then((module) => ({ default: module.GalleryPage })));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage").then((module) => ({ default: module.NotFoundPage })));
 const ProjectPage = lazy(() => import("./pages/ProjectPage").then((module) => ({ default: module.ProjectPage })));
 

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { BrassCornerClasps, FolioCorners } from "../components/AtelierChrome";
+import { BrassCornerClasps, BrassRule, FolioCorners } from "../components/AtelierChrome";
 import { FeaturedReel } from "../components/FeaturedReel";
 import { GalleryLayout } from "../components/GalleryLayout";
 import { GalleryLightbox } from "../components/GalleryLightbox";
@@ -97,8 +97,8 @@ export function GalleryPage() {
       <Seo
         title={text("Atelier Gallery | Leficious", "视觉与技术画廊 | Leficious")}
         description={text(
-          "3D environment art, character rigging, realtime VFX, technical prototypes, and Maya tooling by Lefi (Kevin) Shan.",
-          "单凯飞（Leficious）的 3D 环境美术、角色绑定、实时特效、技术原型与 Maya 工具作品集。",
+          "3D environment art, character rigging, realtime VFX, technical prototypes, and Maya tooling by Leficious.",
+          "Leficious 的 3D 环境美术、角色绑定、实时特效、技术原型与 Maya 工具作品集。",
         )}
         path={localizedPath("/gallery")}
         image="/gallery/thumbnails/water-blossoms.webp"
@@ -185,9 +185,12 @@ export function GalleryPage() {
             </section>
           )}
 
-          {/* Recessed Smoked-Mahogany Discipline Index Tray w/ Chamfered Victorian Tickets */}
-          <section className="mt-7 pb-12 md:mt-9" aria-label={text("Archive", "全部作品")}>
-            <div className="mb-8 border border-warm/38 bg-[#110c09]/92 p-3 shadow-[inset_0_2px_16px_rgba(0,0,0,0.68)] sm:px-4 sm:py-3.5">
+          <BrassRule ornate tone="slate" className="mt-6" />
+
+          {/* Recessed Smoked-Mahogany Discipline Index Tray w/ Bronze Corner Clasps & Chamfered Tickets */}
+          <section className="mt-6 pb-12 md:mt-7" aria-label={text("Archive", "全部作品")}>
+            <div className="relative mb-8 border border-[#d4ae73]/48 bg-[#120d0a]/94 p-3.5 shadow-[0_18px_42px_rgba(0,0,0,0.75),inset_0_2px_16px_rgba(0,0,0,0.72)] sm:px-5 sm:py-4">
+              <BrassCornerClasps sizeClass="h-8 w-8 sm:h-9 sm:w-9" />
               <div className="mb-2.5 flex items-center justify-between gap-4 border-b border-warm/22 pb-2">
                 <span className="font-numeral text-[10.5px] font-semibold tracking-[0.22em] text-muted-foreground uppercase">
                   {text("Discipline Index", "按专业类别筛选")}
@@ -262,9 +265,9 @@ export function GalleryPage() {
                           }`
                     }`}
                   >
-                    <FolioCorners tone={isPinned ? "parchment" : "slate"} inset="inset-1.5" />
+                    <FolioCorners tone={isPinned ? "parchment" : "slate"} inset="inset-1.5" sizeClass="h-5 w-5" />
 
-                    <div className="relative z-10 mb-2 flex w-full items-center justify-between px-1">
+                    <div className="relative z-10 mb-2 flex w-full items-center justify-between px-2.5">
                       <span
                         className={`font-numeral text-[10.5px] font-semibold tracking-[0.18em] ${
                           isPinned ? "text-parchment-muted" : "text-warm/90"
@@ -308,7 +311,7 @@ export function GalleryPage() {
                       )}
                     </div>
 
-                    <div className="relative z-10 flex w-full flex-col px-1 pt-3 pb-0.5">
+                    <div className="relative z-10 flex w-full flex-col px-2.5 pt-3 pb-1">
                       <h2
                         className={`font-display text-lg font-semibold leading-snug tracking-tight transition-colors sm:text-[19px] ${
                           isPinned

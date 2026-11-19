@@ -25,6 +25,14 @@ const ORDERED_FOLIO_SLUGS = [
   "sacred-forest",
 ] as const;
 
+const PROJECT_EMBLEMS: Record<string, string> = {
+  "still-life": "/emblems/still-life-ink.webp",
+  "an-echo-has-no-shape": "/emblems/echo-ink.webp",
+  "fallen-valkyrie": "/emblems/valkyrie-ink.webp",
+  starshore: "/emblems/starshore-ink.webp",
+  "sacred-forest": "/emblems/sacred-forest-ink.webp",
+};
+
 function toRoman(n: number): string {
   return ROMAN_NUMERALS[n - 1] ?? String(n);
 }
@@ -106,9 +114,17 @@ export function ProjectPage() {
         </div>
 
         {/* ==================== UNFOLDED RAG-VELLUM CASE HEADER ==================== */}
-        <header className="parchment-sheet animate-folio-unfold relative mt-7 border-[5px] border-[#15100d] px-6 pt-10 pb-8 sm:px-10 sm:pt-11 sm:pb-9">
+        <header className="parchment-sheet animate-folio-unfold relative mt-7 border-[5px] border-[#110b07] px-6 pt-10 pb-8 sm:px-10 sm:pt-11 sm:pb-9">
           <CrimsonStamp className="pointer-events-none absolute -top-7 left-1/2 z-30 h-14 w-14 -translate-x-1/2" />
           <FolioCorners tone="parchment" />
+          {PROJECT_EMBLEMS[project.slug] && (
+            <img
+              src={PROJECT_EMBLEMS[project.slug]}
+              alt=""
+              aria-hidden="true"
+              className="debossed-intaglio pointer-events-none absolute right-6 bottom-6 hidden h-44 w-44 object-contain opacity-[0.12] mix-blend-multiply select-none md:block"
+            />
+          )}
 
           <div className="relative z-10 grid gap-8 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-8">
@@ -198,6 +214,8 @@ export function ProjectPage() {
               )}
             </dl>
           </div>
+
+          <BrassRule ornate tone="parchment" className="relative z-10 mt-7" />
         </header>
 
         {/* Lead Gameplay Plate */}

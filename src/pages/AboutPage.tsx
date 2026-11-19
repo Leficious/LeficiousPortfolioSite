@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { BrassRule, CrimsonStamp, FolioCorners } from "../components/AtelierChrome";
+import { BrassCornerClasps, BrassRule, CrimsonStamp, FolioCorners } from "../components/AtelierChrome";
 import { FormattedText } from "../components/FormattedText";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
@@ -119,7 +119,8 @@ export function AboutPage() {
                 {/* Portrait Plate + Two-Paragraph Literary Bio */}
                 <div className="grid gap-7 sm:grid-cols-[205px_1fr] sm:items-start">
                   <figure className="mx-auto w-full max-w-[215px] sm:mx-0">
-                    <div className="border-2 border-[#7a582e] bg-[#120d0a] p-1.5 shadow-[0_10px_24px_rgba(0,0,0,0.35)]">
+                    <div className="relative border-2 border-[#5e401d] bg-[#100b08] p-1.5 shadow-[0_12px_28px_rgba(0,0,0,0.48)]">
+                      <BrassCornerClasps sizeClass="h-9 w-9" />
                       <img
                         src="/about/lefi-shan-portrait.webp"
                         alt={text("Portrait of Lefi Shan", "单凯飞（Kevin Shan）肖像")}
@@ -165,7 +166,7 @@ export function AboutPage() {
                   </div>
                 </div>
 
-                <BrassRule tone="parchment" className="my-7" />
+                <BrassRule ornate tone="parchment" className="my-6" />
 
                 {/* Outside the Engine — Authentic Victorian Horizontal Ledger Rows (Zero SaaS Bento Grid!) */}
                 <section aria-labelledby="outside-engine-heading">
@@ -212,8 +213,9 @@ export function AboutPage() {
               aria-labelledby="credentials-heading"
               onPointerMove={(e) => handleTactileCardMove(e, 1.6)}
               onPointerLeave={resetTactileCard}
-              className="slate-folio tactile-tilt relative border border-warm/40 p-6 shadow-[0_22px_50px_rgba(0,0,0,0.75),6px_-5px_0_-1px_#140f0c,7px_-6px_0_0_rgba(168,132,82,0.3)] sm:p-7"
+              className="slate-folio tactile-tilt relative border border-[#d4ae73]/52 p-6 shadow-[0_24px_54px_rgba(0,0,0,0.82),6px_-5px_0_-1px_#140f0c,7px_-6px_0_0_rgba(200,157,98,0.38)] sm:p-7"
             >
+              <BrassCornerClasps sizeClass="h-10 w-10" />
               <FolioCorners tone="slate" inset="inset-2.5" />
 
               <div className="relative z-10 text-center">
