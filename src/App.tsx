@@ -69,7 +69,7 @@ export function App() {
       <AmbientBackdrop dialStep={dialStep} />
       <SiteNav activeFolioSlug={activeFolioSlug} onSelectFolioSlug={handleSelectFolio} />
 
-      <div className="relative z-10 lg:pl-[76px]">
+      <div className="relative z-10 lg:pl-[88px]">
         <div key={pathname} className="route-stage">
           <Suspense
             fallback={

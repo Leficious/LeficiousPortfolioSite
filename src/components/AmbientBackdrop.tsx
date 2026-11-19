@@ -355,7 +355,7 @@ export function AmbientBackdrop(_props: { dialStep?: number }) {
       />
 
       {/* Outer Victorian architectural double-gilded frame hairlines on desktop */}
-      <div className="absolute inset-y-3.5 left-[90px] right-4 hidden border border-[#c89d62]/30 lg:block">
+      <div className="absolute inset-y-3.5 left-[102px] right-4 hidden border border-[#c89d62]/30 lg:block">
         <div className="absolute inset-[3px] border border-[#c89d62]/12" />
         <span className="absolute -left-1 -top-1 h-3.5 w-3.5 border-l-2 border-t-2 border-[#e2be84]/75" />
         <span className="absolute -right-1 -top-1 h-3.5 w-3.5 border-r-2 border-t-2 border-[#e2be84]/75" />
