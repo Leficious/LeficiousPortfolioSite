@@ -113,7 +113,7 @@ export function GalleryPage() {
   }, [location.state, navigate, searchParams, setSearchParams]);
 
   return (
-    <div className="min-h-screen px-4 py-5 text-foreground sm:px-8 lg:px-10 lg:py-6 xl:pr-24">
+    <div className="min-h-screen px-4 py-5 text-foreground sm:px-8 lg:px-10 lg:py-6 xl:pl-11 xl:pr-28">
       <Seo
         title={text("Atelier Gallery | Leficious", "视觉与技术画廊 | Leficious")}
         description={text(
@@ -165,7 +165,7 @@ export function GalleryPage() {
               type="button"
               onClick={() => setReelExpanded((prev) => !prev)}
               aria-expanded={reelExpanded}
-              className="slate-folio group relative flex cursor-pointer items-center gap-3.5 border border-[#d4ae73]/52 p-2.5 pr-5 text-left transition-all hover:-translate-y-0.5 hover:border-[#ebd09e]"
+              className="group relative flex cursor-pointer items-center gap-3.5 border-[1.5px] border-[#ebc88d]/80 bg-gradient-to-bl from-[#5e201d] via-[#421513] to-[#290c0b] p-2.5 pr-5 text-left shadow-[3px_3px_0_0_#eadbc0,4px_4px_0_0_#140d09,0_18px_40px_rgba(0,0,0,0.85)] transition-all hover:-translate-y-0.5 hover:border-[#fff0c8]"
             >
               <BrassCornerClasps sizeClass="h-7 w-7" />
               <span className="relative block h-12 w-21 shrink-0 overflow-hidden border border-warm/40 bg-[#090706]">
@@ -213,13 +213,14 @@ export function GalleryPage() {
 
           {/* Recessed Smoked-Mahogany Discipline Index Tray w/ Bronze Corner Clasps & Embossed Tickets */}
           <section className="mt-6 pb-12 md:mt-7" aria-label={text("Archive", "全部作品")}>
-            <div className="relative mb-8 border border-[#d4ae73]/52 bg-[#120d0a]/94 p-3.5 shadow-[0_18px_42px_rgba(0,0,0,0.78),inset_0_2px_16px_rgba(0,0,0,0.72)] sm:px-5 sm:py-4">
+            <div className="relative mb-8 border-[1.5px] border-[#d4ae73]/68 bg-gradient-to-b from-[#2b1b12]/96 to-[#180f0a]/96 p-3.5 shadow-[0_18px_42px_rgba(0,0,0,0.82),inset_0_1px_0_rgba(246,214,158,0.28)] sm:px-5 sm:py-4">
               <BrassCornerClasps sizeClass="h-8 w-8 sm:h-9 sm:w-9" />
-              <div className="mb-2.5 flex items-center justify-between gap-4 border-b border-warm/28 pb-2">
-                <span className="font-numeral text-[10.5px] font-bold tracking-[0.22em] text-muted-foreground uppercase">
+              <div className="mb-2.5 flex items-center justify-between gap-4 border-b border-warm/32 pb-2">
+                <span className="inline-flex items-center gap-2 font-numeral text-[10.5px] font-bold tracking-[0.22em] text-[#e8d5b5] uppercase">
+                  <span aria-hidden="true" className="h-2 w-2 rotate-45 border border-[#ebc88d] bg-[#2d8f62]" />
                   {text("Discipline Index", "按专业类别筛选")}
                 </span>
-                <span className="font-numeral text-[10.5px] font-bold tracking-[0.2em] text-[#e2be84]" aria-live="polite">
+                <span className="font-numeral text-[10.5px] font-bold tracking-[0.2em] text-[#f0d29c]" aria-live="polite">
                   {visibleEntries.length} {text(visibleEntries.length === 1 ? "SPECIMEN" : "SPECIMENS", "件标本")}
                 </span>
               </div>

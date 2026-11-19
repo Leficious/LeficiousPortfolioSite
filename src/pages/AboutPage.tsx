@@ -19,28 +19,24 @@ const callingCards: {
   labelZh: string;
   href: string;
   stock: "leather" | "vellum" | "oxblood";
-  tilt: string;
 }[] = [
   {
     label: "LinkedIn",
     labelZh: "LinkedIn 履历",
     href: "https://www.linkedin.com/in/leficious/",
     stock: "leather",
-    tilt: "",
   },
   {
     label: "itch.io Builds",
     labelZh: "itch.io 实机包",
     href: "https://leficious.itch.io/",
     stock: "vellum",
-    tilt: "sm:-rotate-[0.9deg]",
   },
   {
     label: "GitHub Code",
     labelZh: "GitHub 源码",
     href: "https://github.com/Leficious",
     stock: "oxblood",
-    tilt: "sm:rotate-[0.8deg]",
   },
 ];
 
@@ -121,19 +117,19 @@ export function AboutPage() {
     : "/resume/Leficious_Technical_Game_Designer_Resume.pdf";
 
   return (
-    <div className="min-h-screen px-4 py-5 text-foreground sm:px-8 lg:px-10 lg:py-6 xl:pr-24">
+    <div className="min-h-screen px-4 py-5 text-foreground sm:px-8 lg:px-10 lg:py-6 xl:pl-11 xl:pr-28">
       <Seo
-        title={text("Dossier & Correspondence | Leficious", "个人档案与信函 | Leficious")}
+        title={text("Lefi Shan | Dossier & Correspondence", "单凯飞 · Lefi Shan | 个人档案与信函")}
         description={text(
           "About Lefi (Kevin) Shan — M.S. Game Design and Development student at USC School of Cinematic Arts.",
-          "关于单凯飞（Leficious）：南加州大学电影艺术学院游戏设计与开发硕士在读。",
+          "关于单凯飞（Lefi Shan）：南加州大学电影艺术学院游戏设计与开发硕士在读。",
         )}
         path={localizedPath("/about")}
       />
 
       {/* ==================== 1. UNIFIED VICTORIAN ARCHIVAL HEADER RAIL ==================== */}
       <AtelierHeaderRail
-        eyebrow={text("BIOGRAPHICAL DOSSIER", "个人档案卷宗")}
+        eyebrow={text("LEFI SHAN · DOSSIER", "单凯飞 · 个人档案卷宗")}
         subtitle={text(
           "Little Tokyo, Los Angeles · USC School of Cinematic Arts & Gnomon",
           "洛杉矶小东京 · 南加州大学电影艺术学院 & Gnomon",
@@ -246,25 +242,29 @@ export function AboutPage() {
             </article>
           </div>
 
-          {/* ==================== RIGHT: SMOKED-MAHOGANY CREDENTIALS & CALLING-CARD TRAY ==================== */}
+          {/* ==================== RIGHT: SADDLE-COGNAC CREDENTIALS & MIXED-STOCK CALLING-CARD TRAY ==================== */}
           <div className="flex flex-col gap-6 lg:pt-8">
             <section
               id="credentials"
               aria-labelledby="credentials-heading"
               onPointerMove={(e) => handleTactileCardMove(e, 1.6)}
               onPointerLeave={resetTactileCard}
-              className="slate-folio tactile-tilt relative scroll-mt-20 border border-[#d4ae73]/55 p-6 shadow-[0_26px_58px_rgba(0,0,0,0.86),6px_6px_0_-1px_#120c09,8px_8px_0_0_rgba(200,157,98,0.4)] sm:p-7"
+              className="tactile-tilt relative scroll-mt-20 border-[1.5px] border-[#ebc88d]/80 bg-gradient-to-br from-[#563521] via-[#3d2517] to-[#27160d] p-6 shadow-[4px_4px_0_0_#eadbc0,5px_5px_0_0_#140d09,7px_7px_0_0_#cbb58c,0_26px_58px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(255,236,198,0.38)] sm:p-7"
             >
               <BrassCornerClasps sizeClass="h-10 w-10" />
               <FolioCorners tone="slate" inset="inset-2.5" sizeClass="h-8 w-8" />
 
               <div className="relative z-10 text-center">
-                <h2
-                  id="credentials-heading"
-                  className="font-numeral text-xs font-bold tracking-[0.22em] text-[#e2be84] uppercase"
-                >
-                  {text("Academic & Guild Credentials", "学术履历与背景")}
-                </h2>
+                <div className="inline-flex items-center justify-center gap-2.5">
+                  <span aria-hidden="true" className="h-2 w-2 rotate-45 border border-[#ebc88d] bg-[#2d8f62]" />
+                  <h2
+                    id="credentials-heading"
+                    className="font-numeral text-xs font-bold tracking-[0.22em] text-[#f0d29c] uppercase"
+                  >
+                    {text("Academic & Guild Credentials", "学术履历与背景")}
+                  </h2>
+                  <span aria-hidden="true" className="h-2 w-2 rotate-45 border border-[#ebc88d] bg-[#2d8f62]" />
+                </div>
 
                 <div className="mt-4 space-y-3 border-y border-warm/30 py-4 text-[16px]">
                   <div>
@@ -349,12 +349,12 @@ export function AboutPage() {
                       rel="noreferrer"
                       onPointerMove={(e) => handleTactileCardMove(e, 3.5)}
                       onPointerLeave={resetTactileCard}
-                      className={`tactile-tilt group relative flex min-h-[86px] flex-col items-center justify-center px-2.5 py-3.5 text-center transition-all hover:rotate-0 ${card.tilt} ${
+                      className={`tactile-tilt group relative flex min-h-[84px] flex-col items-center justify-center px-2.5 py-3.5 text-center transition-all hover:-translate-y-0.5 ${
                         isVellum
                           ? "parchment-sheet border-2 border-[#110b07]"
                           : isOxblood
-                            ? "border border-[#d4ae73]/58 bg-gradient-to-b from-[#581313] to-[#340a0a] shadow-[0_14px_32px_rgba(0,0,0,0.72)]"
-                            : "slate-folio border border-warm/50"
+                            ? "border-[1.5px] border-[#ebc88d]/75 bg-gradient-to-bl from-[#64221f] via-[#481715] to-[#2c0d0c] shadow-[0_14px_32px_rgba(0,0,0,0.82)]"
+                            : "border-[1.5px] border-[#ebc88d]/75 bg-gradient-to-br from-[#593722] via-[#3f2617] to-[#28170e] shadow-[0_14px_32px_rgba(0,0,0,0.82)]"
                       }`}
                     >
                       <span

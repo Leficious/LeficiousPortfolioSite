@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   ArchivalPaperSheaf,
   AtelierHeaderRail,
@@ -10,7 +10,7 @@ import {
   FolioCorners,
 } from "../components/AtelierChrome";
 import { FormattedText } from "../components/FormattedText";
-import { ProjectSigil, type SigilHighlight } from "../components/ProjectSigils";
+import { ProjectSigil } from "../components/ProjectSigils";
 import { Seo } from "../components/Seo";
 import { useLanguage } from "../lib/language";
 import { localizeProject } from "../lib/localizedContent";
@@ -126,10 +126,6 @@ type HomePageProps = {
 
 export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) {
   const { isChinese, text, localizedPath } = useLanguage();
-  const [searchParams] = useSearchParams();
-  const rawEmblemParam = searchParams.get("emblem");
-  const sigilHighlight: SigilHighlight =
-    rawEmblemParam === "peacock" || rawEmblemParam === "amethyst" ? rawEmblemParam : "verdigris";
   const [playingVideo, setPlayingVideo] = useState(false);
   const lastProjectSlugRef = useRef<string>("still-life");
   const blueprintBoxRef = useRef<HTMLDivElement>(null);
@@ -322,7 +318,6 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   <ProjectSigil
                     slug={leftBgProject.slug}
                     variant="gilt"
-                    highlight={sigilHighlight}
                     className="h-[82px] w-[82px] transition-transform duration-300 group-hover:scale-106 xl:h-[90px] xl:w-[90px] 2xl:h-[104px] 2xl:w-[104px]"
                   />
                 </div>
@@ -370,7 +365,6 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   <ProjectSigil
                     slug={rightBgProject.slug}
                     variant="gilt"
-                    highlight={sigilHighlight}
                     className="h-[82px] w-[82px] transition-transform duration-300 group-hover:scale-106 xl:h-[90px] xl:w-[90px] 2xl:h-[104px] 2xl:w-[104px]"
                   />
                 </div>

@@ -191,15 +191,15 @@
   background-size: 360px 360px;
 }
 
-/* Smoked mahogany / oxblood-umber leather folio with gilded top-bevel rim */
+/* Burnished walnut-cognac morocco leather folio with gilded top-bevel rim */
 .slate-folio {
-  background: linear-gradient(165deg, #281e17 0%, #130e0b 100%);
+  background: linear-gradient(158deg, #3f281a 0%, #2a1a11 52%, #1b100b 100%);
   color: var(--foreground);
   box-shadow:
-    0 24px 58px rgba(2, 1, 0, 0.84),
-    inset 0 1px 0 rgba(232, 194, 134, 0.34),
+    0 24px 58px rgba(2, 1, 0, 0.88),
+    inset 0 1px 0 rgba(246, 214, 158, 0.44),
     inset 0 -1px 0 rgba(0, 0, 0, 0.78),
-    inset 0 0 0 1px rgba(200, 157, 98, 0.42);
+    inset 0 0 0 1px rgba(224, 184, 122, 0.52);
 }
 
 /* Chamfered Victorian apothecary / ledger ticket */
@@ -313,18 +313,24 @@
 
 .specimen-stack-slate {
   box-shadow:
-    0 18px 48px rgba(4, 2, 1, 0.7),
-    inset 0 0 0 1px rgba(168, 132, 82, 0.3),
-    5px 5px 0 -1px #120d0b,
-    6px 6px 0 0 rgba(168, 132, 82, 0.42);
+    0 20px 50px rgba(4, 2, 1, 0.84),
+    inset 0 1px 0 rgba(246, 214, 158, 0.44),
+    inset 0 0 0 1px rgba(224, 184, 122, 0.5),
+    4px 4px 0 -1px #e6d7b9,
+    5px 5px 0 0 #140d09,
+    7px 7px 0 -1px #362216,
+    8px 8px 0 0 rgba(216, 178, 118, 0.58);
 }
 
 .specimen-stack-slate:hover {
   box-shadow:
-    0 24px 56px rgba(4, 2, 1, 0.82),
-    inset 0 0 0 1px rgba(196, 156, 98, 0.62),
-    7px 7px 0 -1px #17110e,
-    8px 8px 0 0 rgba(196, 156, 98, 0.58);
+    0 26px 58px rgba(4, 2, 1, 0.9),
+    inset 0 1px 0 rgba(255, 232, 188, 0.58),
+    inset 0 0 0 1px rgba(238, 204, 148, 0.78),
+    5px 5px 0 -1px #efe2c6,
+    6px 6px 0 0 #140d09,
+    9px 9px 0 -1px #42291a,
+    10px 10px 0 0 rgba(232, 194, 134, 0.72);
 }
 
 /* Ensure packed gallery cards position absolutely inside GalleryLayout */
