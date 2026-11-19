@@ -13,8 +13,8 @@
 
 @theme inline {
   --font-sans: "EB Garamond Variable", "Songti SC", "STSong", "PingFang SC", Georgia, serif;
-  --font-display: "Playfair Display Variable", "Songti SC", "STSong", "SimSun", Georgia, serif;
-  --font-numeral: "Cinzel Variable", "Playfair Display Variable", Georgia, serif;
+  --font-display: "Cormorant Garamond Variable", "EB Garamond Variable", "Songti SC", "STSong", "SimSun", Georgia, serif;
+  --font-numeral: "Cormorant Garamond Variable", "EB Garamond Variable", Georgia, serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
   /* Zero soft SaaS rounded corners — strict architectural Victorian edges */

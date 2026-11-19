@@ -1,5 +1,7 @@
 import { useId, type ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useNavEncounterMode } from "../lib/atelierMotion";
+import { useLanguage } from "../lib/language";
 
 const FRAME_MAIN_D =
   "M 31.80 15.00 H 4.70 L 48.00 90.00 L 62.20 65.40 H 57.82 L 48.00 82.40 L 11.28 18.80 H 31.80 Z";
@@ -311,31 +313,143 @@ export function BrassRule({
 
 /**
  * Unified top Victorian Archival Header Rail shared across Atelier, Gallery, Project, and Dossier routes.
+ * Supports Option A ("tabs" — die-cut physical folder tabs docked onto the rail rule) and
+ * Option C ("crossbar" — centered heraldic brass & cloisonné switchboard).
  */
 export function AtelierHeaderRail({
   eyebrow = "LEFICIOUS",
   subtitle,
   rightSlot,
-  maxWidthClass = "max-w-[1340px]",
+  maxWidthClass = "max-w-[1380px]",
 }: {
   eyebrow?: string;
   subtitle: string;
   rightSlot?: ReactNode;
   maxWidthClass?: string;
 }) {
+  const { pathname } = useLocation();
+  const { text, localizedPath } = useLanguage();
+  const { mode, navQuery } = useNavEncounterMode();
+
+  const cleanPath = pathname.replace(/^\/zh(?=\/|$)/, "") || "/";
+  const activeSection: "atelier" | "gallery" | "about" =
+    cleanPath.startsWith("/gallery") ? "gallery" : cleanPath.startsWith("/about") ? "about" : "atelier";
+
+  const roomItems = [
+    {
+      id: "atelier" as const,
+      roman: "I",
+      label: text("Atelier & Reel", "作品案台与集锦"),
+      to: `${localizedPath("/")}${navQuery}`,
+      idleStock: "from-[#5d3a24] via-[#432818] to-[#2c190f]",
+    },
+    {
+      id: "gallery" as const,
+      roman: "II",
+      label: text("Salon Gallery · 29", "视觉与技术画廊 · 29"),
+      to: `${localizedPath("/gallery")}${navQuery}`,
+      idleStock: "from-[#64221f] via-[#481715] to-[#2e0e0d]",
+    },
+    {
+      id: "about" as const,
+      roman: "III",
+      label: text("About & Dossier", "个人档案与信函"),
+      to: `${localizedPath("/about")}${navQuery}`,
+      idleStock: "from-[#4a3121] via-[#342116] to-[#22140d]",
+    },
+  ];
+
   return (
-    <header
-      className={`relative z-20 mx-auto flex w-full ${maxWidthClass} flex-wrap items-center justify-between gap-4 border-b border-warm/42 pb-3.5 shadow-[0_1px_0_rgba(0,0,0,0.8)]`}
-    >
-      <div className="flex flex-wrap items-baseline gap-x-3.5 gap-y-1">
-        <p className="font-numeral text-lg font-bold tracking-[0.22em] text-[#f7eedc] sm:text-xl">
-          {eyebrow}
-        </p>
-        <span aria-hidden="true" className="hidden h-1.5 w-1.5 rotate-45 bg-[#b82222] sm:inline-block" />
-        <p className="font-display text-sm italic text-[#de8278] sm:text-base">{subtitle}</p>
-      </div>
-      {rightSlot && <div className="flex flex-wrap items-center gap-2.5">{rightSlot}</div>}
-    </header>
+    <div className={`relative z-30 mx-auto w-full ${maxWidthClass}`}>
+      <header className="relative flex w-full flex-wrap items-end justify-between gap-3 border-b-[1.5px] border-[#c89d62]/52 pb-3 shadow-[0_1px_0_rgba(0,0,0,0.85)] xl:flex-nowrap">
+        <div className="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-0.5">
+          <p className="font-display text-xl font-bold tracking-[0.18em] text-[#f7eedc] uppercase sm:text-[21px]">
+            {eyebrow}
+          </p>
+          <span aria-hidden="true" className="hidden h-1.5 w-1.5 shrink-0 rotate-45 bg-[#b82222] sm:inline-block" />
+          <p className="truncate font-display text-[15px] font-medium italic text-[#e38e84] sm:text-[16.5px]">{subtitle}</p>
+        </div>
+
+        <div className="flex shrink-0 items-end gap-2.5">
+          {mode === "tabs" && (
+            <nav
+              aria-label={text("Primary Portfolio Volumes", "主要作品卷宗目录")}
+              className="hidden items-end gap-1.5 -mb-[13px] lg:flex"
+            >
+              {roomItems.map((item) => {
+                const active = activeSection === item.id;
+                return (
+                  <Link
+                    key={item.id}
+                    to={item.to}
+                    viewTransition
+                    aria-current={active ? "page" : undefined}
+                    style={{
+                      clipPath: "polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%)",
+                    }}
+                    className={`group relative inline-flex items-center gap-1.5 px-3.5 transition-all duration-200 2xl:px-4.5 ${
+                      active
+                        ? "z-20 bg-gradient-to-b from-[#fbf3e2] to-[#e7d8ba] pt-2 pb-2.5 text-[#110b07] shadow-[0_-4px_14px_rgba(0,0,0,0.75),inset_0_2px_0_#8f1616]"
+                        : `z-10 bg-gradient-to-b ${item.idleStock} pt-1.5 pb-2 text-[#f4ead6] shadow-[0_-3px_10px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(246,218,170,0.45)] hover:-translate-y-0.5 hover:text-white`
+                    }`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`h-1.5 w-1.5 shrink-0 rotate-45 ${
+                        active ? "border border-[#684720] bg-[#2d8f62]" : "bg-[#e5c287]/80 group-hover:bg-[#7ee8b5]"
+                      }`}
+                    />
+                    <span className="font-display text-[12.5px] font-bold tracking-[0.1em] uppercase whitespace-nowrap 2xl:text-[13.5px]">
+                      <span className={active ? "text-rubric" : "text-[#ebc88d]"}>{item.roman}</span> · {item.label}
+                    </span>
+                  </Link>
+                );
+              })}
+            </nav>
+          )}
+
+          {rightSlot && <div className="flex shrink-0 items-center gap-2">{rightSlot}</div>}
+        </div>
+      </header>
+
+      {mode === "crossbar" && (
+        <nav
+          aria-label={text("Primary Portfolio Volumes", "主要作品卷宗目录")}
+          className="mt-2.5 hidden items-center justify-center gap-3 lg:flex"
+        >
+          <span aria-hidden="true" className="h-px w-16 bg-gradient-to-r from-transparent to-[#c89d62]/65" />
+          <div className="inline-flex items-center gap-1.5 border-[1.5px] border-[#d4ae73]/72 bg-[#120c08]/95 p-1 shadow-[0_12px_28px_rgba(0,0,0,0.88),inset_0_1px_0_rgba(255,236,198,0.22)]">
+            {roomItems.map((item) => {
+              const active = activeSection === item.id;
+              return (
+                <Link
+                  key={item.id}
+                  to={item.to}
+                  viewTransition
+                  aria-current={active ? "page" : undefined}
+                  className={`victorian-ticket inline-flex items-center gap-2 px-5 py-1.5 font-display text-[13.5px] font-bold tracking-[0.13em] uppercase transition-all ${
+                    active
+                      ? "brass-plaque"
+                      : `border border-[#ebc88d]/45 bg-gradient-to-b ${item.idleStock} text-[#f4ead6] hover:border-[#fff0c8] hover:text-white`
+                  }`}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`h-1.5 w-1.5 rotate-45 ${
+                      active ? "border border-[#140d09] bg-[#2d8f62]" : "bg-[#e5c287]"
+                    }`}
+                  />
+                  <span>
+                    {item.roman} · {item.label}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+          <span aria-hidden="true" className="h-px w-16 bg-gradient-to-l from-transparent to-[#c89d62]/65" />
+        </nav>
+      )}
+    </div>
   );
 }
 

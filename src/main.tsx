@@ -4,11 +4,10 @@ import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
 import { LanguageProvider } from "./lib/language";
 import "./styles.css";
-import "@fontsource-variable/playfair-display/wght.css";
-import "@fontsource-variable/playfair-display/wght-italic.css";
+import "@fontsource-variable/cormorant-garamond/wght.css";
+import "@fontsource-variable/cormorant-garamond/wght-italic.css";
 import "@fontsource-variable/eb-garamond/wght.css";
 import "@fontsource-variable/eb-garamond/wght-italic.css";
-import "@fontsource-variable/cinzel/wght.css";
 import "@fontsource/ibm-plex-mono/400.css";
 
 const app = (

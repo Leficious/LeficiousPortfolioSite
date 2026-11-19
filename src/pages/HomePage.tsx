@@ -12,6 +12,7 @@ import {
 import { FormattedText } from "../components/FormattedText";
 import { ProjectSigil } from "../components/ProjectSigils";
 import { Seo } from "../components/Seo";
+import { useNavEncounterMode } from "../lib/atelierMotion";
 import { useLanguage } from "../lib/language";
 import { localizeProject } from "../lib/localizedContent";
 import { projects } from "../lib/projects";
@@ -39,7 +40,7 @@ const BOARD_META: Record<string, FolioBoardMeta> = {
     tabShortZh: "I · 静物",
     subtitleEn: "The 235 kg Counterweight Archive",
     subtitleZh: "235 kg 满额配重档案馆",
-    cinemaThumbSrc: "/projects/still-life/cover.webp",
+    cinemaThumbSrc: "/projects/still-life/hero-poster.webp",
     plateSrc: "/projects/still-life/map-02-three-story-archive.webp",
     plateSrcZh: "/projects/still-life/map-02-three-story-archive-zh.webp",
     plateMode: "ink",
@@ -54,7 +55,7 @@ const BOARD_META: Record<string, FolioBoardMeta> = {
     tabShortZh: "II · 回声无形",
     subtitleEn: "Basin of Three Silences",
     subtitleZh: "三重寂静之声波盆地",
-    cinemaThumbSrc: "/projects/an-echo-has-no-shape/cover.webp",
+    cinemaThumbSrc: "/projects/an-echo-has-no-shape/hero-poster.webp",
     plateSrc: "/projects/an-echo-has-no-shape/map-01-world-overview.webp",
     plateSrcZh: "/projects/an-echo-has-no-shape/map-01-world-overview-zh.webp",
     plateMode: "daguerreotype",
@@ -83,7 +84,7 @@ const BOARD_META: Record<string, FolioBoardMeta> = {
     tabShortZh: "IV · 星岸",
     subtitleEn: "Interconnected ARPG Loop",
     subtitleZh: "飞行、索敌与数据驱动循环",
-    cinemaThumbSrc: "/projects/starshore/design-layout-01.avif",
+    cinemaThumbSrc: "/projects/starshore/hero-poster.jpg",
     plateSrc: "/projects/starshore/targeting-01.avif",
     plateMode: "daguerreotype",
     plateLabelEn: "FIG. II · Soft-Lock Targeting",
@@ -126,7 +127,9 @@ type HomePageProps = {
 
 export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) {
   const { isChinese, text, localizedPath } = useLanguage();
+  const { navQuery } = useNavEncounterMode();
   const [playingVideo, setPlayingVideo] = useState(false);
+  const [activeReelKind, setActiveReelKind] = useState<"design" | "environment">("design");
   const lastProjectSlugRef = useRef<string>("still-life");
   const blueprintBoxRef = useRef<HTMLDivElement>(null);
   const loupeRef = useRef<HTMLDivElement>(null);
@@ -148,9 +151,14 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
   const activeProject = orderedProjects[currentProjectIndex];
   const activeMeta = BOARD_META[activeProject.slug] ?? BOARD_META["still-life"];
 
-  const leftBgProject = orderedProjects[(currentProjectIndex + 1) % orderedProjects.length];
+  // On the landing Reel spread, flank the showcase with Flagship Folios I (Still Life) and II (Echo)
+  const leftBgProject = isReelActive
+    ? orderedProjects[0]
+    : orderedProjects[(currentProjectIndex + 1) % orderedProjects.length];
   const leftBgMeta = BOARD_META[leftBgProject.slug];
-  const rightBgProject = orderedProjects[(currentProjectIndex + orderedProjects.length - 1) % orderedProjects.length];
+  const rightBgProject = isReelActive
+    ? orderedProjects[1]
+    : orderedProjects[(currentProjectIndex + orderedProjects.length - 1) % orderedProjects.length];
   const rightBgMeta = BOARD_META[rightBgProject.slug];
 
   const selectBinder = (key: string) => {
@@ -218,24 +226,21 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
       <AtelierHeaderRail
         eyebrow="LEFICIOUS"
         subtitle={text(
-          "Game, Level & Technical Designer · USC School of Cinematic Arts & Gnomon",
-          "游戏、关卡与技术设计师 · 南加州大学电影艺术学院 & Gnomon",
+          "Game, Level & Technical Designer · USC SCA & Gnomon",
+          "游戏、关卡与技术设计师 · 南加大电影学院 & Gnomon",
         )}
+        maxWidthClass="max-w-[1380px]"
         rightSlot={
-          <button
-            type="button"
-            onClick={() => selectBinder(isReelActive ? lastProjectSlugRef.current : "reel")}
-            className="brass-plaque inline-flex cursor-pointer items-center gap-2.5 px-5 py-2 font-numeral text-xs font-bold tracking-[0.12em] uppercase transition-transform hover:-translate-y-0.5 active:scale-97"
-          >
-            {isReelActive ? (
-              <>← {text("Return to Case Folios", "返回作品卷宗")}</>
-            ) : (
-              <>
-                <span aria-hidden="true" className="text-[10px]">▶</span>
-                <span>{text("2026 Master Design Reel", "2026 年度设计集锦")}</span>
-              </>
-            )}
-          </button>
+          !isReelActive ? (
+            <button
+              type="button"
+              onClick={() => selectBinder("reel")}
+              className="brass-plaque inline-flex cursor-pointer items-center gap-1.5 px-3.5 py-1.5 font-display text-xs font-bold tracking-[0.12em] uppercase transition-transform hover:-translate-y-0.5 active:scale-97"
+            >
+              <span aria-hidden="true" className="text-[10px]">▶</span>
+              <span>{text("Master Reel", "年度集锦")}</span>
+            </button>
+          ) : undefined
         }
       />
 
@@ -395,103 +400,216 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
             <FolioCorners tone="parchment" />
 
             {isReelActive ? (
-              /* ==================== 00 · MASTER DESIGN REEL FOLIO ==================== */
-              <div className="relative z-10">
-                <header className="text-center">
-                  <p className="font-numeral text-[11px] font-bold tracking-[0.26em] text-parchment-muted uppercase">
-                    {text("ATELIER SHOWCASE · MMXXVI", "年度实机集锦 · 2026")}
-                  </p>
-                  <h1 className="mt-1 font-display text-2xl font-semibold tracking-tight text-parchment-ink sm:text-4xl">
-                    {text("Game, Level & Technical Design Reel", "游戏、关卡与技术设计作品集锦")}
-                  </h1>
-                  <p className="mt-1 font-display text-base italic text-rubric sm:text-lg">
-                    {text(
-                      "Leficious · USC School of Cinematic Arts & Gnomon",
-                      "Leficious · 南加州大学电影艺术学院 & Gnomon",
-                    )}
-                  </p>
-                </header>
+              /* ==================== 00 · LANDING TWO-WING MASTER REEL & ATELIER DIRECTORY ==================== */
+              (() => {
+                const isDesignReel = activeReelKind === "design";
+                const primaryReelId = isDesignReel ? "hphiglctUCw" : "t5MchABcd3c";
+                const primaryReelThumb = isDesignReel
+                  ? "/reels/game-design-reel-2026.webp"
+                  : "/reels/environment-props-reel-2026.jpg";
+                const primaryReelTitle = isDesignReel
+                  ? text("Game, Level & Technical Design Reel", "游戏、关卡与技术设计作品集锦")
+                  : text("3D Environment & Props Reel", "3D 环境与道具作品集锦");
+                const primaryReelSub = isDesignReel
+                  ? text(
+                      "Multi-floor spatial puzzles, multiphase combat AI & gameplay systems · 2026",
+                      "多层空间解谜、多阶段战斗 AI 与玩法系统 · 2026",
+                    )
+                  : text(
+                      "Realtime 3D environments, Substance shaders, foliage & Maya tools · 2026",
+                      "实时 3D 场景、Substance 程序化材质、风格化植被与 Maya 工具 · 2026",
+                    );
 
-                <BrassRule ornate tone="parchment" className="my-3.5" />
+                const companionThumb = isDesignReel
+                  ? "/reels/environment-props-reel-2026.jpg"
+                  : "/reels/game-design-reel-2026.webp";
+                const companionLabel = isDesignReel
+                  ? text("2026 3D Environment & Props Reel", "2026 环境与道具集锦")
+                  : text("2026 Game & Level Design Reel", "2026 游戏与关卡设计集锦");
 
-                <div className="relative border-2 border-[#4d3417] bg-[#0a0705] p-2 shadow-2xl">
-                  <BrassCornerClasps sizeClass="h-12 w-12 sm:h-16 sm:w-16" />
-                  <div className="relative aspect-video w-full overflow-hidden bg-black">
-                    {playingVideo ? (
-                      <iframe
-                        src="https://www.youtube-nocookie.com/embed/hphiglctUCw?autoplay=1"
-                        title={text("Game Design Reel 2026", "2026 游戏设计作品集锦")}
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="absolute inset-0 h-full w-full"
-                      />
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => setPlayingVideo(true)}
-                        className="group relative block h-full w-full cursor-pointer text-left"
-                        aria-label={text("Play 2026 Game Design Reel", "播放 2026 作品集锦")}
-                      >
-                        <img
-                          src="/reels/game-design-reel-2026.webp"
-                          alt={text("2026 Game Design Reel thumbnail", "2026 游戏设计作品集锦封面")}
-                          width="1280"
-                          height="720"
-                          loading="eager"
-                          decoding="async"
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
-                        />
-                        <span className="absolute inset-0 bg-black/22 transition-colors group-hover:bg-black/8" />
-                        <span className="absolute inset-0 grid place-items-center">
-                          <span className="brass-plaque inline-flex items-center gap-2.5 px-6 py-3 font-numeral text-xs font-bold tracking-[0.14em] uppercase transition-transform group-hover:scale-105 sm:text-sm">
-                            <span aria-hidden="true">▶</span>
-                            {text("Play 2026 Master Reel", "播放 2026 年度设计集锦")}
-                          </span>
-                        </span>
-                      </button>
-                    )}
+                return (
+                  <div className="relative z-10">
+                    <header className="text-center">
+                      <p className="font-display text-[11.5px] font-bold tracking-[0.26em] text-parchment-muted uppercase">
+                        {text("ATELIER SHOWCASE · MMXXVI", "年度实机集锦 · 2026")}
+                      </p>
+                      <h1 className="mt-0.5 font-display text-3xl font-bold tracking-tight text-parchment-ink sm:text-[36px] sm:leading-[1.08]">
+                        {primaryReelTitle}
+                      </h1>
+                      <p className="mt-0.5 font-display text-[16px] font-medium italic text-rubric sm:text-[17.5px]">
+                        {primaryReelSub}
+                      </p>
+                    </header>
+
+                    <BrassRule ornate tone="parchment" className="my-3.5" />
+
+                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.16fr_0.84fr] lg:items-stretch lg:gap-6 xl:gap-7">
+                      {/* LEFT WING: Primary 2026 Reel Stage + 5 Case-Folio Quick-Open Tickets */}
+                      <div className="flex flex-col justify-between gap-3.5">
+                        <div className="relative border-2 border-[#4d3417] bg-[#090604] p-2 shadow-[0_16px_38px_rgba(0,0,0,0.52)]">
+                          <BrassCornerClasps sizeClass="h-11 w-11 sm:h-13 sm:w-13" />
+                          <div className="relative aspect-video w-full overflow-hidden border border-[#c89d62]/48 bg-black">
+                            {playingVideo ? (
+                              <iframe
+                                src={`https://www.youtube-nocookie.com/embed/${primaryReelId}?autoplay=1`}
+                                title={primaryReelTitle}
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                className="absolute inset-0 h-full w-full"
+                              />
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={() => setPlayingVideo(true)}
+                                className="group relative block h-full w-full cursor-pointer text-left"
+                                aria-label={`${text("Play", "播放")}: ${primaryReelTitle}`}
+                              >
+                                <img
+                                  src={primaryReelThumb}
+                                  alt={primaryReelTitle}
+                                  width="1280"
+                                  height="720"
+                                  loading="eager"
+                                  fetchPriority="high"
+                                  decoding="async"
+                                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.018]"
+                                />
+                                <span className="absolute inset-0 bg-gradient-to-t from-black/52 via-transparent to-black/14 transition-opacity group-hover:opacity-72" />
+                                <span className="brass-plaque absolute bottom-4 left-10 inline-flex items-center gap-2 px-4 py-2 font-display text-xs font-bold tracking-[0.14em] uppercase transition-transform duration-200 group-hover:scale-104 sm:bottom-4.5 sm:left-11 sm:px-5">
+                                  <span aria-hidden="true">▶</span>
+                                  <span>
+                                    {isDesignReel
+                                      ? text("Play 2026 Design Reel", "播放 2026 游戏设计集锦")
+                                      : text("Play 3D Environment Reel", "播放 3D 环境集锦")}
+                                  </span>
+                                </span>
+                              </button>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* 5 Single-Row Embossed Case-Folio Index Tickets */}
+                        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-5">
+                          {orderedProjects.map((proj) => {
+                            const shortLabel = isChinese
+                              ? BOARD_META[proj.slug].tabShortZh
+                              : BOARD_META[proj.slug].tabShortEn;
+                            return (
+                              <button
+                                key={proj.slug}
+                                type="button"
+                                onClick={() => selectBinder(proj.slug)}
+                                className="victorian-ticket embossed-ticket cursor-pointer border border-[#61411d]/85 bg-parchment-deep/90 px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.03em] whitespace-nowrap text-parchment-ink transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
+                              >
+                                {shortLabel}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* RIGHT WING: Companion Reel Switcher + Organic Doors into Salon Gallery & Dossier */}
+                      <div className="flex flex-col justify-between gap-3.5 lg:border-l lg:border-[#684720]/48 lg:pl-6 xl:pl-7">
+                        {/* Companion Reel Plate (displays the other 2026 Reel's proper YouTube thumbnail) */}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setPlayingVideo(false);
+                            setActiveReelKind(isDesignReel ? "environment" : "design");
+                          }}
+                          className="embossed-ticket group relative block w-full cursor-pointer border border-[#684720]/80 bg-parchment-deep/75 p-2 text-left transition-colors hover:border-rubric"
+                        >
+                          <CrimsonStamp className="pointer-events-none absolute right-3.5 -top-3 z-30 h-8.5 w-8.5" />
+                          <div className="relative aspect-[16/8.2] w-full overflow-hidden border border-[#684720]/55 bg-[#090604]">
+                            <img
+                              src={companionThumb}
+                              alt={companionLabel}
+                              width="640"
+                              height="360"
+                              loading="eager"
+                              decoding="async"
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                            />
+                            <span className="absolute inset-0 bg-gradient-to-t from-black/68 via-transparent to-transparent" />
+                            <span className="absolute bottom-2 left-2.5 inline-flex items-center gap-1.5 border border-[#ebc88d]/75 bg-[#140d09]/90 px-2.5 py-0.5 font-display text-[11px] font-bold tracking-[0.12em] text-[#f6eedc] uppercase">
+                              <span aria-hidden="true" className="text-[#ebc88d]">⇄</span>
+                              {text("Companion Reel", "副卷集锦")}
+                            </span>
+                          </div>
+                          <div className="mt-1.5 flex items-baseline justify-between gap-2 px-0.5">
+                            <span className="truncate font-display text-[14px] font-bold text-parchment-ink group-hover:text-rubric">
+                              {companionLabel}
+                            </span>
+                            <span className="shrink-0 font-display text-[11px] font-bold tracking-[0.14em] text-rubric uppercase">
+                              {text("Load Stage →", "切换播放 →")}
+                            </span>
+                          </div>
+                        </button>
+
+                        {/* Organic Atelier Doorways into Salon Gallery (29 Plates) & About / Dossier */}
+                        <div className="flex flex-col gap-2.5">
+                          <Link
+                            to={`${localizedPath("/gallery")}${navQuery}`}
+                            viewTransition
+                            className="group relative flex items-center justify-between gap-3 border-[1.5px] border-[#ebc88d]/85 bg-gradient-to-r from-[#5e201d] via-[#461614] to-[#2e0d0c] px-4 py-3 text-left shadow-[3px_3px_0_0_#140d09,0_10px_22px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:border-[#fff0c8]"
+                          >
+                            <div className="min-w-0">
+                              <p className="flex items-center gap-1.5 font-display text-[14px] font-bold tracking-[0.1em] whitespace-nowrap text-[#fbf3e4] uppercase group-hover:text-white">
+                                <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-[#7ee8b5]" />
+                                {text("Salon Gallery · 29 Plates", "视觉与技术标本画廊 · 29 件")}
+                              </p>
+                              <p className="mt-0.5 truncate font-display text-[13.5px] italic text-[#e8d5b5]/90">
+                                {text(
+                                  "3D environments, shaders, character rigs & Maya tools",
+                                  "实时 3D 场景、程序化材质、绑定与 Maya 工具",
+                                )}
+                              </p>
+                            </div>
+                            <span className="shrink-0 font-display text-base font-bold text-[#ebc88d] transition-transform group-hover:translate-x-1">
+                              →
+                            </span>
+                          </Link>
+
+                          <Link
+                            to={`${localizedPath("/about")}${navQuery}`}
+                            viewTransition
+                            className="group relative flex items-center justify-between gap-3 border-[1.5px] border-[#ebc88d]/85 bg-gradient-to-r from-[#593722] via-[#412718] to-[#2b180e] px-4 py-3 text-left shadow-[3px_3px_0_0_#140d09,0_10px_22px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:border-[#fff0c8]"
+                          >
+                            <div className="min-w-0">
+                              <p className="flex items-center gap-1.5 font-display text-[14px] font-bold tracking-[0.1em] whitespace-nowrap text-[#fbf3e4] uppercase group-hover:text-white">
+                                <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-[#7ee8b5]" />
+                                {text("About, Dossier & Dispatch", "个人档案、履历与联络信函")}
+                              </p>
+                              <p className="mt-0.5 truncate font-display text-[13.5px] italic text-[#e8d5b5]/90">
+                                {text(
+                                  "USC SCA & Gnomon credentials, direct email & CV",
+                                  "南加大与 Gnomon 学术背景、直达信箱与简历",
+                                )}
+                              </p>
+                            </div>
+                            <span className="shrink-0 font-display text-base font-bold text-[#ebc88d] transition-transform group-hover:translate-x-1">
+                              →
+                            </span>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-
-                <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex flex-wrap gap-2">
-                    {orderedProjects.map((proj) => (
-                      <button
-                        key={proj.slug}
-                        type="button"
-                        onClick={() => selectBinder(proj.slug)}
-                        className="victorian-ticket embossed-ticket cursor-pointer border border-[#684720]/80 bg-parchment-deep/85 px-3.5 py-1.5 font-display text-xs font-semibold text-parchment-ink transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
-                      >
-                        {BOARD_META[proj.slug].roman} · {proj.title}
-                      </button>
-                    ))}
-                  </div>
-                  <a
-                    href={
-                      isChinese
-                        ? "/resume/Kevin_Shan_CN_Game_Resume.pdf"
-                        : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"
-                    }
-                    download
-                    className="victorian-ticket inline-flex items-center gap-2 bg-[#140d09] px-4.5 py-2 font-numeral text-xs font-semibold tracking-[0.12em] text-[#f6eedc] uppercase transition-colors hover:bg-[#2a1d15]"
-                  >
-                    {text("Download Résumé (PDF)", "下载游戏设计简历")} <span aria-hidden="true">↓</span>
-                  </a>
-                </div>
-              </div>
+                );
+              })()
             ) : (
               /* ==================== I–V · LOCKED TWO-WING VICTORIAN CASE DIPTYCH ==================== */
               <div className="relative z-10">
-                {/* Centered Victorian Case Header (clean breathing margin above filigree divider) */}
+                {/* Unified Garamond Case Header — zero inline font collision */}
                 <header className="text-center">
-                  <h1 className="font-display text-2xl font-bold tracking-tight text-parchment-ink sm:text-[31px]">
-                    <span className="font-numeral text-[0.86em] tracking-[0.08em]">
-                      {text("FOLIO", "卷")} {activeMeta.roman}
-                    </span>{" "}
-                    — {activeProject.title}
+                  <p className="font-display text-[11.5px] font-bold tracking-[0.26em] text-parchment-muted uppercase">
+                    {text("CASE FOLIO", "作品拆解卷")} {activeMeta.roman} · {activeProject.year}
+                  </p>
+                  <h1 className="mt-0.5 font-display text-3xl font-bold tracking-tight text-parchment-ink sm:text-[36px] sm:leading-[1.08]">
+                    {activeProject.title}
                   </h1>
-                  <p className="mt-0.5 font-display text-[15px] font-medium italic text-rubric sm:text-[17px]">
-                    {isChinese ? activeMeta.subtitleZh : activeMeta.subtitleEn} · {activeProject.role} · {activeProject.year}
+                  <p className="mt-0.5 font-display text-[16px] font-medium italic text-rubric sm:text-[17.5px]">
+                    {isChinese ? activeMeta.subtitleZh : activeMeta.subtitleEn} · {activeProject.role}
                   </p>
                 </header>
 

@@ -1,4 +1,15 @@
 import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useSearchParams } from "react-router-dom";
+
+export type NavEncounterMode = "tabs" | "flags" | "crossbar";
+
+export function useNavEncounterMode(): { mode: NavEncounterMode; navQuery: string } {
+  const [searchParams] = useSearchParams();
+  const raw = searchParams.get("nav");
+  const mode: NavEncounterMode = raw === "flags" || raw === "crossbar" ? raw : "tabs";
+  const navQuery = raw === "flags" || raw === "crossbar" ? `?nav=${raw}` : "";
+  return { mode, navQuery };
+}
 
 /**
  * Global 60fps lerped cursor parallax & desk lamplight sheen driver.

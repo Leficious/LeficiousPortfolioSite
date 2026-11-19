@@ -16,7 +16,7 @@ export function App() {
   const { text } = useLanguage();
   const { pathname, hash } = useLocation();
   const previousLocation = useRef({ pathname, hash });
-  const [activeFolioSlug, setActiveFolioSlug] = useState<string>("still-life");
+  const [activeFolioSlug, setActiveFolioSlug] = useState<string>("reel");
   const [dialStep, setDialStep] = useState<number>(0);
 
   useDeskParallax();
