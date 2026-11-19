@@ -1,5 +1,13 @@
-import { useRef, useState } from "react";
-import { BrassCornerClasps, BrassRule, CrimsonStamp, FolioCorners } from "../components/AtelierChrome";
+import { useEffect, useRef, useState } from "react";
+import {
+  ArchivalPaperSheaf,
+  AtelierHeaderRail,
+  BrassCornerClasps,
+  BrassPinThreads,
+  BrassRule,
+  CrimsonStamp,
+  FolioCorners,
+} from "../components/AtelierChrome";
 import { FormattedText } from "../components/FormattedText";
 import { Seo } from "../components/Seo";
 import { SiteFooter } from "../components/SiteNav";
@@ -69,7 +77,29 @@ const outsideDisciplines = [
 export function AboutPage() {
   const { isChinese, text, localizedPath } = useLanguage();
   const [copied, setCopied] = useState(false);
+  const [activeSection, setActiveSection] = useState<"dossier" | "credentials" | "contact">("dossier");
   const emailRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const contactEl = document.getElementById("contact");
+      const credEl = document.getElementById("credentials");
+      if (contactEl && contactEl.getBoundingClientRect().top <= 260) {
+        setActiveSection("contact");
+      } else if (credEl && credEl.getBoundingClientRect().top <= 220 && window.scrollY > 80) {
+        setActiveSection("credentials");
+      } else {
+        setActiveSection("dossier");
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const jumpTo = (id: "dossier" | "credentials" | "contact") => {
+    setActiveSection(id);
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const copyEmail = async () => {
     try {
@@ -91,7 +121,7 @@ export function AboutPage() {
     : "/resume/Leficious_Technical_Game_Designer_Resume.pdf";
 
   return (
-    <div className="min-h-screen text-foreground">
+    <div className="min-h-screen px-4 py-5 text-foreground sm:px-8 lg:px-10 lg:py-6 xl:pr-24">
       <Seo
         title={text("Dossier & Correspondence | Leficious", "个人档案与信函 | Leficious")}
         description={text(
@@ -101,25 +131,39 @@ export function AboutPage() {
         path={localizedPath("/about")}
       />
 
-      <main id="main-content" tabIndex={-1} className="mx-auto max-w-[1260px] px-5 pt-10 pb-12 sm:px-8 lg:pt-12">
-        <div className="grid grid-cols-1 items-start gap-9 lg:grid-cols-[1.2fr_0.8fr] lg:gap-10">
-          {/* ==================== LEFT: WAX-SEALED BIOGRAPHICAL RAG-VELLUM FOLIO ==================== */}
-          <div>
-            <p className="mb-5 text-center font-numeral text-xs font-semibold tracking-[0.24em] text-[#ece2d0]/85 uppercase">
-              {text("BIOGRAPHICAL DOSSIER · LOS ANGELES", "个人档案卷宗 · 洛杉矶")}
-            </p>
+      {/* ==================== 1. UNIFIED VICTORIAN ARCHIVAL HEADER RAIL ==================== */}
+      <AtelierHeaderRail
+        eyebrow={text("BIOGRAPHICAL DOSSIER", "个人档案卷宗")}
+        subtitle={text(
+          "Little Tokyo, Los Angeles · USC School of Cinematic Arts & Gnomon",
+          "洛杉矶小东京 · 南加州大学电影艺术学院 & Gnomon",
+        )}
+        maxWidthClass="max-w-[1260px]"
+        rightSlot={
+          <a
+            href={resumeHref}
+            download
+            className="brass-plaque inline-flex items-center gap-2 px-4.5 py-2 font-numeral text-xs font-bold tracking-[0.12em] uppercase transition-transform hover:-translate-y-0.5 active:scale-97"
+          >
+            <span>{text("Download Résumé (PDF)", "下载完整简历")}</span>
+            <span aria-hidden="true">↓</span>
+          </a>
+        }
+      />
 
-            <article className="parchment-sheet relative border-[5px] border-[#15100d] px-6 pt-10 pb-8 sm:px-10 sm:pt-11 sm:pb-9">
-              {/* Authentic Embossed Deep-Crimson Sealing-Wax Stamp Straddling the Top Border */}
-              <CrimsonStamp className="pointer-events-none absolute -top-7 left-1/2 z-30 h-15 w-15 -translate-x-1/2" />
+      <main id="main-content" tabIndex={-1} className="mx-auto mt-6 max-w-[1260px] pb-10 lg:mt-7">
+        <div className="grid grid-cols-1 items-start gap-9 lg:grid-cols-[1.18fr_0.82fr] lg:gap-10">
+          {/* ==================== LEFT: SUSPENDED RAG-VELLUM BIOGRAPHICAL DOSSIER ==================== */}
+          <div id="dossier" className="scroll-mt-16">
+            <BrassPinThreads animKey="about-dossier" />
 
+            <article className="parchment-sheet animate-folio-arc relative border-[5px] border-[#110b07] px-6 pt-9 pb-8 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-10 sm:pt-10 sm:pb-9">
               <FolioCorners tone="parchment" />
 
               <div className="relative z-10">
-                {/* Portrait Plate + Two-Paragraph Literary Bio */}
                 <div className="grid gap-7 sm:grid-cols-[205px_1fr] sm:items-start">
                   <figure className="mx-auto w-full max-w-[215px] sm:mx-0">
-                    <div className="relative border-2 border-[#5e401d] bg-[#100b08] p-1.5 shadow-[0_12px_28px_rgba(0,0,0,0.48)]">
+                    <div className="relative border-2 border-[#4d3417] bg-[#0a0705] p-1.5 shadow-[0_14px_32px_rgba(0,0,0,0.52)]">
                       <BrassCornerClasps sizeClass="h-9 w-9" />
                       <img
                         src="/about/lefi-shan-portrait.webp"
@@ -135,10 +179,10 @@ export function AboutPage() {
                   </figure>
 
                   <div>
-                    <h1 className="font-display text-4xl font-semibold tracking-tight text-parchment-ink sm:text-[46px] sm:leading-[1.06]">
+                    <h1 className="font-display text-4xl font-bold tracking-tight text-parchment-ink sm:text-[46px] sm:leading-[1.06]">
                       {text("Lefi Shan", "单凯飞 · Lefi Shan")}
                     </h1>
-                    <p className="mt-1.5 font-display text-[15.5px] italic text-rubric sm:text-[17px]">
+                    <p className="mt-1.5 font-display text-[15.5px] font-medium italic text-rubric sm:text-[17px]">
                       {text(
                         "Game, Level & Technical Designer · USC SCA & Gnomon",
                         "游戏、关卡与技术设计师 · 南加州大学电影艺术学院 & Gnomon",
@@ -146,7 +190,7 @@ export function AboutPage() {
                     </p>
 
                     <div
-                      className={`mt-4 space-y-3.5 text-pretty text-[16.5px] leading-[1.62] text-parchment-ink/94 sm:text-[17.5px] ${
+                      className={`mt-4 space-y-3.5 text-pretty text-[16.5px] leading-[1.62] text-parchment-ink sm:text-[17.5px] ${
                         isChinese ? "zh-readable" : ""
                       }`}
                     >
@@ -168,22 +212,22 @@ export function AboutPage() {
 
                 <BrassRule ornate tone="parchment" className="my-6" />
 
-                {/* Outside the Engine — Authentic Victorian Horizontal Ledger Rows (Zero SaaS Bento Grid!) */}
+                {/* Outside the Engine — Authentic Victorian Horizontal Ledger Rows */}
                 <section aria-labelledby="outside-engine-heading">
                   <h2
                     id="outside-engine-heading"
-                    className="font-display text-lg font-semibold tracking-tight text-parchment-ink sm:text-xl"
+                    className="font-display text-lg font-bold tracking-tight text-parchment-ink sm:text-xl"
                   >
                     {text("Outside the Engine — Three Disciplines", "引擎之外 — 三重长期训练")}
                   </h2>
 
-                  <div className="mt-3 divide-y divide-[#7a582e]/35 border-y border-[#7a582e]/35">
+                  <div className="mt-3 divide-y divide-[#684720]/40 border-y border-[#684720]/45">
                     {outsideDisciplines.map((item) => (
                       <div
                         key={item.roman}
                         className="grid gap-1 py-3 sm:grid-cols-[205px_1fr] sm:items-baseline sm:gap-5"
                       >
-                        <h3 className="font-display text-[15.5px] font-semibold text-parchment-ink">
+                        <h3 className="font-display text-[15.5px] font-bold text-parchment-ink">
                           <span className="mr-1.5 font-numeral text-xs font-bold text-rubric">{item.roman}</span>
                           · {isChinese ? item.titleZh : item.title}
                         </h3>
@@ -203,30 +247,26 @@ export function AboutPage() {
           </div>
 
           {/* ==================== RIGHT: SMOKED-MAHOGANY CREDENTIALS & CALLING-CARD TRAY ==================== */}
-          <div className="flex flex-col gap-6">
-            <p className="text-center font-numeral text-xs font-semibold tracking-[0.24em] text-[#ece2d0]/85 uppercase">
-              {text("CREDENTIALS & CORRESPONDENCE", "学术履历与信函联络")}
-            </p>
-
-            {/* Smoked-Mahogany Academic Credentials Plaque w/ Stacked Backing Card */}
+          <div className="flex flex-col gap-6 lg:pt-8">
             <section
+              id="credentials"
               aria-labelledby="credentials-heading"
               onPointerMove={(e) => handleTactileCardMove(e, 1.6)}
               onPointerLeave={resetTactileCard}
-              className="slate-folio tactile-tilt relative border border-[#d4ae73]/52 p-6 shadow-[0_24px_54px_rgba(0,0,0,0.82),6px_-5px_0_-1px_#140f0c,7px_-6px_0_0_rgba(200,157,98,0.38)] sm:p-7"
+              className="slate-folio tactile-tilt relative scroll-mt-20 border border-[#d4ae73]/55 p-6 shadow-[0_26px_58px_rgba(0,0,0,0.86),6px_6px_0_-1px_#120c09,8px_8px_0_0_rgba(200,157,98,0.4)] sm:p-7"
             >
               <BrassCornerClasps sizeClass="h-10 w-10" />
-              <FolioCorners tone="slate" inset="inset-2.5" />
+              <FolioCorners tone="slate" inset="inset-2.5" sizeClass="h-8 w-8" />
 
               <div className="relative z-10 text-center">
                 <h2
                   id="credentials-heading"
-                  className="font-numeral text-xs font-semibold tracking-[0.22em] text-[#d6b27c] uppercase"
+                  className="font-numeral text-xs font-bold tracking-[0.22em] text-[#e2be84] uppercase"
                 >
                   {text("Academic & Guild Credentials", "学术履历与背景")}
                 </h2>
 
-                <div className="mt-4 space-y-3 border-y border-warm/25 py-4 text-[16px]">
+                <div className="mt-4 space-y-3 border-y border-warm/30 py-4 text-[16px]">
                   <div>
                     <p className="font-display font-semibold text-foreground">
                       {text("M.S. in Game Design & Development", "游戏设计与开发理学硕士（在读）")}
@@ -248,13 +288,13 @@ export function AboutPage() {
 
                 <div className="mt-3.5 space-y-1 text-[15px] text-muted-foreground">
                   <p>
-                    <span className="font-numeral text-[11px] tracking-[0.14em] text-[#d6b27c] uppercase">
+                    <span className="font-numeral text-[11px] font-semibold tracking-[0.14em] text-[#e2be84] uppercase">
                       {text("Languages: ", "语言：")}
                     </span>
                     {text("English · Mandarin Chinese (Spoken)", "英语 · 普通话（口语流利）")}
                   </p>
                   <p>
-                    <span className="font-numeral text-[11px] tracking-[0.14em] text-[#d6b27c] uppercase">
+                    <span className="font-numeral text-[11px] font-semibold tracking-[0.14em] text-[#e2be84] uppercase">
                       {text("Regions: ", "意向地区：")}
                     </span>
                     {text("US · Canada · Europe · Japan · China", "美国 · 加拿大 · 欧洲 · 日本 · 中国")}
@@ -265,23 +305,19 @@ export function AboutPage() {
 
             {/* Correspondence & Mixed-Stock Letterpress Calling-Card Tray */}
             <section id="contact" className="scroll-mt-24 space-y-4" aria-labelledby="correspondence-heading">
-              <h2
-                id="correspondence-heading"
-                className="text-center font-display text-lg font-medium tracking-wide text-[#ece2d0]/90"
-              >
-                {text("Correspondence & Calling-Card Tray", "主联络信函与名片盘")}
-              </h2>
+              <BrassRule ornate tone="slate" />
 
-              {/* Primary Rag-Vellum Dispatch Envelope w/ Real Embossed Red Sealing-Wax Stamp */}
+              {/* Primary Rag-Vellum Dispatch Envelope w/ Stacked Book-Edge Lip & Red Sealing-Wax Stamp */}
               <button
                 type="button"
                 onClick={copyEmail}
-                className="parchment-sheet group relative flex w-full cursor-pointer items-center justify-between gap-4 border-2 border-[#15100d] px-6 py-5 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.99]"
+                className="parchment-sheet group relative flex w-full cursor-pointer items-center justify-between gap-4 border-[3px] border-[#110b07] px-6 py-5 text-left shadow-[0_22px_52px_rgba(0,0,0,0.82),5px_5px_0_-1px_#dfd0b2,7px_7px_0_0_#110b07] transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.99]"
               >
+                <FolioCorners tone="parchment" inset="inset-1.5" sizeClass="h-5 w-5" />
                 <div className="relative z-10 min-w-0">
                   <span
                     ref={emailRef}
-                    className="block truncate font-display text-xl font-semibold tracking-tight text-parchment-ink sm:text-[25px]"
+                    className="block truncate font-display text-xl font-bold tracking-tight text-parchment-ink sm:text-[25px]"
                   >
                     leficious@gmail.com
                   </span>
@@ -300,7 +336,7 @@ export function AboutPage() {
                 </div>
               </button>
 
-              {/* 3 Mixed-Stock Victorian Letterpress Calling Cards (Smoked Mahogany, Rag Vellum, Venetian Oxblood) */}
+              {/* 3 Mixed-Stock Victorian Letterpress Calling Cards */}
               <div className="grid gap-3 sm:grid-cols-3">
                 {callingCards.map((card) => {
                   const isVellum = card.stock === "vellum";
@@ -315,27 +351,27 @@ export function AboutPage() {
                       onPointerLeave={resetTactileCard}
                       className={`tactile-tilt group relative flex min-h-[86px] flex-col items-center justify-center px-2.5 py-3.5 text-center transition-all hover:rotate-0 ${card.tilt} ${
                         isVellum
-                          ? "parchment-sheet border-2 border-[#15100d]"
+                          ? "parchment-sheet border-2 border-[#110b07]"
                           : isOxblood
-                            ? "border border-[#c6a06a]/55 bg-gradient-to-b from-[#541313] to-[#330a0a] shadow-[0_14px_32px_rgba(0,0,0,0.68)]"
-                            : "slate-folio border border-warm/45"
+                            ? "border border-[#d4ae73]/58 bg-gradient-to-b from-[#581313] to-[#340a0a] shadow-[0_14px_32px_rgba(0,0,0,0.72)]"
+                            : "slate-folio border border-warm/50"
                       }`}
                     >
                       <span
                         aria-hidden="true"
                         className={`pointer-events-none absolute inset-1.5 border ${
                           isVellum
-                            ? "border-[#7a582e]/45"
+                            ? "border-[#684720]/48"
                             : isOxblood
-                              ? "border-[#c6a06a]/35"
-                              : "border-warm/30"
+                              ? "border-[#d4ae73]/38"
+                              : "border-warm/32"
                         }`}
                       />
                       <span
                         className={`relative z-10 whitespace-nowrap font-display text-[14.5px] font-semibold leading-snug ${
                           isVellum
                             ? "text-parchment-ink group-hover:text-rubric"
-                            : "text-[#f0e4cd] group-hover:text-[#e6c48c]"
+                            : "text-[#f6eedc] group-hover:text-[#ebd09e]"
                         }`}
                       >
                         {isChinese ? card.labelZh : card.label}{" "}
@@ -359,6 +395,36 @@ export function AboutPage() {
           </div>
         </div>
       </main>
+
+      {/* Right-Edge 4-Ply Archival Paper Sheaf & Section Dividers */}
+      <ArchivalPaperSheaf
+        ariaLabel={text("Dossier Section Dividers", "档案纸质分隔签")}
+        topFlag={{
+          label: text("CV PDF", "简历"),
+          href: resumeHref,
+          download: true,
+        }}
+        tabs={[
+          {
+            id: "dossier",
+            label: text("I. Dossier", "I · 个人档案"),
+            active: activeSection === "dossier",
+            onClick: () => jumpTo("dossier"),
+          },
+          {
+            id: "credentials",
+            label: text("II. Guild", "II · 学术履历"),
+            active: activeSection === "credentials",
+            onClick: () => jumpTo("credentials"),
+          },
+          {
+            id: "contact",
+            label: text("III. Dispatch", "III · 主联络函"),
+            active: activeSection === "contact",
+            onClick: () => jumpTo("contact"),
+          },
+        ]}
+      />
 
       <SiteFooter />
     </div>

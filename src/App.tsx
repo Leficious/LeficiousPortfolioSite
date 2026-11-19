@@ -6,10 +6,11 @@ import { SiteNav } from "./components/SiteNav";
 import { AboutPage } from "./pages/AboutPage";
 import { GalleryPage } from "./pages/GalleryPage";
 import { HomePage } from "./pages/HomePage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 import { useLanguage } from "./lib/language";
 
-const NotFoundPage = lazy(() => import("./pages/NotFoundPage").then((module) => ({ default: module.NotFoundPage })));
-const ProjectPage = lazy(() => import("./pages/ProjectPage").then((module) => ({ default: module.ProjectPage })));
+const loadProjectPage = () => import("./pages/ProjectPage").then((module) => ({ default: module.ProjectPage }));
+const ProjectPage = lazy(loadProjectPage);
 
 export function App() {
   const { text } = useLanguage();
@@ -19,6 +20,13 @@ export function App() {
   const [dialStep, setDialStep] = useState<number>(0);
 
   useDeskParallax();
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      void loadProjectPage();
+    }, 350);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const handleSelectFolio = useCallback((slug: string) => {
     setActiveFolioSlug(slug);

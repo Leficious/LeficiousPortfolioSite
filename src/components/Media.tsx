@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { MediaItem } from "../lib/projects";
 import { useLanguage } from "../lib/language";
+import { BrassCornerClasps } from "./AtelierChrome";
 import { FormattedText } from "./FormattedText";
 
 function ExpandIcon({ close = false }: { close?: boolean }) {
@@ -176,8 +177,9 @@ function YouTubeEmbed({ id, title, thumbnailSrc }: { id: string; title: string; 
 export function Media({ item }: { item: MediaItem }) {
   return (
     <figure className="space-y-2.5">
-      <div className="slate-folio overflow-hidden border border-warm/38 p-1.5">
-        <div className="overflow-hidden border border-warm/22 bg-[#090706]">
+      <div className="slate-folio relative overflow-hidden border border-[#d4ae73]/45 p-2 shadow-[0_18px_42px_rgba(0,0,0,0.72)]">
+        <BrassCornerClasps sizeClass="h-8 w-8 sm:h-10 sm:w-10" />
+        <div className="overflow-hidden border border-warm/30 bg-[#090706]">
           {item.type === "image" && <ExpandableImage item={item} />}
           {item.type === "video" && (
             <video src={item.src} poster={item.poster} controls playsInline preload="metadata" className="h-auto w-full" />

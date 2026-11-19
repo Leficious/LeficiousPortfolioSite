@@ -87,7 +87,7 @@ export function GalleryLightbox({
     >
       <div
         ref={dialogRef}
-        className="parchment-sheet animate-folio-arc relative flex max-h-[95vh] w-full max-w-[1440px] flex-col overflow-hidden border-[5px] border-[#15100d] px-4 py-4 sm:px-7 sm:py-6"
+        className="parchment-sheet animate-folio-arc relative flex max-h-[95vh] w-full max-w-[1440px] flex-col overflow-hidden border-[5px] border-[#110b07] px-4 py-4 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-7 sm:py-6"
         onClick={(event) => event.stopPropagation()}
       >
         <FolioCorners tone="parchment" inset="inset-2 sm:inset-3" />
@@ -245,14 +245,14 @@ export function GalleryLightbox({
                 <FormattedText>{entry.description}</FormattedText>
               </p>
 
-              <div className="victorian-ticket mt-4 border border-[#7a582e]/45 bg-parchment-deep/55 px-3.5 py-2.5">
-                <p className="font-numeral text-[10px] font-semibold tracking-[0.2em] text-parchment-muted uppercase">
+              <div className="victorian-ticket embossed-ticket mt-4 border border-[#61411d]/75 bg-parchment-deep/80 px-3.5 py-2.5">
+                <p className="font-numeral text-[10px] font-bold tracking-[0.2em] text-parchment-muted uppercase">
                   {text("Craft & Contribution", "负责模块")}
                 </p>
-                <p className="mt-1 text-[14.5px] leading-snug text-parchment-ink/90">{entry.contribution}</p>
+                <p className="mt-1 text-[14.5px] leading-snug text-parchment-ink/94">{entry.contribution}</p>
               </div>
 
-              <BrassRule tone="parchment" className="my-4" />
+              <BrassRule ornate tone="parchment" className="my-4" />
 
               <SoftwareStack software={entry.software} showLabels tone="parchment" />
             </div>

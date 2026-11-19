@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { BrassCornerClasps, BrassRule, CrimsonStamp, FolioCorners } from "../components/AtelierChrome";
+import {
+  ArchivalPaperSheaf,
+  AtelierHeaderRail,
+  BrassCornerClasps,
+  BrassPinThreads,
+  BrassRule,
+  CrimsonStamp,
+  FolioCorners,
+} from "../components/AtelierChrome";
 import { ScrollReveal } from "../components/AtelierMotion";
 import { CodeBlock } from "../components/CodeBlock";
 import { EchoGddWidget } from "../components/EchoGddComponents";
@@ -25,12 +33,20 @@ const ORDERED_FOLIO_SLUGS = [
   "sacred-forest",
 ] as const;
 
-const PROJECT_EMBLEMS: Record<string, string> = {
-  "still-life": "/emblems/still-life-ink.webp",
-  "an-echo-has-no-shape": "/emblems/echo-ink.webp",
-  "fallen-valkyrie": "/emblems/valkyrie-ink.webp",
-  starshore: "/emblems/starshore-ink.webp",
-  "sacred-forest": "/emblems/sacred-forest-ink.webp",
+const SHEAF_FOLIO_LABELS: Record<string, { en: string; zh: string }> = {
+  "still-life": { en: "I. Still Life", zh: "I · 静物" },
+  "an-echo-has-no-shape": { en: "II. Echo", zh: "II · 回声无形" },
+  "fallen-valkyrie": { en: "III. Fallen Valkyrie", zh: "III · 堕落女武神" },
+  starshore: { en: "IV. Starshore", zh: "IV · 星岸" },
+  "sacred-forest": { en: "V. Sacred Forest", zh: "V · 圣域森林" },
+};
+
+const PROJECT_EMBLEMS: Record<string, { ink: string; gold: string }> = {
+  "still-life": { ink: "/emblems/still-life-ink.webp", gold: "/emblems/still-life-gold.webp" },
+  "an-echo-has-no-shape": { ink: "/emblems/echo-ink.webp", gold: "/emblems/echo-gold.webp" },
+  "fallen-valkyrie": { ink: "/emblems/valkyrie-ink.webp", gold: "/emblems/valkyrie-gold.webp" },
+  starshore: { ink: "/emblems/starshore-ink.webp", gold: "/emblems/starshore-gold.webp" },
+  "sacred-forest": { ink: "/emblems/sacred-forest-ink.webp", gold: "/emblems/sacred-forest-gold.webp" },
 };
 
 function toRoman(n: number): string {
@@ -49,7 +65,7 @@ export function ProjectPage() {
   useEffect(() => {
     setScrollProgress(0);
     setActiveChapter(0);
-    if (typeof window === "undefined" || !sectionCount) return;
+    if (typeof window === "undefined") return;
 
     const updateOnScroll = () => {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -59,7 +75,7 @@ export function ProjectPage() {
       let current = 0;
       for (let i = 0; i < sectionCount; i++) {
         const el = document.getElementById(`section-${i + 1}`);
-        if (el && el.getBoundingClientRect().top <= 180) {
+        if (el && el.getBoundingClientRect().top <= 190) {
           current = i + 1;
         }
       }
@@ -84,12 +100,15 @@ export function ProjectPage() {
   const next = localizeProject(orderedProjects[nextIdx], isChinese);
   const nextRoman = toRoman(nextIdx + 1);
 
+  const emblemPair = PROJECT_EMBLEMS[project.slug] ?? PROJECT_EMBLEMS["still-life"];
+  const nextEmblemPair = PROJECT_EMBLEMS[next.slug] ?? PROJECT_EMBLEMS["still-life"];
+
   const relatedGallery = galleryEntries
     .filter((entry) => project.relatedGalleryIds?.includes(entry.id))
     .map((entry) => localizeGalleryEntry(entry, isChinese));
 
   return (
-    <div className="min-h-screen text-foreground">
+    <div className="min-h-screen px-4 py-5 text-foreground sm:px-8 lg:px-10 lg:py-6 xl:pr-24">
       <Seo
         title={`${project.title} | Leficious`}
         description={project.summary}
@@ -99,47 +118,64 @@ export function ProjectPage() {
         imageHeight={project.coverHeight}
       />
 
-      <article id="main-content" tabIndex={-1} className="mx-auto max-w-[1060px] px-5 pt-8 pb-16 sm:px-8 lg:pt-10">
-        <div className="flex items-center justify-between gap-4">
+      {/* ==================== 1. UNIFIED VICTORIAN ARCHIVAL HEADER RAIL ==================== */}
+      <AtelierHeaderRail
+        eyebrow="LEFICIOUS"
+        subtitle={`${text("Case Folio", "项目深度拆解卷宗")} ${folioRoman} / V · ${project.role} · ${project.year}`}
+        maxWidthClass="max-w-[1080px]"
+        rightSlot={
           <Link
             to={localizedPath("/")}
             viewTransition
-            className="inline-flex items-center gap-2 font-numeral text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase transition-colors hover:text-[#d8b47c]"
+            className="brass-plaque inline-flex items-center gap-2 px-4.5 py-2 font-numeral text-xs font-bold tracking-[0.12em] uppercase transition-transform hover:-translate-y-0.5 active:scale-97"
           >
-            <span aria-hidden="true">←</span> {text("Return to Atelier Desk", "返回案台卷宗")}
+            <span aria-hidden="true">←</span>
+            <span>{text("Return to Atelier Desk", "返回案台卷宗")}</span>
           </Link>
-          <span className="font-numeral text-[11px] tracking-[0.22em] text-warm">
-            {text("FOLIO", "卷")} {folioRoman} / V
-          </span>
-        </div>
+        }
+      />
 
-        {/* ==================== UNFOLDED RAG-VELLUM CASE HEADER ==================== */}
-        <header className="parchment-sheet animate-folio-unfold relative mt-7 border-[5px] border-[#110b07] px-6 pt-10 pb-8 sm:px-10 sm:pt-11 sm:pb-9">
-          <CrimsonStamp className="pointer-events-none absolute -top-7 left-1/2 z-30 h-14 w-14 -translate-x-1/2" />
+      <article id="main-content" tabIndex={-1} className="mx-auto mt-6 max-w-[1080px] pb-16">
+        {/* ==================== 2. SUSPENDED RAG-VELLUM CASE HEADER ==================== */}
+        <BrassPinThreads animKey={project.slug} />
+
+        <header className="parchment-sheet animate-folio-arc relative overflow-hidden border-[5px] border-[#110b07] px-6 pt-9 pb-8 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-10 sm:pt-10 sm:pb-9">
           <FolioCorners tone="parchment" />
-          {PROJECT_EMBLEMS[project.slug] && (
-            <img
-              src={PROJECT_EMBLEMS[project.slug]}
-              alt=""
-              aria-hidden="true"
-              className="debossed-intaglio pointer-events-none absolute right-6 bottom-6 hidden h-44 w-44 object-contain opacity-[0.12] mix-blend-multiply select-none md:block"
-            />
-          )}
+
+          <img
+            src={emblemPair.ink}
+            alt=""
+            aria-hidden="true"
+            className="debossed-intaglio pointer-events-none absolute right-6 bottom-6 hidden h-48 w-48 object-contain opacity-[0.12] mix-blend-multiply select-none md:block"
+          />
 
           <div className="relative z-10 grid gap-8 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-8">
-              <p className="font-numeral text-[11px] font-bold tracking-[0.24em] text-parchment-muted uppercase">
-                {text("CASE FOLIO", "项目深度拆解卷宗")} · {folioRoman}
-              </p>
-              <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight text-parchment-ink sm:text-4xl md:text-5xl">
-                {project.title}
-              </h1>
-              <p className="mt-1.5 font-display text-base italic text-rubric sm:text-lg">
+              <div className="flex items-center gap-3.5">
+                <img
+                  src={emblemPair.ink}
+                  alt=""
+                  aria-hidden="true"
+                  width="46"
+                  height="46"
+                  className="debossed-intaglio hidden h-11 w-11 shrink-0 object-contain opacity-90 sm:block"
+                />
+                <div>
+                  <p className="font-numeral text-[11px] font-bold tracking-[0.24em] text-parchment-muted uppercase">
+                    {text("CASE FOLIO", "项目深度拆解卷宗")} · {folioRoman}
+                  </p>
+                  <h1 className="mt-0.5 font-display text-3xl font-bold tracking-tight text-parchment-ink sm:text-4xl md:text-5xl">
+                    {project.title}
+                  </h1>
+                </div>
+              </div>
+
+              <p className="mt-2 font-display text-base font-medium italic text-rubric sm:text-lg">
                 {project.role} · {project.year}
               </p>
 
               <p
-                className={`mt-4 text-pretty text-[17px] leading-[1.64] text-parchment-ink/94 sm:text-[18px] ${
+                className={`mt-4 text-pretty text-[17px] leading-[1.64] text-parchment-ink sm:text-[18px] ${
                   isChinese ? "zh-readable" : ""
                 }`}
               >
@@ -153,7 +189,7 @@ export function ProjectPage() {
                       href={project.externalLink.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="victorian-ticket inline-flex items-center gap-1.5 bg-[#191310] px-4.5 py-2.5 font-numeral text-xs font-semibold tracking-[0.12em] text-[#f2e8d5] uppercase transition-all hover:-translate-y-0.5 hover:bg-[#2e231d]"
+                      className="victorian-ticket inline-flex items-center gap-1.5 bg-[#140d09] px-4.5 py-2.5 font-numeral text-xs font-bold tracking-[0.12em] text-[#f6eedc] uppercase shadow-[0_4px_12px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-0.5 hover:bg-[#2c1e15]"
                     >
                       {project.externalLink.label} <span aria-hidden="true">↗</span>
                     </a>
@@ -163,7 +199,7 @@ export function ProjectPage() {
                       key={item.url}
                       href={item.url}
                       download
-                      className="victorian-ticket inline-flex items-center gap-1.5 border border-[#191310]/70 bg-parchment-deep/65 px-4 py-2.5 font-numeral text-xs font-semibold tracking-[0.1em] text-parchment-ink uppercase transition-colors hover:bg-[#191310] hover:text-[#f2e8d5]"
+                      className="victorian-ticket embossed-ticket inline-flex items-center gap-1.5 border-2 border-[#140d09] bg-parchment-deep/75 px-4 py-2.5 font-numeral text-xs font-bold tracking-[0.1em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
                     >
                       {item.label} <span aria-hidden="true">↓</span>
                     </a>
@@ -172,24 +208,24 @@ export function ProjectPage() {
               )}
             </div>
 
-            <dl className="space-y-3.5 text-[15.5px] md:col-span-4 md:border-l md:border-[#7a582e]/40 md:pl-6">
+            <dl className="space-y-3.5 text-[15.5px] md:col-span-4 md:border-l md:border-[#684720]/45 md:pl-6">
               <div>
                 <dt className="font-numeral text-[10px] font-bold tracking-[0.2em] text-parchment-muted uppercase">
                   {text("Discipline & Role", "职责与定位")}
                 </dt>
-                <dd className="mt-0.5 font-medium text-parchment-ink">{project.role}</dd>
+                <dd className="mt-0.5 font-semibold text-parchment-ink">{project.role}</dd>
               </div>
               <div>
                 <dt className="font-numeral text-[10px] font-bold tracking-[0.2em] text-parchment-muted uppercase">
                   {text("Chronology", "制作年份")}
                 </dt>
-                <dd className="mt-0.5 font-numeral text-xs text-parchment-ink">{project.year}</dd>
+                <dd className="mt-0.5 font-numeral text-xs font-semibold text-parchment-ink">{project.year}</dd>
               </div>
               <div>
                 <dt className="font-numeral text-[10px] font-bold tracking-[0.2em] text-parchment-muted uppercase">
                   {text("Engine & Craft", "引擎与技术栈")}
                 </dt>
-                <dd className="mt-1 text-[14.5px] leading-snug text-parchment-ink/90">{project.tags.join(" · ")}</dd>
+                <dd className="mt-1 text-[14.5px] leading-snug text-parchment-ink/92">{project.tags.join(" · ")}</dd>
               </div>
               {project.references && project.references.length > 0 && (
                 <div>
@@ -203,7 +239,7 @@ export function ProjectPage() {
                         href={ref.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-baseline gap-1 font-medium text-rubric underline decoration-rubric/50 underline-offset-4 transition-colors hover:text-parchment-ink"
+                        className="inline-flex items-baseline gap-1 font-semibold text-rubric underline decoration-rubric/50 underline-offset-4 transition-colors hover:text-parchment-ink"
                       >
                         <span>{ref.label}</span>
                         <span aria-hidden="true" className="shrink-0 text-xs">↗</span>
@@ -218,8 +254,8 @@ export function ProjectPage() {
           <BrassRule ornate tone="parchment" className="relative z-10 mt-7" />
         </header>
 
-        {/* Lead Gameplay Plate */}
-        <div className="mt-7">
+        {/* ==================== 3. LEAD GAMEPLAY PLATE ==================== */}
+        <div className="mt-8">
           {leadVideo ? (
             <FeaturedReel
               id={leadVideo.id}
@@ -228,9 +264,9 @@ export function ProjectPage() {
               thumbnailSrc={leadVideo.thumbnailSrc ?? heroVisual}
             />
           ) : (
-            <div className="slate-folio relative overflow-hidden border border-warm/40 p-2">
+            <div className="slate-folio relative overflow-hidden border border-[#d4ae73]/52 p-2 shadow-[0_24px_56px_rgba(0,0,0,0.82)]">
               <BrassCornerClasps sizeClass="h-11 w-11 sm:h-14 sm:w-14" />
-              <div className="aspect-video overflow-hidden border border-warm/25 bg-[#090706]">
+              <div className="aspect-video overflow-hidden border border-warm/30 bg-[#090706]">
                 <img
                   src={heroVisual}
                   alt={`${project.title}${text(" cover", "封面")}`}
@@ -245,11 +281,11 @@ export function ProjectPage() {
           )}
         </div>
 
-        {/* Sticky Roman-Numeral Chapter Compass + Live Reading Progress Hairline */}
+        {/* Sticky Smoked-Mahogany Chapter Index Bar + Live Reading Progress */}
         {project.sections && (
           <nav
             aria-label={text("Jump to chapter", "跳转章节")}
-            className="sticky top-[52px] z-30 mt-6 overflow-hidden border border-warm/38 bg-[#120d0a]/93 px-4 py-2.5 text-xs text-muted-foreground shadow-[0_10px_28px_rgba(0,0,0,0.65)] backdrop-blur-md lg:top-3"
+            className="sticky top-[52px] z-30 mt-6 overflow-hidden border border-[#d4ae73]/48 bg-[#120d0a]/95 px-4 py-2.5 text-xs text-muted-foreground shadow-[0_12px_32px_rgba(0,0,0,0.78)] backdrop-blur-md lg:top-3"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5">
               {project.sections.map((section, sectionIndex) => {
@@ -259,17 +295,17 @@ export function ProjectPage() {
                     key={section.title}
                     to={`#section-${sectionIndex + 1}`}
                     className={`inline-flex items-baseline gap-1.5 transition-colors ${
-                      isCurrent ? "text-[#f2dfc0]" : "hover:text-[#e8d2ae]"
+                      isCurrent ? "text-[#f7eedc]" : "hover:text-[#ebd09e]"
                     }`}
                   >
                     <span
                       className={`font-numeral text-[11px] font-bold ${
-                        isCurrent ? "text-[#d8b47c]" : "text-warm/80"
+                        isCurrent ? "text-[#e2be84]" : "text-warm/80"
                       }`}
                     >
                       {toRoman(sectionIndex + 1)}
                     </span>
-                    <span className={`font-display text-sm ${isCurrent ? "font-semibold" : "font-normal"}`}>
+                    <span className={`font-display text-sm ${isCurrent ? "font-bold" : "font-normal"}`}>
                       {section.title}
                     </span>
                   </Link>
@@ -279,97 +315,110 @@ export function ProjectPage() {
             <span
               aria-hidden="true"
               style={{ width: `${scrollProgress.toFixed(1)}%` }}
-              className="pointer-events-none absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#7d1919] via-[#a88452] to-[#d8b47c] transition-[width] duration-150"
+              className="pointer-events-none absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#8f1616] via-[#c89d62] to-[#ebd09e] transition-[width] duration-150"
             />
           </nav>
         )}
 
-        {/* Overview & Key Outcomes */}
-        <ScrollReveal className="mt-12 grid gap-8 md:grid-cols-12 md:gap-10">
-          <div className="md:col-span-3">
-            <p className="font-numeral text-[10.5px] tracking-[0.2em] text-warm uppercase">
-              {text("PROLOGUE", "序章")}
-            </p>
-            <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight text-foreground">
-              {text("Overview & Scope", "项目背景与规模")}
-            </h2>
-            <p className={`mt-2 text-[15px] leading-snug text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
-              <FormattedText>{project.scope}</FormattedText>
-            </p>
-          </div>
-          <div className={`space-y-4 text-pretty leading-[1.66] md:col-span-9 ${isChinese ? "zh-readable" : ""}`}>
-            <p className="text-[18px] text-foreground/94">
-              <FormattedText>{project.overview}</FormattedText>
-            </p>
-            <ul className="space-y-2.5 pt-1 text-[16.5px] text-muted-foreground">
-              {project.outcomes.map((outcome) => (
-                <li key={outcome} className="flex gap-3">
-                  <span aria-hidden="true" className="mt-2.5 h-1.5 w-1.5 shrink-0 rotate-45 border border-warm bg-rubric" />
-                  <span>{outcome}</span>
-                </li>
-              ))}
-            </ul>
-            {project.authorNote && (
-              <aside className="slate-folio mt-6 border-l-2 border-l-rubric px-5 py-4">
-                <p className="font-numeral text-[10.5px] font-semibold tracking-[0.2em] text-[#d8b47c] uppercase">
-                  {text("Designer's Note — Why I Built This", "设计师手记 — 制作初衷")}
-                </p>
-                <p className={`mt-2 text-[16px] leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
-                  <FormattedText>{project.authorNote}</FormattedText>
-                </p>
-              </aside>
-            )}
+        {/* ==================== 4. FRAMED SMOKED-MAHOGANY PROLOGUE & RAG-VELLUM DESIGNER'S NOTE ==================== */}
+        <ScrollReveal className="slate-folio relative mt-10 border border-[#d4ae73]/48 p-6 shadow-[0_24px_56px_rgba(0,0,0,0.82)] sm:p-9">
+          <BrassCornerClasps sizeClass="h-9 w-9 sm:h-11 sm:w-11" />
+          <FolioCorners tone="slate" inset="inset-2.5" sizeClass="h-7 w-7" />
+
+          <div className="relative z-10 grid gap-8 md:grid-cols-12 md:gap-10">
+            <div className="md:col-span-3">
+              <p className="font-numeral text-[10.5px] font-bold tracking-[0.22em] text-[#e2be84] uppercase">
+                {text("PROLOGUE", "序章")}
+              </p>
+              <h2 className="mt-1 font-display text-2xl font-bold tracking-tight text-foreground">
+                {text("Overview & Scope", "项目背景与规模")}
+              </h2>
+              <p className={`mt-2 text-[15px] leading-snug text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
+                <FormattedText>{project.scope}</FormattedText>
+              </p>
+            </div>
+
+            <div className={`space-y-4 text-pretty leading-[1.66] md:col-span-9 ${isChinese ? "zh-readable" : ""}`}>
+              <p className="text-[18px] text-foreground/96">
+                <FormattedText>{project.overview}</FormattedText>
+              </p>
+              <ul className="space-y-2.5 pt-1 text-[16.5px] text-muted-foreground">
+                {project.outcomes.map((outcome) => (
+                  <li key={outcome} className="flex gap-3">
+                    <span aria-hidden="true" className="mt-2.5 h-1.5 w-1.5 shrink-0 rotate-45 border border-warm bg-rubric" />
+                    <span>{outcome}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {project.authorNote && (
+                <aside className="parchment-sheet relative mt-6 border-[3px] border-[#110b07] px-5 py-4 shadow-[0_14px_32px_rgba(0,0,0,0.65),4px_4px_0_-1px_#dfd0b2,6px_6px_0_0_#110b07] sm:px-6">
+                  <CrimsonStamp className="pointer-events-none absolute -right-2.5 -top-2.5 h-10 w-10" />
+                  <p className="relative z-10 font-numeral text-[10.5px] font-bold tracking-[0.2em] text-rubric uppercase">
+                    {text("Designer's Note — Why I Built This", "设计师手记 — 制作初衷")}
+                  </p>
+                  <p className={`relative z-10 mt-1.5 text-[16px] leading-relaxed text-parchment-ink ${isChinese ? "zh-readable" : ""}`}>
+                    <FormattedText>{project.authorNote}</FormattedText>
+                  </p>
+                </aside>
+              )}
+            </div>
           </div>
         </ScrollReveal>
 
         {project.media.length > (leadVideo ? 1 : 0) && (
-          <section className="mt-16 grid gap-8 pt-12 md:grid-cols-12 md:gap-10">
-            <div className="md:col-span-12">
-              <BrassRule tone="slate" className="mb-10" />
-            </div>
-            <div className="md:col-span-3">
-              <p className="font-numeral text-[10.5px] tracking-[0.2em] text-warm uppercase">
-                {text("PLATES", "实机记录")}
-              </p>
-              <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight text-foreground">
-                {text("Walkthroughs", "实机与分解演示")}
-              </h2>
-            </div>
-            <div className="space-y-8 md:col-span-9">
-              {project.media.slice(leadVideo ? 1 : 0).map((item, mediaIndex) => (
-                <Media key={mediaIndex} item={item} />
-              ))}
+          <section className="mt-14">
+            <BrassRule ornate tone="slate" className="mb-10" />
+            <div className="grid gap-8 md:grid-cols-12 md:gap-10">
+              <div className="md:col-span-3">
+                <p className="font-numeral text-[10.5px] font-bold tracking-[0.2em] text-[#e2be84] uppercase">
+                  {text("PLATES", "实机记录")}
+                </p>
+                <h2 className="mt-1 font-display text-2xl font-bold tracking-tight text-foreground">
+                  {text("Walkthroughs", "实机与分解演示")}
+                </h2>
+              </div>
+              <div className="space-y-8 md:col-span-9">
+                {project.media.slice(leadVideo ? 1 : 0).map((item, mediaIndex) => (
+                  <Media key={mediaIndex} item={item} />
+                ))}
+              </div>
             </div>
           </section>
         )}
 
+        {/* ==================== 5. FRAMED CASE CHAPTERS ==================== */}
         {project.sections?.map((section, sectionIndex) => (
           <section
             id={`section-${sectionIndex + 1}`}
             key={section.title}
-            className="mt-16 scroll-mt-24 md:mt-20"
+            className="mt-14 scroll-mt-24 md:mt-16"
           >
-            <BrassRule tone="slate" className="mb-12" />
+            <BrassRule ornate tone="slate" className="mb-9" />
 
-            <ScrollReveal className="grid gap-6 md:grid-cols-12 md:gap-10">
-              <div className="min-w-0 md:col-span-3">
-                <span className="font-numeral text-xs font-bold tracking-[0.2em] text-warm">
-                  {text("CHAPTER", "章节")} {toRoman(sectionIndex + 1)}
-                </span>
-                <h2 className="mt-1.5 break-words font-display text-2xl font-semibold leading-snug tracking-tight text-foreground sm:text-[26px]">
-                  {section.title}
-                </h2>
-              </div>
-              <div
-                className={`min-w-0 space-y-4 text-pretty text-[17.5px] leading-[1.68] text-muted-foreground md:col-span-9 ${
-                  isChinese ? "zh-readable" : ""
-                }`}
-              >
-                {section.body.map((paragraph) => (
-                  <p key={paragraph}>
-                    <FormattedText>{paragraph}</FormattedText>
-                  </p>
-                ))}
+            <ScrollReveal className="slate-folio relative border border-warm/40 p-6 shadow-[0_20px_48px_rgba(0,0,0,0.75)] sm:p-8">
+              <FolioCorners tone="slate" inset="inset-2" sizeClass="h-6 w-6" />
+
+              <div className="relative z-10 grid gap-6 md:grid-cols-12 md:gap-10">
+                <div className="min-w-0 md:col-span-3">
+                  <span className="font-numeral text-xs font-bold tracking-[0.2em] text-[#e2be84]">
+                    {text("CHAPTER", "章节")} {toRoman(sectionIndex + 1)}
+                  </span>
+                  <h2 className="mt-1.5 break-words font-display text-2xl font-bold leading-snug tracking-tight text-foreground sm:text-[26px]">
+                    {section.title}
+                  </h2>
+                </div>
+                <div
+                  className={`min-w-0 space-y-4 text-pretty text-[17.5px] leading-[1.68] text-foreground/90 md:col-span-9 ${
+                    isChinese ? "zh-readable" : ""
+                  }`}
+                >
+                  {section.body.map((paragraph) => (
+                    <p key={paragraph}>
+                      <FormattedText>{paragraph}</FormattedText>
+                    </p>
+                  ))}
+                </div>
               </div>
             </ScrollReveal>
 
@@ -393,14 +442,14 @@ export function ProjectPage() {
         ))}
 
         {project.snippets.length > 0 && (
-          <section className="mt-16 md:mt-20">
-            <BrassRule tone="slate" className="mb-12" />
+          <section className="mt-14 md:mt-16">
+            <BrassRule ornate tone="slate" className="mb-9" />
             <div className="grid gap-8 md:grid-cols-12 md:gap-10">
               <div className="md:col-span-3">
-                <span className="font-numeral text-[10.5px] tracking-[0.2em] text-warm uppercase">
+                <span className="font-numeral text-[10.5px] font-bold tracking-[0.2em] text-[#e2be84] uppercase">
                   {text("IMPLEMENTATION", "代码实现")}
                 </span>
-                <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight">{text("Core Source", "核心代码")}</h2>
+                <h2 className="mt-1 font-display text-2xl font-bold tracking-tight">{text("Core Source", "核心代码")}</h2>
               </div>
               <div className="space-y-6 md:col-span-9">
                 {project.snippets.map((snippet, snippetIndex) => (
@@ -412,16 +461,16 @@ export function ProjectPage() {
         )}
 
         {relatedGallery.length > 0 && (
-          <section className="mt-16 md:mt-20" aria-labelledby="related-gallery-title">
-            <BrassRule tone="slate" className="mb-12" />
+          <section className="mt-14 md:mt-16" aria-labelledby="related-gallery-title">
+            <BrassRule ornate tone="slate" className="mb-9" />
             <div className="mb-6 flex flex-wrap items-baseline justify-between gap-4">
-              <h2 id="related-gallery-title" className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+              <h2 id="related-gallery-title" className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
                 {text("Related Specimen Plates in Gallery", "画廊中的关联拆解图版")}
               </h2>
               <Link
                 to={localizedPath("/gallery")}
                 viewTransition
-                className="font-numeral text-xs font-semibold tracking-[0.14em] text-warm uppercase transition-colors hover:text-[#e4c38e]"
+                className="font-numeral text-xs font-bold tracking-[0.14em] text-[#e2be84] uppercase transition-colors hover:text-[#fbf3e4]"
               >
                 {text("Open Salon Gallery", "进入完整画廊")} →
               </Link>
@@ -434,9 +483,10 @@ export function ProjectPage() {
                   viewTransition
                   onPointerMove={(e) => handleTactileCardMove(e, 2.5)}
                   onPointerLeave={resetTactileCard}
-                  className="slate-folio tactile-tilt group relative overflow-hidden border border-warm/35 p-2.5 hover:border-[#c6a06a]"
+                  className="slate-folio tactile-tilt group relative overflow-hidden border border-warm/45 p-2.5 hover:border-[#ebd09e]"
                 >
-                  <div className="aspect-video overflow-hidden border border-warm/25 bg-[#090706]">
+                  <FolioCorners tone="slate" inset="inset-1.5" sizeClass="h-5 w-5" />
+                  <div className="relative z-10 aspect-video overflow-hidden border border-warm/30 bg-[#090706]">
                     <img
                       src={entry.cover}
                       alt={entry.coverAlt}
@@ -447,8 +497,8 @@ export function ProjectPage() {
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                     />
                   </div>
-                  <div className="px-1 pt-3 pb-1">
-                    <p className="font-display text-base font-semibold transition-colors group-hover:text-[#d8b47c]">
+                  <div className="relative z-10 px-1.5 pt-3 pb-1">
+                    <p className="font-display text-base font-bold transition-colors group-hover:text-[#ebd09e]">
                       {entry.title}
                     </p>
                     <p className="mt-0.5 font-numeral text-[10px] tracking-[0.14em] text-muted-foreground uppercase">
@@ -461,28 +511,57 @@ export function ProjectPage() {
           </section>
         )}
 
-        <nav className="mt-20 flex flex-col justify-between gap-4 border-t border-warm/30 pt-8 sm:flex-row sm:items-center">
+        {/* ==================== 6. STACKED RAG-VELLUM & EMBOSSED CREST NEXT-FOLIO HANDOFF ==================== */}
+        <nav className="mt-16 flex flex-col justify-between gap-6 border-t border-warm/38 pt-9 sm:flex-row sm:items-center">
           <Link
             to={localizedPath("/")}
             viewTransition
-            className="font-numeral text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase transition-colors hover:text-[#d8b47c]"
+            className="brass-plaque inline-flex w-fit items-center gap-2 px-5 py-2.5 font-numeral text-xs font-bold tracking-[0.14em] uppercase transition-transform hover:-translate-y-0.5"
           >
             ← {text("Return to Atelier Desk", "返回案台卷宗")}
           </Link>
+
           <Link
             to={localizedPath(`/projects/${next.slug}`)}
             viewTransition
-            className="parchment-sheet group inline-flex flex-col border-2 border-[#15100d] px-6 py-3.5 text-right transition-transform hover:-translate-y-0.5"
+            className="parchment-sheet group relative inline-flex items-center gap-5 border-[4px] border-[#110b07] px-6 py-4 text-right shadow-[0_24px_54px_rgba(0,0,0,0.85),5px_5px_0_-1px_#dfd0b2,7px_7px_0_0_#110b07] transition-transform hover:-translate-y-1"
           >
-            <span className="relative z-10 font-numeral text-[10px] font-bold tracking-[0.2em] text-rubric uppercase">
-              {text("NEXT CASE FOLIO", "下一卷宗")} · {nextRoman}
-            </span>
-            <span className="relative z-10 mt-0.5 font-display text-xl font-semibold tracking-tight text-parchment-ink transition-colors group-hover:text-rubric">
-              {next.title} →
-            </span>
+            <FolioCorners tone="parchment" inset="inset-1.5" sizeClass="h-5 w-5" />
+            <img
+              src={nextEmblemPair.ink}
+              alt=""
+              aria-hidden="true"
+              width="52"
+              height="52"
+              className="debossed-intaglio relative z-10 h-12 w-12 shrink-0 object-contain opacity-90 transition-transform duration-300 group-hover:scale-108"
+            />
+            <div className="relative z-10">
+              <span className="block font-numeral text-[10px] font-bold tracking-[0.2em] text-rubric uppercase">
+                {text("NEXT CASE FOLIO", "下一卷宗")} · {nextRoman}
+              </span>
+              <span className="mt-0.5 block font-display text-xl font-bold tracking-tight text-parchment-ink transition-colors group-hover:text-rubric sm:text-2xl">
+                {next.title} →
+              </span>
+            </div>
           </Link>
         </nav>
       </article>
+
+      {/* Right-Edge 4-Ply Archival Paper Sheaf & Case Folio Dividers + Live Reading Ribbon */}
+      <ArchivalPaperSheaf
+        ariaLabel={text("Case Folio Dividers", "项目卷宗纸质分隔签")}
+        progressPct={scrollProgress}
+        topFlag={{
+          label: text("← Desk", "← 案台"),
+          to: localizedPath("/"),
+        }}
+        tabs={ORDERED_FOLIO_SLUGS.map((s) => ({
+          id: s,
+          label: isChinese ? SHEAF_FOLIO_LABELS[s].zh : SHEAF_FOLIO_LABELS[s].en,
+          active: s === project.slug,
+          to: localizedPath(`/projects/${s}`),
+        }))}
+      />
 
       <SiteFooter />
     </div>

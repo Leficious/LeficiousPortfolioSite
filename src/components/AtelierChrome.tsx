@@ -1,4 +1,5 @@
-import { useId } from "react";
+import { useId, type ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 const FRAME_MAIN_D =
   "M 31.80 15.00 H 4.70 L 48.00 90.00 L 62.20 65.40 H 57.82 L 48.00 82.40 L 11.28 18.80 H 31.80 Z";
@@ -305,5 +306,268 @@ export function BrassRule({
       <span className={`h-1.5 w-1.5 rotate-45 ${sideDot}`} />
       <span className={`h-[1.2px] flex-1 ${line}`} />
     </div>
+  );
+}
+
+/**
+ * Unified top Victorian Archival Header Rail shared across Atelier, Gallery, Project, and Dossier routes.
+ */
+export function AtelierHeaderRail({
+  eyebrow = "LEFICIOUS",
+  subtitle,
+  rightSlot,
+  maxWidthClass = "max-w-[1340px]",
+}: {
+  eyebrow?: string;
+  subtitle: string;
+  rightSlot?: ReactNode;
+  maxWidthClass?: string;
+}) {
+  return (
+    <header
+      className={`relative z-20 mx-auto flex w-full ${maxWidthClass} flex-wrap items-center justify-between gap-4 border-b border-warm/42 pb-3.5 shadow-[0_1px_0_rgba(0,0,0,0.8)]`}
+    >
+      <div className="flex flex-wrap items-baseline gap-x-3.5 gap-y-1">
+        <p className="font-numeral text-lg font-bold tracking-[0.22em] text-[#f7eedc] sm:text-xl">
+          {eyebrow}
+        </p>
+        <span aria-hidden="true" className="hidden h-1.5 w-1.5 rotate-45 bg-[#b82222] sm:inline-block" />
+        <p className="font-display text-sm italic text-[#de8278] sm:text-base">{subtitle}</p>
+      </div>
+      {rightSlot && <div className="flex flex-wrap items-center gap-2.5">{rightSlot}</div>}
+    </header>
+  );
+}
+
+export type SheafFlagSpec = {
+  label: string;
+  active?: boolean;
+  onClick?: () => void;
+  href?: string;
+  to?: string;
+  download?: boolean;
+};
+
+export type SheafTabSpec = {
+  id: string;
+  label: string;
+  active?: boolean;
+  onClick?: () => void;
+  href?: string;
+  to?: string;
+};
+
+const DIVIDER_PRESETS = [
+  { idleW: "w-[38px]", padY: "py-4", stock: "bg-[#eadcc2]", overlap: "mt-0", tilt: "-rotate-[0.35deg]" },
+  { idleW: "w-[33px]", padY: "py-3.5", stock: "bg-[#ded0b3]", overlap: "-mt-1.5", tilt: "rotate-[0.45deg]" },
+  { idleW: "w-[41px]", padY: "py-4.5", stock: "bg-[#e5d6b9]", overlap: "mt-1.5", tilt: "-rotate-[0.3deg]" },
+  { idleW: "w-[35px]", padY: "py-3.5", stock: "bg-[#d7c5a4]", overlap: "-mt-2", tilt: "rotate-[0.35deg]" },
+  { idleW: "w-[39px]", padY: "py-4", stock: "bg-[#e1d2b4]", overlap: "-mt-1.5", tilt: "-rotate-[0.4deg]" },
+  { idleW: "w-[36px]", padY: "py-3.5", stock: "bg-[#dbc9a8]", overlap: "mt-1", tilt: "rotate-[0.3deg]" },
+] as const;
+
+/**
+ * Shared Right-Edge 4-Ply Layered Archival Paper Sheaf with an upper swallowtail
+ * Venetian-oxblood bookmark flag and asymmetrical shingled die-cut paper separator dividers.
+ */
+export function ArchivalPaperSheaf({
+  ariaLabel,
+  topFlag,
+  tabs,
+  progressPct,
+}: {
+  ariaLabel: string;
+  topFlag?: SheafFlagSpec;
+  tabs: SheafTabSpec[];
+  progressPct?: number;
+}) {
+  const anyTabActive = tabs.some((t) => t.active);
+
+  const renderFlagInner = (active: boolean, label: string) => (
+    <span
+      style={{
+        clipPath: "polygon(0 0, 100% 5px, 100% calc(100% - 9px), 52% calc(100% - 1px), 0 100%)",
+      }}
+      className={`relative flex flex-col items-center gap-1.5 py-3.5 transition-all duration-250 ${
+        active
+          ? "w-[44px] border-r-[3.5px] border-r-[#d8b274] bg-gradient-to-r from-[#6e1515] to-[#8f1b1b] text-[#fbf3e4]"
+          : "w-[34px] bg-gradient-to-r from-[#4b1010] to-[#681616] text-[#e6d2b2] group-hover:w-[38px] group-hover:from-[#611414] group-hover:to-[#821a1a] group-hover:text-[#fbf3e4]"
+      }`}
+    >
+      <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-[3px] w-px bg-[#e2be84]/35" />
+      <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#e2be84]" />
+      <span
+        className="font-numeral text-[10.5px] font-bold tracking-[0.16em] uppercase whitespace-nowrap"
+        style={{ writingMode: "vertical-rl" }}
+      >
+        {label}
+      </span>
+    </span>
+  );
+
+  return (
+    <nav
+      aria-label={ariaLabel}
+      className="fixed right-2.5 top-6 bottom-8 z-40 hidden w-[64px] select-none xl:block 2xl:right-4"
+    >
+      {/* 4-Ply Layered Ledger Paper Sheaf Fore-Edge */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 left-0 w-[15px] shadow-[-14px_6px_28px_rgba(0,0,0,0.9)]"
+      >
+        <span className="absolute top-3.5 bottom-2.5 left-[9px] w-[5px] border-y border-r border-[#5c4324]/60 bg-[#b8a27e]" />
+        <span className="absolute top-1.5 bottom-4 left-[6px] w-[5px] border-y border-r border-[#684c29]/65 bg-[#c9b490] shadow-[1px_0_2px_rgba(0,0,0,0.55)]" />
+        <span className="absolute top-2.5 bottom-1 left-[3px] w-[5px] border-y border-r border-[#73552f]/70 bg-[#dac7a5] shadow-[1px_0_2px_rgba(0,0,0,0.5)]" />
+        <span
+          className="absolute inset-y-0 left-0 w-[5px] border border-[#684720]/80 bg-[#ebd9ba] shadow-[2px_0_4px_rgba(0,0,0,0.55)]"
+          style={{
+            backgroundImage: 'url("/textures/rag-paper-tile.webp")',
+            backgroundSize: "180px 180px",
+          }}
+        />
+        {anyTabActive && <span className="absolute inset-y-2 left-[1px] w-[3.5px] bg-[#f8efdc]" />}
+        {typeof progressPct === "number" && (
+          <span
+            style={{ height: `${Math.max(2, Math.min(100, progressPct)).toFixed(1)}%` }}
+            className="absolute top-0 left-0 w-[2.5px] bg-gradient-to-b from-[#8f1616] via-[#b82222] to-[#d8b274] transition-[height] duration-150"
+          />
+        )}
+      </div>
+
+      {/* Asymmetrical Top-Indexed Cascade */}
+      <div className="relative z-10 flex h-full flex-col items-start pt-5 pl-[11px]">
+        {topFlag &&
+          (() => {
+            const flagClass = `group relative cursor-pointer transition-all duration-250 [filter:drop-shadow(2px_5px_7px_rgba(0,0,0,0.82))] active:scale-97 ${
+              topFlag.active
+                ? "z-30 translate-x-1 rotate-0"
+                : "z-20 -rotate-[1deg] hover:translate-x-1 hover:rotate-0"
+            }`;
+            if (topFlag.to) {
+              return (
+                <Link to={topFlag.to} viewTransition className={flagClass}>
+                  {renderFlagInner(Boolean(topFlag.active), topFlag.label)}
+                </Link>
+              );
+            }
+            if (topFlag.href) {
+              return (
+                <a href={topFlag.href} download={topFlag.download} className={flagClass}>
+                  {renderFlagInner(Boolean(topFlag.active), topFlag.label)}
+                </a>
+              );
+            }
+            return (
+              <button
+                type="button"
+                onClick={topFlag.onClick}
+                aria-current={topFlag.active ? "true" : undefined}
+                className={flagClass}
+              >
+                {renderFlagInner(Boolean(topFlag.active), topFlag.label)}
+              </button>
+            );
+          })()}
+
+        <div className={`${topFlag ? "mt-6" : "mt-2"} flex flex-col items-start`}>
+          {tabs.map((tab, idx) => {
+            const active = Boolean(tab.active);
+            const preset = DIVIDER_PRESETS[idx % DIVIDER_PRESETS.length];
+            const wrapperClass = `group relative cursor-pointer transition-all duration-250 [filter:drop-shadow(2px_5px_7px_rgba(0,0,0,0.78))_drop-shadow(0_1px_1px_rgba(0,0,0,0.65))] active:scale-97 ${
+              idx === 0 ? "mt-0" : preset.overlap
+            } ${
+              active
+                ? "translate-x-0.5 rotate-0"
+                : `${preset.tilt} hover:z-30 hover:translate-x-1 hover:rotate-0`
+            }`;
+
+            const tabInner = (
+              <span
+                style={{
+                  clipPath: "polygon(0 0, 100% 11px, 100% calc(100% - 11px), 0 100%)",
+                  backgroundImage: 'url("/textures/rag-paper-tile.webp")',
+                  backgroundSize: "220px 220px",
+                }}
+                className={`relative flex flex-col items-center justify-center gap-1.5 transition-all duration-250 ${
+                  active
+                    ? "w-[48px] border-r-[4px] border-r-rubric bg-[#f7edd8] py-4.5 text-rubric"
+                    : `${preset.idleW} ${preset.padY} ${preset.stock} border-r border-r-[#684720]/65 text-[#1b130d] group-hover:w-[43px] group-hover:bg-[#f2e6cd]`
+                }`}
+              >
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-y-0 left-[3px] w-px bg-[#684720]/35 shadow-[1px_0_0_rgba(255,252,242,0.75)]"
+                />
+                <span
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute top-3.5 bottom-3.5 right-[4px] w-px ${
+                    active ? "bg-rubric/30" : "bg-[#684720]/25"
+                  }`}
+                />
+                <span
+                  aria-hidden="true"
+                  style={{ borderRadius: "50%" }}
+                  className={`h-2 w-2 shrink-0 border ${
+                    active
+                      ? "border-rubric bg-[#c89d62]"
+                      : "border-[#5c3e1b] bg-[#18110c]/75 group-hover:bg-[#c89d62]"
+                  }`}
+                />
+                <span
+                  className={`max-h-[118px] overflow-hidden font-display text-[12px] tracking-wide whitespace-nowrap ${
+                    active ? "font-bold" : "font-semibold"
+                  }`}
+                  style={{ writingMode: "vertical-rl" }}
+                >
+                  {tab.label}
+                </span>
+              </span>
+            );
+
+            if (tab.to) {
+              return (
+                <Link
+                  key={tab.id}
+                  to={tab.to}
+                  viewTransition
+                  aria-current={active ? "page" : undefined}
+                  style={{ zIndex: active ? 35 : 25 - idx }}
+                  className={wrapperClass}
+                >
+                  {tabInner}
+                </Link>
+              );
+            }
+
+            if (tab.href) {
+              return (
+                <a
+                  key={tab.id}
+                  href={tab.href}
+                  aria-current={active ? "true" : undefined}
+                  style={{ zIndex: active ? 35 : 25 - idx }}
+                  className={wrapperClass}
+                >
+                  {tabInner}
+                </a>
+              );
+            }
+
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={tab.onClick}
+                aria-current={active ? "true" : undefined}
+                style={{ zIndex: active ? 35 : 25 - idx }}
+                className={wrapperClass}
+              >
+                {tabInner}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </nav>
   );
 }

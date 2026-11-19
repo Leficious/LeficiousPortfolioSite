@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { Link } from "react-router-dom";
 import {
+  ArchivalPaperSheaf,
+  AtelierHeaderRail,
   BrassCornerClasps,
   BrassPinThreads,
   BrassRule,
@@ -224,35 +226,29 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
       />
 
       {/* ==================== 1. ALIGNED VICTORIAN ARCHIVAL HEADER RAIL ==================== */}
-      <header className="relative z-20 mx-auto flex w-full max-w-[1340px] flex-wrap items-center justify-between gap-4 border-b border-warm/42 pb-3.5 shadow-[0_1px_0_rgba(0,0,0,0.8)]">
-        <div className="flex flex-wrap items-baseline gap-x-3.5 gap-y-1">
-          <p className="font-numeral text-lg font-bold tracking-[0.22em] text-[#f7eedc] sm:text-xl">
-            LEFICIOUS
-          </p>
-          <span aria-hidden="true" className="hidden h-1.5 w-1.5 rotate-45 bg-[#b82222] sm:inline-block" />
-          <p className="font-display text-sm italic text-[#de8278] sm:text-base">
-            {text(
-              "Game, Level & Technical Designer · USC School of Cinematic Arts & Gnomon",
-              "游戏、关卡与技术设计师 · 南加州大学电影艺术学院 & Gnomon",
+      <AtelierHeaderRail
+        eyebrow="LEFICIOUS"
+        subtitle={text(
+          "Game, Level & Technical Designer · USC School of Cinematic Arts & Gnomon",
+          "游戏、关卡与技术设计师 · 南加州大学电影艺术学院 & Gnomon",
+        )}
+        rightSlot={
+          <button
+            type="button"
+            onClick={() => selectBinder(isReelActive ? lastProjectSlugRef.current : "reel")}
+            className="brass-plaque inline-flex cursor-pointer items-center gap-2.5 px-5 py-2 font-numeral text-xs font-bold tracking-[0.12em] uppercase transition-transform hover:-translate-y-0.5 active:scale-97"
+          >
+            {isReelActive ? (
+              <>← {text("Return to Case Folios", "返回作品卷宗")}</>
+            ) : (
+              <>
+                <span aria-hidden="true" className="text-[10px]">▶</span>
+                <span>{text("2026 Master Design Reel", "2026 年度设计集锦")}</span>
+              </>
             )}
-          </p>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => selectBinder(isReelActive ? lastProjectSlugRef.current : "reel")}
-          className="brass-plaque inline-flex cursor-pointer items-center gap-2.5 px-5 py-2 font-numeral text-xs font-bold tracking-[0.12em] uppercase transition-transform hover:-translate-y-0.5 active:scale-97"
-        >
-          {isReelActive ? (
-            <>← {text("Return to Case Folios", "返回作品卷宗")}</>
-          ) : (
-            <>
-              <span aria-hidden="true" className="text-[10px]">▶</span>
-              <span>{text("2026 Master Design Reel", "2026 年度设计集锦")}</span>
-            </>
-          )}
-        </button>
-      </header>
+          </button>
+        }
+      />
 
       {/* Mobile / Tablet Compact Binder Strip (< xl) */}
       <div
@@ -729,148 +725,20 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
       </div>
 
       {/* ==================== 3. RIGHT-EDGE ARCHIVAL PAPER SHEAF & DIE-CUT SEPARATOR TABS (Desktop xl+) ==================== */}
-      <nav
-        aria-label={text("Folio Separator Dividers", "卷宗纸质分隔索引签")}
-        className="fixed right-2.5 top-6 bottom-8 z-40 hidden w-[64px] select-none xl:block 2xl:right-4"
-      >
-        {/* 4-Ply Layered Ledger Paper Sheaf Fore-Edge (casts deep book-edge shadow onto the desk) */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-0 w-[15px] shadow-[-14px_6px_28px_rgba(0,0,0,0.9)]"
-        >
-          {/* Backmost aged manila ply */}
-          <span className="absolute top-3.5 bottom-2.5 left-[9px] w-[5px] border-y border-r border-[#5c4324]/60 bg-[#b8a27e]" />
-          {/* 3rd ply */}
-          <span className="absolute top-1.5 bottom-4 left-[6px] w-[5px] border-y border-r border-[#684c29]/65 bg-[#c9b490] shadow-[1px_0_2px_rgba(0,0,0,0.55)]" />
-          {/* 2nd ply */}
-          <span className="absolute top-2.5 bottom-1 left-[3px] w-[5px] border-y border-r border-[#73552f]/70 bg-[#dac7a5] shadow-[1px_0_2px_rgba(0,0,0,0.5)]" />
-          {/* Frontmost vellum sheaf edge */}
-          <span
-            className="absolute inset-y-0 left-0 w-[5px] border border-[#684720]/80 bg-[#ebd9ba] shadow-[2px_0_4px_rgba(0,0,0,0.55)]"
-            style={{
-              backgroundImage: 'url("/textures/rag-paper-tile.webp")',
-              backgroundSize: "180px 180px",
-            }}
-          />
-          {/* Active sheet spine highlight running along the sheaf when a folio divider is open */}
-          {!isReelActive && (
-            <span className="absolute inset-y-2 left-[1px] w-[4px] bg-[#f8efdc]" />
-          )}
-        </div>
-
-        {/* Asymmetrical Top-Indexed Cascade (Upper Bookmark Flag + 5 Shingled Die-Cut Paper Dividers; lower sheaf left untabbed) */}
-        <div className="relative z-10 flex h-full flex-col items-start pt-5 pl-[11px]">
-          {/* 00 · Master Reel — Swallowtail Venetian-Oxblood Bookcloth Bookmark Flag tucked near top */}
-          <button
-            type="button"
-            onClick={() => selectBinder("reel")}
-            aria-current={isReelActive ? "true" : undefined}
-            className={`group relative cursor-pointer transition-all duration-250 [filter:drop-shadow(2px_5px_7px_rgba(0,0,0,0.82))] active:scale-97 ${
-              isReelActive ? "z-30 translate-x-1 rotate-0" : "z-20 -rotate-[1deg] hover:translate-x-1 hover:rotate-0"
-            }`}
-          >
-            <span
-              style={{
-                clipPath: "polygon(0 0, 100% 5px, 100% calc(100% - 9px), 52% calc(100% - 1px), 0 100%)",
-              }}
-              className={`relative flex flex-col items-center gap-1.5 py-3.5 transition-all duration-250 ${
-                isReelActive
-                  ? "w-[44px] border-r-[3.5px] border-r-[#d8b274] bg-gradient-to-r from-[#6e1515] to-[#8f1b1b] text-[#fbf3e4]"
-                  : "w-[34px] bg-gradient-to-r from-[#4b1010] to-[#681616] text-[#e6d2b2] group-hover:w-[38px] group-hover:from-[#611414] group-hover:to-[#821a1a] group-hover:text-[#fbf3e4]"
-              }`}
-            >
-              {/* Gold stitched spine crease & brass pinhead */}
-              <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-[3px] w-px bg-[#e2be84]/35" />
-              <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#e2be84]" />
-              <span
-                className="font-numeral text-[10.5px] font-bold tracking-[0.16em] uppercase whitespace-nowrap"
-                style={{ writingMode: "vertical-rl" }}
-              >
-                {text("Reel", "集锦")}
-              </span>
-            </span>
-          </button>
-
-          {/* Asymmetrical archival gap separating top ribbon flag from the 5 paper case dividers */}
-          <div className="mt-6 flex flex-col items-start">
-            {ORDERED_SLUGS.map((slug, idx) => {
-              const active = activeFolioSlug === slug;
-              const meta = BOARD_META[slug];
-              const label = isChinese ? meta.tabShortZh : meta.tabShortEn;
-
-              // Subtle organic variations in stock tone, protrusion width, overlap & hand-cut settle
-              const dividerStyles = [
-                { idleW: "w-[38px]", padY: "py-4", stock: "bg-[#eadcc2]", overlap: "mt-0", tilt: "-rotate-[0.35deg]" },
-                { idleW: "w-[33px]", padY: "py-3.5", stock: "bg-[#ded0b3]", overlap: "-mt-1.5", tilt: "rotate-[0.45deg]" },
-                { idleW: "w-[41px]", padY: "py-4.5", stock: "bg-[#e5d6b9]", overlap: "mt-1.5", tilt: "-rotate-[0.3deg]" },
-                { idleW: "w-[35px]", padY: "py-3.5", stock: "bg-[#d7c5a4]", overlap: "-mt-2", tilt: "rotate-[0.35deg]" },
-                { idleW: "w-[39px]", padY: "py-4", stock: "bg-[#e1d2b4]", overlap: "-mt-1.5", tilt: "-rotate-[0.4deg]" },
-              ][idx];
-
-              return (
-                <button
-                  key={slug}
-                  type="button"
-                  onClick={() => selectBinder(slug)}
-                  aria-current={active ? "true" : undefined}
-                  style={{ zIndex: active ? 35 : 25 - idx }}
-                  className={`group relative cursor-pointer transition-all duration-250 [filter:drop-shadow(2px_5px_7px_rgba(0,0,0,0.78))_drop-shadow(0_1px_1px_rgba(0,0,0,0.65))] active:scale-97 ${
-                    dividerStyles.overlap
-                  } ${
-                    active
-                      ? "translate-x-0.5 rotate-0"
-                      : `${dividerStyles.tilt} hover:z-30 hover:translate-x-1 hover:rotate-0`
-                  }`}
-                >
-                  <span
-                    style={{
-                      clipPath: "polygon(0 0, 100% 11px, 100% calc(100% - 11px), 0 100%)",
-                      backgroundImage: 'url("/textures/rag-paper-tile.webp")',
-                      backgroundSize: "220px 220px",
-                    }}
-                    className={`relative flex flex-col items-center justify-center gap-1.5 transition-all duration-250 ${
-                      active
-                        ? "w-[48px] border-r-[4px] border-r-rubric bg-[#f7edd8] py-5 text-rubric"
-                        : `${dividerStyles.idleW} ${dividerStyles.padY} ${dividerStyles.stock} border-r border-r-[#684720]/65 text-[#1b130d] group-hover:w-[43px] group-hover:bg-[#f2e6cd]`
-                    }`}
-                  >
-                    {/* Debossed vertical fold-score crease where tab bends out of the divider sheet */}
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-y-0 left-[3px] w-px bg-[#684720]/35 shadow-[1px_0_0_rgba(255,252,242,0.75)]"
-                    />
-                    {/* Subtle inner ruled ink margin line along thumb edge */}
-                    <span
-                      aria-hidden="true"
-                      className={`pointer-events-none absolute top-3.5 bottom-3.5 right-[4px] w-px ${
-                        active ? "bg-rubric/30" : "bg-[#684720]/25"
-                      }`}
-                    />
-                    {/* Miniature punched brass reinforcement eyelet at top of paper tab */}
-                    <span
-                      aria-hidden="true"
-                      style={{ borderRadius: "50%" }}
-                      className={`h-2 w-2 shrink-0 border ${
-                        active
-                          ? "border-rubric bg-[#c89d62]"
-                          : "border-[#5c3e1b] bg-[#18110c]/75 group-hover:bg-[#c89d62]"
-                      }`}
-                    />
-                    <span
-                      className={`font-display text-[12.5px] tracking-wide whitespace-nowrap ${
-                        active ? "font-bold" : "font-semibold"
-                      }`}
-                      style={{ writingMode: "vertical-rl" }}
-                    >
-                      {label}
-                    </span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </nav>
+      <ArchivalPaperSheaf
+        ariaLabel={text("Folio Separator Dividers", "卷宗纸质分隔索引签")}
+        topFlag={{
+          label: text("Reel", "集锦"),
+          active: isReelActive,
+          onClick: () => selectBinder("reel"),
+        }}
+        tabs={ORDERED_SLUGS.map((slug) => ({
+          id: slug,
+          label: isChinese ? BOARD_META[slug].tabShortZh : BOARD_META[slug].tabShortEn,
+          active: activeFolioSlug === slug,
+          onClick: () => selectBinder(slug),
+        }))}
+      />
     </div>
   );
 }

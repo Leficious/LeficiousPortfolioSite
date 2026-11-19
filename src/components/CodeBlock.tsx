@@ -13,10 +13,11 @@ export function CodeBlock({ language, title, code }: CodeSnippet) {
   };
 
   return (
-    <div className="slate-folio overflow-hidden border border-warm/38">
-      <div className="flex items-center justify-between border-b border-warm/25 bg-[#120d0a]/90 px-4 py-2.5 text-xs">
+    <div className="slate-folio overflow-hidden border border-[#d4ae73]/48 shadow-[0_18px_44px_rgba(0,0,0,0.74)]">
+      <div className="flex items-center justify-between border-b border-warm/35 bg-[#120d0a]/94 px-4 py-2.5 text-xs">
         <div className="flex items-center gap-3">
-          <span className="font-numeral text-[11px] font-bold tracking-[0.14em] text-warm uppercase">
+          <span className="h-1.5 w-1.5 rotate-45 bg-rubric" aria-hidden="true" />
+          <span className="font-numeral text-[11px] font-bold tracking-[0.16em] text-[#e2be84] uppercase">
             {language === "cpp" ? "C++" : "PYTHON"}
           </span>
           {title && <span className="font-display italic text-muted-foreground">{title}</span>}
@@ -24,9 +25,9 @@ export function CodeBlock({ language, title, code }: CodeSnippet) {
         <button
           type="button"
           onClick={copy}
-          className="cursor-pointer font-numeral text-[10.5px] tracking-widest text-muted-foreground uppercase transition-colors hover:text-[#e2c088]"
+          className="victorian-ticket cursor-pointer border border-warm/35 bg-[#1d1510] px-2.5 py-0.5 font-numeral text-[10px] font-bold tracking-widest text-[#e2be84] uppercase transition-colors hover:bg-[#c89d62] hover:text-[#120b05]"
         >
-          {copied ? text("Copied", "已复制") : text("Copy", "复制")}
+          {copied ? text("✓ Copied", "✓ 已复制") : text("Copy", "复制")}
         </button>
       </div>
       <pre className="overflow-x-auto bg-[#0b0806]/90 p-5 font-mono text-[0.82rem] leading-relaxed text-[#ece2d0]">
