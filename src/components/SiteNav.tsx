@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Link, NavLink, useLocation, useSearchParams } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useLanguage, type Language } from "../lib/language";
 import { projects } from "../lib/projects";
 import { AstrolabeCrest } from "./AtelierChrome";
@@ -13,40 +12,14 @@ const FOLIO_SLUGS = [
   "sacred-forest",
 ] as const;
 
-export type SpineVariant = "ribs" | "coins" | "vellum";
-
 type SiteNavProps = {
   activeFolioSlug?: string | null;
   onSelectFolioSlug?: (slug: string) => void;
 };
 
-/** Raised leather bookbinding cord band with gold tooling highlight & deep shadow crease */
-function RaisedSpineBand() {
-  return (
-    <div aria-hidden="true" className="my-1 w-full px-1.5">
-      <div className="h-[5px] w-full border-y border-[#c89d62]/45 bg-gradient-to-b from-[#3d2b1f] via-[#211610] to-[#090604] shadow-[0_3px_5px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(244,214,162,0.38)]" />
-    </div>
-  );
-}
-
 export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
   const { pathname } = useLocation();
-  const [searchParams] = useSearchParams();
   const { language, setLanguage, text, localizedPath } = useLanguage();
-  const [storedVariant, setStoredVariant] = useState<SpineVariant>("ribs");
-
-  const paramVariant = searchParams.get("spine");
-  const variant: SpineVariant =
-    paramVariant === "coins" || paramVariant === "vellum" || paramVariant === "ribs"
-      ? paramVariant
-      : storedVariant;
-
-  if (
-    (paramVariant === "coins" || paramVariant === "vellum" || paramVariant === "ribs") &&
-    paramVariant !== storedVariant
-  ) {
-    setStoredVariant(paramVariant);
-  }
 
   const cleanPath = pathname.replace(/^\/zh(?=\/|$)/, "") || "/";
   const isHome = cleanPath === "/";
@@ -60,88 +33,25 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
     (slug) => projects.find((p) => p.slug === slug) ?? projects[0],
   );
 
-  /* ==================== VARIANT-SPECIFIC NUMERAL STYLING (I - V) ==================== */
-  const renderNumeralFace = (numeral: string, active: boolean) => {
-    if (variant === "coins") {
-      // Method B: Chased-Bronze & Ivory-Enamel Horological Coin Medallions
-      return (
-        <span
-          style={{ borderRadius: "50%" }}
-          className={`relative flex h-9.5 w-9.5 items-center justify-center border-2 font-numeral text-[14px] tracking-wider transition-all duration-200 ${
-            active
-              ? "scale-108 border-[#ebd09e] bg-gradient-to-b from-[#fbf3e2] to-[#dfd0b2] font-bold text-[#8f1616] shadow-[0_4px_12px_rgba(0,0,0,0.85),0_0_0_2px_#6e1515,inset_0_1px_0_rgba(255,255,255,0.9)]"
-              : "border-[#c89d62]/65 bg-gradient-to-b from-[#2b1f17] to-[#140e0a] font-semibold text-[#ebd09e] shadow-[0_3px_8px_rgba(0,0,0,0.75),inset_0_1px_0_rgba(244,214,162,0.28)] group-hover:border-[#ebd09e] group-hover:from-[#3a2a1f] group-hover:text-[#fff6e5]"
-          }`}
-        >
-          {numeral}
-        </span>
-      );
-    }
+  const renderCoinMedallion = (numeral: string, active: boolean) => (
+    <span
+      style={{ borderRadius: "50%" }}
+      className={`relative flex h-9.5 w-9.5 items-center justify-center border-2 font-numeral text-[14px] tracking-wider transition-all duration-200 ${
+        active
+          ? "scale-108 border-[#ebd09e] bg-gradient-to-b from-[#fbf3e2] to-[#dfd0b2] font-bold text-[#8f1616] shadow-[0_4px_12px_rgba(0,0,0,0.85),0_0_0_2px_#6e1515,inset_0_1px_0_rgba(255,255,255,0.9)]"
+          : "border-[#c89d62]/68 bg-gradient-to-b from-[#2b1f17] to-[#140e0a] font-semibold text-[#ebd09e] shadow-[0_3px_8px_rgba(0,0,0,0.75),inset_0_1px_0_rgba(244,214,162,0.28)] group-hover:border-[#ebd09e] group-hover:from-[#3a2a1f] group-hover:text-[#fff6e5]"
+      }`}
+    >
+      {numeral}
+    </span>
+  );
 
-    if (variant === "vellum") {
-      // Method C: High-Contrast Pinned Rag-Vellum Index Tickets
-      return (
-        <span
-          style={{
-            backgroundImage: 'url("/textures/rag-paper-tile.webp")',
-            backgroundSize: "160px 160px",
-          }}
-          className={`victorian-ticket relative flex h-8.5 w-[58px] items-center justify-center gap-1 border font-numeral text-[13.5px] tracking-widest transition-all duration-200 ${
-            active
-              ? "scale-105 border-2 border-[#8f1616] bg-[#faf1de] font-bold text-[#8f1616] shadow-[0_5px_14px_rgba(0,0,0,0.85)]"
-              : "border-[#7a582e]/80 bg-[#dfd0b3] font-bold text-[#1a120c] opacity-90 shadow-[0_3px_7px_rgba(0,0,0,0.65)] group-hover:bg-[#f2e6ce] group-hover:opacity-100"
-          }`}
-        >
-          <span
-            aria-hidden="true"
-            className={`h-1 w-1 rotate-45 ${active ? "bg-[#8f1616]" : "bg-[#684720]/70"}`}
-          />
-          <span>{numeral}</span>
-        </span>
-      );
-    }
-
-    // Method A (Default): Grand Tome Raised-Rib Gilt & Morocco Leather Compartments
-    return (
-      <span
-        className={`victorian-ticket relative flex h-8.5 w-[56px] items-center justify-center border font-numeral text-[14.5px] tracking-[0.14em] transition-all duration-200 ${
-          active
-            ? "border-[#ebd09e] bg-gradient-to-b from-[#851818] to-[#520d0d] font-bold text-[#fff6e4] shadow-[0_4px_12px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(255,232,188,0.45)]"
-            : "border-[#c89d62]/48 bg-gradient-to-b from-[#241a13] to-[#140e0a] font-semibold text-[#ebd09e] shadow-[inset_0_1px_0_rgba(240,206,148,0.22),0_2px_6px_rgba(0,0,0,0.65)] group-hover:border-[#ebd09e]/85 group-hover:from-[#312319] group-hover:text-[#fff6e4]"
-        }`}
-      >
-        {numeral}
-      </span>
-    );
-  };
-
-  /* ==================== VARIANT-SPECIFIC BOTTOM NAV STYLING ==================== */
-  const renderSectionLinkClass = (isActive: boolean) => {
-    if (variant === "coins") {
-      // Method B: Sculpted Burnished-Brass Push-Plaque vs Gilt-Rimmed Ebony Key
-      return `victorian-ticket relative mx-auto flex w-[72px] items-center justify-center py-2 text-[13.5px] font-display tracking-wide transition-all duration-200 ${
-        isActive
-          ? "brass-plaque font-bold"
-          : "border border-[#c89d62]/55 bg-gradient-to-b from-[#261c15] to-[#130d09] font-semibold text-[#f3e7d0] shadow-[0_3px_8px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(238,204,146,0.24)] hover:border-[#ebd09e] hover:text-[#fff8ea]"
-      }`;
-    }
-
-    if (variant === "vellum") {
-      // Method C: Rag-Vellum & Oxblood Folder Index Strips
-      return `relative mx-auto flex w-[74px] items-center justify-center border py-2 text-[13.5px] font-display tracking-wide transition-all duration-200 ${
-        isActive
-          ? "border-[#8f1616] border-l-[3.5px] bg-[#f5ead3] font-bold text-[#8f1616] shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
-          : "border-[#c89d62]/45 bg-[#221711] font-semibold text-[#f1e4cc] hover:border-[#ebd09e]/80 hover:bg-[#2d1f17] hover:text-[#fff7e8]"
-      }`;
-    }
-
-    // Method A (Default): Gold-Tooled Morocco Leather Spine Title Labels
-    return `relative mx-auto flex w-[74px] items-center justify-center border py-2 text-[13.5px] font-display tracking-wide transition-all duration-200 ${
+  const sectionKeyClass = (isActive: boolean) =>
+    `victorian-ticket relative mx-auto flex w-[72px] items-center justify-center py-2 text-[13.5px] font-display tracking-wide transition-all duration-200 ${
       isActive
-        ? "border-[#ebd09e] bg-gradient-to-b from-[#7d1717] to-[#4b0c0c] font-bold text-[#fff6e5] shadow-[0_4px_12px_rgba(0,0,0,0.85),inset_0_0_0_2px_rgba(235,208,158,0.25)]"
-        : "border-[#c89d62]/50 bg-gradient-to-b from-[#241913] to-[#150e0a] font-semibold text-[#f2e6cf] shadow-[inset_0_1px_0_rgba(235,202,146,0.2)] hover:border-[#ebd09e]/85 hover:from-[#302219] hover:text-[#fff8ea]"
+        ? "brass-plaque font-bold"
+        : "border border-[#c89d62]/58 bg-gradient-to-b from-[#261c15] to-[#130d09] font-semibold text-[#f3e7d0] shadow-[0_3px_8px_rgba(0,0,0,0.72),inset_0_1px_0_rgba(238,204,146,0.24)] hover:border-[#ebd09e] hover:from-[#32241b] hover:text-[#fff8ea]"
     }`;
-  };
 
   return (
     <>
@@ -152,7 +62,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
         {text("Skip to content", "跳至主要内容")}
       </a>
 
-      {/* Desktop 88px Embossed Leather & Double-Brass Vertical Book Spine */}
+      {/* Desktop 88px Chased-Bronze Coin Medallion & Instrument Keybank Spine */}
       <aside
         aria-label={text("Atelier Spine Navigation", "工作室侧脊导航")}
         className="site-header fixed inset-y-0 left-0 z-50 hidden w-[88px] flex-col items-center justify-between bg-gradient-to-r from-[#150f0b] via-[#0e0a07] to-[#080504] py-3.5 shadow-[8px_0_28px_rgba(0,0,0,0.9)] select-none lg:flex"
@@ -178,9 +88,9 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           </span>
         </Link>
 
-        {/* Center Roman Numeral Folio Jumpers (I - V) */}
+        {/* Center Chased-Bronze & Ivory-Enamel Coin Medallions (I - V) */}
         <nav aria-label={text("Case Folios I to V", "档案卷一至五")} className="flex w-full flex-col items-center">
-          <div className="mb-1 flex items-center gap-1">
+          <div className="mb-1.5 flex items-center gap-1">
             <span aria-hidden="true" className="h-1 w-1 rotate-45 bg-rubric" />
             <span className="font-numeral text-[9px] font-bold tracking-[0.22em] text-[#d8b47c] uppercase">
               {text("FOLIOS", "卷宗")}
@@ -188,9 +98,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
             <span aria-hidden="true" className="h-1 w-1 rotate-45 bg-rubric" />
           </div>
 
-          {variant === "ribs" && <RaisedSpineBand />}
-
-          <div className={`flex w-full flex-col items-center ${variant === "ribs" ? "gap-0.5" : "gap-1.5 py-1"}`}>
+          <div className="flex w-full flex-col items-center gap-1.5 py-1">
             {folioItems.map((proj, idx) => {
               const numeral = ROMAN[idx] ?? String(idx + 1);
               const activeOnHome = isHome && activeFolioSlug === proj.slug;
@@ -204,19 +112,23 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
                 />
               ) : null;
 
-              const itemNode = isHome && onSelectFolioSlug ? (
-                <button
-                  key={proj.slug}
-                  type="button"
-                  title={`${numeral} · ${proj.title}`}
-                  onClick={() => onSelectFolioSlug(proj.slug)}
-                  aria-current={active ? "true" : undefined}
-                  className="group relative flex w-full cursor-pointer items-center justify-center py-0.5"
-                >
-                  {renderNumeralFace(numeral, active)}
-                  {pointerNotch}
-                </button>
-              ) : (
+              if (isHome && onSelectFolioSlug) {
+                return (
+                  <button
+                    key={proj.slug}
+                    type="button"
+                    title={`${numeral} · ${proj.title}`}
+                    onClick={() => onSelectFolioSlug(proj.slug)}
+                    aria-current={active ? "true" : undefined}
+                    className="group relative flex w-full cursor-pointer items-center justify-center py-0.5"
+                  >
+                    {renderCoinMedallion(numeral, active)}
+                    {pointerNotch}
+                  </button>
+                );
+              }
+
+              return (
                 <Link
                   key={proj.slug}
                   to={localizedPath(`/projects/${proj.slug}`)}
@@ -225,31 +137,24 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
                   aria-current={active ? "page" : undefined}
                   className="group relative flex w-full items-center justify-center py-0.5"
                 >
-                  {renderNumeralFace(numeral, active)}
+                  {renderCoinMedallion(numeral, active)}
                   {pointerNotch}
                 </Link>
-              );
-
-              return (
-                <div key={proj.slug} className="flex w-full flex-col items-center">
-                  {itemNode}
-                  {variant === "ribs" && <RaisedSpineBand />}
-                </div>
               );
             })}
           </div>
         </nav>
 
-        {/* Bottom Primary Pages, Language Switch & Embossed Bronze Résumé Plaque */}
+        {/* Bottom Chamfered Instrument Keybank, Language Switch & Oxblood-Gilt Résumé Plaque */}
         <div className="flex w-full flex-col items-center gap-2">
           <nav aria-label={text("Primary sections", "主要页面")} className="flex w-full flex-col items-center gap-1.5">
-            <NavLink to={localizedPath("/")} end viewTransition className={({ isActive }) => renderSectionLinkClass(isActive)}>
+            <NavLink to={localizedPath("/")} end viewTransition className={({ isActive }) => sectionKeyClass(isActive)}>
               {text("Atelier", "案台")}
             </NavLink>
-            <NavLink to={localizedPath("/gallery")} viewTransition className={({ isActive }) => renderSectionLinkClass(isActive)}>
+            <NavLink to={localizedPath("/gallery")} viewTransition className={({ isActive }) => sectionKeyClass(isActive)}>
               {text("Gallery", "画廊")}
             </NavLink>
-            <NavLink to={localizedPath("/about")} viewTransition className={({ isActive }) => renderSectionLinkClass(isActive)}>
+            <NavLink to={localizedPath("/about")} viewTransition className={({ isActive }) => sectionKeyClass(isActive)}>
               {text("About", "档案")}
             </NavLink>
           </nav>
@@ -279,10 +184,10 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           <a
             href={resumeHref}
             download
-            className="brass-plaque victorian-ticket flex w-[72px] items-center justify-center gap-1 px-2 py-2 text-center font-numeral text-[10.5px] font-bold tracking-[0.08em] uppercase transition-transform active:scale-95"
+            className="victorian-ticket flex w-[72px] items-center justify-center gap-1 border border-[#e2be84]/75 bg-gradient-to-b from-[#7a1616] to-[#470b0b] px-2 py-2 text-center font-numeral text-[10.5px] font-bold tracking-[0.08em] text-[#fbf3e4] uppercase shadow-[0_4px_10px_rgba(0,0,0,0.82),inset_0_1px_0_rgba(255,228,184,0.32)] transition-all hover:border-[#fff2d6] hover:from-[#8f1b1b] hover:to-[#570e0e] active:scale-95"
           >
             <span>{text("Résumé", "简历")}</span>
-            <span aria-hidden="true" className="text-[10px]">↓</span>
+            <span aria-hidden="true" className="text-[10px] text-[#ebd09e]">↓</span>
           </a>
         </div>
       </aside>
