@@ -142,7 +142,7 @@ function TravelerArcDiagram() {
         <div className="border border-border bg-background/70 px-4 py-3">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <p className="font-display text-sm font-semibold text-foreground">
-              {text("Central Hub — Stone Monument", "中央中枢 — 石之纪念碑")}
+              {text("Central Hub · Stone Monument", "中央中枢 · 石之纪念碑")}
             </p>
             <span className="font-numeral tabular-nums text-[11px] text-muted-foreground">
               {text("Non-linear spoke selection", "三大分支可按任意顺序探索")}
@@ -174,7 +174,7 @@ function TravelerArcDiagram() {
 
         <div className="flex flex-col gap-1 border border-warm/45 bg-background/70 px-4 py-3 sm:flex-row sm:items-baseline sm:justify-between">
           <p className="font-display text-sm font-semibold text-foreground">
-            {text("Finale — 3 / 3 Sky Beacons Lit", "终局 — 三座天际光柱全亮")}
+            {text("Finale · 3 / 3 Sky Beacons Lit", "终局 · 三座天际光柱全亮")}
           </p>
           <p className="text-xs text-muted-foreground">
             {text(
@@ -254,14 +254,14 @@ function GlacierVerificationDiagram() {
   const { text } = useLanguage();
   return (
     <DiagramFrame
-      title={text("Region 1 — Signal Verification Matrix", "区域 1 — 真伪浮冰声波验证逻辑")}
+      title={text("Region 1: Signal Verification Matrix", "区域 1：真伪浮冰声波验证逻辑")}
       subtitle={text("Player White Pulse (E) vs. Siren 62m Magenta Wave (every 7.0s)", "玩家白波 (E) 对比 塞壬 62m 洋红波（7.0s 周期）")}
     >
       <div className="grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2">
         <div className="bg-background/85 p-4">
           <div className="flex items-baseline justify-between gap-2">
             <h4 className="font-display text-sm font-semibold text-foreground">
-              {text("Flanking Arc — Solid Stepping Stones", "侧翼弧线 — 隐形实体真冰")}
+              {text("Flanking Arc: Solid Stepping Stones", "侧翼弧线：隐形实体真冰")}
             </h4>
             <span className="font-numeral tabular-nums text-[11px] text-warm">{text("Safe route", "安全主航线")}</span>
           </div>
@@ -280,14 +280,14 @@ function GlacierVerificationDiagram() {
         <div className="bg-background/85 p-4">
           <div className="flex items-baseline justify-between gap-2">
             <h4 className="font-display text-sm font-semibold text-foreground">
-              {text("Direct Line — Non-Solid Decoy Floes", "直线捷径 — 无碰撞诱饵假冰")}
+              {text("Direct Line: Non-Solid Decoy Floes", "直线捷径：无碰撞诱饵假冰")}
             </h4>
             <span className="font-numeral tabular-nums text-[11px] text-muted-foreground">{text("Respawn hazard", "踩踏即落水")}</span>
           </div>
           <dl className="mt-3 space-y-2 text-xs">
             <div className="flex justify-between gap-4 border-t border-border/70 pt-2">
               <dt className="text-muted-foreground">{text("On Player Echo (E)", "玩家按 E 白波")}</dt>
-              <dd className="text-right font-medium text-foreground">{text("Zero return — pulse passes straight through", "无任何反射 — 白波直接穿过假冰")}</dd>
+              <dd className="text-right font-medium text-foreground">{text("Zero return (pulse passes straight through)", "无反射（白波直接穿过假冰）")}</dd>
             </div>
             <div className="flex justify-between gap-4 border-t border-border/70 pt-2">
               <dt className="text-muted-foreground">{text("On Siren Wave (7.0s)", "塞壬洋红波扫过")}</dt>
@@ -337,7 +337,7 @@ function CitySequenceDiagram() {
 
   return (
     <DiagramFrame
-      title={text("Region 2 — Additive Architectural Layer Sequence", "区域 2 — 三翼街区逐层叠加顺序回路")}
+      title={text("Region 2: Additive Architectural Layer Sequence", "区域 2：三翼街区逐层叠加顺序回路")}
       subtitle={text("Strict clockwise loop: 00 → 01 → 02 → 03 → 04", "严格顺时针激活：00 → 01 → 02 → 03 → 04")}
     >
       <div className="space-y-3">
@@ -355,7 +355,7 @@ function CitySequenceDiagram() {
           <span className="font-medium text-foreground">{text("Reset boundary rule: ", "重置门锁规则：")}</span>
           {text(
             "Interacting with a wing statue out of sequence or crossing the outer city perimeter before Stage 04 fires a 45 m/s reset wave from the center plaza, collapsing unfinished layers back to Stage 00.",
-            "未按顺序交互雕像或在达成阶段 04 前越过城市外围边界，中心广场将发出 45 m/s 重置波，将未锁定图层退回阶段 00。",
+            "未按顺序交互雕像或在达成阶段 04 前越过城市外围边界，中心广场将发出 45 m/s 重置波，将未锁定图层退回阶段 00.",
           )}
         </p>
       </div>
@@ -368,7 +368,7 @@ function WoodsTimelineDiagram() {
   const { ref, inView } = useInViewOnce<HTMLDivElement>();
   return (
     <DiagramFrame
-      title={text("Region 3 — 8.0s Input Cadence & Choke-Point Gates", "区域 3 — 8.0 秒输入时序与岔口虚幻门锁")}
+      title={text("Region 3: 8.0s Input Cadence & Choke-Point Gates", "区域 3：8.0 秒输入时序与岔口虚幻门锁")}
       subtitle={text("3.0s silence window tuned across 6 playtest cohorts", "经 6 轮试玩调优的 3.0s 静默等待窗口")}
     >
       <div ref={ref} className="space-y-4">
@@ -397,7 +397,7 @@ function WoodsTimelineDiagram() {
               <p className="mt-0.5 text-[11px] text-muted-foreground">{text("Hold input", "停步等待")}</p>
             </div>
             <div className="bg-background/95 px-3 py-2.5">
-              <p className="font-medium text-warm">{text("400m Forest Reply — 8 Choke Gates Dissolve Open (5.0s)", "400m 森林翠绿回应波 — 8 道岔口树墙消融敞开 (5.0s)")}</p>
+              <p className="font-medium text-warm">{text("400m Forest Reply: 8 Choke Gates Dissolve Open (5.0s)", "400m 森林翠绿回应波：8 道岔口树墙消融敞开 (5.0s)")}</p>
               <p className="mt-0.5 text-[11px] text-muted-foreground">
                 {text("Direct path to SW Sentinel Tower stays passable unless interrupted", "通往西南终点哨塔的主干捷径敞开，直至被新白波打断")}
               </p>
@@ -408,7 +408,7 @@ function WoodsTimelineDiagram() {
         <div className="grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2">
           <div className="bg-background/85 p-3.5">
             <p className="font-display text-xs font-semibold text-foreground">
-              {text("Outcome A — Player Waits Without Recasting", "分支 A — 克制不按 E（t = 3.0s – 8.0s）")}
+              {text("Outcome A: Player Waits Without Recasting", "分支 A：克制不按 E（t = 3.0s – 8.0s）")}
             </p>
             <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
               {text(
@@ -419,7 +419,7 @@ function WoodsTimelineDiagram() {
           </div>
           <div className="bg-background/85 p-3.5">
             <p className="font-display text-xs font-semibold text-foreground">
-              {text("Outcome B — Recasts E on Cooldown (t = 5.0s)", "分支 B — 5.0s 冷却完毕习惯性按 E")}
+              {text("Outcome B: Recasts E on Cooldown (t = 5.0s)", "分支 B：5.0s 冷却完毕习惯性按 E")}
             </p>
             <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
               {text(
@@ -568,7 +568,7 @@ function StillLifeInversionSection() {
         "被展览馆传感器判定为“1 件无生命物品”（1.4 kg 金属灯具）。",
       ),
       animals: text(
-        "Rejected ('LIVING ORGANISM DETECTED!') — safety alarm ejects the Dog unharmed.",
+        "Rejected ('LIVING ORGANISM DETECTED!'), and the safety alarm ejects the Dog unharmed.",
         "触发安全警报被拒（“检测到活体生物！”），将小狗完好弹出。",
       ),
     },
@@ -673,7 +673,7 @@ function StillLifeLampOnboardingDiagram() {
 
   return (
     <DiagramFrame
-      title={text("Room 1 & Hallway 1 — Zero-Text Companion Onboarding", "1 号房与 1 号走廊 — 无文字伙伴引导与软门锁")}
+      title={text("Room 1 & Hallway 1: Zero-Text Companion Onboarding", "1 号房与 1 号走廊：无文字伙伴引导与软门锁")}
       subtitle={text("DeskLampProceduralRig.cs · 5-state behavior flow", "五状态伙伴行为流")}
     >
       <div className="space-y-3">
@@ -690,7 +690,7 @@ function StillLifeLampOnboardingDiagram() {
         <div className="grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2">
           <div className="bg-background/85 p-3.5">
             <p className="font-display text-xs font-semibold text-foreground">
-              {text("Soft Gate A — Chest Mimics (Hallway 1 & Room 2)", "路线软门锁 A — 宝箱怪（1 号走廊与 2 号房）")}
+              {text("Soft Gate A: Chest Mimics (Hallway 1 & Room 2)", "路线软门锁 A：宝箱怪（1 号走廊与 2 号房）")}
             </p>
             <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
               {text(
@@ -701,7 +701,7 @@ function StillLifeLampOnboardingDiagram() {
           </div>
           <div className="bg-background/85 p-3.5">
             <p className="font-display text-xs font-semibold text-foreground">
-              {text("Soft Gate B — Cold Air Jets (Hallway 2 & Room 3)", "路线软门锁 B — 低温冷风（2 号走廊与 3 号房）")}
+              {text("Soft Gate B: Cold Air Jets (Hallway 2 & Room 3)", "路线软门锁 B：低温冷风（2 号走廊与 3 号房）")}
             </p>
             <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
               {text(
@@ -771,7 +771,7 @@ function StillLifeRoom2AllocationDiagram() {
 
   return (
     <DiagramFrame
-      title={text("Room 2 — Four-Stage Zero-Slack Weight Progression", "2 号房 — 四阶段 100% 满额配重预算（0 kg 剩余）")}
+      title={text("Room 2: Four-Stage Zero-Slack Weight Progression", "2 号房：四阶段 100% 满额配重预算（0 kg 剩余）")}
       subtitle={text("7 animals · 235 kg total pool · 1F / 2F / 3F", "7 只动物 · 总配重池 235 kg · 三层立体联动")}
     >
       <div ref={barsRef} className="space-y-4">
@@ -816,7 +816,7 @@ function StillLifeRoom3FoundryDiagram() {
   const { text } = useLanguage();
   return (
     <DiagramFrame
-      title={text("Room 3 — Inverted Vent Tiles & Three-Intake Crusher", "3 号房 — 取走即断电踏板与三路冲压机卡塞门锁")}
+      title={text("Room 3: Inverted Vent Tiles & Three-Intake Crusher", "3 号房：取走即断电踏板与三路冲压机卡塞门锁")}
       subtitle={text("Cryo-Foundry · 3 green floor indicator lines", "低温车间 · 三条绿色地面导流线")}
     >
       <div className="grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2">
@@ -836,7 +836,7 @@ function StillLifeRoom3FoundryDiagram() {
         <div className="bg-background/85 p-4">
           <span className="font-numeral tabular-nums text-xs text-warm">02</span>
           <h4 className="mt-1.5 font-display text-sm font-semibold text-foreground">
-            {text("Central Crusher — 3 Mechanical Jammers", "中央冲压机 — 三处机械卡塞槽")}
+            {text("Central Crusher: 3 Mechanical Jammers", "中央冲压机：三处机械卡塞槽")}
           </h4>
           <ul className="mt-2 space-y-1.5 text-xs text-muted-foreground">
             <li>• {text("1F West Piston intake → extinguishes Green Line 1", "1F 西侧活塞槽 → 熄灭绿色导流线 1")}</li>
@@ -864,7 +864,7 @@ function StillLifeSubversionDiagram() {
       n: "02",
       title: text("Safety Alarm Rejection", "活体警报弹出"),
       desc: text(
-        "'LIVING ORGANISM DETECTED!' — hopper ejects the Dog unharmed. With zero loose props on the grating, the animals' silence recontextualizes.",
+        "'LIVING ORGANISM DETECTED!': the hopper ejects the Dog unharmed. With zero loose props on the grating, the animals' silence recontextualizes.",
         "警报拉响“检测到活体生物！”并将小狗完好弹出。四周空无他物，玩家瞬间意识到静止动物从始至终都是活体。",
       ),
     },
@@ -888,7 +888,7 @@ function StillLifeSubversionDiagram() {
 
   return (
     <DiagramFrame
-      title={text("Rooms 4 & 5 — Unscripted Habit Reversal", "4 号房与 5 号房 — 无台词习惯反转流程")}
+      title={text("Rooms 4 & 5: Unscripted Habit Reversal", "4 号房与 5 号房：无台词习惯反转流程")}
       subtitle={text("Zero dialogue · Enacted directly by player input", "零对白说教 · 由玩家亲手操作完成反转")}
     >
       <div className="grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">

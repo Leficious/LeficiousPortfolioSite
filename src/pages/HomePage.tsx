@@ -214,8 +214,8 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
       <Seo
         title={text("Leficious | Game, Level & Technical Designer", "Leficious | 游戏、关卡与技术设计师")}
         description={text(
-          "Game, level, and technical design atelier of Leficious — playable spatial puzzle worlds, multiphase combat systems, and 3D environments.",
-          "Leficious 的游戏、关卡与技术设计作品集：空间解谜、多阶段 Boss 战与风格化 3D 环境。",
+          "Game and level design portfolio of Leficious: playable puzzle games, action combat prototypes, and 3D environments.",
+          "Leficious 的游戏、关卡与技术设计作品集：空间解谜、动作战斗原型与风格化 3D 环境。",
         )}
         path={localizedPath("/")}
       />
@@ -435,12 +435,12 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   : text("3D Environment & Props Reel", "3D 环境与道具作品集锦");
                 const primaryReelSub = isDesignReel
                   ? text(
-                      "Multi-floor spatial puzzles, multiphase combat AI & gameplay systems · 2026",
-                      "多层空间解谜、多阶段战斗 AI 与玩法系统 · 2026",
+                      "Playable puzzle games, action combat prototypes & level design · 2026",
+                      "空间解谜、动作战斗原型与关卡设计 · 2026",
                     )
                   : text(
-                      "Realtime 3D environments, Substance shaders, foliage & Maya tools · 2026",
-                      "实时 3D 场景、Substance 程序化材质、风格化植被与 Maya 工具 · 2026",
+                      "Realtime 3D environments, shaders, stylized foliage & Maya tools · 2026",
+                      "实时 3D 场景、材质表现、风格化植被与 Maya 工具 · 2026",
                     );
 
                 const companionThumb = isDesignReel

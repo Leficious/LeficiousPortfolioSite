@@ -380,7 +380,7 @@ export const projects: Project[] = [
     role: "Solo Game & Level Designer",
     year: "2026",
     summary:
-      "First-person sightless puzzle game built on one unchanging echolocation input — each region changes what casting a pulse reveals, hides, or shuts.",
+      "First-person sightless puzzle game built around one echolocation pulse, where each region changes what sound reveals, hides, or locks.",
     tags: ["Unity 6", "Game Design", "Level Design", "Spatial Wayfinding"],
     cover: "/projects/an-echo-has-no-shape/hero-poster.webp",
     heroImage: "/projects/an-echo-has-no-shape/hero-poster.webp",

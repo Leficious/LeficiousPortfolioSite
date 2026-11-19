@@ -151,7 +151,7 @@ const projectTranslations: Record<string, ProjectTranslation> = {
     title: "回声无形",
     role: "独立游戏与关卡设计",
     summary:
-      "围绕单一回声按键构建的第一人称无 UI 探索解谜——三大区域各自改变环境对同一次发声的反馈与门锁规则。",
+      "围绕单一回声按键构建的第一人称无 UI 探索解谜，三大区域各自改变环境对同一次发声的反馈与门锁规则。",
     designGoal:
       "在不引入新技能解锁、战斗或 HUD 界面标记的前提下，仅凭单一核心动作（按 E 释放回声）支撑跨区域第一人称探索与解谜。",
     ownership:

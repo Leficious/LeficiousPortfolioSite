@@ -342,7 +342,7 @@ export function ProjectPage() {
                 <aside className="parchment-sheet relative mt-6 border-[3px] border-[#110b07] px-5 py-4 shadow-[0_14px_32px_rgba(0,0,0,0.65),4px_4px_0_-1px_#dfd0b2,6px_6px_0_0_#110b07] sm:px-6">
                   <CrimsonStamp className="pointer-events-none absolute right-5 -top-3.5 h-9.5 w-9.5" />
                   <p className="relative z-10 font-numeral text-[10.5px] font-bold tracking-[0.2em] text-rubric uppercase">
-                    {text("Designer's Note — Why I Built This", "设计师手记 — 制作初衷")}
+                    {text("Designer's Note", "设计师手记")}
                   </p>
                   <p className={`relative z-10 mt-1.5 text-[16px] leading-relaxed text-parchment-ink ${isChinese ? "zh-readable" : ""}`}>
                     <FormattedText>{project.authorNote}</FormattedText>

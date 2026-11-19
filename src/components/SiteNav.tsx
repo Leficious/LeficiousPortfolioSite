@@ -72,7 +72,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           onClick={() => {
             if (isHome && onSelectFolioSlug) onSelectFolioSlug("reel");
           }}
-          aria-label="Leficious — Home & Reel"
+          aria-label="Leficious: Home and Reel"
           className="group flex flex-col items-center gap-2.5 pt-0.5"
         >
           <AstrolabeCrest className="h-11 w-11 drop-shadow-[0_3px_8px_rgba(0,0,0,0.85)]" />

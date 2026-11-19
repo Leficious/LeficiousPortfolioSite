@@ -43,30 +43,30 @@ const callingCards: {
 const outsideDisciplines = [
   {
     roman: "I",
-    title: "Chamber Music",
-    titleZh: "室内乐与管弦乐",
+    title: "Piano & Cello",
+    titleZh: "钢琴与大提琴",
     description:
-      "15 years of piano & cello in orchestra and chamber ensembles; timing, counterpoint, and deliberate silence.",
+      "Played piano and cello for about fifteen years in orchestras and small chamber groups.",
     descriptionZh:
-      "约 15 年钢琴与大提琴室内乐合奏训练，塑造了对节奏、声部呼应与“留白”的敏感度。",
+      "练了约十五年钢琴和大提琴，参加过管弦乐团与室内乐合奏。",
   },
   {
     roman: "II",
-    title: "Figure Skating & Dance",
+    title: "Skating & Dance",
     titleZh: "花样滑冰与舞蹈",
     description:
-      "Competitive figure skating alongside ballet and ballroom—informing physical weight transfer and combat frame feel.",
+      "Trained in competitive figure skating alongside ballet and ballroom dance.",
     descriptionZh:
-      "长期花样滑冰、芭蕾与标准舞训练，使我对重心转移、预备动作与战斗帧数保持身体层面的直觉。",
+      "长期学习竞技花样滑冰、芭蕾与国标舞。",
   },
   {
     roman: "III",
-    title: "Touchstones",
-    titleZh: "机制与参考谱系",
+    title: "Favorites",
+    titleZh: "常玩与偏爱",
     description:
-      "Zenless Zone Zero, Fire Emblem Fates: Conquest, Arknights, Magritte, and Shin Sekai Yori.",
+      "Zenless Zone Zero, Fire Emblem Fates: Conquest, Arknights, René Magritte, Dostoevsky, and Shin Sekai Yori.",
     descriptionZh:
-      "《绝区零》《火焰之纹章 if：暗夜王国》《明日方舟》、雷内·马格利特与《来自新世界》。",
+      "《绝区零》《火焰之纹章 if：暗夜王国》《明日方舟》、马格利特、陀思妥耶夫斯基与《来自新世界》。",
   },
 ];
 
@@ -121,7 +121,7 @@ export function AboutPage() {
       <Seo
         title={text("Lefi Shan | Dossier & Correspondence", "单凯飞 · Lefi Shan | 个人档案与信函")}
         description={text(
-          "About Lefi (Kevin) Shan — M.S. Game Design and Development student at USC School of Cinematic Arts.",
+          "About Lefi (Kevin) Shan, M.S. Game Design and Development student at USC School of Cinematic Arts.",
           "关于单凯飞（Lefi Shan）：南加州大学电影艺术学院游戏设计与开发硕士在读。",
         )}
         path={localizedPath("/about")}
@@ -192,14 +192,14 @@ export function AboutPage() {
                     >
                       <p>
                         {text(
-                          "I started out in 3D environment and technical art at Gnomon, building spaces, procedural materials, and Maya tools from the ground up. Over time, I cared more about what players actually do inside those spaces than the static assets alone—turning to Unreal Engine and Unity to tie animation timing and state rules directly to player decisions.",
-                          "我本科在 Gnomon 学习 3D 环境与技术美术，从零搭建场景、程序化材质与 Maya 工具管线。做得越久，我越关心玩家在空间里的实际行动与判断，于是转向在 Unreal 与 Unity 中将动画帧数、状态规则与玩家决策直接结合。",
+                          "I grew up around Vancouver and moved to Los Angeles to study 3D art at Gnomon. Halfway through making environments and props, I realized I cared a lot more about what a player actually does in a space than how it looks in a still render, so I moved into game design.",
+                          "我在温哥华长大，后来搬到洛杉矶，在 Gnomon 学 3D 美术。做场景和道具做到一半，我发现比起一张静态渲染图好不好看，我其实更在意玩家走进空间之后能做什么，于是转向了游戏设计。",
                         )}
                       </p>
                       <p>
                         {text(
-                          "Now as an M.S. student at USC's School of Cinematic Arts, my work spans multiphase action-combat encounters in Unreal and first-person spatial puzzle worlds in Unity where floorplan structure and player habit carry the argument without dialogue.",
-                          "进入南加州大学（USC）电影艺术学院攻读游戏设计与开发硕士后，我的作品既涵盖 Unreal 多阶段动作 Boss 战原型，也包括在无对白条件下依靠空间动线与玩家习惯推进主题的 Unity 第一人称解谜游戏。",
+                          "I'm now in the M.S. Game Design program at USC. Most of my projects are action combat prototypes or puzzle games, and the part I enjoy most is getting the mechanics and the presentation to pull in the same direction.",
+                          "现在我在南加大（USC）读游戏设计硕士。平时做得最多的是动作战斗原型和解谜游戏，我最喜欢琢磨的，是怎么让玩法机制和视听表现往同一个方向使劲。",
                         )}
                       </p>
                     </div>
@@ -208,13 +208,13 @@ export function AboutPage() {
 
                 <BrassRule ornate tone="parchment" className="my-6" />
 
-                {/* Outside the Engine — Authentic Victorian Horizontal Ledger Rows */}
+                {/* Outside of Games: Victorian Horizontal Ledger Rows */}
                 <section aria-labelledby="outside-engine-heading">
                   <h2
                     id="outside-engine-heading"
                     className="font-display text-lg font-bold tracking-tight text-parchment-ink sm:text-xl"
                   >
-                    {text("Outside the Engine — Three Disciplines", "引擎之外 — 三重长期训练")}
+                    {text("Outside of Games", "游戏之外")}
                   </h2>
 
                   <div className="mt-3 divide-y divide-[#684720]/40 border-y border-[#684720]/45">
