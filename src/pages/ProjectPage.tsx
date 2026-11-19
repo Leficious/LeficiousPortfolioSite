@@ -98,7 +98,7 @@ export function ProjectPage() {
     .map((entry) => localizeGalleryEntry(entry, isChinese));
 
   return (
-    <div className="min-h-screen px-4 py-5 text-foreground sm:px-8 lg:px-10 lg:py-6 xl:pr-24">
+    <div className="min-h-screen px-4 py-5 text-foreground sm:px-8 lg:px-10 lg:py-6 xl:pl-11 xl:pr-28">
       <Seo
         title={`${project.title} | Leficious`}
         description={project.summary}
@@ -111,16 +111,16 @@ export function ProjectPage() {
       {/* ==================== 1. UNIFIED VICTORIAN ARCHIVAL HEADER RAIL ==================== */}
       <AtelierHeaderRail
         eyebrow="LEFICIOUS"
-        subtitle={`${text("Case Folio", "项目深度拆解卷宗")} ${folioRoman} / V · ${project.role} · ${project.year}`}
-        maxWidthClass="max-w-[1080px]"
+        subtitle={`${text("Case Folio", "项目拆解卷")} ${folioRoman} / V · ${project.role} · ${project.year}`}
+        maxWidthClass="max-w-[1380px]"
         rightSlot={
           <Link
             to={localizedPath("/")}
             viewTransition
-            className="brass-plaque inline-flex items-center gap-2 px-4.5 py-2 font-numeral text-xs font-bold tracking-[0.12em] uppercase transition-transform hover:-translate-y-0.5 active:scale-97"
+            className="brass-plaque inline-flex items-center gap-1.5 px-3.5 py-1.5 font-display text-[12px] font-bold tracking-[0.12em] whitespace-nowrap uppercase transition-transform hover:-translate-y-0.5 active:scale-97 2xl:px-4.5 2xl:text-[12.5px]"
           >
             <span aria-hidden="true">←</span>
-            <span>{text("Return to Atelier Desk", "返回案台卷宗")}</span>
+            <span>{text("Atelier Desk", "返回案台")}</span>
           </Link>
         }
       />

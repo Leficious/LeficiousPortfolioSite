@@ -129,19 +129,19 @@ export function AboutPage() {
 
       {/* ==================== 1. UNIFIED VICTORIAN ARCHIVAL HEADER RAIL ==================== */}
       <AtelierHeaderRail
-        eyebrow={text("LEFI SHAN · DOSSIER", "单凯飞 · 个人档案卷宗")}
+        eyebrow={text("LEFI SHAN", "单凯飞 · LEFI SHAN")}
         subtitle={text(
-          "Little Tokyo, Los Angeles · USC School of Cinematic Arts & Gnomon",
-          "洛杉矶小东京 · 南加州大学电影艺术学院 & Gnomon",
+          "Little Tokyo, Los Angeles · USC SCA & Gnomon",
+          "洛杉矶小东京 · 南加大电影学院 & Gnomon",
         )}
-        maxWidthClass="max-w-[1260px]"
+        maxWidthClass="max-w-[1380px]"
         rightSlot={
           <a
             href={resumeHref}
             download
-            className="brass-plaque inline-flex items-center gap-2 px-4.5 py-2 font-numeral text-xs font-bold tracking-[0.12em] uppercase transition-transform hover:-translate-y-0.5 active:scale-97"
+            className="brass-plaque inline-flex items-center gap-1.5 px-3.5 py-1.5 font-display text-[12px] font-bold tracking-[0.12em] whitespace-nowrap uppercase transition-transform hover:-translate-y-0.5 active:scale-97 2xl:px-4.5 2xl:text-[12.5px]"
           >
-            <span>{text("Download Résumé (PDF)", "下载完整简历")}</span>
+            <span>{text("Résumé (PDF)", "下载简历")}</span>
             <span aria-hidden="true">↓</span>
           </a>
         }

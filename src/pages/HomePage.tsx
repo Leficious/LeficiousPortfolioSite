@@ -12,7 +12,6 @@ import {
 import { FormattedText } from "../components/FormattedText";
 import { ProjectSigil } from "../components/ProjectSigils";
 import { Seo } from "../components/Seo";
-import { useNavEncounterMode } from "../lib/atelierMotion";
 import { useLanguage } from "../lib/language";
 import { localizeProject } from "../lib/localizedContent";
 import { projects } from "../lib/projects";
@@ -127,7 +126,6 @@ type HomePageProps = {
 
 export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) {
   const { isChinese, text, localizedPath } = useLanguage();
-  const { navQuery } = useNavEncounterMode();
   const [playingVideo, setPlayingVideo] = useState(false);
   const [activeReelKind, setActiveReelKind] = useState<"design" | "environment">("design");
   const lastProjectSlugRef = useRef<string>("still-life");
@@ -231,16 +229,29 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
         )}
         maxWidthClass="max-w-[1380px]"
         rightSlot={
-          !isReelActive ? (
+          isReelActive ? (
+            <a
+              href={
+                isChinese
+                  ? "/resume/Kevin_Shan_CN_Game_Resume.pdf"
+                  : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"
+              }
+              download
+              className="brass-plaque inline-flex cursor-pointer items-center gap-1.5 px-3.5 py-1.5 font-display text-[12px] font-bold tracking-[0.12em] whitespace-nowrap uppercase transition-transform hover:-translate-y-0.5 active:scale-97 2xl:px-4.5 2xl:text-[12.5px]"
+            >
+              <span>{text("Résumé (PDF)", "下载简历")}</span>
+              <span aria-hidden="true">↓</span>
+            </a>
+          ) : (
             <button
               type="button"
               onClick={() => selectBinder("reel")}
-              className="brass-plaque inline-flex cursor-pointer items-center gap-1.5 px-3.5 py-1.5 font-display text-xs font-bold tracking-[0.12em] uppercase transition-transform hover:-translate-y-0.5 active:scale-97"
+              className="brass-plaque inline-flex cursor-pointer items-center gap-1.5 px-3.5 py-1.5 font-display text-[12px] font-bold tracking-[0.12em] whitespace-nowrap uppercase transition-transform hover:-translate-y-0.5 active:scale-97 2xl:px-4.5 2xl:text-[12.5px]"
             >
               <span aria-hidden="true" className="text-[10px]">▶</span>
               <span>{text("Master Reel", "年度集锦")}</span>
             </button>
-          ) : undefined
+          )
         }
       />
 
@@ -549,7 +560,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                         {/* Organic Atelier Doorways into Salon Gallery (29 Plates) & About / Dossier */}
                         <div className="flex flex-col gap-2.5">
                           <Link
-                            to={`${localizedPath("/gallery")}${navQuery}`}
+                            to={localizedPath("/gallery")}
                             viewTransition
                             className="group relative flex items-center justify-between gap-3 border-[1.5px] border-[#ebc88d]/85 bg-gradient-to-r from-[#5e201d] via-[#461614] to-[#2e0d0c] px-4 py-3 text-left shadow-[3px_3px_0_0_#140d09,0_10px_22px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:border-[#fff0c8]"
                           >
@@ -571,7 +582,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                           </Link>
 
                           <Link
-                            to={`${localizedPath("/about")}${navQuery}`}
+                            to={localizedPath("/about")}
                             viewTransition
                             className="group relative flex items-center justify-between gap-3 border-[1.5px] border-[#ebc88d]/85 bg-gradient-to-r from-[#593722] via-[#412718] to-[#2b180e] px-4 py-3 text-left shadow-[3px_3px_0_0_#140d09,0_10px_22px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:border-[#fff0c8]"
                           >

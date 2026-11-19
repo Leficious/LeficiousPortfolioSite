@@ -1,5 +1,4 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { useNavEncounterMode } from "../lib/atelierMotion";
 import { useLanguage, type Language } from "../lib/language";
 import { projects } from "../lib/projects";
 import { AstrolabeCrest } from "./AtelierChrome";
@@ -21,12 +20,9 @@ type SiteNavProps = {
 export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
   const { pathname } = useLocation();
   const { language, setLanguage, text, localizedPath } = useLanguage();
-  const { mode, navQuery } = useNavEncounterMode();
 
   const cleanPath = pathname.replace(/^\/zh(?=\/|$)/, "") || "/";
   const isHome = cleanPath === "/";
-  const activeSection: "atelier" | "gallery" | "about" =
-    cleanPath.startsWith("/gallery") ? "gallery" : cleanPath.startsWith("/about") ? "about" : "atelier";
 
   const resumeHref =
     language === "zh"
@@ -40,7 +36,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
   const renderCoinMedallion = (label: string, active: boolean, isReel = false) => (
     <span
       style={{ borderRadius: "50%" }}
-      className={`relative flex h-9 w-9 items-center justify-center border-2 font-display ${
+      className={`relative flex h-9.5 w-9.5 items-center justify-center border-2 font-display ${
         isReel ? "text-[11px]" : "text-[15px]"
       } tracking-wider transition-all duration-200 ${
         active
@@ -54,27 +50,6 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
 
   const reelActive = isHome && activeFolioSlug === "reel";
 
-  const spineRoomFlags = [
-    {
-      id: "atelier" as const,
-      label: text("Atelier", "作品案台"),
-      to: `${localizedPath("/")}${navQuery}`,
-      idleBg: "from-[#5d3a24] to-[#361f12]",
-    },
-    {
-      id: "gallery" as const,
-      label: text("Gallery · 29", "画廊 · 29"),
-      to: `${localizedPath("/gallery")}${navQuery}`,
-      idleBg: "from-[#64221f] to-[#3a1110]",
-    },
-    {
-      id: "about" as const,
-      label: text("About", "个人档案"),
-      to: `${localizedPath("/about")}${navQuery}`,
-      idleBg: "from-[#483020] to-[#28180e]",
-    },
-  ];
-
   return (
     <>
       <a
@@ -87,7 +62,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
       {/* Desktop 88px Chased-Bronze Coin Medallion Book Spine */}
       <aside
         aria-label={text("Atelier Spine Navigation", "工作室侧脊导航")}
-        className="site-header fixed inset-y-0 left-0 z-50 hidden w-[88px] flex-col items-center justify-between overflow-visible bg-gradient-to-r from-[#150f0b] via-[#0e0a07] to-[#080504] py-4 shadow-[8px_0_28px_rgba(0,0,0,0.9)] select-none lg:flex"
+        className="site-header fixed inset-y-0 left-0 z-50 hidden w-[88px] flex-col items-center justify-between bg-gradient-to-r from-[#150f0b] via-[#0e0a07] to-[#080504] py-4 shadow-[8px_0_28px_rgba(0,0,0,0.9)] select-none lg:flex"
       >
         {/* Double vertical burnished-brass binding rods */}
         <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-[1.5px] bg-[#d4ae73]/72" />
@@ -95,63 +70,23 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
         <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-[3px] w-px bg-[#c89d62]/18" />
 
         {/* Top Crest + Vertical Engraved Wordmark */}
-        <div className="flex w-full flex-col items-center gap-4">
-          <Link
-            to={`${localizedPath("/")}${navQuery}`}
-            viewTransition
-            onClick={() => {
-              if (isHome && onSelectFolioSlug) onSelectFolioSlug("reel");
-            }}
-            aria-label="Leficious — Home & Reel"
-            className="group flex flex-col items-center gap-2 pt-0.5"
+        <Link
+          to={localizedPath("/")}
+          viewTransition
+          onClick={() => {
+            if (isHome && onSelectFolioSlug) onSelectFolioSlug("reel");
+          }}
+          aria-label="Leficious — Home & Reel"
+          className="group flex flex-col items-center gap-2.5 pt-0.5"
+        >
+          <AstrolabeCrest className="h-11 w-11 drop-shadow-[0_3px_8px_rgba(0,0,0,0.85)]" />
+          <span
+            className="font-display text-[13px] font-bold tracking-[0.26em] text-[#e8c891] uppercase transition-colors group-hover:text-[#fff6e5]"
+            style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
           >
-            <AstrolabeCrest className="h-11 w-11 drop-shadow-[0_3px_8px_rgba(0,0,0,0.85)]" />
-            <span
-              className="font-display text-[13px] font-bold tracking-[0.26em] text-[#e8c891] uppercase transition-colors group-hover:text-[#fff6e5]"
-              style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
-            >
-              LEFICIOUS
-            </span>
-          </Link>
-
-          {/* Option B ("flags"): Upper-Chest Protruding Swallowtail Leather & Rag-Vellum Bookmark Flags */}
-          {mode === "flags" && (
-            <nav
-              aria-label={text("Primary Portfolio Volumes", "主要作品卷宗目录")}
-              className="mt-1 flex w-full flex-col items-start gap-2 pl-2"
-            >
-              {spineRoomFlags.map((flag) => {
-                const active = activeSection === flag.id;
-                return (
-                  <Link
-                    key={flag.id}
-                    to={flag.to}
-                    viewTransition
-                    aria-current={active ? "page" : undefined}
-                    style={{
-                      clipPath: "polygon(0 0, 100% 0, calc(100% - 9px) 50%, 100% 100%, 0 100%)",
-                    }}
-                    className={`group relative z-30 flex items-center gap-1.5 py-2 pr-5 pl-2.5 transition-all duration-200 [filter:drop-shadow(4px_6px_10px_rgba(0,0,0,0.88))] ${
-                      active
-                        ? "w-[122px] border-l-[4px] border-l-[#8f1616] bg-gradient-to-r from-[#fbf3e2] to-[#e4d4b4] text-[#110b07] 2xl:w-[146px]"
-                        : `w-[116px] border-l-[2px] border-l-[#ebc88d] bg-gradient-to-r ${flag.idleBg} text-[#f6eedc] hover:translate-x-1 hover:text-white 2xl:w-[138px]`
-                    }`}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={`h-1.5 w-1.5 shrink-0 rotate-45 ${
-                        active ? "bg-[#2d8f62]" : "bg-[#ebc88d]"
-                      }`}
-                    />
-                    <span className="font-display text-[12.5px] font-bold tracking-[0.08em] uppercase whitespace-nowrap 2xl:text-[13.5px]">
-                      {flag.label}
-                    </span>
-                  </Link>
-                );
-              })}
-            </nav>
-          )}
-        </div>
+            LEFICIOUS
+          </span>
+        </Link>
 
         {/* Center Chased-Bronze & Ivory-Enamel Coin Medallions (Reel + Folios I - V) */}
         <nav aria-label={text("Showcase Reel & Case Folios I to V", "年度集锦与档案卷一至五")} className="flex w-full flex-col items-center">
@@ -164,7 +99,6 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           </div>
 
           <div className="flex w-full flex-col items-center gap-1.5 py-0.5">
-            {/* Master Reel Coin */}
             {isHome && onSelectFolioSlug ? (
               <button
                 type="button"
@@ -183,7 +117,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
               </button>
             ) : (
               <Link
-                to={`${localizedPath("/")}${navQuery}`}
+                to={localizedPath("/")}
                 viewTransition
                 title={text("2026 Master Design Reel", "2026 年度设计集锦")}
                 className="group relative flex w-full items-center justify-center py-0.5"
@@ -224,7 +158,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
               return (
                 <Link
                   key={proj.slug}
-                  to={`${localizedPath(`/projects/${proj.slug}`)}${navQuery}`}
+                  to={localizedPath(`/projects/${proj.slug}`)}
                   viewTransition
                   title={`${numeral} · ${proj.title}`}
                   aria-current={active ? "page" : undefined}

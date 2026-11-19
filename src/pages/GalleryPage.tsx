@@ -131,21 +131,23 @@ export function GalleryPage() {
         <AtelierHeaderRail
           eyebrow="LEFICIOUS"
           subtitle={text(
-            "Salon Specimen Wall · Realtime 3D, Rigging, Shaders & Maya Tooling",
-            "工作室视觉与技术标本馆 · 实时 3D 场景、角色绑定与工具管线",
+            "Salon Specimen Wall · 3D, Shaders, Rigging & Tooling",
+            "视觉与技术标本馆 · 3D 场景、材质、绑定与工具",
           )}
-          maxWidthClass="max-w-[1260px]"
+          maxWidthClass="max-w-[1380px]"
           rightSlot={
-            !isChinese ? (
-              <a
-                href="/resume/Leficious_3D_Environment_Artist_Resume.pdf"
-                download
-                className="brass-plaque inline-flex items-center gap-2 px-4.5 py-2 font-numeral text-xs font-bold tracking-[0.12em] uppercase transition-transform hover:-translate-y-0.5 active:scale-95"
-              >
-                <span>3D Art Résumé</span>
-                <span aria-hidden="true">↓</span>
-              </a>
-            ) : undefined
+            <a
+              href={
+                isChinese
+                  ? "/resume/Kevin_Shan_CN_Game_Resume.pdf"
+                  : "/resume/Leficious_3D_Environment_Artist_Resume.pdf"
+              }
+              download
+              className="brass-plaque inline-flex items-center gap-1.5 px-3.5 py-1.5 font-display text-[12px] font-bold tracking-[0.12em] whitespace-nowrap uppercase transition-transform hover:-translate-y-0.5 active:scale-95 2xl:px-4.5 2xl:text-[12.5px]"
+            >
+              <span>{text("3D Art Résumé", "下载简历")}</span>
+              <span aria-hidden="true">↓</span>
+            </a>
           }
         />
 
