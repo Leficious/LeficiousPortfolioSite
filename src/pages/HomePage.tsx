@@ -276,13 +276,29 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               role="tab"
               aria-selected={active}
               onClick={() => selectBinder(key)}
-              className={`victorian-ticket cursor-pointer border px-3.5 py-1.5 font-display text-xs font-semibold transition-all ${
+              style={{
+                clipPath:
+                  "polygon(7px 0, calc(100% - 7px) 0, 100% 7px, 100% calc(100% - 7px), calc(100% - 7px) 100%, 7px 100%, 0 calc(100% - 7px), 0 7px)",
+              }}
+              className={`group inline-flex cursor-pointer p-[1.5px] transition-colors ${
                 active
-                  ? "border-[#8f1616] bg-parchment text-parchment-ink"
-                  : "border-warm/40 bg-surface text-muted-foreground hover:text-foreground"
+                  ? "bg-gradient-to-b from-[#fff2d4] to-[#cfa363]"
+                  : "bg-gradient-to-b from-[#dfb97c]/75 to-[#8f6836]/58 hover:from-[#f6deb0] hover:to-[#b58749]"
               }`}
             >
-              {label}
+              <span
+                style={{
+                  clipPath:
+                    "polygon(6.12px 0, calc(100% - 6.12px) 0, 100% 6.12px, 100% calc(100% - 6.12px), calc(100% - 6.12px) 100%, 6.12px 100%, 0 calc(100% - 6.12px), 0 6.12px)",
+                }}
+                className={`inline-flex items-center px-3.5 py-1.5 font-display text-xs font-semibold transition-colors ${
+                  active
+                    ? "bg-gradient-to-b from-[#fbf3e2] to-[#e6d6b8] text-parchment-ink"
+                    : "bg-gradient-to-b from-[#2e1f15] to-[#1c120d] text-[#e2d4be] group-hover:text-[#fbf3e4]"
+                }`}
+              >
+                {label}
+              </span>
             </button>
           );
         })}
@@ -510,7 +526,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                                 key={proj.slug}
                                 type="button"
                                 onClick={() => selectBinder(proj.slug)}
-                                className="victorian-ticket embossed-ticket cursor-pointer border border-[#61411d]/85 bg-parchment-deep/90 px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.03em] whitespace-nowrap text-parchment-ink transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
+                                className="victorian-ticket embossed-ticket cursor-pointer border border-[#61411d]/85 bg-parchment-deep/90 px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.03em] whitespace-nowrap text-parchment-ink transition-colors [--ticket-border:#61411d] hover:bg-[#140d09] hover:text-[#f6eedc] hover:[--ticket-border:#140d09]"
                               >
                                 {shortLabel}
                               </button>
@@ -675,7 +691,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                       {telemetry.map((spec) => (
                         <div
                           key={spec}
-                          className="victorian-ticket embossed-ticket flex items-center justify-center gap-1.5 border border-[#61411d]/85 bg-parchment-deep/90 px-2 py-2 text-center"
+                          className="victorian-ticket embossed-ticket flex items-center justify-center gap-1.5 border border-[#61411d]/85 bg-parchment-deep/90 px-2 py-2 text-center [--ticket-border:#61411d]"
                         >
                           <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-rubric" />
                           <span className="whitespace-nowrap font-numeral text-[9.5px] font-bold tracking-[0.07em] text-parchment-ink uppercase xl:text-[10px]">
@@ -782,7 +798,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                           href={activeProject.externalLink.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="victorian-ticket embossed-ticket inline-flex items-center justify-center gap-1.5 whitespace-nowrap border-2 border-[#140d09] bg-parchment-deep/65 px-3 py-2 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc] 2xl:px-4 2xl:py-2.5 2xl:text-xs"
+                          className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center justify-center gap-1.5 whitespace-nowrap border-2 border-[#140d09] bg-parchment-deep/65 px-3 py-2 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc] 2xl:px-4 2xl:py-2.5 2xl:text-xs"
                         >
                           <span>{activeProject.externalLink.label}</span>
                           <span aria-hidden="true">↗</span>
@@ -791,7 +807,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                         <Link
                           to={localizedPath("/gallery")}
                           viewTransition
-                          className="victorian-ticket embossed-ticket inline-flex items-center justify-center gap-1.5 whitespace-nowrap border-2 border-[#140d09] bg-parchment-deep/65 px-3 py-2 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc] 2xl:px-4 2xl:py-2.5 2xl:text-xs"
+                          className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center justify-center gap-1.5 whitespace-nowrap border-2 border-[#140d09] bg-parchment-deep/65 px-3 py-2 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc] 2xl:px-4 2xl:py-2.5 2xl:text-xs"
                         >
                           <span>{text("Gallery", "画廊拆解")}</span>
                           <span aria-hidden="true">→</span>

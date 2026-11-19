@@ -202,8 +202,9 @@
     inset 0 0 0 1px rgba(224, 184, 122, 0.52);
 }
 
-/* Chamfered Victorian apothecary / ledger ticket */
+/* Chamfered Victorian apothecary / ledger ticket (with diagonal corner border completion) */
 .victorian-ticket {
+  --ticket-border: transparent;
   position: relative;
   clip-path: polygon(
     7px 0,
@@ -215,6 +216,31 @@
     0 calc(100% - 7px),
     0 7px
   );
+}
+
+.victorian-ticket::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, var(--ticket-border) 5.9px, transparent 6.35px) top left / 9px 9px no-repeat,
+    linear-gradient(225deg, var(--ticket-border) 5.9px, transparent 6.35px) top right / 9px 9px no-repeat,
+    linear-gradient(315deg, var(--ticket-border) 5.9px, transparent 6.35px) bottom right / 9px 9px no-repeat,
+    linear-gradient(45deg, var(--ticket-border) 5.9px, transparent 6.35px) bottom left / 9px 9px no-repeat;
+}
+
+.victorian-ticket-heavy {
+  --ticket-border: #140d09;
+}
+
+.victorian-ticket-heavy::after {
+  inset: -2px;
+  background:
+    linear-gradient(135deg, var(--ticket-border) 6.85px, transparent 7.35px) top left / 10px 10px no-repeat,
+    linear-gradient(225deg, var(--ticket-border) 6.85px, transparent 7.35px) top right / 10px 10px no-repeat,
+    linear-gradient(315deg, var(--ticket-border) 6.85px, transparent 7.35px) bottom right / 10px 10px no-repeat,
+    linear-gradient(45deg, var(--ticket-border) 6.85px, transparent 7.35px) bottom left / 10px 10px no-repeat;
 }
 
 /* Embossed letterpress ticket relief on rag-vellum */

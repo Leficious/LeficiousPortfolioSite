@@ -384,20 +384,31 @@ export function AtelierHeaderRail({
                   style={{
                     clipPath: "polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%)",
                   }}
-                  className={`group relative inline-flex items-center gap-1.5 px-3 transition-all duration-200 2xl:px-4 ${
+                  className={`group relative inline-flex p-[1.5px] pb-0 transition-colors duration-200 ${
                     active
-                      ? "z-20 bg-gradient-to-b from-[#fbf3e2] to-[#e7d8ba] pt-2 pb-2.5 text-[#110b07] shadow-[0_-4px_14px_rgba(0,0,0,0.75),inset_0_2px_0_#8f1616]"
-                      : `z-10 bg-gradient-to-b ${item.idleStock} pt-1.5 pb-2 text-[#f4ead6] shadow-[0_-3px_10px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(246,218,170,0.45)] hover:-translate-y-0.5 hover:text-white`
+                      ? "z-20 bg-gradient-to-b from-[#fff2d4] via-[#d8b173] to-[#b58749] shadow-[0_-4px_14px_rgba(0,0,0,0.75)]"
+                      : "z-10 bg-gradient-to-b from-[#e5c287]/78 to-[#8a6534]/60 shadow-[0_-3px_10px_rgba(0,0,0,0.7)] hover:from-[#fff0c8] hover:to-[#c89d62]"
                   }`}
                 >
                   <span
-                    aria-hidden="true"
-                    className={`h-1.5 w-1.5 shrink-0 rotate-45 ${
-                      active ? "border border-[#684720] bg-[#2d8f62]" : "bg-[#e5c287]/80 group-hover:bg-[#7ee8b5]"
+                    style={{
+                      clipPath: "polygon(7.7px 0, calc(100% - 7.7px) 0, 100% 100%, 0 100%)",
+                    }}
+                    className={`inline-flex items-center gap-1.5 px-3 py-2 transition-colors 2xl:px-4 ${
+                      active
+                        ? "bg-gradient-to-b from-[#fbf3e2] to-[#e7d8ba] text-[#110b07]"
+                        : `bg-gradient-to-b ${item.idleStock} text-[#f4ead6] group-hover:text-white`
                     }`}
-                  />
-                  <span className="font-display text-[12px] font-bold tracking-[0.09em] uppercase whitespace-nowrap 2xl:text-[13.5px]">
-                    <span className={active ? "text-rubric" : "text-[#ebc88d]"}>{item.roman}</span> · {item.label}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`h-1.5 w-1.5 shrink-0 rotate-45 ${
+                        active ? "bg-[#2d8f62]" : "bg-[#e5c287]/85 group-hover:bg-[#7ee8b5]"
+                      }`}
+                    />
+                    <span className="font-display text-[12px] font-bold tracking-[0.09em] uppercase whitespace-nowrap 2xl:text-[13.5px]">
+                      <span className={active ? "text-rubric" : "text-[#ebc88d]"}>{item.roman}</span> · {item.label}
+                    </span>
                   </span>
                 </Link>
               );

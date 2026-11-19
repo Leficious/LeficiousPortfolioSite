@@ -38,10 +38,10 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
       style={{ borderRadius: "50%" }}
       className={`relative flex h-9.5 w-9.5 items-center justify-center border-2 font-display ${
         isReel ? "text-[11px]" : "text-[15px]"
-      } tracking-wider transition-all duration-200 ${
+      } tracking-wider transition-colors duration-200 ${
         active
-          ? "scale-108 border-[#ebd09e] bg-gradient-to-b from-[#fbf3e2] to-[#dfd0b2] font-bold text-[#8f1616] shadow-[0_4px_12px_rgba(0,0,0,0.85),0_0_0_2px_#6e1515,inset_0_1px_0_rgba(255,255,255,0.9)]"
-          : "border-[#c89d62]/68 bg-gradient-to-b from-[#2b1f17] to-[#140e0a] font-bold text-[#ebd09e] shadow-[0_3px_8px_rgba(0,0,0,0.75),inset_0_1px_0_rgba(244,214,162,0.28)] group-hover:border-[#ebd09e] group-hover:from-[#3a2a1f] group-hover:text-[#fff6e5]"
+          ? "border-[#fff2d4] bg-gradient-to-b from-[#fbf3e2] to-[#dfd0b2] font-bold text-[#8f1616] shadow-[0_4px_12px_rgba(0,0,0,0.85),0_0_0_2px_#6e1515,inset_0_1px_0_rgba(255,255,255,0.9)]"
+          : "border-[#c89d62]/72 bg-gradient-to-b from-[#2b1f17] to-[#140e0a] font-bold text-[#ebd09e] shadow-[0_3px_8px_rgba(0,0,0,0.75),inset_0_1px_0_rgba(244,214,162,0.28)] group-hover:border-[#ebd09e] group-hover:from-[#3a2a1f] group-hover:text-[#fff6e5]"
       }`}
     >
       {label}
@@ -186,8 +186,8 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
                   onClick={() => setLanguage(opt)}
                   aria-pressed={language === opt}
                   lang={opt === "zh" ? "zh-CN" : "en"}
-                  className={`cursor-pointer px-0.5 transition-colors ${
-                    language === opt ? "font-bold text-[#ebd09e]" : "text-muted-foreground hover:text-foreground"
+                  className={`cursor-pointer px-0.5 font-bold transition-colors ${
+                    language === opt ? "text-[#ebd09e]" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {opt === "en" ? "EN" : "中文"}
@@ -199,7 +199,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           <a
             href={resumeHref}
             download
-            className="victorian-ticket flex w-[72px] items-center justify-center gap-1 border border-[#e2be84]/75 bg-gradient-to-b from-[#7a1616] to-[#470b0b] px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.1em] text-[#fbf3e4] uppercase shadow-[0_4px_10px_rgba(0,0,0,0.82),inset_0_1px_0_rgba(255,228,184,0.32)] transition-all hover:border-[#fff2d6] hover:from-[#8f1b1b] hover:to-[#570e0e] active:scale-95"
+            className="victorian-ticket flex w-[72px] items-center justify-center gap-1 border border-[#e2be84]/75 bg-gradient-to-b from-[#7a1616] to-[#470b0b] px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.1em] text-[#fbf3e4] uppercase shadow-[0_4px_10px_rgba(0,0,0,0.82),inset_0_1px_0_rgba(255,228,184,0.32)] transition-all [--ticket-border:rgba(226,190,132,0.75)] hover:border-[#fff2d6] hover:from-[#8f1b1b] hover:to-[#570e0e] hover:[--ticket-border:#fff2d6] active:scale-95"
           >
             <span>{text("Résumé", "简历")}</span>
             <span aria-hidden="true" className="text-[10px] text-[#ebd09e]">↓</span>
@@ -220,21 +220,21 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
               to={localizedPath("/")}
               end
               viewTransition
-              className={({ isActive }) => (isActive ? "font-bold text-[#fbf3e4]" : "text-muted-foreground")}
+              className={({ isActive }) => (isActive ? "font-bold text-[#fbf3e4]" : "font-bold text-muted-foreground")}
             >
               {text("Atelier", "案台")}
             </NavLink>
             <NavLink
               to={localizedPath("/gallery")}
               viewTransition
-              className={({ isActive }) => (isActive ? "font-bold text-[#fbf3e4]" : "text-muted-foreground")}
+              className={({ isActive }) => (isActive ? "font-bold text-[#fbf3e4]" : "font-bold text-muted-foreground")}
             >
               {text("Gallery", "画廊")}
             </NavLink>
             <NavLink
               to={localizedPath("/about")}
               viewTransition
-              className={({ isActive }) => (isActive ? "font-bold text-[#fbf3e4]" : "text-muted-foreground")}
+              className={({ isActive }) => (isActive ? "font-bold text-[#fbf3e4]" : "font-bold text-muted-foreground")}
             >
               {text("About", "档案")}
             </NavLink>

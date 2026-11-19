@@ -241,20 +241,35 @@ export function GalleryPage() {
                       type="button"
                       aria-pressed={active}
                       onClick={() => setActiveTag(tag)}
-                      className={`victorian-ticket inline-flex cursor-pointer items-center gap-1.5 border px-3 py-1.5 font-display text-xs font-semibold tracking-wide transition-all duration-200 active:scale-97 sm:px-3.5 sm:text-[13.5px] ${
+                      style={{
+                        clipPath:
+                          "polygon(7px 0, calc(100% - 7px) 0, 100% 7px, 100% calc(100% - 7px), calc(100% - 7px) 100%, 7px 100%, 0 calc(100% - 7px), 0 7px)",
+                      }}
+                      className={`group relative inline-flex cursor-pointer p-[1.5px] transition-colors duration-200 ${
                         active
-                          ? "parchment-sheet embossed-ticket -translate-y-0.5 border-[#684720] text-parchment-ink shadow-[0_6px_16px_rgba(0,0,0,0.62)]"
-                          : "border-warm/32 bg-[#1b1410] text-muted-foreground hover:-translate-y-0.5 hover:border-[#d4ae73]/75 hover:bg-[#261c16] hover:text-foreground"
+                          ? "bg-gradient-to-b from-[#fff2d4] to-[#cfa363] shadow-[0_6px_16px_rgba(0,0,0,0.68)]"
+                          : "bg-gradient-to-b from-[#dfb97c]/78 to-[#8f6836]/62 shadow-[0_3px_10px_rgba(0,0,0,0.55)] hover:from-[#f6deb0] hover:to-[#b58749]"
                       }`}
                     >
-                      {active && <span aria-hidden="true" className="relative z-10 h-1.5 w-1.5 rotate-45 bg-rubric" />}
-                      <span className="relative z-10">{label}</span>
                       <span
-                        className={`relative z-10 font-numeral text-[10.5px] ${
-                          active ? "font-bold text-rubric" : "text-muted-foreground/78"
+                        style={{
+                          clipPath:
+                            "polygon(6.12px 0, calc(100% - 6.12px) 0, 100% 6.12px, 100% calc(100% - 6.12px), calc(100% - 6.12px) 100%, 6.12px 100%, 0 calc(100% - 6.12px), 0 6.12px)",
+                        }}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 font-display text-xs font-semibold tracking-wide transition-colors sm:px-3.5 sm:text-[14px] ${
+                          active
+                            ? "bg-gradient-to-b from-[#fbf3e2] to-[#e6d6b8] text-parchment-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]"
+                            : "bg-gradient-to-b from-[#2e1f15] to-[#1c120d] text-[#e2d4be] group-hover:from-[#3a271b] group-hover:to-[#241811] group-hover:text-[#fbf3e4]"
                         }`}
                       >
-                        ({tagCounts[tag] ?? 0})
+                        <span>{label}</span>
+                        <span
+                          className={`font-numeral text-[11px] font-semibold tabular-nums ${
+                            active ? "text-rubric" : "text-[#c0ad92] group-hover:text-[#ebd09e]"
+                          }`}
+                        >
+                          ({tagCounts[tag] ?? 0})
+                        </span>
                       </span>
                     </button>
                   );

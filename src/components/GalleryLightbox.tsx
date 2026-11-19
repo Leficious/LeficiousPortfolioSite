@@ -193,9 +193,9 @@ export function GalleryLightbox({
                         onClick={() => onSlideChange(index)}
                         aria-label={`${text("Pass", "图层")} ${index + 1}`}
                         aria-current={active ? "true" : undefined}
-                        className={`group relative h-14 w-22 shrink-0 cursor-pointer overflow-hidden border-2 bg-[#0d0a08] transition-all ${
+                        className={`group relative h-14 w-22 shrink-0 cursor-pointer overflow-hidden border-2 bg-[#0d0a08] transition-colors ${
                           active
-                            ? "-translate-y-0.5 border-rubric shadow-[0_3px_10px_rgba(125,25,25,0.45)]"
+                            ? "border-rubric shadow-[0_3px_10px_rgba(125,25,25,0.45)]"
                             : "border-[#6e4e27]/45 opacity-75 hover:border-[#6e4e27] hover:opacity-100"
                         }`}
                       >
@@ -245,7 +245,7 @@ export function GalleryLightbox({
                 <FormattedText>{entry.description}</FormattedText>
               </p>
 
-              <div className="victorian-ticket embossed-ticket mt-4 border border-[#61411d]/75 bg-parchment-deep/80 px-3.5 py-2.5">
+              <div className="victorian-ticket embossed-ticket mt-4 border border-[#61411d]/75 bg-parchment-deep/80 px-3.5 py-2.5 [--ticket-border:rgba(97,65,29,0.75)]">
                 <p className="font-numeral text-[10px] font-bold tracking-[0.2em] text-parchment-muted uppercase">
                   {text("Craft & Contribution", "负责模块")}
                 </p>
@@ -273,7 +273,7 @@ export function GalleryLightbox({
                 <button
                   type="button"
                   onClick={onNextEntry}
-                  className="victorian-ticket inline-flex cursor-pointer items-center justify-between border border-[#191310]/70 bg-transparent px-4 py-2 font-display text-sm font-semibold text-parchment-ink transition-colors hover:bg-[#191310]/8"
+                  className="victorian-ticket inline-flex cursor-pointer items-center justify-between border border-[#191310]/70 bg-transparent px-4 py-2 font-display text-sm font-semibold text-parchment-ink transition-colors [--ticket-border:rgba(25,19,16,0.7)] hover:bg-[#191310]/8"
                 >
                   <span className="truncate pr-2">
                     {text("Next Specimen Plate", "下一件标本")}

@@ -56,8 +56,8 @@ export function SoftwareStack({ software, showLabels = false, tone = "slate" }: 
             title={name}
             className={`victorian-ticket inline-flex min-h-7 items-center gap-2 border px-2.5 py-1 text-xs transition-colors ${
               isParchment
-                ? "border-[#7a582e]/55 bg-parchment-deep/75 text-parchment-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.4)]"
-                : "border-warm/35 bg-[#120d0a]/85 text-muted-foreground"
+                ? "border-[#7a582e]/55 bg-parchment-deep/75 text-parchment-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] [--ticket-border:rgba(122,88,46,0.55)]"
+                : "border-warm/35 bg-[#120d0a]/85 text-muted-foreground [--ticket-border:rgba(200,157,98,0.35)]"
             }`}
           >
             <span
