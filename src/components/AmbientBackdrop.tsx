@@ -2,67 +2,43 @@ import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { LamplightDustCanvas } from "./AtelierMotion";
 
-type SurveyPeak = {
-  baseX: number;
-  baseY: number;
+type GearSpec = {
   x: number;
   y: number;
-  amplitude: number;
-  cosA: number;
-  sinA: number;
-  invSX2: number;
-  invSY2: number;
-  reach: number;
-  phase: number;
-  side: "left" | "right";
-  label?: string;
-  bearingText: string;
+  teeth: number;
+  pitchR: number;
+  spokes: number;
+  ratioFromRoot: number;
+  phaseOffset: number;
+  sign: 1 | -1;
+  hasCompassNeedle?: boolean;
+  hasRomanDial?: boolean;
+  caption?: string;
 };
 
-type AstrolabePulse = {
+type GearTrain = {
+  side: "left" | "right";
+  gears: GearSpec[];
+  angle: number;
+  omega: number;
+  baseOmega: number;
+};
+
+type CompassNeedleState = {
+  angle: number;
+  vel: number;
+};
+
+type SparkMote = {
   x: number;
   y: number;
-  radius: number;
-  maxRadius: number;
-  speed: number;
+  vx: number;
+  vy: number;
+  life: number;
+  maxLife: number;
+  size: number;
   crimson: boolean;
 };
-
-const ROUTE_SURVEY_LABELS: Record<string, string[]> = {
-  atelier: ["MERIDIAN", "ZENITH", "APOGEE", "SOLSTICE"],
-  gallery: ["RELIEF", "STRATA", "CONTOUR", "QUADRANT"],
-  about: ["ORIGIN", "AXIS", "VANTAGE", "EQUINOX"],
-  project: ["ANCHOR", "THRESHOLD", "AZIMUTH", "BEACON"],
-};
-
-const ROMAN_BEARINGS = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-
-const MS_EDGES: number[][][] = [
-  [],
-  [[3, 2]],
-  [[2, 1]],
-  [[3, 1]],
-  [[0, 1]],
-  [[0, 3], [2, 1]],
-  [[0, 2]],
-  [[0, 3]],
-  [[0, 3]],
-  [[0, 2]],
-  [[0, 1], [3, 2]],
-  [[0, 1]],
-  [[3, 1]],
-  [[2, 1]],
-  [[3, 2]],
-  [],
-];
-
-const CONTOUR_LEVELS = [0.18, 0.31, 0.44, 0.58, 0.72, 0.88];
-const HOT_STYLES = [
-  "rgba(232, 192, 124, 0.44)",
-  "rgba(255, 228, 168, 0.88)",
-  "rgba(186, 42, 42, 0.48)",
-  "rgba(228, 66, 58, 0.86)",
-] as const;
 
 const OUTER_TICKS = Array.from({ length: 72 }, (_, idx) => {
   const deg = idx * 5;
@@ -97,13 +73,7 @@ const INNER_TICKS = Array.from({ length: 36 }, (_, idx) => {
   };
 });
 
-function routeKey(pathname: string) {
-  const clean = pathname.replace(/^\/zh(?=\/|$)/, "") || "/";
-  if (clean.startsWith("/gallery")) return "gallery";
-  if (clean.startsWith("/about")) return "about";
-  if (clean.startsWith("/projects/")) return "project";
-  return "atelier";
-}
+const DIAL_ROMANS = ["XII", "III", "VI", "IX"] as const;
 
 function routeBearing(pathname: string, stepIndex = 0) {
   const clean = pathname.replace(/^\/zh(?=\/|$)/, "") || "/";
@@ -118,103 +88,100 @@ function routeBearing(pathname: string, stepIndex = 0) {
   return base + stepIndex * 28;
 }
 
-function seededRandom(seedText: string) {
-  let seed = 2166136261;
-  for (let i = 0; i < seedText.length; i += 1) {
-    seed ^= seedText.charCodeAt(i);
-    seed = Math.imul(seed, 16777619);
-  }
-  return () => {
-    seed += 0x6d2b79f5;
-    let value = seed;
-    value = Math.imul(value ^ (value >>> 15), value | 1);
-    value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
-    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+function shortestAngleDiff(from: number, to: number) {
+  let diff = ((to - from + Math.PI) % (Math.PI * 2)) - Math.PI;
+  if (diff < -Math.PI) diff += Math.PI * 2;
+  return diff;
+}
+
+function meshGear(
+  parent: GearSpec,
+  teeth: number,
+  moduleSize: number,
+  bearingDeg: number,
+  spokes: number,
+  extra?: Partial<GearSpec>,
+): GearSpec {
+  const pitchR = (teeth * moduleSize) / 2;
+  const phi = (bearingDeg * Math.PI) / 180;
+  const dist = parent.pitchR + pitchR + 0.8;
+  const x = parent.x + Math.cos(phi) * dist;
+  const y = parent.y + Math.sin(phi) * dist;
+  const ratioFromRoot = parent.ratioFromRoot * (parent.teeth / teeth);
+  const sign = (parent.sign * -1) as 1 | -1;
+  // Exact horological tooth-valley phase lock
+  const phaseOffset =
+    phi + Math.PI - (parent.phaseOffset - phi) * (parent.teeth / teeth) + Math.PI / teeth;
+
+  return {
+    x,
+    y,
+    teeth,
+    pitchR,
+    spokes,
+    ratioFromRoot,
+    phaseOffset,
+    sign,
+    ...extra,
   };
 }
 
 /**
- * Persistent nocturnal Victorian obsidian-mahogany & gilded cartographic desk (`#080605`).
- * Combines:
- * 1. Interactive 60fps Marching Squares cartographic contour & astrolabe sonar field
- *    that warps under the cursor, illuminates molten gold & Venetian crimson contours,
- *    and emits concentric survey shockwaves on cursor sweeps & clicks.
- * 2. Rotating brass Celestial Astrolabe dial synchronized to folio transitions.
- * 3. Rising warm candlelit dust motes (`LamplightDustCanvas`).
+ * Persistent nocturnal Victorian Clocktower & Horological Escapement Desk (`#080605`).
+ * Zero modern topographic blobs — features:
+ * 1. Mathematically meshed 19th-century watchmaker brass gear trains with ruby jewel arbors
+ *    recessed into the left & right mahogany desk wells; sweeping the cursor winds their
+ *    flywheel momentum and casts directional candle-gold specular glints across the gear teeth.
+ * 2. Spring-damped Victorian magnetic compass needles & a central astrolabe alidade sight-rule
+ *    that smoothly track the cursor's live bearing across the desk.
+ * 3. Crisp mechanical escapement ratchet impulse + gold-leaf candle sparks on click.
  */
 export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
   const { pathname } = useLocation();
-  const contourCanvasRef = useRef<HTMLCanvasElement>(null);
+  const clockworkCanvasRef = useRef<HTMLCanvasElement>(null);
+  const dialKickRef = useRef(0);
   const bearing = routeBearing(pathname, dialStep);
   const innerBearing = -Math.round(bearing * 0.68);
 
   useEffect(() => {
-    const canvas = contourCanvasRef.current;
+    dialKickRef.current += 1;
+  }, [dialStep, pathname]);
+
+  useEffect(() => {
+    const canvas = clockworkCanvasRef.current;
     if (!canvas) return;
-    const context = canvas.getContext("2d");
-    if (!context) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
     const desktop = window.matchMedia("(min-width: 1024px)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (!desktop.matches) return;
 
-    const key = routeKey(pathname);
-    const labels = ROUTE_SURVEY_LABELS[key];
-    const cellSize = 18;
+    let width = 0;
+    let height = 0;
+    let spineOffset = 76;
+    let trains: GearTrain[] = [];
+    let needles: CompassNeedleState[] = [];
+    const sparks: SparkMote[] = [];
+    let alidadeAngle = -Math.PI * 0.35;
+    let alidadeVel = 0;
+    let lastKickSeen = dialKickRef.current;
+    let lastTime = 0;
+    let frame = 0;
 
     const pointer = {
       x: -1000,
       y: -1000,
+      prevX: -1000,
+      prevY: -1000,
       smoothX: -1000,
       smoothY: -1000,
-      lastPulseX: -1000,
-      lastPulseY: -1000,
+      speed: 0,
       lastMoveTime: -9999,
       active: false,
     };
 
-    let width = 0;
-    let height = 0;
-    let spineOffset = 76;
-    let bandLeftEnd = 0;
-    let bandRightStart = 0;
-    let leftPeaks: SurveyPeak[] = [];
-    let rightPeaks: SurveyPeak[] = [];
-    let allPeaks: SurveyPeak[] = [];
-    let pulses: AstrolabePulse[] = [];
-    let lastAmbientPulseTime = 0;
-    let lastDrawTime = 0;
-    let frame = 0;
-
-    let fieldBuf = new Float32Array(4096);
-    let sinXBuf = new Float32Array(256);
-    let cosYBuf = new Float32Array(256);
-    const hotBins = [
-      new Float32Array(2048),
-      new Float32Array(2048),
-      new Float32Array(2048),
-      new Float32Array(2048),
-    ];
-    const hotCounts = [0, 0, 0, 0];
-
-    const pushHot = (bin: number, x1: number, y1: number, x2: number, y2: number) => {
-      let buf = hotBins[bin];
-      const idx = hotCounts[bin];
-      if (idx + 4 > buf.length) {
-        const grown = new Float32Array(buf.length * 2);
-        grown.set(buf);
-        hotBins[bin] = grown;
-        buf = grown;
-      }
-      buf[idx] = x1;
-      buf[idx + 1] = y1;
-      buf[idx + 2] = x2;
-      buf[idx + 3] = y2;
-      hotCounts[bin] = idx + 4;
-    };
-
-    const buildCartography = () => {
-      const random = seededRandom(`${key}-${pathname}-victorian-cartography`);
+    const buildClockwork = () => {
       width = window.innerWidth;
       height = window.innerHeight;
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -222,121 +189,320 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
       canvas.height = Math.round(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      leftPeaks = [];
-      rightPeaks = [];
-      allPeaks = [];
-      pulses = [];
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       spineOffset = width >= 1024 ? 76 : 0;
-      const usableW = width - spineOffset;
-      const centerSpan = Math.min(960, usableW * 0.62);
-      const centerMid = spineOffset + usableW * 0.5;
-      bandLeftEnd = Math.max(spineOffset + 160, centerMid - centerSpan * 0.5 + 85);
-      bandRightStart = Math.min(width - 160, centerMid + centerSpan * 0.5 - 85);
+      const mod = Math.max(2.7, Math.min(3.45, width / 560));
 
-      const maxBandWidth = Math.max(bandLeftEnd - spineOffset, width - bandRightStart) + 32;
-      const maxCols = Math.ceil(maxBandWidth / cellSize) + 3;
-      const maxRows = Math.ceil(height / cellSize) + 3;
-      const needed = maxCols * maxRows;
-      if (fieldBuf.length < needed) fieldBuf = new Float32Array(needed);
-      if (sinXBuf.length < maxCols) sinXBuf = new Float32Array(maxCols);
-      if (cosYBuf.length < maxRows) cosYBuf = new Float32Array(maxRows);
-
-      const peaksPerSide = Math.max(4, Math.min(6, Math.round(height / 175)));
-
-      (["left", "right"] as const).forEach((side) => {
-        const startX = side === "left" ? spineOffset + 22 : bandRightStart + 18;
-        const endX = side === "left" ? bandLeftEnd - 18 : width - 26;
-        const spanX = Math.max(36, endX - startX);
-
-        for (let i = 0; i < peaksPerSide; i += 1) {
-          const baseX = startX + (0.18 + random() * 0.64) * spanX;
-          const baseY = ((i + 0.22 + random() * 0.56) / peaksPerSide) * (height - 110) + 55;
-          const amplitude = 0.74 + random() * 0.44;
-          const sigmaX = Math.max(42, Math.min(108, spanX * (0.3 + random() * 0.24)));
-          const sigmaY = 78 + random() * 68;
-          const angle = (random() - 0.5) * 0.9;
-          const degBearing = Math.round((amplitude * 180) / 5) * 5;
-          const roman = ROMAN_BEARINGS[(i + (side === "right" ? 4 : 0)) % ROMAN_BEARINGS.length];
-
-          const peak: SurveyPeak = {
-            baseX,
-            baseY,
-            x: baseX,
-            y: baseY,
-            amplitude,
-            cosA: Math.cos(angle),
-            sinA: Math.sin(angle),
-            invSX2: 1 / (sigmaX * sigmaX),
-            invSY2: 1 / (sigmaY * sigmaY),
-            reach: Math.max(sigmaX, sigmaY) * 2.55,
-            phase: random() * Math.PI * 2,
-            side,
-            bearingText: `${roman} · ${degBearing}°`,
-          };
-          allPeaks.push(peak);
-          if (side === "left") leftPeaks.push(peak);
-          else rightPeaks.push(peak);
-        }
+      // Left Horological Escapement Train (recessed in left mahogany desk well)
+      const leftAnchorX = spineOffset + Math.max(92, (width - spineOffset) * 0.085);
+      const leftAnchorY = height * 0.49;
+      const lRoot: GearSpec = {
+        x: leftAnchorX,
+        y: leftAnchorY,
+        teeth: 54,
+        pitchR: (54 * mod) / 2,
+        spokes: 6,
+        ratioFromRoot: 1,
+        phaseOffset: 0,
+        sign: 1,
+        hasRomanDial: true,
+        caption: "CHRONO · I",
+      };
+      const lUpper = meshGear(lRoot, 34, mod, -68, 5, {
+        hasCompassNeedle: true,
+        caption: "VERNIER · N",
+      });
+      const lTopEsc = meshGear(lUpper, 22, mod, -38, 4);
+      const lLower = meshGear(lRoot, 28, mod, 66, 5, {
+        hasCompassNeedle: true,
+        caption: "ESCAPEMENT",
       });
 
-      const labelStep = Math.max(1, Math.floor(allPeaks.length / labels.length));
-      labels.forEach((label, index) => {
-        const peak = allPeaks[Math.min(allPeaks.length - 1, index * labelStep)];
-        if (peak) peak.label = label;
+      // Right Horological Orrery Train (recessed in right mahogany desk well)
+      const rightAnchorX = width - Math.max(106, (width - spineOffset) * 0.09);
+      const rightAnchorY = height * 0.51;
+      const rRoot: GearSpec = {
+        x: rightAnchorX,
+        y: rightAnchorY,
+        teeth: 58,
+        pitchR: (58 * mod) / 2,
+        spokes: 6,
+        ratioFromRoot: 1,
+        phaseOffset: 0.2,
+        sign: -1,
+        hasRomanDial: true,
+        caption: "ORRERY · II",
+      };
+      const rUpper = meshGear(rRoot, 36, mod, -114, 5, {
+        hasCompassNeedle: true,
+        caption: "AZIMUTH",
       });
+      const rLower = meshGear(rRoot, 30, mod, 116, 5, {
+        hasCompassNeedle: true,
+        caption: "MERIDIAN",
+      });
+      const rPinion = meshGear(rLower, 20, mod, 150, 4);
+
+      trains = [
+        {
+          side: "left",
+          gears: [lRoot, lUpper, lTopEsc, lLower],
+          angle: 0.3,
+          omega: 0.09,
+          baseOmega: 0.09,
+        },
+        {
+          side: "right",
+          gears: [rRoot, rUpper, rLower, rPinion],
+          angle: 0.8,
+          omega: 0.08,
+          baseOmega: 0.08,
+        },
+      ];
+
+      const totalNeedles = trains.reduce(
+        (acc, tr) => acc + tr.gears.filter((g) => g.hasCompassNeedle).length,
+        0,
+      );
+      needles = Array.from({ length: totalNeedles }, () => ({ angle: -Math.PI / 2, vel: 0 }));
     };
 
-    const onPointerMove = (event: PointerEvent) => {
+    const spawnSparks = (x: number, y: number, count: number, burst = false) => {
+      for (let i = 0; i < count; i += 1) {
+        if (sparks.length >= 42) break;
+        const ang = Math.random() * Math.PI * 2;
+        const spd = (burst ? 0.85 : 0.32) + Math.random() * (burst ? 1.65 : 0.65);
+        sparks.push({
+          x: x + (Math.random() - 0.5) * 10,
+          y: y + (Math.random() - 0.5) * 10,
+          vx: Math.cos(ang) * spd,
+          vy: Math.sin(ang) * spd - (0.35 + Math.random() * 0.45),
+          life: 0,
+          maxLife: 34 + Math.random() * 28,
+          size: 1.1 + Math.random() * 1.4,
+          crimson: i % 4 === 0,
+        });
+      }
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
       const now = performance.now();
       pointer.lastMoveTime = now;
+
       if (!pointer.active) {
-        pointer.smoothX = event.clientX;
-        pointer.smoothY = event.clientY;
-        pointer.lastPulseX = event.clientX;
-        pointer.lastPulseY = event.clientY;
+        pointer.prevX = e.clientX;
+        pointer.prevY = e.clientY;
+        pointer.smoothX = e.clientX;
+        pointer.smoothY = e.clientY;
+      } else {
+        pointer.prevX = pointer.x;
+        pointer.prevY = pointer.y;
       }
-      pointer.x = event.clientX;
-      pointer.y = event.clientY;
+
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
       pointer.active = true;
 
-      const inOuterDesk =
-        event.clientX < bandLeftEnd + 95 || event.clientX > bandRightStart - 95;
-      const dx = event.clientX - pointer.lastPulseX;
-      const dy = event.clientY - pointer.lastPulseY;
+      const dx = pointer.x - pointer.prevX;
+      const dy = pointer.y - pointer.prevY;
+      const stepDist = Math.hypot(dx, dy);
+      pointer.speed = Math.min(48, pointer.speed * 0.65 + stepDist * 0.55);
 
-      if (inOuterDesk && dx * dx + dy * dy > 4900 && pulses.length < 7) {
-        pointer.lastPulseX = event.clientX;
-        pointer.lastPulseY = event.clientY;
-        pulses.push({
-          x: event.clientX,
-          y: event.clientY,
-          radius: 6,
-          maxRadius: 245,
-          speed: 2.5,
-          crimson: pulses.length % 2 === 1,
-        });
+      // Wind nearby horological gear trains when sweeping the cursor near them
+      for (let tIdx = 0; tIdx < trains.length; tIdx += 1) {
+        const tr = trains[tIdx];
+        let minDist = 9999;
+        for (let gIdx = 0; gIdx < tr.gears.length; gIdx += 1) {
+          const g = tr.gears[gIdx];
+          const d = Math.hypot(pointer.x - g.x, pointer.y - g.y) - g.pitchR;
+          if (d < minDist) minDist = d;
+        }
+        if (minDist < 220 && stepDist > 0.5) {
+          const proximity = 1 - Math.max(0, minDist) / 220;
+          tr.omega = Math.min(2.6, tr.omega + proximity * stepDist * 0.0085);
+          if (stepDist > 14 && Math.random() < 0.35 && !reducedMotion.matches) {
+            spawnSparks(pointer.x, pointer.y, 1, false);
+          }
+        }
       }
     };
 
-    const onPointerDown = (event: PointerEvent) => {
+    const onPointerDown = (e: PointerEvent) => {
       pointer.lastMoveTime = performance.now();
-      if (pulses.length < 8) {
-        pulses.push({
-          x: event.clientX,
-          y: event.clientY,
-          radius: 5,
-          maxRadius: 310,
-          speed: 3.3,
-          crimson: true,
-        });
+      // Crisp mechanical escapement ratchet impulse on click
+      for (let i = 0; i < trains.length; i += 1) {
+        trains[i].omega = Math.min(3.1, trains[i].omega + 1.25);
+      }
+      if (!reducedMotion.matches) {
+        spawnSparks(e.clientX, e.clientY, 8, true);
       }
     };
 
     const onPointerLeave = () => {
       pointer.active = false;
+    };
+
+    const drawGear = (gear: GearSpec, theta: number, glow: number, lightAngle: number) => {
+      const { x, y, teeth, pitchR, spokes } = gear;
+      const addendum = Math.min(4.6, pitchR * 0.075 + 1.5);
+      const dedendum = addendum * 1.15;
+      const outerR = pitchR + addendum;
+      const rootR = pitchR - dedendum;
+      const rimInnerR = rootR - Math.max(4.5, pitchR * 0.11);
+      const hubR = Math.max(8, pitchR * 0.22);
+      const step = (Math.PI * 2) / teeth;
+
+      ctx.save();
+      ctx.translate(x, y);
+
+      // 1. Toothed Involute-Trapezoid Brass Rim
+      ctx.save();
+      ctx.rotate(theta);
+      ctx.beginPath();
+      for (let i = 0; i < teeth; i += 1) {
+        const a = i * step;
+        const a0 = a - step * 0.34;
+        const a1 = a - step * 0.15;
+        const a2 = a + step * 0.15;
+        const a3 = a + step * 0.34;
+        if (i === 0) {
+          ctx.moveTo(Math.cos(a0) * rootR, Math.sin(a0) * rootR);
+        } else {
+          ctx.lineTo(Math.cos(a0) * rootR, Math.sin(a0) * rootR);
+        }
+        ctx.lineTo(Math.cos(a1) * outerR, Math.sin(a1) * outerR);
+        ctx.lineTo(Math.cos(a2) * outerR, Math.sin(a2) * outerR);
+        ctx.lineTo(Math.cos(a3) * rootR, Math.sin(a3) * rootR);
+      }
+      ctx.closePath();
+
+      const baseFillAlpha = 0.045 + glow * 0.09;
+      ctx.fillStyle = `rgba(204, 158, 92, ${baseFillAlpha.toFixed(3)})`;
+      ctx.fill();
+
+      const strokeAlpha = 0.24 + glow * 0.56;
+      ctx.lineWidth = glow > 0.25 ? 1.2 : 0.9;
+      ctx.strokeStyle = `rgba(232, 190, 122, ${strokeAlpha.toFixed(3)})`;
+      ctx.stroke();
+
+      // Inner chapter ring & Breguet watchmaker spokes
+      ctx.beginPath();
+      ctx.arc(0, 0, rimInnerR, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(200, 157, 98, ${(0.2 + glow * 0.42).toFixed(3)})`;
+      ctx.lineWidth = 0.85;
+      ctx.stroke();
+
+      for (let s = 0; s < spokes; s += 1) {
+        const sa = (s * Math.PI * 2) / spokes;
+        const ca = Math.cos(sa);
+        const sna = Math.sin(sa);
+        const px = -sna * 2.1;
+        const py = ca * 2.1;
+
+        ctx.beginPath();
+        ctx.moveTo(ca * hubR + px, sna * hubR + py);
+        ctx.lineTo(ca * rimInnerR + px * 0.55, sna * rimInnerR + py * 0.55);
+        ctx.lineTo(ca * rimInnerR - px * 0.55, sna * rimInnerR - py * 0.55);
+        ctx.lineTo(ca * hubR - px, sna * hubR - py);
+        ctx.closePath();
+        ctx.fillStyle = `rgba(186, 142, 82, ${(0.08 + glow * 0.14).toFixed(3)})`;
+        ctx.fill();
+        ctx.strokeStyle = `rgba(220, 178, 112, ${(0.22 + glow * 0.44).toFixed(3)})`;
+        ctx.lineWidth = 0.75;
+        ctx.stroke();
+      }
+
+      // Roman dial chapter ring on primary barrel wheels
+      if (gear.hasRomanDial && rimInnerR > 48) {
+        const dialR = rimInnerR - 11;
+        ctx.beginPath();
+        ctx.arc(0, 0, dialR, 0, Math.PI * 2);
+        ctx.setLineDash([2, 4]);
+        ctx.strokeStyle = `rgba(218, 176, 112, ${(0.18 + glow * 0.34).toFixed(3)})`;
+        ctx.lineWidth = 0.65;
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.font = '600 8.5px "Cinzel Variable", Georgia, serif';
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = `rgba(238, 204, 146, ${(0.28 + glow * 0.52).toFixed(3)})`;
+        for (let rIdx = 0; rIdx < 4; rIdx += 1) {
+          const ra = (rIdx * Math.PI) / 2 - Math.PI / 2;
+          ctx.fillText(
+            DIAL_ROMANS[rIdx],
+            Math.cos(ra) * (dialR - 9),
+            Math.sin(ra) * (dialR - 9),
+          );
+        }
+      }
+      ctx.restore();
+
+      // 2. Directional Candle-Lantern Specular Arc facing the Cursor!
+      if (glow > 0.06) {
+        ctx.beginPath();
+        ctx.arc(0, 0, pitchR, lightAngle - 0.72, lightAngle + 0.72);
+        ctx.strokeStyle = `rgba(255, 232, 178, ${(glow * 0.72).toFixed(3)})`;
+        ctx.lineWidth = 1.45;
+        ctx.stroke();
+      }
+
+      // 3. Center Brass Chaton Collar & Crimson Ruby 17-Jewel Pivot Bearing
+      ctx.beginPath();
+      ctx.arc(0, 0, hubR, 0, Math.PI * 2);
+      ctx.fillStyle = "#0e0a08";
+      ctx.fill();
+      ctx.strokeStyle = `rgba(228, 188, 124, ${(0.38 + glow * 0.5).toFixed(3)})`;
+      ctx.lineWidth = 1.05;
+      ctx.stroke();
+
+      // Ruby jewel bearing in the center arbor
+      const rubyR = Math.max(3.2, hubR * 0.34);
+      ctx.beginPath();
+      ctx.arc(0, 0, rubyR, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(176, 28, 28, ${(0.68 + glow * 0.32).toFixed(3)})`;
+      ctx.fill();
+      ctx.strokeStyle = `rgba(244, 206, 142, ${(0.45 + glow * 0.45).toFixed(3)})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+
+      if (gear.caption) {
+        ctx.font = '600 8px "Cinzel Variable", Georgia, serif';
+        ctx.textAlign = "center";
+        ctx.fillStyle = `rgba(228, 192, 134, ${(0.24 + glow * 0.54).toFixed(3)})`;
+        ctx.fillText(gear.caption, 0, outerR + 13);
+      }
+
+      ctx.restore();
+    };
+
+    const drawCompassNeedle = (gear: GearSpec, needleAngle: number, glow: number) => {
+      const len = gear.pitchR * 0.76;
+      ctx.save();
+      ctx.translate(gear.x, gear.y);
+      ctx.rotate(needleAngle);
+
+      // North-seeking Venetian crimson pointer half
+      ctx.beginPath();
+      ctx.moveTo(len, 0);
+      ctx.lineTo(0, -3.2);
+      ctx.lineTo(-4, 0);
+      ctx.lineTo(0, 3.2);
+      ctx.closePath();
+      ctx.fillStyle = `rgba(198, 36, 34, ${(0.72 + glow * 0.28).toFixed(3)})`;
+      ctx.fill();
+
+      // South-seeking burnished gold counterweight half
+      ctx.beginPath();
+      ctx.moveTo(-len * 0.72, 0);
+      ctx.lineTo(0, -2.6);
+      ctx.lineTo(0, 2.6);
+      ctx.closePath();
+      ctx.fillStyle = `rgba(238, 202, 138, ${(0.62 + glow * 0.36).toFixed(3)})`;
+      ctx.fill();
+
+      ctx.restore();
     };
 
     const draw = (time: number) => {
@@ -345,352 +511,160 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
         return;
       }
 
-      const recentlyMoved = time - pointer.lastMoveTime < 320;
-      const minDelta = recentlyMoved || pulses.length > 0 ? 15.5 : 46;
-      const dtMs = time - lastDrawTime;
-      if (lastDrawTime > 0 && dtMs < minDelta) {
+      const recentlyActive =
+        time - pointer.lastMoveTime < 900 ||
+        sparks.length > 0 ||
+        trains.some((tr) => tr.omega > tr.baseOmega + 0.03);
+      const minDelta = recentlyActive ? 15.5 : 42;
+      const dtMs = time - lastTime;
+      if (lastTime > 0 && dtMs < minDelta) {
         if (!reducedMotion.matches) frame = window.requestAnimationFrame(draw);
         return;
       }
-      const stepScale = lastDrawTime > 0 ? Math.min(3, dtMs / 16.667) : 1;
-      lastDrawTime = time;
+      const dt = lastTime > 0 ? Math.min(0.05, dtMs / 1000) : 0.016;
+      lastTime = time;
 
-      context.clearRect(0, 0, width, height);
-      if (allPeaks.length === 0) {
-        if (!reducedMotion.matches) frame = window.requestAnimationFrame(draw);
-        return;
+      // Kick gear trains when the user switches folios or routes!
+      if (lastKickSeen !== dialKickRef.current) {
+        lastKickSeen = dialKickRef.current;
+        for (let i = 0; i < trains.length; i += 1) {
+          trains[i].omega = Math.min(2.8, trains[i].omega + 1.15);
+        }
       }
-
-      const t = time * 0.00052;
-      const influence = 225;
 
       if (pointer.active) {
-        const alpha = 1 - Math.pow(0.83, stepScale);
-        pointer.smoothX += (pointer.x - pointer.smoothX) * alpha;
-        pointer.smoothY += (pointer.y - pointer.smoothY) * alpha;
+        const lerp = 1 - Math.pow(0.0015, dt);
+        pointer.smoothX += (pointer.x - pointer.smoothX) * lerp;
+        pointer.smoothY += (pointer.y - pointer.smoothY) * lerp;
+      }
+      pointer.speed *= Math.pow(0.08, dt);
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Center of the Celestial Astrolabe (`left-1/2` inside the main area)
+      const astroCx = spineOffset + (width - spineOffset) * 0.5;
+      const astroCy = height * 0.5;
+
+      // Update & draw the cursor-tracking Brass Alidade Sight-Rule on the Celestial Astrolabe
+      if (pointer.active && !reducedMotion.matches) {
+        const targetAlidade = Math.atan2(pointer.smoothY - astroCy, pointer.smoothX - astroCx);
+        const diff = shortestAngleDiff(alidadeAngle, targetAlidade);
+        alidadeVel += diff * 18 * dt;
+        alidadeVel *= Math.pow(0.04, dt);
+        alidadeAngle += alidadeVel * dt;
       }
 
-      if (!reducedMotion.matches && time - lastAmbientPulseTime > 3100) {
-        lastAmbientPulseTime = time;
-        const sourcePeak = allPeaks[Math.floor((time * 0.001) % allPeaks.length)];
-        if (sourcePeak && pulses.length < 5) {
-          pulses.push({
-            x: sourcePeak.x,
-            y: sourcePeak.y,
-            radius: 4,
-            maxRadius: 225,
-            speed: 1.55,
-            crimson: false,
-          });
+      const astroR = Math.min(height * 0.63, 590) * 0.848;
+      ctx.save();
+      ctx.translate(astroCx, astroCy);
+      ctx.rotate(alidadeAngle);
+      // Slender astrolabe vernier sight-line & glowing rim cursor pip
+      ctx.beginPath();
+      ctx.moveTo(-astroR * 0.96, 0);
+      ctx.lineTo(astroR * 0.96, 0);
+      ctx.strokeStyle = pointer.active
+        ? "rgba(232, 192, 124, 0.16)"
+        : "rgba(200, 157, 98, 0.07)";
+      ctx.lineWidth = 0.85;
+      ctx.stroke();
+
+      //Vernier pointer reticle riding along the outer astrolabe degree ring
+      ctx.beginPath();
+      ctx.moveTo(astroR + 7, 0);
+      ctx.lineTo(astroR - 5, -4.5);
+      ctx.lineTo(astroR - 2, 0);
+      ctx.lineTo(astroR - 5, 4.5);
+      ctx.closePath();
+      ctx.fillStyle = pointer.active ? "rgba(246, 212, 146, 0.78)" : "rgba(200, 157, 98, 0.32)";
+      ctx.fill();
+
+      if (pointer.active) {
+        ctx.beginPath();
+        ctx.arc(0, 0, astroR, -0.16, 0.16);
+        ctx.strokeStyle = "rgba(255, 226, 166, 0.58)";
+        ctx.lineWidth = 1.6;
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // Update & render Left and Right Horological Gear Trains + Spring-Damped Compass Needles
+      let needleCursor = 0;
+      for (let tIdx = 0; tIdx < trains.length; tIdx += 1) {
+        const tr = trains[tIdx];
+        if (!reducedMotion.matches) {
+          tr.angle += tr.omega * dt;
+          // Smooth flywheel coast-down back toward base horological escapement speed
+          tr.omega += (tr.baseOmega - tr.omega) * (1 - Math.pow(0.14, dt));
         }
-      }
 
-      for (let i = pulses.length - 1; i >= 0; i -= 1) {
-        pulses[i].radius += pulses[i].speed * stepScale;
-        if (pulses[i].radius >= pulses[i].maxRadius) {
-          pulses.splice(i, 1);
+        // Faint brass linkage lines connecting the arbors in the train
+        ctx.beginPath();
+        for (let gIdx = 1; gIdx < tr.gears.length; gIdx += 1) {
+          const g = tr.gears[gIdx];
+          const prev = gIdx === 2 && tr.side === "left" ? tr.gears[1] : gIdx === 3 && tr.side === "right" ? tr.gears[2] : tr.gears[0];
+          ctx.moveTo(prev.x, prev.y);
+          ctx.lineTo(g.x, g.y);
         }
-      }
+        ctx.strokeStyle = "rgba(200, 157, 98, 0.14)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
 
-      for (let i = 0; i < allPeaks.length; i += 1) {
-        const peak = allPeaks[i];
-        const driftX = !reducedMotion.matches ? Math.cos(t + peak.phase) * 7.5 : 0;
-        const driftY = !reducedMotion.matches ? Math.sin(t * 0.85 + peak.phase) * 9.5 : 0;
-        let px = peak.baseX + driftX;
-        let py = peak.baseY + driftY;
+        for (let gIdx = 0; gIdx < tr.gears.length; gIdx += 1) {
+          const g = tr.gears[gIdx];
+          const gearTheta = g.phaseOffset + tr.angle * g.ratioFromRoot * g.sign;
 
-        if (pointer.active) {
-          const dx = px - pointer.smoothX;
-          const dy = py - pointer.smoothY;
-          const d2 = dx * dx + dy * dy;
-          if (d2 < influence * influence && d2 > 0.001) {
-            const dist = Math.sqrt(d2);
-            const wake = 1 - dist / influence;
-            const push = wake * wake * 20;
-            px += (dx / dist) * push;
-            py += (dy / dist) * push;
+          let glow = 0;
+          let lightAngle = -Math.PI * 0.75;
+          if (pointer.active) {
+            const dx = pointer.smoothX - g.x;
+            const dy = pointer.smoothY - g.y;
+            const dist = Math.hypot(dx, dy);
+            lightAngle = Math.atan2(dy, dx);
+            glow = Math.max(0, 1 - Math.max(0, dist - g.pitchR * 0.5) / 310);
           }
-        }
-        peak.x = px;
-        peak.y = py;
-      }
 
-      const rows = Math.ceil(height / cellSize);
-      for (let r = 0; r <= rows; r += 1) {
-        cosYBuf[r] = Math.cos(r * cellSize * 0.012 - t * 0.6);
-      }
+          drawGear(g, gearTheta, glow, lightAngle);
 
-      (["left", "right"] as const).forEach((side) => {
-        const minX = side === "left" ? spineOffset + 6 : bandRightStart - 8;
-        const maxX = side === "left" ? bandLeftEnd + 8 : width - 6;
-        if (maxX - minX < 36) return;
+          if (g.hasCompassNeedle && needles[needleCursor]) {
+            const ns = needles[needleCursor];
+            const targetAng = pointer.active
+              ? Math.atan2(pointer.smoothY - g.y, pointer.smoothX - g.x)
+              : -Math.PI / 2 + Math.sin(time * 0.0007 + needleCursor) * 0.18;
 
-        const cols = Math.ceil((maxX - minX) / cellSize);
-        const stride = cols + 1;
-        const sidePeaks = side === "left" ? leftPeaks : rightPeaks;
-        const phaseSign = side === "left" ? t : -t;
-
-        for (let c = 0; c <= cols; c += 1) {
-          sinXBuf[c] = 0.085 * Math.sin((minX + c * cellSize) * 0.018 + phaseSign);
-        }
-
-        for (let r = 0; r <= rows; r += 1) {
-          const cy = cosYBuf[r];
-          const rowOff = r * stride;
-          for (let c = 0; c <= cols; c += 1) {
-            fieldBuf[rowOff + c] = sinXBuf[c] * cy;
-          }
-        }
-
-        for (let k = 0; k < sidePeaks.length; k += 1) {
-          const p = sidePeaks[k];
-          const c0 = Math.max(0, Math.floor((p.x - p.reach - minX) / cellSize));
-          const c1 = Math.min(cols, Math.ceil((p.x + p.reach - minX) / cellSize));
-          const r0 = Math.max(0, Math.floor((p.y - p.reach) / cellSize));
-          const r1 = Math.min(rows, Math.ceil((p.y + p.reach) / cellSize));
-
-          for (let r = r0; r <= r1; r += 1) {
-            const dy = r * cellSize - p.y;
-            const rowOff = r * stride;
-            for (let c = c0; c <= c1; c += 1) {
-              const dx = minX + c * cellSize - p.x;
-              const rx = dx * p.cosA - dy * p.sinA;
-              const ry = dx * p.sinA + dy * p.cosA;
-              const d2 = rx * rx * p.invSX2 + ry * ry * p.invSY2;
-              if (d2 < 6.5) {
-                fieldBuf[rowOff + c] += p.amplitude * Math.exp(-d2);
-              }
+            if (!reducedMotion.matches) {
+              const err = shortestAngleDiff(ns.angle, targetAng);
+              // Underdamped magnetic compass needle spring physics
+              ns.vel += err * 34 * dt;
+              ns.vel *= Math.pow(0.025, dt);
+              ns.angle += ns.vel * dt;
+            } else {
+              ns.angle = targetAng;
             }
+
+            drawCompassNeedle(g, ns.angle, glow);
+            needleCursor += 1;
           }
         }
-
-        // Interactive cursor gravity/candle-lens ripple inside 190px radius
-        if (pointer.active && pointer.smoothX > minX - 195 && pointer.smoothX < maxX + 195) {
-          const c0 = Math.max(0, Math.floor((pointer.smoothX - 190 - minX) / cellSize));
-          const c1 = Math.min(cols, Math.ceil((pointer.smoothX + 190 - minX) / cellSize));
-          const r0 = Math.max(0, Math.floor((pointer.smoothY - 190) / cellSize));
-          const r1 = Math.min(rows, Math.ceil((pointer.smoothY + 190) / cellSize));
-          for (let r = r0; r <= r1; r += 1) {
-            const cdy = r * cellSize - pointer.smoothY;
-            const cdy2 = cdy * cdy;
-            const rowOff = r * stride;
-            for (let c = c0; c <= c1; c += 1) {
-              const cdx = minX + c * cellSize - pointer.smoothX;
-              const cd2 = cdx * cdx + cdy2;
-              if (cd2 < 36100) {
-                const norm = cd2 / 9800;
-                fieldBuf[rowOff + c] += 0.38 * norm * Math.exp(-norm * 0.82);
-              }
-            }
-          }
-        }
-
-        hotCounts[0] = 0;
-        hotCounts[1] = 0;
-        hotCounts[2] = 0;
-        hotCounts[3] = 0;
-
-        const pointerNearSide =
-          pointer.active && pointer.smoothX > minX - 165 && pointer.smoothX < maxX + 165;
-        const pulseCount = pulses.length;
-
-        for (let levelIdx = 0; levelIdx < CONTOUR_LEVELS.length; levelIdx += 1) {
-          const level = CONTOUR_LEVELS[levelIdx];
-          const isIndexContour = levelIdx % 2 === 1;
-          context.beginPath();
-
-          for (let r = 0; r < rows; r += 1) {
-            const y0 = r * cellSize;
-            const rowOffset = r * stride;
-            const nextRowOffset = (r + 1) * stride;
-
-            for (let c = 0; c < cols; c += 1) {
-              const vTL = fieldBuf[rowOffset + c];
-              const vTR = fieldBuf[rowOffset + c + 1];
-              const vBR = fieldBuf[nextRowOffset + c + 1];
-              const vBL = fieldBuf[nextRowOffset + c];
-
-              let mask = 0;
-              if (vTL >= level) mask |= 8;
-              if (vTR >= level) mask |= 4;
-              if (vBR >= level) mask |= 2;
-              if (vBL >= level) mask |= 1;
-              if (mask === 0 || mask === 15) continue;
-
-              const pairs = MS_EDGES[mask];
-              const x0 = minX + c * cellSize;
-
-              for (let pIdx = 0; pIdx < pairs.length; pIdx += 1) {
-                const [e1, e2] = pairs[pIdx];
-
-                let x1 = x0;
-                let y1 = y0;
-                if (e1 === 0) {
-                  const frac = (level - vTL) / (vTR - vTL || 1e-5);
-                  x1 = x0 + (frac < 0 ? 0 : frac > 1 ? 1 : frac) * cellSize;
-                } else if (e1 === 1) {
-                  const frac = (level - vTR) / (vBR - vTR || 1e-5);
-                  x1 = x0 + cellSize;
-                  y1 = y0 + (frac < 0 ? 0 : frac > 1 ? 1 : frac) * cellSize;
-                } else if (e1 === 2) {
-                  const frac = (level - vBL) / (vBR - vBL || 1e-5);
-                  x1 = x0 + (frac < 0 ? 0 : frac > 1 ? 1 : frac) * cellSize;
-                  y1 = y0 + cellSize;
-                } else {
-                  const frac = (level - vTL) / (vBL - vTL || 1e-5);
-                  y1 = y0 + (frac < 0 ? 0 : frac > 1 ? 1 : frac) * cellSize;
-                }
-
-                let x2 = x0;
-                let y2 = y0;
-                if (e2 === 0) {
-                  const frac = (level - vTL) / (vTR - vTL || 1e-5);
-                  x2 = x0 + (frac < 0 ? 0 : frac > 1 ? 1 : frac) * cellSize;
-                } else if (e2 === 1) {
-                  const frac = (level - vTR) / (vBR - vTR || 1e-5);
-                  x2 = x0 + cellSize;
-                  y2 = y0 + (frac < 0 ? 0 : frac > 1 ? 1 : frac) * cellSize;
-                } else if (e2 === 2) {
-                  const frac = (level - vBL) / (vBR - vBL || 1e-5);
-                  x2 = x0 + (frac < 0 ? 0 : frac > 1 ? 1 : frac) * cellSize;
-                  y2 = y0 + cellSize;
-                } else {
-                  const frac = (level - vTL) / (vBL - vTL || 1e-5);
-                  y2 = y0 + (frac < 0 ? 0 : frac > 1 ? 1 : frac) * cellSize;
-                }
-
-                context.moveTo(x1, y1);
-                context.lineTo(x2, y2);
-
-                if (!pointerNearSide && pulseCount === 0) continue;
-
-                const midX = (x1 + x2) * 0.5;
-                const midY = (y1 + y2) * 0.5;
-                let maxGlow = 0;
-                let glowCrimson = false;
-
-                if (pointerNearSide) {
-                  const pdx = midX - pointer.smoothX;
-                  const pdy = midY - pointer.smoothY;
-                  if (Math.abs(pdx) < 160 && Math.abs(pdy) < 160) {
-                    const pDist2 = pdx * pdx + pdy * pdy;
-                    if (pDist2 < 25600) {
-                      maxGlow = (1 - Math.sqrt(pDist2) / 160) * 0.82;
-                    }
-                  }
-                }
-
-                for (let s = 0; s < pulseCount; s += 1) {
-                  const pulse = pulses[s];
-                  const reachR = pulse.radius + 24;
-                  const sdx = midX - pulse.x;
-                  const sdy = midY - pulse.y;
-                  if (Math.abs(sdx) > reachR || Math.abs(sdy) > reachR) continue;
-                  const sDist = Math.sqrt(sdx * sdx + sdy * sdy);
-                  const ringDiff = Math.abs(sDist - pulse.radius);
-                  if (ringDiff < 24) {
-                    const life = 1 - pulse.radius / pulse.maxRadius;
-                    const waveGlow = (1 - ringDiff / 24) * life * 0.96;
-                    if (waveGlow > maxGlow) {
-                      maxGlow = waveGlow;
-                      glowCrimson = pulse.crimson;
-                    }
-                  }
-                }
-
-                if (maxGlow > 0.14) {
-                  const bin = (glowCrimson ? 2 : 0) + (maxGlow > 0.44 ? 1 : 0);
-                  pushHot(bin, x1, y1, x2, y2);
-                }
-              }
-            }
-          }
-
-          context.strokeStyle = isIndexContour
-            ? "rgba(212, 168, 102, 0.24)"
-            : "rgba(176, 134, 74, 0.13)";
-          context.lineWidth = isIndexContour ? 1.0 : 0.68;
-          context.stroke();
-        }
-
-        // Batched molten-gold & Venetian-crimson contour highlights
-        context.lineWidth = 1.4;
-        for (let bin = 0; bin < 4; bin += 1) {
-          const count = hotCounts[bin];
-          if (count === 0) continue;
-          const buf = hotBins[bin];
-          context.beginPath();
-          for (let idx = 0; idx < count; idx += 4) {
-            context.moveTo(buf[idx], buf[idx + 1]);
-            context.lineTo(buf[idx + 2], buf[idx + 3]);
-          }
-          context.strokeStyle = HOT_STYLES[bin];
-          context.stroke();
-        }
-      });
-
-      // Expanding concentric brass & Venetian-crimson astrolabe survey rings
-      for (let i = 0; i < pulses.length; i += 1) {
-        const pulse = pulses[i];
-        const life = 1 - pulse.radius / pulse.maxRadius;
-        context.beginPath();
-        context.arc(pulse.x, pulse.y, pulse.radius, 0, Math.PI * 2);
-        context.strokeStyle = pulse.crimson
-          ? `rgba(204, 48, 44, ${(life * 0.34).toFixed(3)})`
-          : `rgba(228, 186, 118, ${(life * 0.32).toFixed(3)})`;
-        context.lineWidth = 0.95;
-        context.stroke();
       }
 
-      // Victorian cartographic survey reticles & Cinzel bearing callouts
-      context.font = '600 8.5px "Cinzel Variable", Georgia, serif';
-      for (let i = 0; i < allPeaks.length; i += 1) {
-        const peak = allPeaks[i];
-        const pDist = pointer.active
-          ? Math.hypot(peak.x - pointer.smoothX, peak.y - pointer.smoothY)
-          : 999;
-        let wake = Math.max(0, 1 - pDist / influence);
-
-        for (let s = 0; s < pulses.length; s += 1) {
-          const pulse = pulses[s];
-          const ringDiff = Math.abs(Math.hypot(peak.x - pulse.x, peak.y - pulse.y) - pulse.radius);
-          if (ringDiff < 34) {
-            const life = 1 - pulse.radius / pulse.maxRadius;
-            wake = Math.max(wake, (1 - ringDiff / 34) * life);
-          }
+      // Render rising warm gold-leaf & crimson ember sparks from cursor sweeps/clicks
+      for (let i = sparks.length - 1; i >= 0; i -= 1) {
+        const sp = sparks[i];
+        sp.life += dt * 60;
+        if (sp.life >= sp.maxLife) {
+          sparks.splice(i, 1);
+          continue;
         }
-
-        const arm = 3.8 + wake * 4.2;
-        context.beginPath();
-        context.moveTo(peak.x - arm, peak.y);
-        context.lineTo(peak.x + arm, peak.y);
-        context.moveTo(peak.x, peak.y - arm);
-        context.lineTo(peak.x, peak.y + arm);
-        context.strokeStyle = `rgba(232, 192, 124, ${(0.28 + wake * 0.58).toFixed(3)})`;
-        context.lineWidth = 0.85;
-        context.stroke();
-
-        // Small diamond pip at survey center
-        context.beginPath();
-        context.moveTo(peak.x, peak.y - 2.2);
-        context.lineTo(peak.x + 2.2, peak.y);
-        context.lineTo(peak.x, peak.y + 2.2);
-        context.lineTo(peak.x - 2.2, peak.y);
-        context.closePath();
-        context.fillStyle =
-          wake > 0.25
-            ? `rgba(204, 44, 40, ${(0.55 + wake * 0.45).toFixed(3)})`
-            : "rgba(200, 157, 98, 0.42)";
-        context.fill();
-
-        if (peak.label || wake > 0.18) {
-          const textAlpha = peak.label ? 0.34 + wake * 0.58 : wake * 0.78;
-          context.fillStyle = `rgba(238, 206, 150, ${textAlpha.toFixed(3)})`;
-          const callout = peak.label ? `${peak.label} · ${peak.bearingText}` : peak.bearingText;
-          const xOffset = peak.side === "right" ? -8 : 8;
-          context.textAlign = peak.side === "right" ? "right" : "left";
-          context.fillText(callout, peak.x + xOffset, peak.y - 5);
-        }
+        sp.x += sp.vx * (dt * 60);
+        sp.y += sp.vy * (dt * 60);
+        sp.vx *= 0.97;
+        const alpha = Math.sin((sp.life / sp.maxLife) * Math.PI) * 0.85;
+        ctx.beginPath();
+        ctx.arc(sp.x, sp.y, sp.size, 0, Math.PI * 2);
+        ctx.fillStyle = sp.crimson
+          ? `rgba(214, 48, 42, ${alpha.toFixed(3)})`
+          : `rgba(255, 224, 158, ${alpha.toFixed(3)})`;
+        ctx.fill();
       }
 
       if (!reducedMotion.matches) {
@@ -700,15 +674,15 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
 
     const onVisibility = () => {
       if (!document.hidden && !frame && !reducedMotion.matches) {
-        lastDrawTime = 0;
+        lastTime = 0;
         frame = window.requestAnimationFrame(draw);
       }
     };
 
-    buildCartography();
+    buildClockwork();
     frame = window.requestAnimationFrame(draw);
 
-    window.addEventListener("resize", buildCartography);
+    window.addEventListener("resize", buildClockwork);
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     window.addEventListener("pointerdown", onPointerDown, { passive: true });
     window.addEventListener("pointerleave", onPointerLeave);
@@ -716,13 +690,13 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
 
     return () => {
       if (frame) window.cancelAnimationFrame(frame);
-      window.removeEventListener("resize", buildCartography);
+      window.removeEventListener("resize", buildClockwork);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("pointerleave", onPointerLeave);
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [pathname]);
+  }, []);
 
   return (
     <div
@@ -735,12 +709,12 @@ export function AmbientBackdrop({ dialStep = 0 }: { dialStep?: number }) {
         className="absolute -inset-24 opacity-95"
         style={{
           background:
-            "radial-gradient(640px circle at var(--spot-x) var(--spot-y), rgba(214, 170, 104, 0.13), rgba(143, 22, 22, 0.04) 45%, transparent 72%)",
+            "radial-gradient(640px circle at var(--spot-x) var(--spot-y), rgba(224, 178, 108, 0.14), rgba(143, 22, 22, 0.045) 45%, transparent 72%)",
         }}
       />
 
-      {/* Interactive Cursor-Reactive Victorian Cartographic Contour & Astrolabe Sonar Canvas */}
-      <canvas ref={contourCanvasRef} className="absolute inset-0 hidden lg:block" />
+      {/* Interactive Horological Clockwork Gear Trains, Compass Needles & Astrolabe Alidade */}
+      <canvas ref={clockworkCanvasRef} className="absolute inset-0 hidden lg:block" />
 
       {/* Outer Victorian drafting mat double-gilded frame hairlines on desktop */}
       <div className="absolute inset-y-3.5 left-[90px] right-4 hidden border border-[#c89d62]/36 lg:block">

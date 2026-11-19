@@ -722,8 +722,8 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
         <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-rubric" />
         <span className="hidden font-display italic sm:inline">
           {text(
-            "Sweep desk contours or hover blueprint loupe · Switch folios via ledger tabs or ← / →",
-            "划过背景等高线或悬停蓝图放大镜 · 通过右侧书签或 ← / → 切换卷宗",
+            "Wind desk clockwork or hover blueprint loupe · Switch folios via ledger tabs or ← / →",
+            "划过两侧钟表齿轮或悬停蓝图放大镜 · 通过右侧书签或 ← / → 切换卷宗",
           )}
         </span>
       </div>
