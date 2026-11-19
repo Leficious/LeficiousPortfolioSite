@@ -139,7 +139,7 @@ export function AboutPage() {
           <a
             href={resumeHref}
             download
-            className="brass-plaque inline-flex items-center gap-1.5 px-3.5 py-1.5 font-display text-[12px] font-bold tracking-[0.12em] whitespace-nowrap uppercase transition-transform hover:-translate-y-0.5 active:scale-97 2xl:px-4.5 2xl:text-[12.5px]"
+            className="brass-plaque inline-flex h-[34px] items-center gap-1.5 px-4 font-display text-[12px] font-bold tracking-[0.11em] whitespace-nowrap uppercase transition-colors 2xl:px-4.5 2xl:text-[12.5px]"
           >
             <span>{text("Résumé (PDF)", "下载简历")}</span>
             <span aria-hidden="true">↓</span>
@@ -150,10 +150,10 @@ export function AboutPage() {
       <main id="main-content" tabIndex={-1} className="mx-auto mt-6 max-w-[1260px] pb-10 lg:mt-7">
         <div className="grid grid-cols-1 items-start gap-9 lg:grid-cols-[1.18fr_0.82fr] lg:gap-10">
           {/* ==================== LEFT: SUSPENDED RAG-VELLUM BIOGRAPHICAL DOSSIER ==================== */}
-          <div id="dossier" className="scroll-mt-16">
+          <div id="dossier" className="animate-folio-arc scroll-mt-16">
             <BrassPinThreads animKey="about-dossier" />
 
-            <article className="parchment-sheet animate-folio-arc relative border-[5px] border-[#110b07] px-6 pt-9 pb-8 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-10 sm:pt-10 sm:pb-9">
+            <article className="parchment-sheet relative border-[5px] border-[#110b07] px-6 pt-9 pb-8 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-10 sm:pt-10 sm:pb-9">
               <FolioCorners tone="parchment" />
 
               <div className="relative z-10">

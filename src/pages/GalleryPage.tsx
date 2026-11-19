@@ -142,7 +142,7 @@ export function GalleryPage() {
                   : "/resume/Leficious_3D_Environment_Artist_Resume.pdf"
               }
               download
-              className="brass-plaque inline-flex items-center gap-1.5 px-3.5 py-1.5 font-display text-[12px] font-bold tracking-[0.12em] whitespace-nowrap uppercase transition-transform hover:-translate-y-0.5 active:scale-95 2xl:px-4.5 2xl:text-[12.5px]"
+              className="brass-plaque inline-flex h-[34px] items-center gap-1.5 px-4 font-display text-[12px] font-bold tracking-[0.11em] whitespace-nowrap uppercase transition-colors 2xl:px-4.5 2xl:text-[12.5px]"
             >
               <span>{text("3D Art Résumé", "下载简历")}</span>
               <span aria-hidden="true">↓</span>

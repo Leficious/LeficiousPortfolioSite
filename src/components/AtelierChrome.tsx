@@ -161,13 +161,8 @@ export function FolioCorners({
   );
 }
 
-// Shared organic 12-lobe pressed sealing-wax silhouette around center (32, 32)
-const WAX_RIM_D =
-  "M32 3.2 C36.2 3.2 38.8 5.4 42.6 5.9 C46.5 6.4 50.2 8.2 52.4 11.5 C54.6 14.8 55.2 18.6 57.3 21.9 C59.4 25.2 60.8 28.4 60.6 32.3 C60.4 36.2 58.3 39.2 57.4 43.0 C56.5 46.8 54.5 50.6 51.1 52.8 C47.7 55.0 43.9 55.6 40.3 57.5 C36.7 59.4 33.6 60.8 29.7 60.5 C25.8 60.2 22.8 58.1 19.0 57.1 C15.2 56.1 11.4 54.2 9.3 50.8 C7.2 47.4 6.7 43.6 4.8 40.1 C2.9 36.6 3.1 32.6 3.5 28.8 C3.9 25.0 5.8 21.8 6.9 18.1 C8.0 14.4 10.2 10.6 13.7 8.5 C17.2 6.4 21.1 6.1 24.8 4.5 C27.4 3.4 29.5 3.2 32 3.2 Z";
-
 /**
- * Crisp sculpted vector Deep-Crimson Sealing-Wax Stamp with embossed L-monolith.
- * Replaces blurry raster wax seals so both small (34px) and large (56px) stamps read cleanly.
+ * Authentic photorealistic Deep-Crimson Melted Sealing-Wax Stamp (`crimson-wax-seal.webp`).
  */
 export function CrimsonStamp({
   className = "h-12 w-12",
@@ -177,65 +172,34 @@ export function CrimsonStamp({
   className?: string;
   stamped?: boolean;
 }) {
-  const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
-  const outerId = `wax-out-${uid}`;
-  const wellId = `wax-well-${uid}`;
-
   return (
-    <svg
-      viewBox="0 0 64 64"
-      fill="none"
+    <img
+      src="/ornaments/crimson-wax-seal.webp"
+      alt=""
       aria-hidden="true"
-      className={`shrink-0 select-none overflow-visible [filter:drop-shadow(0_5px_10px_rgba(0,0,0,0.68))_drop-shadow(0_1.5px_2px_rgba(0,0,0,0.85))] ${
-        stamped ? "animate-stamp-press" : "-rotate-3"
+      width="96"
+      height="96"
+      decoding="async"
+      className={`shrink-0 select-none object-contain [filter:drop-shadow(0_5px_10px_rgba(0,0,0,0.68))_drop-shadow(0_1.5px_2px_rgba(0,0,0,0.86))] ${
+        stamped ? "animate-stamp-press" : "-rotate-2"
       } ${className}`}
-    >
-      <defs>
-        <radialGradient id={outerId} cx="34%" cy="28%" r="72%">
-          <stop offset="0%" stopColor="#b82529" />
-          <stop offset="52%" stopColor="#821417" />
-          <stop offset="100%" stopColor="#4a090b" />
-        </radialGradient>
-        <linearGradient id={wellId} x1="20%" y1="15%" x2="82%" y2="88%">
-          <stop offset="0%" stopColor="#630d10" />
-          <stop offset="55%" stopColor="#851518" />
-          <stop offset="100%" stopColor="#a62024" />
-        </linearGradient>
-      </defs>
-
-      <path d={WAX_RIM_D} fill={`url(#${outerId})`} stroke="#3b0608" strokeWidth="1" />
-      <circle cx="32" cy="32" r="21.5" fill={`url(#${wellId})`} stroke="#45080a" strokeWidth="1.4" />
-      <circle cx="32" cy="32" r="19.2" stroke="#d96b68" strokeWidth="0.7" opacity="0.45" />
-      <circle cx="32" cy="32" r="16.8" stroke="#3b0608" strokeWidth="0.75" strokeDasharray="2 2" opacity="0.65" />
-
-      {/* Embossed central Leficious L-monolith in crimson wax relief */}
-      <path
-        d="M26.5 20.5 L31.2 17.8 V37.2 H42.5 L39.8 41.8 H28.5 L26.5 38.4 Z"
-        fill="#a82226"
-        stroke="#3b0608"
-        strokeWidth="0.9"
-      />
-      <path d="M27.2 20.8 L30.8 18.7 V36.8 H41.6" stroke="#eba09b" strokeWidth="0.75" opacity="0.55" />
-    </svg>
+    />
   );
 }
 
 /**
- * Taut burnished-bronze suspension cords + sculpted Deep-Crimson Sealing-Wax Stamp
- * straddling the top-center border of the active folio.
+ * Top-center melted crimson wax seal & short swallowtail silk ribbon tab mounted
+ * rigidly to the folio header (zero independent pendulum wobble, zero stretched diagonal cords).
  */
 export function BrassPinThreads({ animKey }: { animKey?: string }) {
+  void animKey;
   return (
-    <div aria-hidden="true" className="pointer-events-none relative z-30 mx-auto -mb-6 h-15 w-80 sm:w-[440px]">
-      <div key={animKey} className="animate-pin-pendulum h-full w-full">
-        <svg viewBox="0 0 440 58" className="h-full w-full overflow-visible" fill="none">
-          <line x1="220" y1="18" x2="54" y2="53" stroke="#d4ad73" strokeWidth="1.25" opacity="0.82" />
-          <line x1="220" y1="18" x2="386" y2="53" stroke="#d4ad73" strokeWidth="1.25" opacity="0.82" />
-          <circle cx="54" cy="53" r="3" fill="#14100c" stroke="#e8c88e" strokeWidth="1.25" />
-          <circle cx="386" cy="53" r="3" fill="#14100c" stroke="#e8c88e" strokeWidth="1.25" />
-        </svg>
-      </div>
-      <CrimsonStamp className="absolute left-1/2 top-0.5 h-13 w-13 -translate-x-1/2 rotate-0 sm:h-14 sm:w-14" />
+    <div aria-hidden="true" className="pointer-events-none relative z-30 mx-auto -mb-7 flex h-14 w-16 flex-col items-center justify-start select-none">
+      {/* Short folded crimson-and-gold silk ribbon tail tucked cleanly above FolioCorners */}
+      <svg viewBox="0 0 24 18" fill="none" className="absolute bottom-0.5 h-4 w-6 [filter:drop-shadow(0_2px_3px_rgba(0,0,0,0.55))]">
+        <polygon points="3,0 21,0 21,16 12,11.5 3,16" fill="#6b1114" stroke="#d4ad73" strokeWidth="0.9" />
+      </svg>
+      <CrimsonStamp className="relative z-10 h-13 w-13 rotate-0 sm:h-14 sm:w-14" />
     </div>
   );
 }
@@ -347,7 +311,7 @@ export function AtelierHeaderRail({
 
   return (
     <div className={`relative z-30 mx-auto w-full ${maxWidthClass}`}>
-      <header className="relative flex w-full flex-wrap items-end justify-between gap-3 border-b border-[#d4ad73]/48 pb-3 shadow-[0_1px_0_rgba(0,0,0,0.85)] xl:flex-nowrap">
+      <header className="relative flex w-full flex-wrap items-center justify-between gap-3 border-b border-[#d4ad73]/38 pb-3.5 xl:flex-nowrap">
         <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-3 gap-y-0.5 xl:flex-nowrap">
           <p className="shrink-0 font-display text-xl font-bold tracking-[0.18em] text-[#f7f0e2] uppercase sm:text-[21px]">
             {eyebrow}
@@ -358,10 +322,10 @@ export function AtelierHeaderRail({
           </p>
         </div>
 
-        <div className="flex shrink-0 items-end gap-3 2xl:gap-4">
+        <div className="flex shrink-0 items-center gap-2.5 2xl:gap-3">
           <nav
             aria-label={text("Primary Portfolio Volumes", "主要作品卷宗目录")}
-            className="hidden items-end gap-1.5 -mb-[13px] lg:flex"
+            className="hidden items-center gap-1.5 lg:flex"
           >
             {roomItems.map((item) => {
               const active = activeSection === item.id;
@@ -372,25 +336,27 @@ export function AtelierHeaderRail({
                   viewTransition
                   aria-current={active ? "page" : undefined}
                   style={{
-                    clipPath: "polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%)",
+                    clipPath:
+                      "polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px)",
                   }}
-                  className={`group relative inline-flex p-[1.5px] pb-0 transition-colors duration-200 ${
+                  className={`group relative inline-flex h-[34px] p-[1.5px] transition-colors duration-200 ${
                     active
-                      ? "z-20 bg-gradient-to-b from-[#fff3d6] via-[#dfb97b] to-[#b5894b] shadow-[0_-4px_14px_rgba(0,0,0,0.75)]"
-                      : "z-10 bg-gradient-to-b from-[#e5c489]/72 to-[#8c6736]/55 shadow-[0_-3px_10px_rgba(0,0,0,0.7)] hover:from-[#fff0cc] hover:to-[#c89d62]"
+                      ? "bg-gradient-to-b from-[#fff3d6] via-[#dfb97b] to-[#b5894b] shadow-[0_4px_12px_rgba(0,0,0,0.65)]"
+                      : "bg-gradient-to-b from-[#e5c489]/75 to-[#8c6736]/58 shadow-[0_3px_8px_rgba(0,0,0,0.55)] hover:from-[#fff0cc] hover:to-[#c89d62]"
                   }`}
                 >
                   <span
                     style={{
-                      clipPath: "polygon(7.7px 0, calc(100% - 7.7px) 0, 100% 100%, 0 100%)",
+                      clipPath:
+                        "polygon(5.12px 0, calc(100% - 5.12px) 0, 100% 5.12px, 100% calc(100% - 5.12px), calc(100% - 5.12px) 100%, 5.12px 100%, 0 calc(100% - 5.12px), 0 5.12px)",
                     }}
-                    className={`inline-flex items-center gap-2 px-3.5 py-2 transition-colors 2xl:px-4 ${
+                    className={`inline-flex h-full items-center px-3.5 transition-colors 2xl:px-4 ${
                       active
-                        ? "bg-gradient-to-b from-[#fbf5e6] to-[#eae0c8] text-[#14100c]"
+                        ? "bg-gradient-to-b from-[#fcf6e8] to-[#eae0c8] text-[#14100c]"
                         : "bg-gradient-to-b from-[#211913] via-[#17110d] to-[#100c09] text-[#ede2cf] group-hover:from-[#2c2119] group-hover:to-[#18120e] group-hover:text-white"
                     }`}
                   >
-                    <span className="font-display text-[12px] font-bold tracking-[0.09em] uppercase whitespace-nowrap 2xl:text-[13.5px]">
+                    <span className="font-display text-[12px] font-bold tracking-[0.09em] uppercase whitespace-nowrap 2xl:text-[13px]">
                       <span className={active ? "text-rubric" : "text-[#e8c78c]"}>{item.roman}</span> · {item.label}
                     </span>
                   </span>
@@ -399,7 +365,12 @@ export function AtelierHeaderRail({
             })}
           </nav>
 
-          {rightSlot && <div className="flex shrink-0 items-center gap-2">{rightSlot}</div>}
+          {rightSlot && (
+            <>
+              <span aria-hidden="true" className="hidden h-4.5 w-px bg-[#d4ad73]/38 lg:block" />
+              <div className="flex shrink-0 items-center">{rightSlot}</div>
+            </>
+          )}
         </div>
       </header>
     </div>

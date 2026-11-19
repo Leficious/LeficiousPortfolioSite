@@ -62,12 +62,8 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
       {/* Desktop 88px Chased-Bronze Coin Medallion Book Spine */}
       <aside
         aria-label={text("Atelier Spine Navigation", "工作室侧脊导航")}
-        className="site-header fixed inset-y-0 left-0 z-50 hidden w-[88px] flex-col items-center justify-between bg-gradient-to-r from-[#150f0b] via-[#0e0a07] to-[#080504] py-4 shadow-[8px_0_28px_rgba(0,0,0,0.9)] select-none lg:flex"
+        className="site-header fixed inset-y-0 left-0 z-50 hidden w-[88px] flex-col items-center justify-between border-r border-[#d4ad73]/42 bg-gradient-to-r from-[#120e0b] via-[#0c0907] to-[#070504] py-5 shadow-[8px_0_28px_rgba(0,0,0,0.9)] select-none lg:flex"
       >
-        {/* Double vertical burnished-brass binding rods */}
-        <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-[1.5px] bg-[#d4ae73]/72" />
-        <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-[4px] w-px bg-[#c89d62]/32" />
-        <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-[3px] w-px bg-[#c89d62]/18" />
 
         {/* Top Crest + Vertical Engraved Wordmark */}
         <Link
@@ -172,37 +168,55 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           </div>
         </nav>
 
-        {/* Foot: Language Switch & Venetian Oxblood-Gilt Résumé Plaque */}
-        <div className="flex w-full flex-col items-center gap-2.5">
+        {/* Foot: Centered 40px Vertical Language Toggle & Compact CV Plaque (24px clear margin on both sides — zero tangents) */}
+        <div className="flex w-full flex-col items-center gap-3">
           <div
-            className="flex items-center gap-1.5 border border-warm/35 bg-[#19120d] px-2 py-0.5 font-display text-[11px] font-semibold"
+            role="group"
             aria-label={text("Choose language", "切换语言")}
+            style={{
+              clipPath:
+                "polygon(5px 0, calc(100% - 5px) 0, 100% 5px, 100% calc(100% - 5px), calc(100% - 5px) 100%, 5px 100%, 0 calc(100% - 5px), 0 5px)",
+            }}
+            className="flex w-[40px] flex-col bg-gradient-to-b from-[#e5c489]/75 to-[#8c6736]/58 p-[1.25px] shadow-[0_4px_10px_rgba(0,0,0,0.75)]"
           >
-            {(["en", "zh"] as Language[]).map((opt, idx) => (
-              <span key={opt} className="inline-flex items-center gap-1.5">
-                {idx > 0 && <span aria-hidden="true" className="text-warm/55">/</span>}
-                <button
-                  type="button"
-                  onClick={() => setLanguage(opt)}
-                  aria-pressed={language === opt}
-                  lang={opt === "zh" ? "zh-CN" : "en"}
-                  className={`cursor-pointer px-0.5 font-bold transition-colors ${
-                    language === opt ? "text-[#ebd09e]" : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {opt === "en" ? "EN" : "中文"}
-                </button>
-              </span>
-            ))}
+            <div
+              style={{
+                clipPath:
+                  "polygon(4.25px 0, calc(100% - 4.25px) 0, 100% 4.25px, 100% calc(100% - 4.25px), calc(100% - 4.25px) 100%, 4.25px 100%, 0 calc(100% - 4.25px), 0 4.25px)",
+              }}
+              className="flex w-full flex-col divide-y divide-[#d4ad73]/30 overflow-hidden bg-[#140f0c]"
+            >
+              {(["en", "zh"] as Language[]).map((opt) => {
+                const active = language === opt;
+                return (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => setLanguage(opt)}
+                    aria-pressed={active}
+                    lang={opt === "zh" ? "zh-CN" : "en"}
+                    className={`flex h-[27px] w-full cursor-pointer items-center justify-center font-display text-[11px] font-bold tracking-wider transition-colors ${
+                      active
+                        ? "bg-gradient-to-b from-[#fcf6e8] to-[#e4d6ba] text-rubric"
+                        : "bg-transparent text-[#cfc2ad] hover:bg-[#221a14] hover:text-white"
+                    }`}
+                  >
+                    {opt === "en" ? "EN" : "中文"}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <a
             href={resumeHref}
             download
-            className="victorian-ticket victorian-ticket-oxblood flex w-[72px] items-center justify-center gap-1 bg-gradient-to-b from-[#261c15] to-[#140e0a] px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.1em] text-[#f4e4c3] uppercase transition-all hover:from-[#5e1517] hover:to-[#3b0c0e] hover:text-white active:scale-95"
+            title={text("Download Résumé (PDF)", "下载简历 (PDF)")}
+            aria-label={text("Download Résumé (PDF)", "下载简历 (PDF)")}
+            className="victorian-ticket victorian-ticket-sm victorian-ticket-oxblood flex h-[30px] w-[40px] items-center justify-center gap-0.5 bg-gradient-to-b from-[#241b14] to-[#130e0a] font-display text-[10.5px] font-bold tracking-[0.06em] text-[#f4e4c3] uppercase transition-colors hover:from-[#5e1517] hover:to-[#3b0c0e] hover:text-white"
           >
-            <span>{text("Résumé", "简历")}</span>
-            <span aria-hidden="true" className="text-[10px] text-[#ebd09e]">↓</span>
+            <span>{text("CV", "简历")}</span>
+            {language === "en" && <span aria-hidden="true" className="text-[9.5px] text-[#e8c78c]">↓</span>}
           </a>
         </div>
       </aside>

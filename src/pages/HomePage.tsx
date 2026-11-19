@@ -237,7 +237,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"
               }
               download
-              className="brass-plaque inline-flex cursor-pointer items-center gap-1.5 px-3.5 py-1.5 font-display text-[12px] font-bold tracking-[0.12em] whitespace-nowrap uppercase transition-transform hover:-translate-y-0.5 active:scale-97 2xl:px-4.5 2xl:text-[12.5px]"
+              className="brass-plaque inline-flex h-[34px] cursor-pointer items-center gap-1.5 px-4 font-display text-[12px] font-bold tracking-[0.11em] whitespace-nowrap uppercase transition-colors 2xl:px-4.5 2xl:text-[12.5px]"
             >
               <span>{text("Résumé (PDF)", "下载简历")}</span>
               <span aria-hidden="true">↓</span>
@@ -246,7 +246,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
             <button
               type="button"
               onClick={() => selectBinder("reel")}
-              className="brass-plaque inline-flex cursor-pointer items-center gap-1.5 px-3.5 py-1.5 font-display text-[12px] font-bold tracking-[0.12em] whitespace-nowrap uppercase transition-transform hover:-translate-y-0.5 active:scale-97 2xl:px-4.5 2xl:text-[12.5px]"
+              className="brass-plaque inline-flex h-[34px] cursor-pointer items-center gap-1.5 px-4 font-display text-[12px] font-bold tracking-[0.11em] whitespace-nowrap uppercase transition-colors 2xl:px-4.5 2xl:text-[12.5px]"
             >
               <span aria-hidden="true" className="text-[10px]">▶</span>
               <span>{text("Master Reel", "年度集锦")}</span>
@@ -306,9 +306,6 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
 
       {/* ==================== 2. SPATIALLY LOCKED CASE-DESK STAGE ==================== */}
       <main id="main-content" tabIndex={-1} className="relative my-auto mx-auto w-full max-w-[1380px] py-3 lg:py-4">
-        {/* Top Deep-Crimson Wax Seal & Bronze Suspension Cords */}
-        <BrassPinThreads animKey={activeFolioSlug} />
-
         {/* Stage Wrapper — aligns backing case-folders strictly within the vellum sheet's vertical span (zero top slivers or corner tangencies) */}
         <div className="relative">
           {/* Asymmetrically Staggered Victorian Bookbinding Backing Folios w/ Stepped Vellum Page-Edges & Airy Gilt Sigils */}
@@ -323,7 +320,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               type="button"
               onClick={() => selectBinder(leftBgProject.slug)}
               aria-label={`${text("Inspect Folio", "切换至")} ${leftBgMeta.roman}: ${leftBgProject.title}`}
-              className="pointer-events-auto group absolute left-0 top-8 bottom-9 flex w-[255px] -rotate-[4.8deg] cursor-pointer flex-col justify-between border border-[#d8b47c]/70 bg-gradient-to-br from-[#342116] via-[#23150d] to-[#140c08] px-3.5 py-4 text-left shadow-[-3px_2px_0_0_#eadcc2,-4px_3px_0_0_#0e0906,-6px_5px_0_0_#c8b28b,-22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,236,198,0.28)] transition-all duration-300 hover:-translate-x-2.5 hover:-translate-y-1.5 hover:-rotate-[5.8deg] hover:border-[#f5dfb2] xl:left-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:left-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
+              className="pointer-events-auto group absolute left-0 top-15 bottom-9 flex w-[255px] -rotate-[4.8deg] cursor-pointer flex-col justify-between border border-[#d8b47c]/70 bg-gradient-to-br from-[#342116] via-[#23150d] to-[#140c08] px-3.5 py-4 text-left shadow-[-3px_2px_0_0_#eadcc2,-4px_3px_0_0_#0e0906,-6px_5px_0_0_#c8b28b,-22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,236,198,0.28)] transition-all duration-300 hover:-translate-x-2.5 hover:-translate-y-1.5 hover:-rotate-[5.8deg] hover:border-[#f5dfb2] xl:left-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:left-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
             >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <img
@@ -370,7 +367,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               type="button"
               onClick={() => selectBinder(rightBgProject.slug)}
               aria-label={`${text("Inspect Folio", "切换至")} ${rightBgMeta.roman}: ${rightBgProject.title}`}
-              className="pointer-events-auto group absolute right-0 top-12 bottom-6 flex w-[255px] rotate-[3.6deg] cursor-pointer flex-col justify-between border border-[#d8b47c]/70 bg-gradient-to-bl from-[#421515] via-[#2c0d0e] to-[#190708] px-3.5 py-4 text-right shadow-[3px_2px_0_0_#eadcc2,4px_3px_0_0_#0e0906,6px_5px_0_0_#c8b28b,22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,232,196,0.26)] transition-all duration-300 hover:translate-x-2.5 hover:-translate-y-1.5 hover:rotate-[4.6deg] hover:border-[#f5dfb2] xl:right-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:right-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
+              className="pointer-events-auto group absolute right-0 top-19 bottom-6 flex w-[255px] rotate-[3.6deg] cursor-pointer flex-col justify-between border border-[#d8b47c]/70 bg-gradient-to-bl from-[#421515] via-[#2c0d0e] to-[#190708] px-3.5 py-4 text-right shadow-[3px_2px_0_0_#eadcc2,4px_3px_0_0_#0e0906,6px_5px_0_0_#c8b28b,22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,232,196,0.26)] transition-all duration-300 hover:translate-x-2.5 hover:-translate-y-1.5 hover:rotate-[4.6deg] hover:border-[#f5dfb2] xl:right-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:right-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
             >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <img
@@ -420,10 +417,9 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               transform: "translate3d(calc(var(--mx) * 3.5px), calc(var(--my) * 2.5px), 0)",
             }}
           >
-          <article
-            key={activeFolioSlug}
-            className="parchment-sheet animate-folio-arc relative overflow-hidden border-[5px] border-[#110b07] px-5 pt-8 pb-6 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-9 sm:pt-8.5 sm:pb-7"
-          >
+            <div key={activeFolioSlug} className="animate-folio-arc relative">
+              <BrassPinThreads animKey={activeFolioSlug} />
+              <article className="parchment-sheet relative overflow-hidden border-[5px] border-[#110b07] px-5 pt-8 pb-6 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-9 sm:pt-8.5 sm:pb-7">
             <FolioCorners tone="parchment" />
 
             {isReelActive ? (
@@ -818,7 +814,8 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                 </div>
               </div>
             )}
-          </article>
+              </article>
+            </div>
           </div>
         </div>
       </main>

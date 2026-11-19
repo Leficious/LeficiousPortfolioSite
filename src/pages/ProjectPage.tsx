@@ -117,7 +117,7 @@ export function ProjectPage() {
           <Link
             to={localizedPath("/")}
             viewTransition
-            className="brass-plaque inline-flex items-center gap-1.5 px-3.5 py-1.5 font-display text-[12px] font-bold tracking-[0.12em] whitespace-nowrap uppercase transition-transform hover:-translate-y-0.5 active:scale-97 2xl:px-4.5 2xl:text-[12.5px]"
+            className="brass-plaque inline-flex h-[34px] items-center gap-1.5 px-4 font-display text-[12px] font-bold tracking-[0.11em] whitespace-nowrap uppercase transition-colors 2xl:px-4.5 2xl:text-[12.5px]"
           >
             <span aria-hidden="true">←</span>
             <span>{text("Atelier Desk", "返回案台")}</span>
@@ -127,9 +127,10 @@ export function ProjectPage() {
 
       <article id="main-content" tabIndex={-1} className="mx-auto mt-6 max-w-[1080px] pb-16">
         {/* ==================== 2. SUSPENDED RAG-VELLUM CASE HEADER ==================== */}
-        <BrassPinThreads animKey={project.slug} />
+        <div className="animate-folio-arc relative">
+          <BrassPinThreads animKey={project.slug} />
 
-        <header className="parchment-sheet animate-folio-arc relative overflow-hidden border-[5px] border-[#110b07] px-6 pt-9 pb-8 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-10 sm:pt-10 sm:pb-9">
+          <header className="parchment-sheet relative overflow-hidden border-[5px] border-[#110b07] px-6 pt-9 pb-8 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-10 sm:pt-10 sm:pb-9">
           <FolioCorners tone="parchment" />
 
           <ProjectSigil
@@ -239,6 +240,7 @@ export function ProjectPage() {
 
           <BrassRule ornate tone="parchment" className="relative z-10 mt-7" />
         </header>
+        </div>
 
         {/* ==================== 3. LEAD GAMEPLAY PLATE ==================== */}
         <div className="mt-8">
