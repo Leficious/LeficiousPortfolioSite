@@ -459,7 +459,7 @@ export function ProjectPage() {
                 viewTransition
                 className="font-numeral text-xs font-bold tracking-[0.14em] text-[#e2be84] uppercase transition-colors hover:text-[#fbf3e4]"
               >
-                {text("Open Salon Gallery", "进入完整画廊")} →
+                {text("Open Gallery", "进入画廊")} →
               </Link>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">

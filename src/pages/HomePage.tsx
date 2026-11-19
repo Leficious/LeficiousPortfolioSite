@@ -579,7 +579,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                             <div className="min-w-0">
                               <p className="flex items-center gap-2 font-display text-[14px] font-bold tracking-[0.1em] whitespace-nowrap text-[#f7f0e2] uppercase group-hover:text-white">
                                 <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-[#e8c78c]" />
-                                {text("Salon Gallery · 29 Plates", "视觉与技术标本画廊 · 29 件")}
+                                {text("Gallery · 29 Plates", "作品画廊 · 29 件")}
                               </p>
                               <p className="mt-0.5 truncate font-display text-[13.5px] italic text-[#d6c8b2]">
                                 {text(

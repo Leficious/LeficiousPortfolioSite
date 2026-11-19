@@ -112,7 +112,7 @@ export function GalleryLightbox({
             className="brass-plaque shrink-0 cursor-pointer px-4 py-1.5 font-numeral text-xs font-bold tracking-[0.12em] uppercase transition-transform active:scale-95"
           >
             <span aria-hidden="true" className="mr-1.5">×</span>
-            {text("Return to Salon Wall", "返回画廊墙")}
+            {text("Back to Gallery", "返回画廊")}
           </button>
         </header>
 

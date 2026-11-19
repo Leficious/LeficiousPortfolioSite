@@ -161,23 +161,29 @@
   }
 }
 
-/* Luminous museum cotton rag-vellum sheet with subtle paper fiber & crisp shadow depth */
+/* Tactile handmade cotton rag-vellum sheet with dual-scale fibers, micro-abrasions & subtle edge wear */
 .parchment-sheet {
   position: relative;
   background-color: var(--parchment);
-  background-image: radial-gradient(
-    ellipse at 50% 18%,
-    rgba(255, 253, 246, 0.85) 0%,
-    rgba(245, 237, 220, 0.35) 64%,
-    rgba(214, 196, 164, 0.24) 100%
-  );
+  background-image:
+    radial-gradient(circle at 4% 6%, rgba(124, 88, 44, 0.14) 0%, transparent 28%),
+    radial-gradient(circle at 96% 94%, rgba(118, 82, 40, 0.16) 0%, transparent 32%),
+    radial-gradient(circle at 95% 7%, rgba(128, 92, 48, 0.11) 0%, transparent 25%),
+    radial-gradient(circle at 6% 93%, rgba(120, 84, 42, 0.13) 0%, transparent 26%),
+    radial-gradient(
+      ellipse at 50% 20%,
+      rgba(255, 252, 244, 0.72) 0%,
+      rgba(244, 235, 216, 0.25) 62%,
+      rgba(198, 174, 136, 0.32) 100%
+    );
   color: var(--parchment-ink);
   box-shadow:
     0 34px 82px rgba(2, 1, 0, 0.9),
     0 8px 22px rgba(0, 0, 0, 0.62),
-    inset 0 1.5px 0 rgba(255, 253, 248, 0.92),
-    inset 0 0 42px rgba(108, 76, 36, 0.09),
-    inset 0 0 0 1px rgba(112, 80, 40, 0.42);
+    inset 0 1.5px 0 rgba(255, 253, 248, 0.86),
+    inset 0 0 46px rgba(102, 70, 32, 0.18),
+    inset 0 0 12px rgba(82, 54, 22, 0.14),
+    inset 0 0 0 1px rgba(112, 80, 40, 0.46);
 }
 
 .parchment-sheet::before {
@@ -185,10 +191,29 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.11;
+  opacity: 0.38;
   mix-blend-mode: multiply;
-  background-image: url("/textures/rag-paper-tile.webp");
-  background-size: 360px 360px;
+  filter: contrast(1.52) brightness(1.06);
+  background-image:
+    url("/textures/rag-paper-tile.webp"),
+    url("/textures/rag-paper-tile.webp"),
+    repeating-linear-gradient(
+      0deg,
+      rgba(92, 64, 30, 0.045) 0px,
+      rgba(92, 64, 30, 0.045) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  background-size: 420px 420px, 173px 173px, 100% 4px;
+  background-position: 0 0, 83px 129px, 0 0;
+  background-blend-mode: overlay, normal, normal;
+}
+
+/* Subtle letterpress ink-wicking edge + sparse dry-ink micro-abrasions on vellum display headings (retains deep #14100c ink contrast) */
+.parchment-sheet h1,
+.parchment-sheet h2 {
+  color: var(--parchment-ink);
+  filter: url(#letterpress-ink) drop-shadow(0 0.8px 0 rgba(255, 252, 242, 0.72));
 }
 
 /* Deep museum ebony-morocco folio with crisp gilt top-bevel rim (high contrast for cream & gold type) */

@@ -325,7 +325,7 @@ export function AtelierHeaderRail({
     {
       id: "gallery" as const,
       roman: "II",
-      label: text("Salon Gallery · 29", "视觉与技术画廊 · 29"),
+      label: text("Gallery", "画廊"),
       to: localizedPath("/gallery"),
     },
     {
@@ -527,11 +527,14 @@ export function ArchivalPaperSheaf({
               <span
                 style={{
                   clipPath: "polygon(0 0, 100% 9px, 100% calc(100% - 9px), 0 100%)",
+                  backgroundImage: 'url("/textures/rag-paper-tile.webp")',
+                  backgroundSize: "190px 190px",
+                  backgroundBlendMode: "multiply",
                 }}
                 className={`relative flex flex-col items-center justify-center py-3.5 transition-all duration-200 ${
                   active
                     ? "w-[42px] border-r-[3px] border-r-rubric bg-[#f7efe0] text-rubric"
-                    : "w-[34px] border-r border-r-[#755228]/60 bg-[#e4d7be] text-[#1c140e] group-hover:w-[37px] group-hover:bg-[#f2e8d4]"
+                    : "w-[34px] border-r border-r-[#755228]/60 bg-[#eadec6] text-[#1c140e] group-hover:w-[37px] group-hover:bg-[#f4ead6]"
                 }`}
               >
                 <span

@@ -114,7 +114,7 @@ export function GalleryPage() {
   return (
     <div className="min-h-screen px-4 py-5 text-foreground sm:px-8 lg:px-10 lg:py-6 xl:pl-11 xl:pr-28">
       <Seo
-        title={text("Atelier Gallery | Leficious", "视觉与技术画廊 | Leficious")}
+        title={text("Gallery | Leficious", "作品画廊 | Leficious")}
         description={text(
           "3D environment art, character rigging, realtime VFX, technical prototypes, and Maya tooling by Leficious.",
           "Leficious 的 3D 环境美术、角色绑定、实时特效、技术原型与 Maya 工具作品集。",
@@ -130,8 +130,8 @@ export function GalleryPage() {
         <AtelierHeaderRail
           eyebrow="LEFICIOUS"
           subtitle={text(
-            "Salon Specimen Wall · 3D, Shaders, Rigging & Tooling",
-            "视觉与技术标本馆 · 3D 场景、材质、绑定与工具",
+            "3D Environments, Shaders, Rigging & Tooling",
+            "3D 场景、程序化材质、绑定与工具",
           )}
           maxWidthClass="max-w-[1380px]"
           rightSlot={

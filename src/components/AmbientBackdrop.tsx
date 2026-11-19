@@ -359,6 +359,27 @@ export function AmbientBackdrop(_props: { dialStep?: number }) {
         }`}
       />
 
+      {/* Global 0x0 SVG filter: subtle 0.85px ink-wicked glyph edges + sparse ~16% dry-ink micro-abrasions while keeping deep #14100c ink */}
+      <svg width="0" height="0" aria-hidden="true" className="pointer-events-none fixed">
+        <defs>
+          <filter id="letterpress-ink" x="-2%" y="-6%" width="104%" height="112%" colorInterpolationFilters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.62" numOctaves="2" seed="7" result="edgeNoise" />
+            <feDisplacementMap in="SourceGraphic" in2="edgeNoise" scale="0.85" xChannelSelector="R" yChannelSelector="G" result="wicked" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.88" numOctaves="3" seed="23" result="fiberNoise" />
+            <feColorMatrix
+              in="fiberNoise"
+              type="matrix"
+              values="0 0 0 0 0
+                      0 0 0 0 0
+                      0 0 0 0 0
+                      2.2 0 0 0 -1.32"
+              result="sparseAbrasion"
+            />
+            <feComposite in="wicked" in2="sparseAbrasion" operator="out" />
+          </filter>
+        </defs>
+      </svg>
+
       <LamplightDustCanvas />
     </div>
   );
