@@ -152,9 +152,9 @@ export function GalleryPage() {
                   height="180"
                   loading="eager"
                   decoding="async"
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="h-full w-full object-cover brightness-[1.05] transition-transform duration-300 group-hover:scale-105"
                 />
-                <span className="absolute inset-0 grid place-items-center bg-black/30 text-sm text-[#f7f0e2] transition-colors group-hover:bg-black/10">
+                <span className="absolute inset-0 grid place-items-center bg-black/10 text-sm text-[#f7f0e2] drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)] transition-colors group-hover:bg-transparent">
                   {reelExpanded ? "−" : "▶"}
                 </span>
               </span>

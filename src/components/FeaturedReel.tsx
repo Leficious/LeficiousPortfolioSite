@@ -52,7 +52,7 @@ export function FeaturedReel({ id, zhId, title, description, thumbnailSrc, autoS
               loading="eager"
               fetchPriority="high"
               decoding="async"
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+              className={`h-full w-full object-cover transition-[transform,filter] duration-500 group-hover:scale-[1.015] ${thumbnailSrc?.startsWith("/reels/") ? "brightness-[1.04] group-hover:brightness-[1.08]" : ""}`}
               onError={(event) => {
                 const fallback = `https://i.ytimg.com/vi/${activeId}/hqdefault.jpg`;
                 if (event.currentTarget.src !== fallback) {
@@ -60,9 +60,11 @@ export function FeaturedReel({ id, zhId, title, description, thumbnailSrc, autoS
                 }
               }}
             />
-            <span aria-hidden="true" className="absolute inset-0 bg-black/22 transition-colors duration-300 group-hover:bg-black/8" />
+            {!thumbnailSrc?.startsWith("/reels/") && (
+              <span aria-hidden="true" className="absolute inset-0 bg-black/22 transition-colors duration-300 group-hover:bg-black/8" />
+            )}
             <span className="absolute inset-0 grid place-items-center">
-              <span className="brass-plaque inline-flex items-center gap-2.5 px-5 py-2.5 font-display text-[13.5px] font-bold tracking-[0.12em] uppercase transition-transform duration-200 group-hover:scale-[1.03]">
+              <span className="brass-plaque inline-flex items-center gap-2.5 px-5 py-2.5 font-display text-[13.5px] font-bold tracking-[0.12em] uppercase shadow-[0_10px_28px_rgba(0,0,0,0.88)] transition-transform duration-200 group-hover:scale-[1.03]">
                 <PlayIcon />
                 <span>{text("Play Walkthrough", "播放实机演示")}</span>
               </span>

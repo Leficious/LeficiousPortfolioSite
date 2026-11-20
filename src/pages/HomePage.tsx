@@ -469,10 +469,9 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                                   loading="eager"
                                   fetchPriority="high"
                                   decoding="async"
-                                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.018]"
+                                  className="h-full w-full object-cover brightness-[1.05] contrast-[1.02] transition-[transform,filter] duration-500 group-hover:scale-[1.018] group-hover:brightness-[1.09]"
                                 />
-                                <span className="absolute inset-0 bg-gradient-to-t from-black/52 via-transparent to-black/14 transition-opacity group-hover:opacity-72" />
-                                <span className="brass-plaque absolute bottom-4 left-4 inline-flex items-center gap-2 px-4 py-2 font-display text-[13.5px] font-bold tracking-[0.12em] uppercase transition-transform duration-200 group-hover:scale-103 sm:px-5">
+                                <span className="brass-plaque absolute bottom-4 left-4 inline-flex items-center gap-2 px-4 py-2 font-display text-[13.5px] font-bold tracking-[0.12em] uppercase shadow-[0_8px_24px_rgba(0,0,0,0.88)] transition-transform duration-200 group-hover:scale-103 sm:px-5">
                                   <span aria-hidden="true">▶</span>
                                   <span>
                                     {isDesignReel
@@ -525,10 +524,9 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                               height="360"
                               loading="eager"
                               decoding="async"
-                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                              className="h-full w-full object-cover brightness-[1.06] contrast-[1.02] transition-[transform,filter] duration-500 group-hover:scale-[1.03] group-hover:brightness-[1.10]"
                             />
-                            <span className="absolute inset-0 bg-gradient-to-t from-black/68 via-transparent to-transparent" />
-                            <span className="absolute bottom-2 left-2.5 inline-flex items-center gap-1.5 border border-[#e5c489]/70 bg-[#140f0b]/92 px-2.5 py-0.5 font-display text-[12px] font-bold tracking-[0.1em] text-[#f7f0e2] uppercase">
+                            <span className="absolute bottom-2 left-2.5 inline-flex items-center gap-1.5 border border-[#e5c489]/75 bg-[#140f0b]/94 px-2.5 py-0.5 font-display text-[12px] font-bold tracking-[0.1em] text-[#f7f0e2] uppercase shadow-[0_6px_18px_rgba(0,0,0,0.88)]">
                               <span aria-hidden="true" className="text-[#e8c78c]">⇄</span>
                               {text("Companion Reel", "副卷集锦")}
                             </span>
