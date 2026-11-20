@@ -220,6 +220,7 @@ export function AtelierIntroCurtain({
     if (cleanPath === "/") {
       criticalImages.push(
         "/reels/game-design-reel-2026.webp",
+        "/reels/environment-props-reel-2026.jpg",
         "/projects/still-life/hero-poster.webp",
         "/projects/an-echo-has-no-shape/hero-poster.webp",
       );
@@ -244,15 +245,16 @@ export function AtelierIntroCurtain({
       ...criticalImages.map(preloadDecodeImage),
     ]);
 
-    // Hard safety cap (1260ms) so slow networks never stall; minimum poise (1080ms) so the 8-layer B-04 + LEFICIØUS sting plays cleanly
+    // Hard safety cap (2150ms) so slow networks never stall; minimum poise (1850ms: 0.12s breath + 1.32s build + 0.41s hold)
+    // so every beat of the 8-layer B-04 + LEFICIØUS intro sting lands clearly before dissolving.
     const maxCapTimer = window.setTimeout(() => {
       if (!cancelled) beginReveal();
-    }, 1260);
+    }, 2150);
 
     waitAssets.then(() => {
       if (cancelled || revealedRef.current) return;
       const elapsed = performance.now() - startedAtRef.current;
-      const remaining = Math.max(0, 1080 - elapsed);
+      const remaining = Math.max(0, 1850 - elapsed);
       window.setTimeout(() => {
         if (!cancelled) beginReveal();
       }, remaining);
@@ -279,7 +281,7 @@ export function AtelierIntroCurtain({
       aria-hidden="true"
       className={`atelier-intro-curtain fixed inset-0 z-[120] flex flex-col items-center justify-center bg-[#080605] select-none ${
         isRevealing
-          ? "pointer-events-none opacity-0 scale-[1.015] transition-[opacity,scale] duration-[540ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+          ? "pointer-events-none opacity-0 scale-[1.015] transition-[opacity,scale] duration-[620ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
           : "opacity-100 scale-100"
       }`}
     >

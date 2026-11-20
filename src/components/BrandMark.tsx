@@ -531,7 +531,7 @@ export function NavbarBrandLockup() {
 }
 
 /**
- * Full 8-layer choreographed B-04 Crest + `LEFICIØUS` Intro Sting (~1.08s)
+ * Full 8-layer choreographed B-04 Crest + `LEFICIØUS` Intro Sting (~1.32s build + ~0.33s poise = 1.65s)
  * driven at native display refresh rate for the landing curtain sequence.
  */
 export function B04IntroSting() {
@@ -558,18 +558,37 @@ export function B04IntroSting() {
   const oGlintRef = useRef<SVGLineElement | null>(null);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      for (const el of [
+        astroRef.current,
+        diaRef.current,
+        monoRef.current,
+        starRef.current,
+        lancetRef.current,
+        wingLRef.current,
+        wingRRef.current,
+        voluteRef.current,
+        crimsonRef.current,
+        ...wmLetterRefs.current,
+      ]) {
+        el?.setAttribute("opacity", "1");
+      }
+      oSlashRef.current?.setAttribute("opacity", "1");
+      return;
+    }
 
     let rafId = 0;
     const start = performance.now();
-    const totalDur = 1.08;
+    const leadIn = 0.12;
+    const totalDur = 1.48;
 
     const renderFrame = (now: number) => {
-      const t = Math.min(totalDur, (now - start) / 1000);
+      const rawElapsed = Math.min(totalDur, (now - start) / 1000);
+      const t = Math.max(0, rawElapsed - leadIn);
 
-      // 1. Astrolabe arcs draw + CCW spin (0.00s - 0.42s)
-      const pAstro = easeOutExpo(prog(t, 0.0, 0.42));
-      astroRef.current?.setAttribute("opacity", clamp01(t / 0.14).toFixed(2));
+      // 1. Astrolabe arcs draw + CCW spin (0.00s - 0.52s)
+      const pAstro = easeOutExpo(prog(t, 0.0, 0.52));
+      astroRef.current?.setAttribute("opacity", clamp01(t / 0.18).toFixed(2));
       setRigTransform(astroRef.current, 0, 0, -48 * (1 - pAstro), 0.9 + 0.1 * pAstro, 340, 340);
       for (const a of arcRefs.current) {
         if (!a) continue;
@@ -577,92 +596,92 @@ export function B04IntroSting() {
         a.setAttribute("stroke-dashoffset", (100 * (1 - pAstro)).toFixed(1));
       }
 
-      // 2. 45-degree Diamond detent snap (0.04s - 0.44s)
-      const pDiaRaw = prog(t, 0.04, 0.42);
+      // 2. 45-degree Diamond detent snap (0.06s - 0.56s)
+      const pDiaRaw = prog(t, 0.06, 0.5);
       const pDia = easeOutBack(pDiaRaw);
-      diaRef.current?.setAttribute("opacity", clamp01((t - 0.03) / 0.14).toFixed(2));
+      diaRef.current?.setAttribute("opacity", clamp01((t - 0.05) / 0.16).toFixed(2));
       setRigTransform(diaRef.current, 0, 0, -45 * (1 - pDia), 1.16 - 0.16 * easeOutExpo(pDiaRaw), 340, 340);
 
-      // 3. 45-degree Monolith upward wipe + extrusion (0.14s - 0.56s)
-      const pMono = easeOutExpo(prog(t, 0.14, 0.44));
+      // 3. 45-degree Monolith upward wipe + extrusion (0.18s - 0.70s)
+      const pMono = easeOutExpo(prog(t, 0.18, 0.52));
       const sweepY = 640 - 540 * pMono;
       clipMonoPolyRef.current?.setAttribute(
         "points",
         `180,${(sweepY + 90).toFixed(1)} 500,${(sweepY - 90).toFixed(1)} 500,660 180,660`,
       );
-      monoRef.current?.setAttribute("opacity", clamp01((t - 0.13) / 0.1).toFixed(2));
+      monoRef.current?.setAttribute("opacity", clamp01((t - 0.17) / 0.12).toFixed(2));
       setRigTransform(monoRef.current, 0, 24 * (1 - pMono), 0, 1, 340, 420);
 
-      // 4. North Star flare & Y-axis Lancet strike (0.18s - 0.54s)
-      const pStar = easeOutBack(prog(t, 0.18, 0.34));
-      starRef.current?.setAttribute("opacity", clamp01((t - 0.17) / 0.1).toFixed(2));
+      // 4. North Star flare & Y-axis Lancet strike (0.24s - 0.68s)
+      const pStar = easeOutBack(prog(t, 0.24, 0.42));
+      starRef.current?.setAttribute("opacity", clamp01((t - 0.23) / 0.12).toFixed(2));
       setRigTransform(
         starRef.current,
         0,
         0,
-        -45 * (1 - easeOutExpo(prog(t, 0.18, 0.34))),
+        -45 * (1 - easeOutExpo(prog(t, 0.24, 0.42))),
         Math.max(0.01, pStar),
         340.2,
         122,
       );
-      const pStarGlint = prog(t, 0.2, 0.28);
+      const pStarGlint = prog(t, 0.26, 0.34);
       starGlintRef.current?.setAttribute(
         "opacity",
         (pStarGlint > 0 && pStarGlint < 1 ? Math.sin(pStarGlint * Math.PI) * 0.9 : 0).toFixed(2),
       );
 
-      const pLancet = easeOutExpo(prog(t, 0.22, 0.34));
-      lancetRef.current?.setAttribute("opacity", clamp01((t - 0.21) / 0.08).toFixed(2));
+      const pLancet = easeOutExpo(prog(t, 0.28, 0.42));
+      lancetRef.current?.setAttribute("opacity", clamp01((t - 0.27) / 0.1).toFixed(2));
       setRigTransform(lancetRef.current, 0, -90 * (1 - pLancet), 0, 1, 340, 240);
 
-      // 5. Smooth 3-Blade Gothic Wings radial unfold (0.30s - 0.78s)
-      const pWing = easeOutExpo(prog(t, 0.3, 0.48));
-      const wOp = clamp01((t - 0.29) / 0.12).toFixed(2);
+      // 5. Smooth 3-Blade Gothic Wings radial unfold (0.38s - 0.96s)
+      const pWing = easeOutExpo(prog(t, 0.38, 0.58));
+      const wOp = clamp01((t - 0.37) / 0.15).toFixed(2);
       wingLRef.current?.setAttribute("opacity", wOp);
       wingRRef.current?.setAttribute("opacity", wOp);
       setRigTransform(wingLRef.current, 12 * (1 - pWing), 6 * (1 - pWing), 30 * (1 - pWing), 0.8 + 0.2 * pWing, 271, 455);
       setRigTransform(wingRRef.current, -12 * (1 - pWing), 6 * (1 - pWing), -30 * (1 - pWing), 0.8 + 0.2 * pWing, 409, 455);
 
-      // 6. B-04 Victorian Volute center-out unfurl & Crimson shockwave (0.34s - 0.82s)
-      const pVol = easeOutQuart(prog(t, 0.34, 0.46));
+      // 6. B-04 Victorian Volute center-out unfurl & Crimson shockwave (0.44s - 1.02s)
+      const pVol = easeOutQuart(prog(t, 0.44, 0.56));
       const halfW = 165 * pVol;
       clipVolRectRef.current?.setAttribute("x", (340 - halfW).toFixed(1));
       clipVolRectRef.current?.setAttribute("width", (halfW * 2).toFixed(1));
-      voluteRef.current?.setAttribute("opacity", clamp01((t - 0.33) / 0.1).toFixed(2));
+      voluteRef.current?.setAttribute("opacity", clamp01((t - 0.43) / 0.12).toFixed(2));
       setRigTransform(voluteRef.current, 0, 12 * (1 - pVol), 0, 1, 340, 535);
 
-      const pCrim = easeOutBack(prog(t, 0.42, 0.34));
-      crimsonRef.current?.setAttribute("opacity", clamp01((t - 0.41) / 0.1).toFixed(2));
+      const pCrim = easeOutBack(prog(t, 0.54, 0.42));
+      crimsonRef.current?.setAttribute("opacity", clamp01((t - 0.53) / 0.12).toFixed(2));
       setRigTransform(crimsonRef.current, 0, 0, 0, Math.max(0.01, pCrim), 340, 525);
-      const pWave = prog(t, 0.44, 0.38);
+      const pWave = prog(t, 0.56, 0.46);
       crimsonRingRef.current?.setAttribute(
         "opacity",
         (pWave > 0 && pWave < 1 ? (1 - pWave) * 0.72 : 0).toFixed(2),
       );
       setRigTransform(crimsonRingRef.current, 0, 0, 0, 0.55 + 1.1 * easeOutQuart(pWave), 340, 536);
 
-      // 7. LEFICIØUS Wordmark stagger + 45-degree O Razor Slash Climax (0.44s - 1.02s)
+      // 7. LEFICIØUS Wordmark stagger + 45-degree O Razor Slash Climax (0.54s - 1.32s)
       WORDMARK_LETTERS.forEach((_, idx) => {
         const gLet = wmLetterRefs.current[idx];
         if (!gLet) return;
-        const t0 = 0.42 + idx * 0.026;
-        const pLet = easeOutExpo(prog(t, t0, 0.32));
-        gLet.setAttribute("opacity", clamp01((t - t0) / 0.14).toFixed(2));
+        const t0 = 0.54 + idx * 0.032;
+        const pLet = easeOutExpo(prog(t, t0, 0.38));
+        gLet.setAttribute("opacity", clamp01((t - t0) / 0.16).toFixed(2));
         const extraTrack = (idx - 4) * 3.8 * (1 - pLet);
         gLet.setAttribute("transform", `translate(${extraTrack.toFixed(2)}, ${(7 * (1 - pLet)).toFixed(2)})`);
       });
 
-      const pSlash = easeOutExpo(prog(t, 0.74, 0.22));
+      const pSlash = easeOutExpo(prog(t, 0.94, 0.28));
       oSlashRef.current?.setAttribute("stroke-dashoffset", (100 * (1 - pSlash)).toFixed(1));
       oSlashRef.current?.setAttribute("opacity", pSlash > 0.01 ? "1" : "0");
 
-      const pSlashGlint = prog(t, 0.74, 0.28);
+      const pSlashGlint = prog(t, 0.94, 0.36);
       oGlintRef.current?.setAttribute(
         "opacity",
         (pSlashGlint > 0 && pSlashGlint < 1 ? Math.sin(pSlashGlint * Math.PI) * 0.95 : 0).toFixed(2),
       );
 
-      if (t < totalDur) {
+      if (rawElapsed < totalDur) {
         rafId = window.requestAnimationFrame(renderFrame);
       }
     };
@@ -689,7 +708,7 @@ export function B04IntroSting() {
           </clipPath>
         </defs>
 
-        <g ref={astroRef}>
+        <g ref={astroRef} opacity="0">
           {ASTROLABE_GEOMETRY.arcs.map((arc, idx) => (
             <path
               key={idx}
@@ -722,7 +741,7 @@ export function B04IntroSting() {
           <line x1="631" y1="340" x2="660" y2="340" stroke={pal.muted} strokeWidth="1.8" />
         </g>
 
-        <g ref={diaRef}>
+        <g ref={diaRef} opacity="0">
           <polygon points="340,60 620,340 340,620 60,340" fill="none" stroke={pal.muted} strokeWidth="2.1" />
           <polygon
             points="340,72.5 607.5,340 340,607.5 72.5,340"
@@ -735,15 +754,15 @@ export function B04IntroSting() {
           <path d="M 558 292 A 223 223 0 0 1 558 388 A 232 232 0 0 0 558 292 Z" fill={pal.muted} opacity="0.8" />
         </g>
 
-        <g ref={wingLRef}>
+        <g ref={wingLRef} opacity="0">
           <path d={EMBLEM_PATHS.wingLeft} fill={pal.fg} fillRule="evenodd" />
         </g>
-        <g ref={wingRRef}>
+        <g ref={wingRRef} opacity="0">
           <path d={EMBLEM_PATHS.wingRight} fill={pal.fg} fillRule="evenodd" />
         </g>
 
         <g clipPath={`url(#${clipMonoId})`}>
-          <g ref={monoRef}>
+          <g ref={monoRef} opacity="0">
             <path d={EMBLEM_PATHS.monolithLBase} fill={pal.fg} fillRule="evenodd" />
             <path d={EMBLEM_PATHS.spireLeftUpper} fill={pal.fg} fillRule="evenodd" />
             <path d={EMBLEM_PATHS.spireRightUpper} fill={pal.fg} fillRule="evenodd" />
@@ -752,10 +771,10 @@ export function B04IntroSting() {
           </g>
         </g>
 
-        <g ref={lancetRef}>
+        <g ref={lancetRef} opacity="0">
           <path d={EMBLEM_PATHS.lancetUpper} fill={pal.fg} fillRule="evenodd" />
         </g>
-        <g ref={starRef}>
+        <g ref={starRef} opacity="0">
           <path d={EMBLEM_PATHS.northStar} fill={pal.fg} fillRule="evenodd" />
         </g>
         <g ref={starGlintRef} opacity="0">
@@ -763,7 +782,7 @@ export function B04IntroSting() {
           <line x1="340.2" y1="74" x2="340.2" y2="170" stroke={pal.glint} strokeWidth="2.3" />
         </g>
 
-        <g ref={crimsonRef}>
+        <g ref={crimsonRef} opacity="0">
           {EMBLEM_PATHS.crimsonCore.map((d, idx) => (
             <path key={idx} d={d} fill={pal.crimson} fillRule="evenodd" />
           ))}
@@ -778,7 +797,7 @@ export function B04IntroSting() {
         />
 
         <g clipPath={`url(#${clipVolId})`}>
-          <g ref={voluteRef}>
+          <g ref={voluteRef} opacity="0">
             <path d={EMBLEM_PATHS.voluteScroll} fill={pal.fg} fillRule="evenodd" />
           </g>
         </g>
@@ -800,6 +819,7 @@ export function B04IntroSting() {
         {WORDMARK_LETTERS.map((item, idx) => (
           <g
             key={item.key}
+            opacity="0"
             ref={(el) => {
               wmLetterRefs.current[idx] = el;
             }}
@@ -818,7 +838,8 @@ export function B04IntroSting() {
           strokeWidth="2.25"
           strokeLinecap="square"
           strokeDasharray="100"
-          strokeDashoffset="0"
+          strokeDashoffset="100"
+          opacity="0"
         />
         <line
           ref={oGlintRef}

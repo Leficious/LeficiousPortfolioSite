@@ -868,7 +868,7 @@ html[lang="zh-CN"] .parchment-sheet h2 {
 
   .atelier-curtain-rule-l,
   .atelier-curtain-rule-r {
-    animation: curtain-rule-expand 460ms 60ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: curtain-rule-expand 540ms 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   @keyframes atelier-spine-in {
