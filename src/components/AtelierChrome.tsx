@@ -695,26 +695,46 @@ export function ArchivalPaperSheaf({
 
   const anyTabActive = tabs.some((t) => t.active);
 
-  const renderFlagInner = (active: boolean, label: string) => (
-    <span
-      style={{
-        clipPath: "polygon(0 6px, 100% 0, 100% 100%, 0 calc(100% - 6px))",
-      }}
-      className={`relative flex flex-col items-center gap-1.5 py-3 transition-[width,background-color,color,border-color] duration-200 2xl:py-3.5 ${
-        active
-          ? "w-[44px] border-l-[3px] border-l-[#ebd09e] bg-gradient-to-l from-[#6b1416] to-[#8c1a1d] text-[#faf3e6] shadow-[inset_-4px_0_6px_rgba(10,3,3,0.45)]"
-          : "w-[36px] border-l border-l-[#d4ad73]/45 bg-gradient-to-l from-[#420d0f] to-[#631417] text-[#ead8bc] shadow-[inset_-4px_0_6px_rgba(10,3,3,0.52)] group-hover:w-[40px] group-hover:from-[#581214] group-hover:to-[#7c191c] group-hover:text-[#faf3e6]"
-      }`}
-    >
-      <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#ebd09e]" />
+  const renderFlagInner = (active: boolean, rawLabel: string) => {
+    const hasBackArrow = rawLabel.startsWith("←");
+    const cleanLabel = hasBackArrow ? rawLabel.replace(/^←\s*/, "") : rawLabel;
+
+    return (
       <span
-        className="font-numeral text-[11.5px] font-bold tracking-[0.14em] uppercase whitespace-nowrap"
-        style={{ writingMode: "vertical-rl" }}
+        style={{
+          clipPath: "polygon(0 7px, 100% 0, 100% 100%, 0 calc(100% - 7px))",
+        }}
+        className={`relative flex flex-col items-center gap-1.5 py-2.5 transition-[width,background-color,color,border-color] duration-200 2xl:py-3 ${
+          active
+            ? "w-[56px] border-l-[3.5px] border-l-[#f5deb0] bg-gradient-to-l from-[#741518] to-[#9c1d21] text-[#fffaf0] shadow-[inset_-3px_0_5px_rgba(10,3,3,0.38)] 2xl:w-[60px]"
+            : "w-[47px] border-l-[2px] border-l-[#e5c489]/75 bg-gradient-to-l from-[#561013] to-[#7c181b] text-[#fff6e6] shadow-[inset_-3px_0_5px_rgba(10,3,3,0.42)] group-hover:w-[53px] group-hover:from-[#691417] group-hover:to-[#941c20] group-hover:text-white 2xl:w-[50px] 2xl:group-hover:w-[56px]"
+        }`}
       >
-        {label}
+        {hasBackArrow ? (
+          <span
+            aria-hidden="true"
+            className="font-numeral text-[13px] leading-none font-bold text-[#f5deb0]"
+          >
+            ←
+          </span>
+        ) : (
+          <span aria-hidden="true" className="h-2 w-2 rotate-45 bg-[#f5deb0]" />
+        )}
+        <span
+          className="font-sans text-[14px] leading-none font-bold tracking-[0.14em] uppercase whitespace-nowrap 2xl:text-[15.5px]"
+          style={{ writingMode: "vertical-rl" }}
+        >
+          {cleanLabel}
+        </span>
       </span>
-    </span>
-  );
+    );
+  };
+
+  const parseTabParts = (raw: string): { roman: string | null; title: string } => {
+    const match = raw.match(/^([IVX]+)\s*[.·]\s*(.+)$/);
+    if (!match) return { roman: null, title: raw };
+    return { roman: match[1], title: match[2] };
+  };
 
   const sheafNode = (
     <>
@@ -740,7 +760,7 @@ export function ArchivalPaperSheaf({
 
       <nav
         aria-label={ariaLabel}
-        className="atelier-fore-edge pointer-events-none fixed inset-y-0 right-0 z-40 hidden w-[70px] overflow-x-clip select-none xl:flex xl:flex-col xl:items-end xl:justify-center"
+        className="atelier-fore-edge pointer-events-none fixed inset-y-0 right-0 z-40 hidden w-[96px] overflow-x-clip select-none xl:flex xl:flex-col xl:items-end xl:justify-center"
       >
         {/* Full-Height Bound Morocco Board Lip + 4-Ply Stepped Rag-Vellum Page Stack Docked Flush at right-0 (z-20 above tabs) */}
         <div
@@ -833,22 +853,23 @@ export function ArchivalPaperSheaf({
             );
           })()}
 
-        <div className={`${topFlag ? "mt-3.5 2xl:mt-4.5" : ""} flex flex-col items-end gap-1`}>
+        <div className={`${topFlag ? "mt-2.5 2xl:mt-3.5" : ""} flex flex-col items-end gap-1`}>
           {tabs.map((tab, idx) => {
             const active = Boolean(tab.active);
-            const wrapperClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(-3px_4px_7px_rgba(0,0,0,0.8))] ${
+            const { roman, title } = parseTabParts(tab.label);
+            const wrapperClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(-3px_4px_7px_rgba(0,0,0,0.82))] ${
               active ? "" : "hover:z-30 hover:-translate-x-0.5"
             }`;
 
             const tabInner = (
               <span
                 style={{
-                  clipPath: "polygon(0 9px, 100% 0, 100% 100%, 0 calc(100% - 9px))",
+                  clipPath: "polygon(0 8px, 100% 0, 100% 100%, 0 calc(100% - 8px))",
                 }}
-                className={`relative flex flex-col items-center justify-center overflow-hidden py-2.5 transition-[width,background-color,color,border-color] duration-200 2xl:py-3.5 ${
+                className={`relative flex flex-col items-center justify-center overflow-hidden py-2.5 transition-[width,background-color,color,border-color] duration-200 2xl:py-3 ${
                   active
-                    ? "w-[45px] border-l-[3px] border-l-rubric bg-[#fbf4e6] text-rubric shadow-[inset_-4px_0_6px_rgba(68,46,20,0.22)]"
-                    : "w-[36px] border-l border-l-[#755228]/65 bg-[#eee3cc] text-[#1c140e] shadow-[inset_-5px_0_7px_rgba(44,28,12,0.28)] group-hover:w-[40px] group-hover:bg-[#f7efe0]"
+                    ? "w-[56px] border-l-[3.5px] border-l-rubric bg-[#fffdf9] text-[#7c1215] shadow-[inset_-3px_0_4px_rgba(52,32,12,0.14)] 2xl:w-[60px]"
+                    : "w-[47px] border-l-[2px] border-l-[#8c6432]/85 bg-[#faf3e4] text-[#0c0805] shadow-[inset_-3px_0_4px_rgba(36,22,8,0.14)] group-hover:w-[53px] group-hover:bg-[#fffdf9] 2xl:w-[50px] 2xl:group-hover:w-[56px]"
                 }`}
               >
                 <span
@@ -857,13 +878,26 @@ export function ArchivalPaperSheaf({
                     backgroundImage: 'url("/textures/rag-paper-tile.webp")',
                     backgroundSize: "220px 220px",
                   }}
-                  className="pointer-events-none absolute inset-0 opacity-[0.11] mix-blend-multiply"
+                  className="pointer-events-none absolute inset-0 opacity-[0.045] mix-blend-multiply"
                 />
                 <span
-                  className="relative z-10 max-h-[146px] overflow-hidden font-display text-[13px] font-bold tracking-[0.03em] whitespace-nowrap"
+                  className="relative z-10 max-h-[168px] overflow-hidden font-sans text-[16px] leading-none font-bold tracking-[0.03em] whitespace-nowrap 2xl:text-[17.5px]"
                   style={{ writingMode: "vertical-rl" }}
                 >
-                  {tab.label}
+                  {roman && (
+                    <>
+                      <span className={active ? "font-extrabold text-[#8a181a]" : "font-extrabold text-rubric"}>
+                        {roman}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className={`mx-0.5 ${active ? "text-rubric/70" : "text-[#7a5528]/75"}`}
+                      >
+                        ·
+                      </span>
+                    </>
+                  )}
+                  <span>{title}</span>
                 </span>
               </span>
             );
