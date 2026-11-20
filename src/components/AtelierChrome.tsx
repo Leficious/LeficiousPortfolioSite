@@ -541,6 +541,10 @@ export function ArchivalPaperSheaf({
   tabs: SheafTabSpec[];
   progressPct?: number;
 }) {
+  const sheafUid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const backShadowId = `sheaf-bs-${sheafUid}`;
+  const frontShadowId = `sheaf-fs-${sheafUid}`;
+
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(() =>
     isClientHydratedForPortals() && typeof document !== "undefined" ? document.body : null,
   );
@@ -693,8 +697,6 @@ export function ArchivalPaperSheaf({
     }
   };
 
-  const anyTabActive = tabs.some((t) => t.active);
-
   const renderFlagInner = (active: boolean, rawLabel: string) => {
     const hasBackArrow = rawLabel.startsWith("←");
     const cleanLabel = hasBackArrow ? rawLabel.replace(/^←\s*/, "") : rawLabel;
@@ -702,26 +704,26 @@ export function ArchivalPaperSheaf({
     return (
       <span
         style={{
-          clipPath: "polygon(0 7px, 100% 0, 100% 100%, 0 calc(100% - 7px))",
+          clipPath: "polygon(0 6px, 100% 0, 100% 100%, 0 calc(100% - 6px))",
         }}
         className={`relative flex flex-col items-center gap-1.5 py-2.5 transition-[width,background-color,color,border-color] duration-200 2xl:py-3 ${
           active
-            ? "w-[56px] border-l-[3.5px] border-l-[#f5deb0] bg-gradient-to-l from-[#741518] to-[#9c1d21] text-[#fffaf0] shadow-[inset_-3px_0_5px_rgba(10,3,3,0.38)] 2xl:w-[60px]"
-            : "w-[47px] border-l-[2px] border-l-[#e5c489]/75 bg-gradient-to-l from-[#561013] to-[#7c181b] text-[#fff6e6] shadow-[inset_-3px_0_5px_rgba(10,3,3,0.42)] group-hover:w-[53px] group-hover:from-[#691417] group-hover:to-[#941c20] group-hover:text-white 2xl:w-[50px] 2xl:group-hover:w-[56px]"
+            ? "w-[48px] border-l-[3px] border-l-[#f2d7a4] bg-gradient-to-l from-[#6e1417] to-[#941c20] text-[#faf3e6] shadow-[inset_-3px_0_5px_rgba(10,3,3,0.38)] 2xl:w-[51px]"
+            : "w-[40px] border-l-[1.5px] border-l-[#dfb97c]/68 bg-gradient-to-l from-[#4f0f12] to-[#731619] text-[#f3e6cf] shadow-[inset_-3px_0_5px_rgba(10,3,3,0.44)] group-hover:w-[45px] group-hover:from-[#631316] group-hover:to-[#8a1a1e] group-hover:text-[#fffaf0] 2xl:w-[43px] 2xl:group-hover:w-[48px]"
         }`}
       >
         {hasBackArrow ? (
           <span
             aria-hidden="true"
-            className="font-numeral text-[13px] leading-none font-bold text-[#f5deb0]"
+            className="font-numeral text-[12px] leading-none font-semibold text-[#f2d7a4]"
           >
             ←
           </span>
         ) : (
-          <span aria-hidden="true" className="h-2 w-2 rotate-45 bg-[#f5deb0]" />
+          <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#f2d7a4]" />
         )}
         <span
-          className="font-sans text-[14px] leading-none font-bold tracking-[0.14em] uppercase whitespace-nowrap 2xl:text-[15.5px]"
+          className="font-display text-[12.5px] leading-none font-semibold tracking-[0.16em] uppercase whitespace-nowrap 2xl:text-[13.5px]"
           style={{ writingMode: "vertical-rl" }}
         >
           {cleanLabel}
@@ -762,69 +764,74 @@ export function ArchivalPaperSheaf({
         aria-label={ariaLabel}
         className="atelier-fore-edge pointer-events-none fixed inset-y-0 right-0 z-40 hidden w-[96px] overflow-x-clip select-none xl:flex xl:flex-col xl:items-end xl:justify-center"
       >
-        {/* Full-Height Bound Morocco Board Lip + 4-Ply Stepped Rag-Vellum Page Stack Docked Flush at right-0 (z-20 above tabs) */}
+        {/* 1. BACK LAYER (z-10, BEHIND Divider Tabs): Smoked Morocco Cover Board + 4 Fanned Deeper Rag-Vellum Signatures */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 z-20 w-[22px] shadow-[-16px_0_34px_rgba(0,0,0,0.94)]"
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-[36px]"
         >
-          {/* Outer ebony-mahogany book-cover board & gilt bevel */}
-          <span className="absolute inset-y-0 right-0 w-[7px] border-l border-[#d4ad73]/48 bg-gradient-to-l from-[#070504] via-[#120d09] to-[#1d150f]" />
+          {/* Ambient desk cast-shadow from the overhanging leather cover board */}
+          <span className="absolute inset-y-0 right-0 w-[26px] border-l border-[#cfa668]/42 bg-gradient-to-l from-[#060403] via-[#140d09] to-[#231710] shadow-[-18px_0_38px_rgba(0,0,0,0.95)]" />
 
-          {/* Stepped 4-ply rag-vellum page block running full height */}
-          <span className="absolute inset-y-0 right-[7px] w-[4px] border-l border-[#5c4324]/70 bg-[#b8a382]" />
-          <span className="absolute inset-y-0 right-[10.5px] w-[4px] border-l border-[#684c29]/75 bg-[#ccb896] shadow-[-1px_0_2px_rgba(0,0,0,0.45)]" />
-          <span className="absolute inset-y-0 right-[14px] w-[4px] border-l border-[#73552f]/78 bg-[#dfd0b0] shadow-[-1px_0_2px_rgba(0,0,0,0.4)]" />
-          <span className="absolute inset-y-0 right-[17.5px] w-[4.5px] border-x border-[#684720]/82 bg-[#f1e5cc] shadow-[-2px_0_5px_rgba(0,0,0,0.55)]" />
-
-          {/* Subtle paper-edge deckle grain along outermost vellum ply */}
-          <span
-            className="absolute inset-y-0 right-[17.5px] w-[4.5px] opacity-25 mix-blend-multiply"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(to bottom, rgba(84,56,24,0.38) 0px, rgba(84,56,24,0.38) 1px, transparent 1px, transparent 4px)",
-            }}
-          />
-
-          {anyTabActive && <span className="absolute inset-y-5 right-[18.5px] w-[2px] bg-[#fbf4e6]" />}
-
-          {/* Interactive Brass & Crimson Fore-Edge Scroll Shuttle Nested Inside the 7px Mahogany Cover Channel */}
-          <div
-            ref={railRef}
-            data-scrollable="false"
-            data-dragging="false"
-            onPointerDown={handleRailPointerDown}
-            onPointerMove={handleRailPointerMove}
-            onPointerUp={handleRailPointerEnd}
-            onPointerCancel={handleRailPointerEnd}
-            className="group/rail pointer-events-none absolute top-[16px] right-0 bottom-[16px] z-30 w-[16px] cursor-pointer touch-none opacity-0 transition-opacity duration-200 data-[dragging=true]:cursor-grabbing data-[scrollable=true]:pointer-events-auto data-[scrollable=true]:opacity-100"
+          {/* 4 obliquely fanned deeper rag-vellum sheaves peeking behind & between the divider tabs */}
+          <svg
+            viewBox="0 0 36 1080"
+            preserveAspectRatio="none"
+            className="absolute inset-0 h-full w-full overflow-visible"
           >
-            {/* Recessed horological guide hairline centered in the outer mahogany channel */}
-            <span className="pointer-events-none absolute inset-y-1.5 right-[2.75px] w-px bg-[#d4ad73]/22 transition-colors group-hover/rail:bg-[#ebd09e]/42" />
+            <defs>
+              <filter id={backShadowId} x="-35%" y="-2%" width="150%" height="104%">
+                <feDropShadow dx="-1.6" dy="1.4" stdDeviation="1.35" floodColor="#0d0703" floodOpacity="0.62" />
+              </filter>
+            </defs>
 
-            {/* Sliding sculpted brass bookmark shuttle + B-04 crimson garnet core */}
-            <span
-              ref={thumbRef}
-              style={{ height: "56px", transform: "translate3d(0, 0, 0)" }}
-              className="pointer-events-none absolute top-0 right-[0.5px] flex w-[5.5px] items-center justify-center border-y border-[#fff4db]/90 bg-gradient-to-b from-[#bd8f52] via-[#f4dfb4] to-[#9c6f38] opacity-80 shadow-[0_2px_8px_rgba(0,0,0,0.9),0_0_8px_rgba(212,173,115,0.28)] transition-[opacity,filter,box-shadow] duration-150 group-hover/rail:opacity-100 group-hover/rail:shadow-[0_2px_10px_rgba(0,0,0,0.95),0_0_12px_rgba(242,212,160,0.52)] group-data-[dragging=true]/rail:opacity-100 group-data-[dragging=true]/rail:brightness-110"
-            >
-              <span className="h-[6px] w-[3.5px] bg-[#9e191c] ring-[0.5px] ring-[#fff4db]/75" />
-            </span>
-          </div>
-
-          {/* Sculpted bookbinding headband (top) & tailband (bottom) brass clasps */}
-          <span className="absolute top-0 right-0 h-[16px] w-[22px] border-b border-[#d4ad73]/65 bg-gradient-to-b from-[#261b13] to-[#120c08] shadow-[0_3px_8px_rgba(0,0,0,0.8)]" />
-          <span className="absolute bottom-0 right-0 h-[16px] w-[22px] border-t border-[#d4ad73]/65 bg-gradient-to-t from-[#261b13] to-[#120c08] shadow-[0_-3px_8px_rgba(0,0,0,0.8)]" />
+            {/* Back Sheaf 1 (Deepest aged signature) */}
+            <path
+              d="M 10.6 17 L 29.8 15 L 29.8 1065 L 14.0 1063 Z"
+              fill="#c5b08d"
+              stroke="#efe2c8"
+              strokeWidth="0.7"
+              strokeOpacity="0.48"
+              filter={`url(#${backShadowId})`}
+            />
+            {/* Back Sheaf 2 (Counter-fanned signature) */}
+            <path
+              d="M 14.4 26 L 29.8 24 L 29.8 1056 L 10.8 1054 Z"
+              fill="#d3c09f"
+              stroke="#f6ebcf"
+              strokeWidth="0.75"
+              strokeOpacity="0.56"
+              filter={`url(#${backShadowId})`}
+            />
+            {/* Back Sheaf 3 (Stepped middle-back signature) */}
+            <path
+              d="M 12.2 35 L 29.8 33 L 29.8 1047 L 15.8 1045 Z"
+              fill="#dfd0b2"
+              stroke="#fbf2dd"
+              strokeWidth="0.8"
+              strokeOpacity="0.64"
+              filter={`url(#${backShadowId})`}
+            />
+            {/* Back Sheaf 4 (Inner-saddle rag signature right behind divider tabs) */}
+            <path
+              d="M 16.2 44 L 29.8 42 L 29.8 1038 L 12.6 1036 Z"
+              fill="#ebe0c7"
+              stroke="#fffaf0"
+              strokeWidth="0.85"
+              strokeOpacity="0.72"
+              filter={`url(#${backShadowId})`}
+            />
+          </svg>
         </div>
 
-        {/* Inward-Projecting Die-Cut Index Cascade (tucked physically behind the z-20 page lip at right-[19px]) */}
+        {/* 2. MIDDLE LAYER (z-20): Die-Cut Index Divider Tabs Sandwiched Between Back & Front Page Sheaves */}
         <div
-          className={`pointer-events-auto relative z-10 flex flex-col items-end py-7 pr-[19px] ${
+          className={`pointer-events-auto relative z-20 flex flex-col items-end py-7 pr-[15px] ${
             dealOnMountRef.current ? "animate-sheaf-tabs" : ""
           }`}
         >
         {topFlag &&
           (() => {
-            const flagClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(-3px_4px_7px_rgba(0,0,0,0.84))] ${
+            const flagClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(-3px_3px_6px_rgba(0,0,0,0.78))] ${
               topFlag.active ? "z-30" : "z-20 hover:-translate-x-0.5"
             }`;
             if (topFlag.to) {
@@ -857,19 +864,19 @@ export function ArchivalPaperSheaf({
           {tabs.map((tab, idx) => {
             const active = Boolean(tab.active);
             const { roman, title } = parseTabParts(tab.label);
-            const wrapperClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(-3px_4px_7px_rgba(0,0,0,0.82))] ${
+            const wrapperClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(-3px_3px_6px_rgba(0,0,0,0.72))] ${
               active ? "" : "hover:z-30 hover:-translate-x-0.5"
             }`;
 
             const tabInner = (
               <span
                 style={{
-                  clipPath: "polygon(0 8px, 100% 0, 100% 100%, 0 calc(100% - 8px))",
+                  clipPath: "polygon(0 7px, 100% 0, 100% 100%, 0 calc(100% - 7px))",
                 }}
                 className={`relative flex flex-col items-center justify-center overflow-hidden py-2.5 transition-[width,background-color,color,border-color] duration-200 2xl:py-3 ${
                   active
-                    ? "w-[56px] border-l-[3.5px] border-l-rubric bg-[#fffdf9] text-[#7c1215] shadow-[inset_-3px_0_4px_rgba(52,32,12,0.14)] 2xl:w-[60px]"
-                    : "w-[47px] border-l-[2px] border-l-[#8c6432]/85 bg-[#faf3e4] text-[#0c0805] shadow-[inset_-3px_0_4px_rgba(36,22,8,0.14)] group-hover:w-[53px] group-hover:bg-[#fffdf9] 2xl:w-[50px] 2xl:group-hover:w-[56px]"
+                    ? "w-[49px] border-l-[3px] border-l-rubric bg-[#fffdf8] text-[#7c1417] shadow-[inset_-3px_0_4px_rgba(44,26,10,0.16)] 2xl:w-[52px]"
+                    : "w-[41px] border-l-[1.5px] border-l-[#8c6432]/72 bg-[#f5ecda] text-[#231912] shadow-[inset_-3px_0_5px_rgba(36,22,8,0.18)] group-hover:w-[46px] group-hover:bg-[#fcf7eb] group-hover:text-[#110c08] 2xl:w-[44px] 2xl:group-hover:w-[49px]"
                 }`}
               >
                 <span
@@ -878,20 +885,20 @@ export function ArchivalPaperSheaf({
                     backgroundImage: 'url("/textures/rag-paper-tile.webp")',
                     backgroundSize: "220px 220px",
                   }}
-                  className="pointer-events-none absolute inset-0 opacity-[0.045] mix-blend-multiply"
+                  className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-multiply"
                 />
                 <span
-                  className="relative z-10 max-h-[168px] overflow-hidden font-sans text-[16px] leading-none font-bold tracking-[0.03em] whitespace-nowrap 2xl:text-[17.5px]"
+                  className={`relative z-10 max-h-[168px] overflow-hidden font-display text-[15.5px] leading-none tracking-[0.025em] whitespace-nowrap 2xl:text-[16.5px] ${
+                    active ? "font-[640]" : "font-[570]"
+                  }`}
                   style={{ writingMode: "vertical-rl" }}
                 >
                   {roman && (
                     <>
-                      <span className={active ? "font-extrabold text-[#8a181a]" : "font-extrabold text-rubric"}>
-                        {roman}
-                      </span>
+                      <span className="font-[650] text-rubric">{roman}</span>
                       <span
                         aria-hidden="true"
-                        className={`mx-0.5 ${active ? "text-rubric/70" : "text-[#7a5528]/75"}`}
+                        className={`mx-0.5 ${active ? "text-rubric/65" : "text-[#7a5528]/70"}`}
                       >
                         ·
                       </span>
@@ -945,6 +952,116 @@ export function ArchivalPaperSheaf({
           })}
         </div>
       </div>
+
+        {/* 3. FRONT LAYER (z-30, OVERLAPPING Tab Roots): 4 Fanned Sunlit Rag-Vellum Signatures + Mahogany Lip & Brass Shuttle */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 z-30 w-[36px]"
+        >
+          <svg
+            viewBox="0 0 36 1080"
+            preserveAspectRatio="none"
+            className="absolute inset-0 h-full w-full overflow-visible"
+          >
+            <defs>
+              <filter id={frontShadowId} x="-40%" y="-2%" width="160%" height="104%">
+                <feDropShadow dx="-1.8" dy="1.2" stdDeviation="1.35" floodColor="#120a04" floodOpacity="0.56" />
+              </filter>
+            </defs>
+
+            {/* Front Sheaf 1 (Clamps directly over the right root of the divider tabs) */}
+            <path
+              d="M 17.8 52 L 29.8 50 L 29.8 1030 L 17.4 1028 L 19.5 540 Z"
+              fill="#ece0c7"
+              stroke="#fffaf0"
+              strokeWidth="0.8"
+              strokeOpacity="0.72"
+              filter={`url(#${frontShadowId})`}
+            />
+
+            {/* Front Sheaf 2 (Counter-angled signature split into upper & lower folios so corner overlaps show mid-spine) */}
+            <path
+              d="M 21.0 62 L 29.8 60 L 29.8 565 L 18.9 562 Z"
+              fill="#f3e8d2"
+              stroke="#fffdf7"
+              strokeWidth="0.85"
+              strokeOpacity="0.82"
+              filter={`url(#${frontShadowId})`}
+            />
+            <path
+              d="M 19.2 548 L 29.8 546 L 29.8 1020 L 21.4 1018 Z"
+              fill="#f5ead5"
+              stroke="#fffdf8"
+              strokeWidth="0.85"
+              strokeOpacity="0.84"
+              filter={`url(#${frontShadowId})`}
+            />
+
+            {/* Front Sheaf 3 (Stepped upper-inner rag signature) */}
+            <path
+              d="M 22.0 72 L 29.8 70 L 29.8 1010 L 21.8 1008 L 23.9 525 Z"
+              fill="#faf2e2"
+              stroke="#ffffff"
+              strokeWidth="0.85"
+              strokeOpacity="0.88"
+              filter={`url(#${frontShadowId})`}
+            />
+
+            {/* Front Sheaf 4 (Topmost sunlit rag-vellum flyleaf) */}
+            <path
+              d="M 25.2 82 L 29.8 80 L 29.8 392 L 23.8 389 Z"
+              fill="#fffaf0"
+              stroke="#ffffff"
+              strokeWidth="0.85"
+              strokeOpacity="0.92"
+              filter={`url(#${frontShadowId})`}
+            />
+            <path
+              d="M 24.2 376 L 29.8 374 L 29.8 742 L 25.4 739 Z"
+              fill="#fdf7eb"
+              stroke="#ffffff"
+              strokeWidth="0.85"
+              strokeOpacity="0.92"
+              filter={`url(#${frontShadowId})`}
+            />
+            <path
+              d="M 23.9 726 L 29.8 724 L 29.8 1000 L 25.4 998 Z"
+              fill="#fffaf0"
+              stroke="#ffffff"
+              strokeWidth="0.85"
+              strokeOpacity="0.92"
+              filter={`url(#${frontShadowId})`}
+            />
+          </svg>
+
+          {/* Outer 6.5px ebony-mahogany book-cover fore-edge lip & gilt bevel */}
+          <span className="absolute inset-y-0 right-0 w-[6.5px] border-l border-[#d4ad73]/55 bg-gradient-to-l from-[#070504] via-[#120d09] to-[#1e150f] shadow-[-2px_0_5px_rgba(0,0,0,0.65)]" />
+
+          {/* Interactive Brass & Crimson Fore-Edge Scroll Shuttle Nested Inside the Outer Mahogany Channel */}
+          <div
+            ref={railRef}
+            data-scrollable="false"
+            data-dragging="false"
+            onPointerDown={handleRailPointerDown}
+            onPointerMove={handleRailPointerMove}
+            onPointerUp={handleRailPointerEnd}
+            onPointerCancel={handleRailPointerEnd}
+            className="group/rail pointer-events-none absolute top-[15px] right-0 bottom-[15px] z-40 w-[15px] cursor-pointer touch-none opacity-0 transition-opacity duration-200 data-[dragging=true]:cursor-grabbing data-[scrollable=true]:pointer-events-auto data-[scrollable=true]:opacity-100"
+          >
+            <span className="pointer-events-none absolute inset-y-1.5 right-[2.5px] w-px bg-[#d4ad73]/22 transition-colors group-hover/rail:bg-[#ebd09e]/42" />
+            <span
+              ref={thumbRef}
+              style={{ height: "56px", transform: "translate3d(0, 0, 0)" }}
+              className="pointer-events-none absolute top-0 right-[0.5px] flex w-[5px] items-center justify-center border-y border-[#fff4db]/90 bg-gradient-to-b from-[#bd8f52] via-[#f4dfb4] to-[#9c6f38] opacity-80 shadow-[0_2px_8px_rgba(0,0,0,0.9),0_0_8px_rgba(212,173,115,0.28)] transition-[opacity,filter,box-shadow] duration-150 group-hover/rail:opacity-100 group-hover/rail:shadow-[0_2px_10px_rgba(0,0,0,0.95),0_0_12px_rgba(242,212,160,0.52)] group-data-[dragging=true]/rail:opacity-100 group-data-[dragging=true]/rail:brightness-110"
+            >
+              <span className="h-[6px] w-[3px] bg-[#9e191c] ring-[0.5px] ring-[#fff4db]/75" />
+            </span>
+          </div>
+
+          {/* Sculpted bookbinding headband (top) & tailband (bottom) brass clasps */}
+          <span className="absolute top-0 right-0 h-[15px] w-[26px] border-b border-[#d4ad73]/65 bg-gradient-to-b from-[#261b13] to-[#120c08] shadow-[0_3px_8px_rgba(0,0,0,0.82)]" />
+          <span className="absolute bottom-0 right-0 h-[15px] w-[26px] border-t border-[#d4ad73]/65 bg-gradient-to-t from-[#261b13] to-[#120c08] shadow-[0_-3px_8px_rgba(0,0,0,0.82)]" />
+        </div>
       </nav>
     </>
   );
