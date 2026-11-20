@@ -361,7 +361,7 @@ export function App() {
 
     if (targetCleanPath.startsWith("/about")) {
       return {
-        eyebrow: text("LEFI SHAN", "单凯飞 · LEFI SHAN"),
+        eyebrow: "LEFICIOUS",
         subtitle: text("Little Tokyo, LA · USC SCA & Gnomon", "洛杉矶小东京 · 南加大 & Gnomon"),
         rightSlotKey: "about-resume",
         rightSlot: (

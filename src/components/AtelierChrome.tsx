@@ -353,10 +353,7 @@ export function AtelierHeaderRail({
   return (
     <div className={`atelier-header-rail relative z-30 mx-auto w-full ${maxWidthClass}`}>
       <header className="atelier-header-bar relative flex w-full flex-wrap items-center justify-between gap-3 border-b border-[#d4ad73]/38 pb-3.5 xl:flex-nowrap">
-        <div
-          key={`${eyebrow}|${subtitle}`}
-          className="animate-header-meta flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-0.5 xl:flex-nowrap"
-        >
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-0.5 xl:flex-nowrap">
           {eyebrow === "LEFICIOUS" ? (
             <Link
               to={localizedPath("/")}
@@ -372,12 +369,18 @@ export function AtelierHeaderRail({
               />
             </Link>
           ) : (
-            <p className="shrink-0 font-display text-xl font-bold tracking-[0.18em] text-[#f7f0e2] uppercase sm:text-[22px]">
+            <p
+              key={eyebrow}
+              className="animate-header-meta shrink-0 font-display text-xl font-bold tracking-[0.18em] text-[#f7f0e2] uppercase sm:text-[22px]"
+            >
               {eyebrow}
             </p>
           )}
           <span aria-hidden="true" className="hidden h-1.5 w-1.5 shrink-0 rotate-45 bg-[#d4ad73] sm:inline-block" />
-          <p className="truncate font-display text-[16px] font-medium italic text-[#e6dac6] sm:text-[17.5px]">
+          <p
+            key={subtitle}
+            className="animate-header-meta truncate font-display text-[16px] font-medium italic text-[#e6dac6] sm:text-[17.5px]"
+          >
             {subtitle}
           </p>
         </div>
