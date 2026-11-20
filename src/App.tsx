@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AmbientBackdrop } from "./components/AmbientBackdrop";
+import { AtelierIntroCurtain, type IntroStage } from "./components/AtelierMotion";
 import { useDeskParallax } from "./lib/atelierMotion";
 import { SiteNav } from "./components/SiteNav";
 import { AboutPage } from "./pages/AboutPage";
@@ -18,14 +19,20 @@ export function App() {
   const previousLocation = useRef({ pathname, hash });
   const [activeFolioSlug, setActiveFolioSlug] = useState<string>("reel");
   const [dialStep, setDialStep] = useState<number>(0);
+  const [backdropReady, setBackdropReady] = useState(false);
+  const [introStage, setIntroStage] = useState<IntroStage>("veiled");
 
   useDeskParallax();
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
       void loadProjectPage();
-    }, 350);
+    }, 550);
     return () => window.clearTimeout(timer);
+  }, []);
+
+  const handleBackdropReady = useCallback(() => {
+    setBackdropReady(true);
   }, []);
 
   const handleSelectFolio = useCallback((slug: string) => {
@@ -66,7 +73,16 @@ export function App() {
 
   return (
     <div className="relative min-h-screen">
-      <AmbientBackdrop dialStep={dialStep} />
+      <AtelierIntroCurtain
+        backdropReady={backdropReady}
+        pathname={pathname}
+        onStageChange={setIntroStage}
+      />
+      <AmbientBackdrop
+        dialStep={dialStep}
+        onBackdropReady={handleBackdropReady}
+        dustActive={introStage !== "veiled"}
+      />
       <SiteNav activeFolioSlug={activeFolioSlug} onSelectFolioSlug={handleSelectFolio} />
 
       <div className="relative z-10 lg:pl-[88px]">

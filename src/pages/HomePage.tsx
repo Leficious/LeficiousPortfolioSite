@@ -128,6 +128,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
   const { isChinese, text, localizedPath } = useLanguage();
   const [playingVideo, setPlayingVideo] = useState(false);
   const [activeReelKind, setActiveReelKind] = useState<"design" | "environment">("design");
+  const [folioSwitchCount, setFolioSwitchCount] = useState(0);
   const lastProjectSlugRef = useRef<string>("still-life");
   const blueprintBoxRef = useRef<HTMLDivElement>(null);
   const loupeRef = useRef<HTMLDivElement>(null);
@@ -162,6 +163,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
   const selectBinder = (key: string) => {
     if (key === activeFolioSlug) return;
     setPlayingVideo(false);
+    setFolioSwitchCount((c) => c + 1);
     onSelectFolioSlug(key);
   };
 
@@ -176,6 +178,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
           ? (idx + 1) % ALL_BINDER_KEYS.length
           : (idx - 1 + ALL_BINDER_KEYS.length) % ALL_BINDER_KEYS.length;
       setPlayingVideo(false);
+      setFolioSwitchCount((c) => c + 1);
       onSelectFolioSlug(ALL_BINDER_KEYS[nextIdx]);
     };
     window.addEventListener("keydown", onKey);
@@ -320,13 +323,14 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               type="button"
               onClick={() => selectBinder(leftBgProject.slug)}
               aria-label={`${text("Inspect Folio", "切换至")} ${leftBgMeta.roman}: ${leftBgProject.title}`}
-              className="pointer-events-auto group absolute left-0 top-15 bottom-9 flex w-[255px] -rotate-[4.8deg] cursor-pointer flex-col justify-between border border-[#e5c489]/82 bg-gradient-to-br from-[#3e271a] via-[#28180f] to-[#150c08] px-3.5 py-4 text-left shadow-[-3px_2px_0_0_#efe2c8,-5px_4px_0_0_#0e0906,-7px_6px_0_0_#cbb48d,-24px_30px_56px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,238,202,0.42)] transition-all duration-300 hover:-translate-x-3 hover:-translate-y-2 hover:-rotate-[5.8deg] hover:border-[#fff0cc] xl:left-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:left-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
+              className="atelier-wing-left pointer-events-auto group absolute left-0 top-15 bottom-9 flex w-[255px] -rotate-[4.8deg] cursor-pointer flex-col justify-between border border-[#e5c489]/82 bg-gradient-to-br from-[#3e271a] via-[#28180f] to-[#150c08] px-3.5 py-4 text-left shadow-[-3px_2px_0_0_#efe2c8,-5px_4px_0_0_#0e0906,-7px_6px_0_0_#cbb48d,-24px_30px_56px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,238,202,0.42)] transition-all duration-300 hover:-translate-x-3 hover:-translate-y-2 hover:-rotate-[5.8deg] hover:border-[#fff0cc] xl:left-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:left-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
             >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <img
                   src={leftBgMeta.cinemaThumbSrc}
                   alt=""
-                  loading="lazy"
+                  loading="eager"
+                  decoding="async"
                   className="h-full w-full object-cover opacity-[0.28] mix-blend-luminosity contrast-115 saturate-50 transition-all duration-500 group-hover:scale-105 group-hover:opacity-[0.44]"
                 />
                 <span className="absolute inset-0 bg-gradient-to-r from-[#28180f]/82 via-[#23150d]/42 to-[#140c08]/88" />
@@ -368,13 +372,14 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               type="button"
               onClick={() => selectBinder(rightBgProject.slug)}
               aria-label={`${text("Inspect Folio", "切换至")} ${rightBgMeta.roman}: ${rightBgProject.title}`}
-              className="pointer-events-auto group absolute right-0 top-19 bottom-6 flex w-[255px] rotate-[3.6deg] cursor-pointer flex-col justify-between border border-[#e5c489]/82 bg-gradient-to-bl from-[#521a1b] via-[#341011] to-[#1a0708] px-3.5 py-4 text-right shadow-[3px_2px_0_0_#efe2c8,5px_4px_0_0_#0e0906,7px_6px_0_0_#cbb48d,24px_30px_56px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,236,198,0.4)] transition-all duration-300 hover:translate-x-3 hover:-translate-y-2 hover:rotate-[4.6deg] hover:border-[#fff0cc] xl:right-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:right-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
+              className="atelier-wing-right pointer-events-auto group absolute right-0 top-19 bottom-6 flex w-[255px] rotate-[3.6deg] cursor-pointer flex-col justify-between border border-[#e5c489]/82 bg-gradient-to-bl from-[#521a1b] via-[#341011] to-[#1a0708] px-3.5 py-4 text-right shadow-[3px_2px_0_0_#efe2c8,5px_4px_0_0_#0e0906,7px_6px_0_0_#cbb48d,24px_30px_56px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,236,198,0.4)] transition-all duration-300 hover:translate-x-3 hover:-translate-y-2 hover:rotate-[4.6deg] hover:border-[#fff0cc] xl:right-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:right-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
             >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <img
                   src={rightBgMeta.cinemaThumbSrc}
                   alt=""
-                  loading="lazy"
+                  loading="eager"
+                  decoding="async"
                   className="h-full w-full object-cover opacity-[0.28] mix-blend-luminosity contrast-115 saturate-50 transition-all duration-500 group-hover:scale-105 group-hover:opacity-[0.44]"
                 />
                 <span className="absolute inset-0 bg-gradient-to-l from-[#341011]/82 via-[#2c0d0e]/42 to-[#190708]/88" />
@@ -419,7 +424,10 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               transform: "translate3d(calc(var(--mx) * 3.5px), calc(var(--my) * 2.5px), 0)",
             }}
           >
-            <div key={activeFolioSlug} className="animate-folio-arc relative">
+            <div
+              key={activeFolioSlug}
+              className={`atelier-entrance-sheet relative ${folioSwitchCount > 0 ? "animate-folio-arc" : ""}`}
+            >
               <BrassPinThreads animKey={activeFolioSlug} />
               <article className="parchment-sheet relative overflow-hidden border-[5px] border-[#110b07] px-5 pt-7 pb-5 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-9 sm:pt-7.5 sm:pb-5.5 2xl:pt-8.5 2xl:pb-7">
             <FolioCorners tone="parchment" />

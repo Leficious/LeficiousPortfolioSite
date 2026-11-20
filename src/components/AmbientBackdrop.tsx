@@ -106,20 +106,34 @@ function compileShader(gl: WebGLRenderingContext, type: number, source: string) 
   return shader;
 }
 
+type AmbientBackdropProps = {
+  dialStep?: number;
+  onBackdropReady?: () => void;
+  dustActive?: boolean;
+};
+
 /**
  * Persistent nocturnal Victorian Blind-Tooled & Gilt Damask Wall (`#080605`).
  * Renders a sweeping, faded 19th-century acanthus & pomegranate damask bas-relief
  * that rests quietly in dark mahogany shadow and smoothly 3D-shades / glows with
  * grazing antique-gold candlelight wherever the cursor sweeps across it.
  */
-export function AmbientBackdrop(_props: { dialStep?: number }) {
-  void _props;
+export function AmbientBackdrop({ onBackdropReady, dustActive = true }: AmbientBackdropProps) {
   const glCanvasRef = useRef<HTMLCanvasElement>(null);
+  const readyCallbackRef = useRef(onBackdropReady);
+  readyCallbackRef.current = onBackdropReady;
+
   const [webglReady, setWebglReady] = useState(false);
+  const [webglUnsupported, setWebglUnsupported] = useState(false);
 
   useEffect(() => {
     const canvas = glCanvasRef.current;
     if (!canvas) return;
+
+    const failToFallback = () => {
+      setWebglUnsupported(true);
+      readyCallbackRef.current?.();
+    };
 
     const gl = (canvas.getContext("webgl", {
       alpha: false,
@@ -129,18 +143,30 @@ export function AmbientBackdrop(_props: { dialStep?: number }) {
       powerPreference: "low-power",
     }) ||
       canvas.getContext("experimental-webgl")) as WebGLRenderingContext | null;
-    if (!gl) return;
+    if (!gl) {
+      failToFallback();
+      return;
+    }
 
     const vs = compileShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
     const fs = compileShader(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
-    if (!vs || !fs) return;
+    if (!vs || !fs) {
+      failToFallback();
+      return;
+    }
 
     const prog = gl.createProgram();
-    if (!prog) return;
+    if (!prog) {
+      failToFallback();
+      return;
+    }
     gl.attachShader(prog, vs);
     gl.attachShader(prog, fs);
     gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      failToFallback();
+      return;
+    }
     gl.useProgram(prog);
 
     const quad = gl.createBuffer();
@@ -165,26 +191,8 @@ export function AmbientBackdrop(_props: { dialStep?: number }) {
 
     const tex = gl.createTexture();
     let textureLoaded = false;
+    let notifiedReady = false;
     let disposed = false;
-
-    const img = new Image();
-    img.decoding = "async";
-    img.src = "/textures/victorian-damask-nh.webp";
-    img.onload = () => {
-      if (disposed || !tex) return;
-      gl.bindTexture(gl.TEXTURE_2D, tex);
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 0);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
-      gl.generateMipmap(gl.TEXTURE_2D);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.uniform1i(uDamask, 0);
-      textureLoaded = true;
-      setWebglReady(true);
-      scheduleFrame();
-    };
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let width = window.innerWidth;
@@ -198,25 +206,13 @@ export function AmbientBackdrop(_props: { dialStep?: number }) {
       curY: height * 0.42,
       trailX: width * 0.54,
       trailY: height * 0.42,
-      targetAlpha: 0.45, // Gentle ambient candle glow even before first pointer move
-      curAlpha: 0.45,
+      targetAlpha: 0.48,
+      curAlpha: reducedMotion.matches ? 0.48 : 0.08, // Blooms smoothly as lamplight ignites
       scrollY: window.scrollY,
     };
 
     let rafId = 0;
     let lastTime = 0;
-
-    const resize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      scheduleFrame();
-    };
 
     const render = (now: number) => {
       rafId = 0;
@@ -273,6 +269,51 @@ export function AmbientBackdrop(_props: { dialStep?: number }) {
       }
     }
 
+    const uploadTexture = (img: HTMLImageElement) => {
+      if (disposed || !tex) return;
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 0);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
+      gl.generateMipmap(gl.TEXTURE_2D);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.uniform1i(uDamask, 0);
+      textureLoaded = true;
+      // Draw initial frame synchronously before signalling ready so zero black-canvas flash occurs
+      render(performance.now());
+      setWebglReady(true);
+      if (!notifiedReady) {
+        notifiedReady = true;
+        readyCallbackRef.current?.();
+      }
+    };
+
+    const img = new Image();
+    img.decoding = "async";
+    img.src = "/textures/victorian-damask-nh.webp";
+    img.onload = () => {
+      if (typeof img.decode === "function") {
+        img.decode().then(() => uploadTexture(img), () => uploadTexture(img));
+      } else {
+        uploadTexture(img);
+      }
+    };
+    img.onerror = failToFallback;
+
+    const resize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      scheduleFrame();
+    };
+
     const onPointerMove = (e: PointerEvent) => {
       state.targetX = e.clientX;
       state.targetY = e.clientY;
@@ -308,7 +349,7 @@ export function AmbientBackdrop(_props: { dialStep?: number }) {
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerleave", onPointerLeave);
       window.removeEventListener("scroll", onScroll);
-      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("visibilitychange", onVisibility);
       if (tex) gl.deleteTexture(tex);
       if (quad) gl.deleteBuffer(quad);
       gl.deleteProgram(prog);
@@ -322,33 +363,35 @@ export function AmbientBackdrop(_props: { dialStep?: number }) {
       aria-hidden="true"
       className="celestial-mat pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#080605]"
     >
-      {/* Pure CSS Fallback Layer (instant SSR paint & non-WebGL fallback using pre-lit damask tile) */}
+      {/* Lightweight Obsidian Vignette Base (only loads 139KB static damask if WebGL is unsupported) */}
       <div
         className={`absolute inset-0 transition-opacity duration-500 ${
           webglReady ? "opacity-0" : "opacity-100"
         }`}
       >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_53%_46%,rgba(58,36,20,0.48)_0%,rgba(14,10,8,0.95)_70%,#050302_100%)]" />
-        {/* Faded base damask */}
-        <div
-          className="absolute inset-0 opacity-[0.10] mix-blend-screen"
-          style={{
-            backgroundImage: 'url("/textures/victorian-damask-gilt.webp")',
-            backgroundSize: "520px 1040px",
-          }}
-        />
-        {/* Cursor-masked illuminated damask fallback */}
-        <div
-          className="absolute inset-0 opacity-[0.23] mix-blend-screen"
-          style={{
-            backgroundImage: 'url("/textures/victorian-damask-gilt.webp")',
-            backgroundSize: "520px 1040px",
-            WebkitMaskImage:
-              "radial-gradient(560px circle at var(--spot-x) var(--spot-y), black 0%, rgba(0,0,0,0.4) 45%, transparent 78%)",
-            maskImage:
-              "radial-gradient(560px circle at var(--spot-x) var(--spot-y), black 0%, rgba(0,0,0,0.4) 45%, transparent 78%)",
-          }}
-        />
+        {webglUnsupported && (
+          <>
+            <div
+              className="absolute inset-0 opacity-[0.10] mix-blend-screen"
+              style={{
+                backgroundImage: 'url("/textures/victorian-damask-gilt.webp")',
+                backgroundSize: "520px 1040px",
+              }}
+            />
+            <div
+              className="absolute inset-0 opacity-[0.23] mix-blend-screen"
+              style={{
+                backgroundImage: 'url("/textures/victorian-damask-gilt.webp")',
+                backgroundSize: "520px 1040px",
+                WebkitMaskImage:
+                  "radial-gradient(560px circle at var(--spot-x) var(--spot-y), black 0%, rgba(0,0,0,0.4) 45%, transparent 78%)",
+                maskImage:
+                  "radial-gradient(560px circle at var(--spot-x) var(--spot-y), black 0%, rgba(0,0,0,0.4) 45%, transparent 78%)",
+              }}
+            />
+          </>
+        )}
       </div>
 
       {/* Real-Time Normal-Mapped 3D Grazing-Candlelight Victorian Damask WebGL Canvas */}
@@ -359,126 +402,139 @@ export function AmbientBackdrop(_props: { dialStep?: number }) {
         }`}
       />
 
-      {/* Global 0x0 SVG filters: delicate capillary ink edge-bleed along glyph perimeters (subtle, crisp letterforms, zero screentone) */}
+      {/*
+       * Authentic Dip-Pen Capillary Ink Bleed Filters (Zero Screentone / Zero Jagged Bite):
+       * Preserves an unbroken, anti-aliased glyph core on top while layering selective,
+       * macro-gated (~32% wet pockets, ~68% dry crisp stretches) outward capillary feathering
+       * underneath — so stems and serifs never get chewed or stair-stepped.
+       */}
       <svg width="0" height="0" aria-hidden="true" className="pointer-events-none fixed">
         <defs>
-          <filter id="letterpress-ink" x="-4%" y="-10%" width="108%" height="120%" colorInterpolationFilters="sRGB">
-            {/* 1. Very gentle letterpress stroke variation */}
-            <feTurbulence type="fractalNoise" baseFrequency="0.08 0.11" numOctaves="2" seed="5" result="squeezeNoise" />
+          <filter id="letterpress-ink" x="-6%" y="-14%" width="112%" height="128%" colorInterpolationFilters="sRGB">
+            {/* 1. Unbroken, anti-aliased nib core with subtle organic hand-pressure flow */}
+            <feTurbulence type="fractalNoise" baseFrequency="0.035 0.05" numOctaves="2" seed="7" result="nibFlow" />
             <feDisplacementMap
               in="SourceGraphic"
-              in2="squeezeNoise"
-              scale="0.7"
+              in2="nibFlow"
+              scale="0.34"
               xChannelSelector="R"
               yChannelSelector="G"
-              result="squeezedInk"
+              result="intactNibCore"
             />
 
-            {/* 2. Subtle fibrous bite on the solid ink edge */}
-            <feTurbulence type="turbulence" baseFrequency="0.45 0.6" numOctaves="2" seed="17" result="rimFiber" />
-            <feDisplacementMap
-              in="squeezedInk"
-              in2="rimFiber"
-              scale="0.8"
-              xChannelSelector="R"
-              yChannelSelector="G"
-              result="crispWickedCore"
-            />
-
-            {/* 3. Whisper-subtle sporadic capillary tendrils soaking into paper fibers */}
-            <feGaussianBlur in="squeezedInk" stdDeviation="0.45" result="thinRim" />
-            <feTurbulence type="turbulence" baseFrequency="0.24 0.5" numOctaves="3" seed="31" result="fiberVeins" />
-            <feDisplacementMap
-              in="thinRim"
-              in2="fiberVeins"
-              scale="2.1"
-              xChannelSelector="R"
-              yChannelSelector="G"
-              result="warpedRim"
-            />
+            {/* 2. Macro wet-pocket mask (~30px patches: ~62% dry = 0, ~38% pooled wet = 0..1) */}
+            <feTurbulence type="fractalNoise" baseFrequency="0.028 0.044" numOctaves="2" seed="19" result="macroPool" />
             <feColorMatrix
-              in="fiberVeins"
+              in="macroPool"
               type="matrix"
               values="0 0 0 0 0
                       0 0 0 0 0
                       0 0 0 0 0
-                      3.2 0 0 0 -1.35"
-              result="sporadicVeinMask"
-            />
-            <feComposite in="warpedRim" in2="sporadicVeinMask" operator="in" result="gatedTendrils" />
-            <feColorMatrix
-              in="gatedTendrils"
-              type="matrix"
-              values="1 0 0 0 0.05
-                      0 1 0 0 0.03
-                      0 0 1 0 0.01
-                      0 0 0 0.65 -0.1"
-              result="capillaryTendrils"
+                      8.6 0 0 0 -4.35"
+              result="wetPocketMask"
             />
 
+            {/* 3. Purely outward capillary ink wicking along cotton fibers (stronger on thick stems & junctions) */}
+            <feMorphology in="intactNibCore" operator="dilate" radius="0.42 0.28" result="inkPool" />
+            <feGaussianBlur in="inkPool" stdDeviation="0.95 0.68" result="pooledSpread" />
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.12 0.27"
+              numOctaves="3"
+              seed="43"
+              result="cottonFibers"
+            />
+            <feDisplacementMap
+              in="pooledSpread"
+              in2="cottonFibers"
+              scale="2.75"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="wickedSpread"
+            />
+
+            {/* Gate outward wicking strictly to sporadic wet pockets */}
+            <feComposite in="wickedSpread" in2="wetPocketMask" operator="in" result="localWicking" />
+
+            {/* Smooth anti-aliased capillary meniscus (never 1-bit stair-stepped, zero detached dots) */}
+            <feColorMatrix
+              in="localWicking"
+              type="matrix"
+              values="0.90 0 0 0 0
+                      0 0.86 0 0 0
+                      0 0 0.82 0 0
+                      0 0 0 3.6 -0.78"
+              result="smoothCapillarySwell"
+            />
+
+            {/* Intact anti-aliased glyph core sits cleanly on top of localized outward ink swell */}
             <feMerge>
-              <feMergeNode in="capillaryTendrils" />
-              <feMergeNode in="crispWickedCore" />
+              <feMergeNode in="smoothCapillarySwell" />
+              <feMergeNode in="intactNibCore" />
             </feMerge>
           </filter>
 
-          <filter id="letterpress-ink-sub" x="-3%" y="-8%" width="106%" height="116%" colorInterpolationFilters="sRGB">
-            <feTurbulence type="fractalNoise" baseFrequency="0.1 0.13" numOctaves="2" seed="13" result="subSqueeze" />
+          <filter id="letterpress-ink-sub" x="-5%" y="-12%" width="110%" height="124%" colorInterpolationFilters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.045 0.06" numOctaves="2" seed="13" result="subFlow" />
             <feDisplacementMap
               in="SourceGraphic"
-              in2="subSqueeze"
-              scale="0.45"
+              in2="subFlow"
+              scale="0.24"
               xChannelSelector="R"
               yChannelSelector="G"
-              result="subSqueezed"
+              result="subIntactCore"
             />
-            <feTurbulence type="turbulence" baseFrequency="0.5 0.66" numOctaves="2" seed="29" result="subRim" />
-            <feDisplacementMap
-              in="subSqueezed"
-              in2="subRim"
-              scale="0.55"
-              xChannelSelector="R"
-              yChannelSelector="G"
-              result="subCore"
-            />
-            <feGaussianBlur in="subSqueezed" stdDeviation="0.35" result="subSoft" />
-            <feTurbulence type="turbulence" baseFrequency="0.3 0.58" numOctaves="2" seed="41" result="subVeins" />
-            <feDisplacementMap
-              in="subSoft"
-              in2="subVeins"
-              scale="1.35"
-              xChannelSelector="R"
-              yChannelSelector="G"
-              result="subWarped"
-            />
+
+            <feTurbulence type="fractalNoise" baseFrequency="0.035 0.052" numOctaves="2" seed="29" result="subPool" />
             <feColorMatrix
-              in="subVeins"
+              in="subPool"
               type="matrix"
               values="0 0 0 0 0
                       0 0 0 0 0
                       0 0 0 0 0
-                      3.0 0 0 0 -1.3"
-              result="subVeinMask"
+                      8.4 0 0 0 -4.28"
+              result="subPocketMask"
             />
-            <feComposite in="subWarped" in2="subVeinMask" operator="in" result="subGated" />
+
+            <feMorphology in="subIntactCore" operator="dilate" radius="0.28 0.18" result="subDilated" />
+            <feGaussianBlur in="subDilated" stdDeviation="0.72 0.52" result="subSpread" />
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.14 0.30"
+              numOctaves="3"
+              seed="53"
+              result="subFibers"
+            />
+            <feDisplacementMap
+              in="subSpread"
+              in2="subFibers"
+              scale="1.95"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="subWicked"
+            />
+
+            <feComposite in="subWicked" in2="subPocketMask" operator="in" result="subLocalWick" />
+
             <feColorMatrix
-              in="subGated"
+              in="subLocalWick"
               type="matrix"
-              values="1 0 0 0 0.04
-                      0 1 0 0 0.025
-                      0 0 1 0 0.01
-                      0 0 0 0.5 -0.08"
-              result="subTendrils"
+              values="0.90 0 0 0 0
+                      0 0.86 0 0 0
+                      0 0 0.82 0 0
+                      0 0 0 3.3 -0.74"
+              result="subCapillarySwell"
             />
+
             <feMerge>
-              <feMergeNode in="subTendrils" />
-              <feMergeNode in="subCore" />
+              <feMergeNode in="subCapillarySwell" />
+              <feMergeNode in="subIntactCore" />
             </feMerge>
           </filter>
         </defs>
       </svg>
 
-      <LamplightDustCanvas />
+      <LamplightDustCanvas active={dustActive} />
     </div>
   );
 }

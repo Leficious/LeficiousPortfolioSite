@@ -337,7 +337,7 @@ export function AtelierHeaderRail({
   ];
 
   return (
-    <div className={`relative z-30 mx-auto w-full ${maxWidthClass}`}>
+    <div className={`atelier-header-rail relative z-30 mx-auto w-full ${maxWidthClass}`}>
       <header className="relative flex w-full flex-wrap items-center justify-between gap-3 border-b border-[#d4ad73]/38 pb-3.5 xl:flex-nowrap">
         <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-3 gap-y-0.5 xl:flex-nowrap">
           <p className="shrink-0 font-display text-xl font-bold tracking-[0.18em] text-[#f7f0e2] uppercase sm:text-[22px]">
@@ -423,8 +423,10 @@ export type SheafTabSpec = {
 };
 
 /**
- * Shared Right-Edge 4-Ply Layered Archival Paper Sheaf with an upper swallowtail
- * Venetian-carmine bookmark flag and cleanly aligned die-cut rag-vellum index tabs.
+ * Flush Right-Edge Bound Book-Block & Mahogany Fore-Edge Dock (`right-0 inset-y-0`).
+ * Mirrors the left spine architecturally so the viewport reads as an open folio volume,
+ * with die-cut rag-vellum index tabs & a Venetian-carmine bookmark flag projecting
+ * inward (leftward) from between the stepped bound pages instead of floating in mid-air.
  */
 export function ArchivalPaperSheaf({
   ariaLabel,
@@ -442,12 +444,12 @@ export function ArchivalPaperSheaf({
   const renderFlagInner = (active: boolean, label: string) => (
     <span
       style={{
-        clipPath: "polygon(0 0, 100% 5px, 100% calc(100% - 8px), 50% calc(100% - 1px), 0 100%)",
+        clipPath: "polygon(0 6px, 100% 0, 100% 100%, 0 calc(100% - 6px))",
       }}
       className={`relative flex flex-col items-center gap-1.5 py-3 transition-all duration-200 2xl:py-3.5 ${
         active
-          ? "w-[42px] border-r-[3px] border-r-[#ebd09e] bg-gradient-to-r from-[#6b1416] to-[#8c1a1d] text-[#faf3e6]"
-          : "w-[36px] bg-gradient-to-r from-[#450e10] to-[#611417] text-[#ead8bc] group-hover:w-[39px] group-hover:from-[#5c1315] group-hover:to-[#7a191c] group-hover:text-[#faf3e6]"
+          ? "w-[44px] border-l-[3px] border-l-[#ebd09e] bg-gradient-to-l from-[#6b1416] to-[#8c1a1d] text-[#faf3e6] shadow-[inset_-4px_0_6px_rgba(10,3,3,0.45)]"
+          : "w-[36px] border-l border-l-[#d4ad73]/45 bg-gradient-to-l from-[#420d0f] to-[#631417] text-[#ead8bc] shadow-[inset_-4px_0_6px_rgba(10,3,3,0.52)] group-hover:w-[40px] group-hover:from-[#581214] group-hover:to-[#7c191c] group-hover:text-[#faf3e6]"
       }`}
     >
       <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#ebd09e]" />
@@ -463,32 +465,52 @@ export function ArchivalPaperSheaf({
   return (
     <nav
       aria-label={ariaLabel}
-      className="fixed right-2.5 top-6 bottom-8 z-40 hidden w-[62px] select-none xl:block 2xl:right-4"
+      className="atelier-fore-edge fixed inset-y-0 right-0 z-40 hidden w-[70px] select-none xl:flex xl:flex-col xl:items-end xl:justify-center"
     >
-      {/* 4-Ply Layered Ledger Paper Sheaf Fore-Edge */}
+      {/* Full-Height Bound Morocco Board Lip + 4-Ply Stepped Rag-Vellum Page Stack Docked Flush at right-0 */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 w-[14px] shadow-[-12px_6px_26px_rgba(0,0,0,0.9)]"
+        className="pointer-events-none absolute inset-y-0 right-0 w-[22px] shadow-[-16px_0_34px_rgba(0,0,0,0.94)]"
       >
-        <span className="absolute top-3.5 bottom-2.5 left-[9px] w-[4px] border-y border-r border-[#5c4324]/55 bg-[#b8a382]" />
-        <span className="absolute top-1.5 bottom-4 left-[6px] w-[4px] border-y border-r border-[#684c29]/60 bg-[#cab695] shadow-[1px_0_2px_rgba(0,0,0,0.5)]" />
-        <span className="absolute top-2.5 bottom-1 left-[3px] w-[4px] border-y border-r border-[#73552f]/65 bg-[#dccba9] shadow-[1px_0_2px_rgba(0,0,0,0.45)]" />
-        <span className="absolute inset-y-0 left-0 w-[4px] border border-[#684720]/75 bg-[#eee1c6] shadow-[2px_0_4px_rgba(0,0,0,0.5)]" />
-        {anyTabActive && <span className="absolute inset-y-2 left-[1px] w-[2.5px] bg-[#faf3e4]" />}
+        {/* Outer ebony-mahogany book-cover board & gilt bevel */}
+        <span className="absolute inset-y-0 right-0 w-[7px] border-l border-[#d4ad73]/48 bg-gradient-to-l from-[#070504] via-[#120d09] to-[#1d150f]" />
+
+        {/* Stepped 4-ply rag-vellum page block running full height */}
+        <span className="absolute inset-y-0 right-[7px] w-[4px] border-l border-[#5c4324]/70 bg-[#b8a382]" />
+        <span className="absolute inset-y-0 right-[10.5px] w-[4px] border-l border-[#684c29]/75 bg-[#ccb896] shadow-[-1px_0_2px_rgba(0,0,0,0.45)]" />
+        <span className="absolute inset-y-0 right-[14px] w-[4px] border-l border-[#73552f]/78 bg-[#dfd0b0] shadow-[-1px_0_2px_rgba(0,0,0,0.4)]" />
+        <span className="absolute inset-y-0 right-[17.5px] w-[4.5px] border-x border-[#684720]/82 bg-[#f1e5cc] shadow-[-2px_0_5px_rgba(0,0,0,0.55)]" />
+
+        {/* Subtle paper-edge deckle grain along outermost vellum ply */}
+        <span
+          className="absolute inset-y-0 right-[17.5px] w-[4.5px] opacity-25 mix-blend-multiply"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(to bottom, rgba(84,56,24,0.38) 0px, rgba(84,56,24,0.38) 1px, transparent 1px, transparent 4px)",
+          }}
+        />
+
+        {anyTabActive && <span className="absolute inset-y-5 right-[18.5px] w-[2px] bg-[#fbf4e6]" />}
+
+        {/* Live silk reading-progress ribbon along the inner fore-edge seam */}
         {typeof progressPct === "number" && (
           <span
             style={{ height: `${Math.max(2, Math.min(100, progressPct)).toFixed(1)}%` }}
-            className="absolute top-0 left-0 w-[2.5px] bg-gradient-to-b from-[#8a181a] via-[#b82225] to-[#e2be84] transition-[height] duration-150"
+            className="absolute top-0 right-[19.5px] w-[2.5px] bg-gradient-to-b from-[#8a181a] via-[#b82225] to-[#e2be84] transition-[height] duration-150"
           />
         )}
+
+        {/* Sculpted bookbinding headband (top) & tailband (bottom) brass clasps */}
+        <span className="absolute top-0 right-0 h-[16px] w-[22px] border-b border-[#d4ad73]/65 bg-gradient-to-b from-[#261b13] to-[#120c08] shadow-[0_3px_8px_rgba(0,0,0,0.8)]" />
+        <span className="absolute bottom-0 right-0 h-[16px] w-[22px] border-t border-[#d4ad73]/65 bg-gradient-to-t from-[#261b13] to-[#120c08] shadow-[0_-3px_8px_rgba(0,0,0,0.8)]" />
       </div>
 
-      {/* Clean Architecturally Aligned Index Cascade */}
-      <div className="relative z-10 flex h-full flex-col items-start pt-4 pl-[10px] 2xl:pt-5">
+      {/* Inward-Projecting Die-Cut Index Cascade (tucked physically behind the outermost page lip at right-[19px]) */}
+      <div className="relative z-10 flex flex-col items-end py-7 pr-[19px]">
         {topFlag &&
           (() => {
-            const flagClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(2px_4px_6px_rgba(0,0,0,0.8))] ${
-              topFlag.active ? "z-30" : "z-20 hover:translate-x-0.5"
+            const flagClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(-3px_4px_7px_rgba(0,0,0,0.84))] ${
+              topFlag.active ? "z-30" : "z-20 hover:-translate-x-0.5"
             }`;
             if (topFlag.to) {
               return (
@@ -516,22 +538,22 @@ export function ArchivalPaperSheaf({
             );
           })()}
 
-        <div className={`${topFlag ? "mt-3.5 2xl:mt-5" : "mt-2"} flex flex-col items-start gap-1`}>
+        <div className={`${topFlag ? "mt-3.5 2xl:mt-4.5" : ""} flex flex-col items-end gap-1`}>
           {tabs.map((tab, idx) => {
             const active = Boolean(tab.active);
-            const wrapperClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(2px_4px_6px_rgba(0,0,0,0.75))] ${
-              active ? "" : "hover:z-30 hover:translate-x-0.5"
+            const wrapperClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(-3px_4px_7px_rgba(0,0,0,0.8))] ${
+              active ? "" : "hover:z-30 hover:-translate-x-0.5"
             }`;
 
             const tabInner = (
               <span
                 style={{
-                  clipPath: "polygon(0 0, 100% 9px, 100% calc(100% - 9px), 0 100%)",
+                  clipPath: "polygon(0 9px, 100% 0, 100% 100%, 0 calc(100% - 9px))",
                 }}
                 className={`relative flex flex-col items-center justify-center overflow-hidden py-2.5 transition-all duration-200 2xl:py-3.5 ${
                   active
-                    ? "w-[44px] border-r-[3px] border-r-rubric bg-[#faf3e4] text-rubric"
-                    : "w-[36px] border-r border-r-[#755228]/55 bg-[#efe4ce] text-[#1c140e] group-hover:w-[39px] group-hover:bg-[#f6eddc]"
+                    ? "w-[45px] border-l-[3px] border-l-rubric bg-[#fbf4e6] text-rubric shadow-[inset_-4px_0_6px_rgba(68,46,20,0.22)]"
+                    : "w-[36px] border-l border-l-[#755228]/65 bg-[#eee3cc] text-[#1c140e] shadow-[inset_-5px_0_7px_rgba(44,28,12,0.28)] group-hover:w-[40px] group-hover:bg-[#f7efe0]"
                 }`}
               >
                 <span
