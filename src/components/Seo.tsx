@@ -9,7 +9,7 @@ type SeoProps = {
   imageHeight?: number;
 };
 
-const defaultImage = "/social/leficious-og-1200x630.png?v=b04";
+const defaultImage = "/social/leficious-og-1200x630.png?v=b05";
 
 const setMeta = (selector: string, attribute: "name" | "property", value: string, content: string) => {
   let element = document.head.querySelector<HTMLMetaElement>(selector);
