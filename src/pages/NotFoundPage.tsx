@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { BrassPinThreads, BrassRule, FolioCorners } from "../components/AtelierChrome";
+import { AstrolabeCrest, BrassPinThreads, BrassRule, FolioCorners } from "../components/AtelierChrome";
 import { Seo } from "../components/Seo";
 import { useLanguage } from "../lib/language";
 
@@ -20,6 +20,7 @@ export function NotFoundPage({ message }: { message?: string }) {
         <div className="parchment-sheet relative border-[5px] border-[#110b07] px-8 pt-10 pb-10 text-center shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07]">
           <FolioCorners tone="parchment" />
           <div className="relative z-10">
+            <AstrolabeCrest tone="vellum" interactive={false} className="mx-auto mb-2.5 h-15 w-15 opacity-92" />
             <p className="font-numeral text-[13px] font-bold tracking-[0.24em] text-rubric">ARCHIVE CDIV · 404</p>
             <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-parchment-ink">{resolvedMessage}</h1>
             <BrassRule ornate tone="parchment" className="my-4" />

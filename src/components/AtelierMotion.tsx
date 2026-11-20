@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
-import { AstrolabeCrest } from "./AtelierChrome";
+import { B04IntroSting } from "./BrandMark";
 import { useInViewOnce } from "../lib/atelierMotion";
 
 type DustMote = {
@@ -244,15 +244,15 @@ export function AtelierIntroCurtain({
       ...criticalImages.map(preloadDecodeImage),
     ]);
 
-    // Hard safety cap (780ms) so slow networks never stall; minimum poise (400ms) so cached loads never flash
+    // Hard safety cap (1260ms) so slow networks never stall; minimum poise (1080ms) so the 8-layer B-04 + LEFICIØUS sting plays cleanly
     const maxCapTimer = window.setTimeout(() => {
       if (!cancelled) beginReveal();
-    }, 780);
+    }, 1260);
 
     waitAssets.then(() => {
       if (cancelled || revealedRef.current) return;
       const elapsed = performance.now() - startedAtRef.current;
-      const remaining = Math.max(0, 400 - elapsed);
+      const remaining = Math.max(0, 1080 - elapsed);
       window.setTimeout(() => {
         if (!cancelled) beginReveal();
       }, remaining);
@@ -283,23 +283,11 @@ export function AtelierIntroCurtain({
           : "opacity-100 scale-100"
       }`}
     >
-      {/* Warm candle-ember ignition aura */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(380px_circle_at_50%_47%,rgba(212,173,115,0.11)_0%,rgba(42,26,14,0.18)_46%,transparent_76%)]" />
+      {/* Warm candle-ember & crimson ignition aura */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(420px_circle_at_50%_47%,rgba(212,173,115,0.1)_0%,rgba(92,20,22,0.12)_38%,rgba(18,12,10,0.22)_62%,transparent_80%)]" />
 
       <div className="relative z-10 flex flex-col items-center">
-        <div className="atelier-curtain-crest">
-          <AstrolabeCrest className="h-15 w-15 drop-shadow-[0_6px_22px_rgba(212,173,115,0.22)] sm:h-17 sm:w-17" />
-        </div>
-
-        <div className="mt-4 flex items-center gap-2.5">
-          <span className="atelier-curtain-rule-r h-px w-12 origin-right bg-gradient-to-l from-[#d4ad73]/80 to-transparent sm:w-16" />
-          <span className="h-1.5 w-1.5 rotate-45 bg-[#8a181a]" />
-          <span className="atelier-curtain-rule-l h-px w-12 origin-left bg-gradient-to-r from-[#d4ad73]/80 to-transparent sm:w-16" />
-        </div>
-
-        <p className="mt-2.5 font-display text-[12.5px] font-bold tracking-[0.28em] text-[#e6cf9f]/90 uppercase">
-          LEFICIOUS · ATELIER
-        </p>
+        <B04IntroSting />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { useLanguage, type Language } from "../lib/language";
 import { projects } from "../lib/projects";
 import { AstrolabeCrest } from "./AtelierChrome";
+import { B04ColophonSeal, LeficiousWordmark } from "./BrandMark";
 
 const ROMAN = ["I", "II", "III", "IV", "V"] as const;
 const FOLIO_SLUGS = [
@@ -15,9 +16,10 @@ const FOLIO_SLUGS = [
 type SiteNavProps = {
   activeFolioSlug?: string | null;
   onSelectFolioSlug?: (slug: string) => void;
+  detentStep?: number;
 };
 
-export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
+export function SiteNav({ activeFolioSlug, onSelectFolioSlug, detentStep = 0 }: SiteNavProps) {
   const { pathname } = useLocation();
   const { language, setLanguage, text, localizedPath } = useLanguage();
 
@@ -65,7 +67,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
         className="site-header fixed inset-y-0 left-0 z-50 hidden w-[88px] flex-col items-center justify-between border-r border-[#d4ad73]/42 bg-gradient-to-r from-[#120e0b] via-[#0c0907] to-[#070504] py-5 shadow-[8px_0_28px_rgba(0,0,0,0.9)] select-none lg:flex"
       >
 
-        {/* Top Crest + Vertical Engraved Wordmark */}
+        {/* Top Crest + Vertical Engraved Slashed Wordmark */}
         <Link
           to={localizedPath("/")}
           viewTransition
@@ -75,12 +77,17 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           aria-label="Leficious: Home and Reel"
           className="group flex flex-col items-center gap-2.5 pt-0.5"
         >
-          <AstrolabeCrest className="h-11 w-11 drop-shadow-[0_3px_8px_rgba(0,0,0,0.85)]" />
+          <AstrolabeCrest
+            interactive
+            detentStep={detentStep}
+            className="h-12 w-12 drop-shadow-[0_3px_8px_rgba(0,0,0,0.85)]"
+          />
           <span
+            aria-hidden="true"
             className="font-display text-[13.5px] font-bold tracking-[0.25em] text-[#e8c891] uppercase transition-colors group-hover:text-[#fff6e5]"
             style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
           >
-            LEFICIOUS
+            LEFICIØUS
           </span>
         </Link>
 
@@ -224,9 +231,19 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
       {/* Mobile / Tablet Compact Top Bar (< lg) */}
       <header className="site-header sticky top-0 z-50 border-b border-warm/45 bg-spine/95 backdrop-blur-md lg:hidden">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-2.5">
-          <Link to={localizedPath("/")} viewTransition className="inline-flex items-center gap-2.5">
-            <AstrolabeCrest className="h-8 w-8" />
-            <span className="font-display text-base font-bold tracking-[0.2em] text-[#e5c287]">LEFICIOUS</span>
+          <Link
+            to={localizedPath("/")}
+            viewTransition
+            aria-label="Leficious: Home"
+            className="group inline-flex items-center gap-2.5"
+          >
+            <AstrolabeCrest compact interactive detentStep={detentStep} className="h-8.5 w-8.5" />
+            <LeficiousWordmark
+              className="h-[19px] w-auto translate-y-[1px]"
+              color="#ebd09e"
+              triggerKey={cleanPath}
+              ariaLabel={null}
+            />
           </Link>
 
           <div className="flex items-center gap-4 text-[15px] font-display">
@@ -273,10 +290,8 @@ export function SiteFooter() {
   const { text } = useLanguage();
   return (
     <footer className="mt-16 border-t border-warm/35">
-      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-7 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-display text-[16px] tracking-wide text-foreground/92">
-          © {new Date().getFullYear()} Leficious · {text("Game, Level & Technical Design Atelier", "游戏、关卡与技术设计档案")}
-        </p>
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-8 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <B04ColophonSeal subtitle={text("Game, Level & Technical Design Atelier", "游戏、关卡与技术设计档案")} />
         <p className="font-display text-[13px] font-bold tracking-[0.2em] text-warm uppercase">LOS ANGELES · CA</p>
       </div>
     </footer>

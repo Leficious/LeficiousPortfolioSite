@@ -12,6 +12,7 @@ import {
 import { Link, Route, Routes, useLocation, type Location } from "react-router-dom";
 import { AmbientBackdrop } from "./components/AmbientBackdrop";
 import {
+  AstrolabeCrest,
   AtelierHeaderRail,
   type AtelierSection,
 } from "./components/AtelierChrome";
@@ -229,6 +230,7 @@ export function App() {
       };
       setDisplayedLocation(dest);
       setStagePhase({ state: "entering", kind: finalKind });
+      setDialStep((prev) => prev + 1);
 
       // Fallback safety cleanup slightly past 380ms enter duration in case tab is backgrounded
       enterSafetyTimerRef.current = window.setTimeout(() => {
@@ -424,7 +426,11 @@ export function App() {
         onBackdropReady={handleBackdropReady}
         dustActive={introStage !== "veiled"}
       />
-      <SiteNav activeFolioSlug={activeFolioSlug} onSelectFolioSlug={handleSelectFolio} />
+      <SiteNav
+        activeFolioSlug={activeFolioSlug}
+        onSelectFolioSlug={handleSelectFolio}
+        detentStep={dialStep}
+      />
 
       <div className="relative z-10 flex min-h-[calc(100vh-56px)] flex-col lg:min-h-screen lg:pl-[88px]">
         {/* Persistent Top Archival Header Rail — never unmounts across route switches */}
@@ -444,7 +450,11 @@ export function App() {
         >
           <Suspense
             fallback={
-              <div className="mx-auto min-h-[70vh] max-w-6xl px-6 py-24" aria-live="polite">
+              <div
+                className="mx-auto flex min-h-[70vh] max-w-6xl items-center justify-center px-6 py-24"
+                aria-live="polite"
+              >
+                <AstrolabeCrest calibrating interactive={false} className="h-14 w-14 opacity-80" />
                 <span className="sr-only">{text("Opening folio", "正在展开档案")}</span>
               </div>
             }

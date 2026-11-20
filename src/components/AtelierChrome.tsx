@@ -3,79 +3,18 @@ import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import { isClientHydratedForPortals } from "../lib/atelierMotion";
 import { useLanguage } from "../lib/language";
-
-const FRAME_MAIN_D =
-  "M 31.80 15.00 H 4.70 L 48.00 90.00 L 62.20 65.40 H 57.82 L 48.00 82.40 L 11.28 18.80 H 31.80 Z";
-const FRAME_UR_D =
-  "M 51.40 15.00 H 91.30 L 73.52 45.80 H 69.13 L 84.72 18.80 H 51.40 Z";
-const L_MONOLITH_D =
-  "M 36.20 10.24 L 47.00 4.00 V 50.20 H 77.20 L 70.96 61.00 H 40.73 L 36.20 53.16 Z";
-const CHEVRON_POINTS =
-  "42.23,65.40 44.60,65.40 48.00,71.30 51.40,65.40 53.77,65.40 48.00,75.40";
-const CHAMBER_POINTS = "51.40,23.20 77.09,23.20 64.05,45.80 51.40,45.80";
-
-const ASTROLABE_TICKS = Array.from({ length: 24 }, (_, idx) => {
-  const angle = (idx * 15 * Math.PI) / 180;
-  const major = idx % 2 === 0;
-  const r1 = major ? 42.5 : 44.5;
-  const r2 = 46.8;
-  return {
-    x1: (48 + Math.cos(angle) * r1).toFixed(2),
-    y1: (48 + Math.sin(angle) * r1).toFixed(2),
-    x2: (48 + Math.cos(angle) * r2).toFixed(2),
-    y2: (48 + Math.sin(angle) * r2).toFixed(2),
-    major,
-  };
-});
+import { B04Crest, LeficiousWordmark, type B04CrestProps } from "./BrandMark";
 
 /**
- * Custom P03-E2 geometric L-monolith crest inscribed inside a mathematical
- * double-ring burnished antique-bronze astrolabe.
+ * B-04 Cathedral Monolith, Detached 3-Blade Gothic Wings & Victorian Volute Crest.
  */
-export function AstrolabeCrest({ className = "h-11 w-11" }: { className?: string }) {
-  const rawId = useId();
-  const clipId = `ast-crest-${rawId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
-
-  return (
-    <svg viewBox="0 0 96 96" aria-hidden="true" className={`shrink-0 overflow-visible ${className}`}>
-      <defs>
-        <clipPath id={clipId}>
-          <polygon points={CHAMBER_POINTS} />
-        </clipPath>
-      </defs>
-
-      <g className="origin-center transition-transform duration-700 ease-out group-hover:rotate-[30deg]">
-        <circle cx="48" cy="48" r="46.8" fill="none" stroke="#e2be84" strokeWidth="1.1" opacity="0.92" />
-        <circle cx="48" cy="48" r="42.2" fill="none" stroke="#d4ad73" strokeWidth="0.7" opacity="0.55" />
-        {ASTROLABE_TICKS.map((t, i) => (
-          <line
-            key={i}
-            x1={t.x1}
-            y1={t.y1}
-            x2={t.x2}
-            y2={t.y2}
-            stroke="#e2be84"
-            strokeWidth={t.major ? "1.05" : "0.6"}
-            opacity={t.major ? "0.9" : "0.48"}
-          />
-        ))}
-        <polygon points="48,0 50.2,3.2 48,6.4 45.8,3.2" fill="#f3dfb9" />
-        <polygon points="48,89.6 50.2,92.8 48,96 45.8,92.8" fill="#d4ad73" opacity="0.85" />
-      </g>
-
-      <g transform="translate(10.5, 11) scale(0.78)">
-        <path d={FRAME_MAIN_D} fill="#f7f0e2" />
-        <path d={FRAME_UR_D} fill="#f7f0e2" />
-        <g clipPath={`url(#${clipId})`} fill="none" stroke="#d4ad73" strokeWidth="2.4">
-          <circle cx="47" cy="50.2" r="10.8" />
-          <circle cx="47" cy="50.2" r="18.0" />
-          <circle cx="47" cy="50.2" r="25.2" />
-        </g>
-        <polygon points={CHEVRON_POINTS} fill="#d4ad73" />
-        <path d={L_MONOLITH_D} fill="#ebd09e" />
-      </g>
-    </svg>
-  );
+export function AstrolabeCrest({
+  className = "h-11 w-11",
+  tone = "gilt",
+  interactive = true,
+  ...rest
+}: B04CrestProps) {
+  return <B04Crest className={className} tone={tone} interactive={interactive} {...rest} />;
 }
 
 /**
@@ -416,11 +355,27 @@ export function AtelierHeaderRail({
       <header className="atelier-header-bar relative flex w-full flex-wrap items-center justify-between gap-3 border-b border-[#d4ad73]/38 pb-3.5 xl:flex-nowrap">
         <div
           key={`${eyebrow}|${subtitle}`}
-          className="animate-header-meta flex min-w-0 flex-1 flex-wrap items-baseline gap-x-3 gap-y-0.5 xl:flex-nowrap"
+          className="animate-header-meta flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-0.5 xl:flex-nowrap"
         >
-          <p className="shrink-0 font-display text-xl font-bold tracking-[0.18em] text-[#f7f0e2] uppercase sm:text-[22px]">
-            {eyebrow}
-          </p>
+          {eyebrow === "LEFICIOUS" ? (
+            <Link
+              to={localizedPath("/")}
+              viewTransition
+              aria-label="Leficious: Atelier Home"
+              className="shrink-0 py-0.5"
+            >
+              <LeficiousWordmark
+                className="h-[22px] w-auto translate-y-[1.5px] sm:h-[25px]"
+                color="#f7f0e2"
+                triggerKey={cleanPath}
+                ariaLabel={null}
+              />
+            </Link>
+          ) : (
+            <p className="shrink-0 font-display text-xl font-bold tracking-[0.18em] text-[#f7f0e2] uppercase sm:text-[22px]">
+              {eyebrow}
+            </p>
+          )}
           <span aria-hidden="true" className="hidden h-1.5 w-1.5 shrink-0 rotate-45 bg-[#d4ad73] sm:inline-block" />
           <p className="truncate font-display text-[16px] font-medium italic text-[#e6dac6] sm:text-[17.5px]">
             {subtitle}
