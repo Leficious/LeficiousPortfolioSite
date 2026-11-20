@@ -213,7 +213,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
   const telemetry = isChinese ? activeMeta.telemetryZh : activeMeta.telemetryEn;
 
   return (
-    <div className="relative flex min-h-[calc(100vh-56px)] flex-col justify-between overflow-x-clip px-4 py-4 sm:px-8 lg:min-h-screen lg:px-10 lg:py-4 xl:pl-11 xl:pr-28 2xl:py-6">
+    <div className="relative flex min-h-[calc(100vh-56px)] flex-col justify-between overflow-x-clip px-4 pt-5 pb-4 sm:px-8 lg:min-h-screen lg:px-10 lg:pt-6 lg:pb-4 xl:pl-11 xl:pr-28 2xl:pb-6">
       <Seo
         title={text("Leficious | Game, Level & Technical Designer", "Leficious | 游戏、关卡与技术设计师")}
         description={text(

@@ -1,13 +1,16 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
+
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
- * Packs natural-height Salon cards across 1–3 columns without stretching aspect ratios
- * and without ever creating mid-stream vertical holes from wide spans across uneven columns.
+ * Packs natural-height Salon cards across 1–3 columns synchronously before first paint
+ * (via useLayoutEffect) so View Transitions capture the already-packed masonry layout
+ * with zero post-paint card snapping.
  */
 export function GalleryLayout({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const grid = ref.current;
     if (!grid) return;
     let frame = 0;
@@ -24,8 +27,6 @@ export function GalleryLayout({ children }: { children: ReactNode }) {
         const card = cards[idx];
         const wantsWide = card.dataset.wide === "true" && columns > 1;
 
-        // Only allow a 2-column span when two adjacent columns sit within 40px of each other
-        // AND within 60px of the shortest column so wide cards never stack down one side leaving an empty column.
         const minBottom = Math.min(...bottoms);
         let chosenSpan = 1;
         let chosenCol = 0;
@@ -72,13 +73,14 @@ export function GalleryLayout({ children }: { children: ReactNode }) {
       frame = requestAnimationFrame(pack);
     };
 
+    pack();
+
     const observer = new ResizeObserver(schedule);
     observer.observe(grid);
     for (const child of grid.children) observer.observe(child);
 
     window.addEventListener("resize", schedule);
     grid.addEventListener("load", schedule, true);
-    pack();
 
     return () => {
       observer.disconnect();

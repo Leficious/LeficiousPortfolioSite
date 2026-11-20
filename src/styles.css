@@ -115,6 +115,22 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(212, 173, 115, 0.32) #080605;
+  }
+
+  html::-webkit-scrollbar {
+    width: 6px;
+    background-color: #080605;
+  }
+
+  html::-webkit-scrollbar-thumb {
+    background-color: rgba(212, 173, 115, 0.32);
+  }
+
+  html::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(212, 173, 115, 0.55);
   }
 
   body {
@@ -514,6 +530,18 @@ html[lang="zh-CN"] .parchment-sheet h2 {
   view-transition-name: celestial-mat;
 }
 
+.atelier-header-bar {
+  view-transition-name: atelier-header-bar;
+}
+
+.atelier-active-tab {
+  view-transition-name: atelier-active-tab;
+}
+
+.atelier-fore-edge {
+  view-transition-name: atelier-sheaf;
+}
+
 .route-stage {
   view-transition-name: route-content;
 }
@@ -543,26 +571,102 @@ html[lang="zh-CN"] .parchment-sheet h2 {
     animation: astrolabe-ccw 155s linear infinite;
   }
 
-  @keyframes desk-sheet-clear {
+  @keyframes vt-pan-out-left {
     from {
       opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
+      transform: translate3d(0, 0, 0);
     }
     to {
       opacity: 0;
-      transform: translate3d(0, 8px, 0) scale(0.992);
+      transform: translate3d(-22px, 0, 0);
     }
   }
 
-  @keyframes desk-sheet-deal {
+  @keyframes vt-pan-in-right {
     from {
       opacity: 0;
-      transform: translate3d(0, 10px, 0) scale(0.992);
+      transform: translate3d(24px, 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes vt-pan-out-right {
+    from {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      opacity: 0;
+      transform: translate3d(22px, 0, 0);
+    }
+  }
+
+  @keyframes vt-pan-in-left {
+    from {
+      opacity: 0;
+      transform: translate3d(-24px, 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes vt-folio-open-out {
+    from {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translate3d(0, -12px, 0) scale(0.99);
+    }
+  }
+
+  @keyframes vt-folio-open-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 16px, 0) scale(0.99);
     }
     to {
       opacity: 1;
       transform: translate3d(0, 0, 0) scale(1);
     }
+  }
+
+  @keyframes vt-folio-close-out {
+    from {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translate3d(0, 12px, 0) scale(0.99);
+    }
+  }
+
+  @keyframes vt-folio-close-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -14px, 0) scale(0.992);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes vt-soft-fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+
+  @keyframes vt-soft-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   @keyframes folio-arc-in {
@@ -773,35 +877,121 @@ html[lang="zh-CN"] .parchment-sheet h2 {
   mix-blend-mode: normal;
 }
 
-::view-transition-group(site-header) {
-  z-index: 60;
-}
-
 ::view-transition-group(celestial-mat) {
   z-index: 0;
 }
 
 ::view-transition-group(route-content) {
-  animation-duration: 460ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 10;
+  /* Prevent Chromium from morphing/stretching box height between 900px Home and 4800px Gallery! */
+  animation: none;
 }
 
-::view-transition-old(route-content) {
-  animation: desk-sheet-clear 175ms ease-in both;
+::view-transition-image-pair(route-content) {
+  isolation: isolate;
+}
+
+::view-transition-old(route-content),
+::view-transition-new(route-content) {
+  width: 100%;
+  height: auto;
+  overflow: clip;
+  object-fit: none;
+  object-position: top center;
   mix-blend-mode: normal;
+}
+
+/* Default subtle depth deal */
+::view-transition-old(route-content) {
+  animation: vt-folio-open-out 165ms cubic-bezier(0.32, 0, 0.67, 0) both;
 }
 
 ::view-transition-new(route-content) {
-  animation: desk-sheet-deal 360ms 85ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: vt-folio-open-in 340ms 55ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Direction-aware horizontal room glides when clicking top Atelier / Gallery / About tabs */
+html[data-vt-kind="pan-right"]::view-transition-old(route-content) {
+  animation: vt-pan-out-left 165ms cubic-bezier(0.32, 0, 0.67, 0) both;
+}
+
+html[data-vt-kind="pan-right"]::view-transition-new(route-content) {
+  animation: vt-pan-in-right 350ms 50ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+html[data-vt-kind="pan-left"]::view-transition-old(route-content) {
+  animation: vt-pan-out-right 165ms cubic-bezier(0.32, 0, 0.67, 0) both;
+}
+
+html[data-vt-kind="pan-left"]::view-transition-new(route-content) {
+  animation: vt-pan-in-left 350ms 50ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+html[data-vt-kind="folio-close"]::view-transition-old(route-content) {
+  animation: vt-folio-close-out 160ms cubic-bezier(0.32, 0, 0.67, 0) both;
+}
+
+html[data-vt-kind="folio-close"]::view-transition-new(route-content) {
+  animation: vt-folio-close-in 340ms 50ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Right bound book-block stays anchored flush to right-0 while its index tabs crossfade in place */
+::view-transition-group(atelier-sheaf) {
+  z-index: 45;
+  animation-duration: 280ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(atelier-sheaf) {
+  animation: vt-soft-fade-out 150ms ease-out both;
   mix-blend-mode: normal;
 }
 
+::view-transition-new(atelier-sheaf) {
+  animation: vt-soft-fade-in 240ms 40ms ease-out both;
+  mix-blend-mode: normal;
+}
+
+/* Stationary Top Header Rail + Gliding Champagne-Gilt Underline Shuttle */
+::view-transition-group(atelier-header-bar) {
+  z-index: 55;
+  animation-duration: 240ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(atelier-header-bar) {
+  animation: vt-soft-fade-out 160ms ease-out both;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(atelier-header-bar) {
+  animation: vt-soft-fade-in 200ms 20ms ease-out both;
+  mix-blend-mode: normal;
+}
+
+::view-transition-group(atelier-active-tab) {
+  z-index: 56;
+  animation-duration: 340ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(atelier-active-tab),
+::view-transition-new(atelier-active-tab) {
+  height: 100%;
+  width: 100%;
+  mix-blend-mode: normal;
+}
+
+::view-transition-group(site-header) {
+  z-index: 60;
+}
+
 html.language-switching::view-transition-old(route-content) {
-  animation: desk-sheet-clear 110ms ease-in both;
+  animation: vt-soft-fade-out 110ms ease-in both;
 }
 
 html.language-switching::view-transition-new(route-content) {
-  animation: desk-sheet-deal 220ms 40ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: vt-soft-fade-in 220ms 40ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -410,36 +410,36 @@ export function AmbientBackdrop({ onBackdropReady, dustActive = true }: AmbientB
        */}
       <svg width="0" height="0" aria-hidden="true" className="pointer-events-none fixed">
         <defs>
-          <filter id="letterpress-ink" x="-6%" y="-14%" width="112%" height="128%" colorInterpolationFilters="sRGB">
-            {/* 1. Unbroken, anti-aliased nib core with subtle organic hand-pressure flow */}
+          <filter id="letterpress-ink" x="-5%" y="-12%" width="110%" height="124%" colorInterpolationFilters="sRGB">
+            {/* 1. Unbroken, anti-aliased nib core with whisper-subtle hand-pressure flow */}
             <feTurbulence type="fractalNoise" baseFrequency="0.035 0.05" numOctaves="2" seed="7" result="nibFlow" />
             <feDisplacementMap
               in="SourceGraphic"
               in2="nibFlow"
-              scale="0.34"
+              scale="0.24"
               xChannelSelector="R"
               yChannelSelector="G"
               result="intactNibCore"
             />
 
-            {/* 2. Macro wet-pocket mask (~30px patches: ~62% dry = 0, ~38% pooled wet = 0..1) */}
-            <feTurbulence type="fractalNoise" baseFrequency="0.028 0.044" numOctaves="2" seed="19" result="macroPool" />
+            {/* 2. Selective macro wet-pocket mask (~72% crisp dry edge, ~28% delicate pooled wicking) */}
+            <feTurbulence type="fractalNoise" baseFrequency="0.030 0.046" numOctaves="2" seed="19" result="macroPool" />
             <feColorMatrix
               in="macroPool"
               type="matrix"
               values="0 0 0 0 0
                       0 0 0 0 0
                       0 0 0 0 0
-                      8.6 0 0 0 -4.35"
+                      8.0 0 0 0 -4.18"
               result="wetPocketMask"
             />
 
-            {/* 3. Purely outward capillary ink wicking along cotton fibers (stronger on thick stems & junctions) */}
-            <feMorphology in="intactNibCore" operator="dilate" radius="0.42 0.28" result="inkPool" />
-            <feGaussianBlur in="inkPool" stdDeviation="0.95 0.68" result="pooledSpread" />
+            {/* 3. Restrained outward capillary feathering along cotton fibers (zero heavy blotching) */}
+            <feMorphology in="intactNibCore" operator="dilate" radius="0.16 0.10" result="inkPool" />
+            <feGaussianBlur in="inkPool" stdDeviation="0.72 0.52" result="pooledSpread" />
             <feTurbulence
               type="fractalNoise"
-              baseFrequency="0.12 0.27"
+              baseFrequency="0.13 0.29"
               numOctaves="3"
               seed="43"
               result="cottonFibers"
@@ -447,7 +447,7 @@ export function AmbientBackdrop({ onBackdropReady, dustActive = true }: AmbientB
             <feDisplacementMap
               in="pooledSpread"
               in2="cottonFibers"
-              scale="2.75"
+              scale="1.85"
               xChannelSelector="R"
               yChannelSelector="G"
               result="wickedSpread"
@@ -456,51 +456,50 @@ export function AmbientBackdrop({ onBackdropReady, dustActive = true }: AmbientB
             {/* Gate outward wicking strictly to sporadic wet pockets */}
             <feComposite in="wickedSpread" in2="wetPocketMask" operator="in" result="localWicking" />
 
-            {/* Smooth anti-aliased capillary meniscus (never 1-bit stair-stepped, zero detached dots) */}
+            {/* Gentle anti-aliased capillary meniscus */}
             <feColorMatrix
               in="localWicking"
               type="matrix"
-              values="0.90 0 0 0 0
-                      0 0.86 0 0 0
-                      0 0 0.82 0 0
-                      0 0 0 3.6 -0.78"
+              values="0.92 0 0 0 0
+                      0 0.88 0 0 0
+                      0 0 0.84 0 0
+                      0 0 0 2.35 -0.62"
               result="smoothCapillarySwell"
             />
 
-            {/* Intact anti-aliased glyph core sits cleanly on top of localized outward ink swell */}
+            {/* Intact anti-aliased glyph core sits cleanly on top of localized outward ink wicking */}
             <feMerge>
               <feMergeNode in="smoothCapillarySwell" />
               <feMergeNode in="intactNibCore" />
             </feMerge>
           </filter>
 
-          <filter id="letterpress-ink-sub" x="-5%" y="-12%" width="110%" height="124%" colorInterpolationFilters="sRGB">
+          <filter id="letterpress-ink-sub" x="-4%" y="-10%" width="108%" height="120%" colorInterpolationFilters="sRGB">
             <feTurbulence type="fractalNoise" baseFrequency="0.045 0.06" numOctaves="2" seed="13" result="subFlow" />
             <feDisplacementMap
               in="SourceGraphic"
               in2="subFlow"
-              scale="0.24"
+              scale="0.18"
               xChannelSelector="R"
               yChannelSelector="G"
               result="subIntactCore"
             />
 
-            <feTurbulence type="fractalNoise" baseFrequency="0.035 0.052" numOctaves="2" seed="29" result="subPool" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.036 0.054" numOctaves="2" seed="29" result="subPool" />
             <feColorMatrix
               in="subPool"
               type="matrix"
               values="0 0 0 0 0
                       0 0 0 0 0
                       0 0 0 0 0
-                      8.4 0 0 0 -4.28"
+                      7.8 0 0 0 -4.12"
               result="subPocketMask"
             />
 
-            <feMorphology in="subIntactCore" operator="dilate" radius="0.28 0.18" result="subDilated" />
-            <feGaussianBlur in="subDilated" stdDeviation="0.72 0.52" result="subSpread" />
+            <feGaussianBlur in="subIntactCore" stdDeviation="0.58 0.44" result="subSpread" />
             <feTurbulence
               type="fractalNoise"
-              baseFrequency="0.14 0.30"
+              baseFrequency="0.15 0.32"
               numOctaves="3"
               seed="53"
               result="subFibers"
@@ -508,7 +507,7 @@ export function AmbientBackdrop({ onBackdropReady, dustActive = true }: AmbientB
             <feDisplacementMap
               in="subSpread"
               in2="subFibers"
-              scale="1.95"
+              scale="1.35"
               xChannelSelector="R"
               yChannelSelector="G"
               result="subWicked"
@@ -519,10 +518,10 @@ export function AmbientBackdrop({ onBackdropReady, dustActive = true }: AmbientB
             <feColorMatrix
               in="subLocalWick"
               type="matrix"
-              values="0.90 0 0 0 0
-                      0 0.86 0 0 0
-                      0 0 0.82 0 0
-                      0 0 0 3.3 -0.74"
+              values="0.92 0 0 0 0
+                      0 0.88 0 0 0
+                      0 0 0.84 0 0
+                      0 0 0 2.15 -0.58"
               result="subCapillarySwell"
             />
 

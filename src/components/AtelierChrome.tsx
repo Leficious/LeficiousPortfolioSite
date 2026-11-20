@@ -338,7 +338,7 @@ export function AtelierHeaderRail({
 
   return (
     <div className={`atelier-header-rail relative z-30 mx-auto w-full ${maxWidthClass}`}>
-      <header className="relative flex w-full flex-wrap items-center justify-between gap-3 border-b border-[#d4ad73]/38 pb-3.5 xl:flex-nowrap">
+      <header className="atelier-header-bar relative flex w-full flex-wrap items-center justify-between gap-3 border-b border-[#d4ad73]/38 pb-3.5 xl:flex-nowrap">
         <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-3 gap-y-0.5 xl:flex-nowrap">
           <p className="shrink-0 font-display text-xl font-bold tracking-[0.18em] text-[#f7f0e2] uppercase sm:text-[22px]">
             {eyebrow}
@@ -362,31 +362,43 @@ export function AtelierHeaderRail({
                   to={item.to}
                   viewTransition
                   aria-current={active ? "page" : undefined}
-                  style={{
-                    clipPath:
-                      "polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px)",
-                  }}
-                  className={`group relative inline-flex h-[36px] p-[1.5px] transition-colors duration-200 ${
-                    active
-                      ? "bg-gradient-to-b from-[#fff3d6] via-[#dfb97b] to-[#b5894b] shadow-[0_4px_12px_rgba(0,0,0,0.65)]"
-                      : "bg-gradient-to-b from-[#e5c489]/75 to-[#8c6736]/58 shadow-[0_3px_8px_rgba(0,0,0,0.55)] hover:from-[#fff0cc] hover:to-[#c89d62]"
-                  }`}
+                  className="group relative inline-flex h-[36px]"
                 >
                   <span
                     style={{
                       clipPath:
-                        "polygon(5.12px 0, calc(100% - 5.12px) 0, 100% 5.12px, 100% calc(100% - 5.12px), calc(100% - 5.12px) 100%, 5.12px 100%, 0 calc(100% - 5.12px), 0 5.12px)",
+                        "polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px)",
                     }}
-                    className={`inline-flex h-full items-center px-3.5 transition-colors xl:px-4 ${
+                    className={`inline-flex h-full items-center p-[1.5px] transition-colors duration-200 ${
                       active
-                        ? "bg-gradient-to-b from-[#fcf6e8] to-[#eae0c8] text-[#14100c]"
-                        : "bg-gradient-to-b from-[#211913] via-[#17110d] to-[#100c09] text-[#ede2cf] group-hover:from-[#2c2119] group-hover:to-[#18120e] group-hover:text-white"
+                        ? "bg-gradient-to-b from-[#fff3d6] via-[#dfb97b] to-[#b5894b] shadow-[0_4px_12px_rgba(0,0,0,0.65)]"
+                        : "bg-gradient-to-b from-[#e5c489]/75 to-[#8c6736]/58 shadow-[0_3px_8px_rgba(0,0,0,0.55)] group-hover:from-[#fff0cc] group-hover:to-[#c89d62]"
                     }`}
                   >
-                    <span className="font-display text-[13px] font-bold tracking-[0.08em] uppercase whitespace-nowrap xl:text-[13.5px]">
-                      <span className={active ? "text-rubric" : "text-[#e8c78c]"}>{item.roman}</span> · {item.label}
+                    <span
+                      style={{
+                        clipPath:
+                          "polygon(5.12px 0, calc(100% - 5.12px) 0, 100% 5.12px, 100% calc(100% - 5.12px), calc(100% - 5.12px) 100%, 5.12px 100%, 0 calc(100% - 5.12px), 0 5.12px)",
+                      }}
+                      className={`inline-flex h-full items-center px-3.5 transition-colors xl:px-4 ${
+                        active
+                          ? "bg-gradient-to-b from-[#fcf6e8] to-[#eae0c8] text-[#14100c]"
+                          : "bg-gradient-to-b from-[#211913] via-[#17110d] to-[#100c09] text-[#ede2cf] group-hover:from-[#2c2119] group-hover:to-[#18120e] group-hover:text-white"
+                      }`}
+                    >
+                      <span className="font-display text-[13px] font-bold tracking-[0.08em] uppercase whitespace-nowrap xl:text-[13.5px]">
+                        <span className={active ? "text-rubric" : "text-[#e8c78c]"}>{item.roman}</span> · {item.label}
+                      </span>
                     </span>
                   </span>
+
+                  {/* Gliding champagne-gilt underline shuttle riding along the header rule with zero text overlap */}
+                  {active && (
+                    <span
+                      aria-hidden="true"
+                      className="atelier-active-tab pointer-events-none absolute inset-x-1.5 -bottom-[15px] h-[2px] bg-gradient-to-r from-[#c89d62] via-[#fff2d2] to-[#c89d62] shadow-[0_0_10px_rgba(242,212,160,0.55)]"
+                    />
+                  )}
                 </Link>
               );
             })}
@@ -395,7 +407,7 @@ export function AtelierHeaderRail({
           {rightSlot && (
             <>
               <span aria-hidden="true" className="hidden h-4.5 w-px bg-[#d4ad73]/38 lg:block" />
-              <div className="flex shrink-0 items-center">{rightSlot}</div>
+              <div className="flex shrink-0 items-center justify-end lg:min-w-[158px]">{rightSlot}</div>
             </>
           )}
         </div>
