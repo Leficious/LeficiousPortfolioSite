@@ -153,7 +153,7 @@ function YouTubeEmbed({ id, title, thumbnailSrc }: { id: string; title: string; 
     <button
       type="button"
       onClick={() => setActive(true)}
-      className="group absolute inset-0 flex cursor-pointer items-center justify-center bg-black"
+      className="group absolute inset-0 w-full cursor-pointer text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
       aria-label={`${text("Play", "播放")} ${title}`}
     >
       <img
@@ -164,11 +164,16 @@ function YouTubeEmbed({ id, title, thumbnailSrc }: { id: string; title: string; 
         loading="lazy"
         decoding="async"
         onError={() => setThumbnail(`https://i.ytimg.com/vi/${id}/hqdefault.jpg`)}
-        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
       />
-      <span aria-hidden="true" className="absolute inset-0 bg-black/22 transition-colors group-hover:bg-black/8" />
-      <span className="brass-plaque relative px-4.5 py-2 font-display text-[13.5px] font-bold tracking-[0.1em] uppercase transition-transform group-hover:scale-[1.03]">
-        ▶ {text("Play Clip", "播放片段")}
+      <span aria-hidden="true" className="absolute inset-0 bg-black/22 transition-colors duration-300 group-hover:bg-black/8" />
+      <span className="absolute inset-0 grid place-items-center">
+        <span className="brass-plaque inline-flex items-center gap-2.5 px-5 py-2.5 font-display text-[13.5px] font-bold tracking-[0.12em] whitespace-nowrap uppercase shadow-[0_10px_28px_rgba(0,0,0,0.88)] transition-transform duration-200 group-hover:scale-[1.03]">
+          <svg viewBox="0 0 24 24" aria-hidden="true" className="h-3.5 w-3.5 shrink-0 fill-current">
+            <path d="M8.25 5.1v13.8L19 12 8.25 5.1Z" />
+          </svg>
+          <span>{text("Play Clip", "播放片段")}</span>
+        </span>
       </span>
     </button>
   );
@@ -185,7 +190,7 @@ export function Media({ item }: { item: MediaItem }) {
             <video src={item.src} poster={item.poster} controls playsInline preload="metadata" className="h-auto w-full" />
           )}
           {item.type === "youtube" && (
-            <div className="relative aspect-video w-full">
+            <div className="relative aspect-video w-full overflow-hidden">
               <YouTubeEmbed id={item.id} title={item.caption ?? "Project video"} thumbnailSrc={item.thumbnailSrc} />
             </div>
           )}
