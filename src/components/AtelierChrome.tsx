@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+  type ReactNode,
+} from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import { isClientHydratedForPortals } from "../lib/atelierMotion";
@@ -527,7 +535,6 @@ export function ArchivalPaperSheaf({
   ariaLabel,
   topFlag,
   tabs,
-  progressPct,
 }: {
   ariaLabel: string;
   topFlag?: SheafFlagSpec;
@@ -539,9 +546,152 @@ export function ArchivalPaperSheaf({
   );
   const dealOnMountRef = useRef<boolean>(isClientHydratedForPortals());
 
+  const railRef = useRef<HTMLDivElement | null>(null);
+  const thumbRef = useRef<HTMLSpanElement | null>(null);
+  const compactRailRef = useRef<HTMLDivElement | null>(null);
+  const compactThumbRef = useRef<HTMLSpanElement | null>(null);
+  const dragStateRef = useRef<{
+    grabOffsetY: number;
+    thumbH: number;
+  } | null>(null);
+
+  const syncScrollShuttle = useCallback(() => {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+    const vh = window.innerHeight;
+    const sh = Math.max(
+      document.documentElement.scrollHeight,
+      document.body ? document.body.scrollHeight : 0,
+    );
+    const maxScroll = Math.max(0, sh - vh);
+    const scrollY = window.scrollY;
+    const isScrollable = maxScroll > 6;
+
+    const updatePair = (
+      rail: HTMLDivElement | null,
+      thumb: HTMLSpanElement | null,
+      minThumbPx: number,
+      fallbackTrackH: number,
+    ) => {
+      if (!rail || !thumb) return;
+      rail.dataset.scrollable = isScrollable ? "true" : "false";
+      if (!isScrollable) return;
+      const measuredH = rail.clientHeight || fallbackTrackH;
+      if (measuredH <= minThumbPx) return;
+      const thumbH = Math.round(
+        Math.max(minThumbPx, Math.min(measuredH * 0.86, (vh / sh) * measuredH)),
+      );
+      const travel = Math.max(0, measuredH - thumbH);
+      const ratio = Math.min(1, Math.max(0, scrollY / maxScroll));
+      const thumbY = ratio * travel;
+      thumb.style.height = `${thumbH}px`;
+      thumb.style.transform = `translate3d(0, ${thumbY.toFixed(1)}px, 0)`;
+    };
+
+    updatePair(railRef.current, thumbRef.current, 44, Math.max(0, vh - 32));
+    updatePair(compactRailRef.current, compactThumbRef.current, 36, Math.max(0, vh - 72));
+  }, []);
+
   useEffect(() => {
     setPortalTarget(document.body);
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+    let rafId = 0;
+    const scheduleSync = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = 0;
+        syncScrollShuttle();
+      });
+    };
+
+    syncScrollShuttle();
+    window.addEventListener("scroll", scheduleSync, { passive: true });
+    window.addEventListener("resize", scheduleSync, { passive: true });
+
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(scheduleSync);
+      ro.observe(document.documentElement);
+      if (document.body) ro.observe(document.body);
+    }
+
+    return () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", scheduleSync);
+      window.removeEventListener("resize", scheduleSync);
+      ro?.disconnect();
+    };
+  }, [portalTarget, syncScrollShuttle]);
+
+  const handleRailPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0 || typeof window === "undefined") return;
+    const rail = e.currentTarget;
+    if (rail.dataset.scrollable !== "true") return;
+
+    const vh = window.innerHeight;
+    const sh = Math.max(
+      document.documentElement.scrollHeight,
+      document.body ? document.body.scrollHeight : 0,
+    );
+    const maxScroll = Math.max(0, sh - vh);
+    if (maxScroll <= 6) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const rect = rail.getBoundingClientRect();
+    const trackH = rect.height;
+    const minThumb = rail === compactRailRef.current ? 36 : 44;
+    const thumbH = Math.round(Math.max(minThumb, Math.min(trackH * 0.86, (vh / sh) * trackH)));
+    const travel = Math.max(1, trackH - thumbH);
+    const curThumbY = Math.min(1, Math.max(0, window.scrollY / maxScroll)) * travel;
+    const localY = e.clientY - rect.top;
+
+    let grabOffsetY: number;
+    if (localY >= curThumbY - 5 && localY <= curThumbY + thumbH + 5) {
+      grabOffsetY = localY - curThumbY;
+    } else {
+      grabOffsetY = thumbH / 2;
+      const nextThumbY = Math.max(0, Math.min(travel, localY - grabOffsetY));
+      window.scrollTo({ top: (nextThumbY / travel) * maxScroll, behavior: "instant" });
+    }
+
+    dragStateRef.current = { grabOffsetY, thumbH };
+    rail.dataset.dragging = "true";
+    rail.setPointerCapture(e.pointerId);
+    syncScrollShuttle();
+  };
+
+  const handleRailPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const state = dragStateRef.current;
+    if (!state || typeof window === "undefined") return;
+    const rail = e.currentTarget;
+    const vh = window.innerHeight;
+    const sh = Math.max(
+      document.documentElement.scrollHeight,
+      document.body ? document.body.scrollHeight : 0,
+    );
+    const maxScroll = Math.max(0, sh - vh);
+    if (maxScroll <= 6) return;
+
+    const rect = rail.getBoundingClientRect();
+    const travel = Math.max(1, rect.height - state.thumbH);
+    const localY = e.clientY - rect.top;
+    const nextThumbY = Math.max(0, Math.min(travel, localY - state.grabOffsetY));
+    window.scrollTo({ top: (nextThumbY / travel) * maxScroll, behavior: "instant" });
+    syncScrollShuttle();
+  };
+
+  const handleRailPointerEnd = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!dragStateRef.current) return;
+    dragStateRef.current = null;
+    e.currentTarget.dataset.dragging = "false";
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+  };
 
   const anyTabActive = tabs.some((t) => t.active);
 
@@ -567,54 +717,91 @@ export function ArchivalPaperSheaf({
   );
 
   const sheafNode = (
-    <nav
-      aria-label={ariaLabel}
-      className="atelier-fore-edge fixed inset-y-0 right-0 z-40 hidden w-[70px] overflow-x-clip select-none xl:flex xl:flex-col xl:items-end xl:justify-center"
-    >
-      {/* Full-Height Bound Morocco Board Lip + 4-Ply Stepped Rag-Vellum Page Stack Docked Flush at right-0 (z-20 above tabs) */}
+    <>
+      {/* Compact Flush-Right Gilt Scroll Shuttle for Narrow Viewports (< xl) Where Fore-Edge Dock Is Hidden */}
       <div
+        ref={compactRailRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 z-20 w-[22px] shadow-[-16px_0_34px_rgba(0,0,0,0.94)]"
+        data-scrollable="false"
+        data-dragging="false"
+        onPointerDown={handleRailPointerDown}
+        onPointerMove={handleRailPointerMove}
+        onPointerUp={handleRailPointerEnd}
+        onPointerCancel={handleRailPointerEnd}
+        className="group/rail pointer-events-none fixed top-[62px] right-0 bottom-2 z-40 hidden w-[12px] touch-none select-none opacity-0 transition-opacity duration-200 data-[scrollable=true]:pointer-events-auto data-[scrollable=true]:opacity-100 pointer-fine:block xl:pointer-fine:hidden"
       >
-        {/* Outer ebony-mahogany book-cover board & gilt bevel */}
-        <span className="absolute inset-y-0 right-0 w-[7px] border-l border-[#d4ad73]/48 bg-gradient-to-l from-[#070504] via-[#120d09] to-[#1d150f]" />
-
-        {/* Stepped 4-ply rag-vellum page block running full height */}
-        <span className="absolute inset-y-0 right-[7px] w-[4px] border-l border-[#5c4324]/70 bg-[#b8a382]" />
-        <span className="absolute inset-y-0 right-[10.5px] w-[4px] border-l border-[#684c29]/75 bg-[#ccb896] shadow-[-1px_0_2px_rgba(0,0,0,0.45)]" />
-        <span className="absolute inset-y-0 right-[14px] w-[4px] border-l border-[#73552f]/78 bg-[#dfd0b0] shadow-[-1px_0_2px_rgba(0,0,0,0.4)]" />
-        <span className="absolute inset-y-0 right-[17.5px] w-[4.5px] border-x border-[#684720]/82 bg-[#f1e5cc] shadow-[-2px_0_5px_rgba(0,0,0,0.55)]" />
-
-        {/* Subtle paper-edge deckle grain along outermost vellum ply */}
+        <span className="pointer-events-none absolute inset-y-0 right-[1.5px] w-px bg-[#d4ad73]/18" />
         <span
-          className="absolute inset-y-0 right-[17.5px] w-[4.5px] opacity-25 mix-blend-multiply"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(to bottom, rgba(84,56,24,0.38) 0px, rgba(84,56,24,0.38) 1px, transparent 1px, transparent 4px)",
-          }}
+          ref={compactThumbRef}
+          style={{ height: "44px", transform: "translate3d(0, 0, 0)" }}
+          className="pointer-events-none absolute top-0 right-[0.5px] w-[3.5px] border-y border-[#fff3d6]/80 bg-gradient-to-b from-[#b98c4f] via-[#f2ddb2] to-[#9f733b] opacity-70 shadow-[0_1px_6px_rgba(0,0,0,0.85)] transition-opacity duration-150 group-hover/rail:w-[4.5px] group-hover/rail:opacity-100 group-data-[dragging=true]/rail:w-[4.5px] group-data-[dragging=true]/rail:opacity-100"
         />
-
-        {anyTabActive && <span className="absolute inset-y-5 right-[18.5px] w-[2px] bg-[#fbf4e6]" />}
-
-        {/* Live silk reading-progress ribbon along the inner fore-edge seam */}
-        {typeof progressPct === "number" && (
-          <span
-            style={{ height: `${Math.max(2, Math.min(100, progressPct)).toFixed(1)}%` }}
-            className="absolute top-0 right-[19.5px] w-[2.5px] bg-gradient-to-b from-[#8a181a] via-[#b82225] to-[#e2be84] transition-[height] duration-150"
-          />
-        )}
-
-        {/* Sculpted bookbinding headband (top) & tailband (bottom) brass clasps */}
-        <span className="absolute top-0 right-0 h-[16px] w-[22px] border-b border-[#d4ad73]/65 bg-gradient-to-b from-[#261b13] to-[#120c08] shadow-[0_3px_8px_rgba(0,0,0,0.8)]" />
-        <span className="absolute bottom-0 right-0 h-[16px] w-[22px] border-t border-[#d4ad73]/65 bg-gradient-to-t from-[#261b13] to-[#120c08] shadow-[0_-3px_8px_rgba(0,0,0,0.8)]" />
       </div>
 
-      {/* Inward-Projecting Die-Cut Index Cascade (tucked physically behind the z-20 page lip at right-[19px]) */}
-      <div
-        className={`relative z-10 flex flex-col items-end py-7 pr-[19px] ${
-          dealOnMountRef.current ? "animate-sheaf-tabs" : ""
-        }`}
+      <nav
+        aria-label={ariaLabel}
+        className="atelier-fore-edge pointer-events-none fixed inset-y-0 right-0 z-40 hidden w-[70px] overflow-x-clip select-none xl:flex xl:flex-col xl:items-end xl:justify-center"
       >
+        {/* Full-Height Bound Morocco Board Lip + 4-Ply Stepped Rag-Vellum Page Stack Docked Flush at right-0 (z-20 above tabs) */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 z-20 w-[22px] shadow-[-16px_0_34px_rgba(0,0,0,0.94)]"
+        >
+          {/* Outer ebony-mahogany book-cover board & gilt bevel */}
+          <span className="absolute inset-y-0 right-0 w-[7px] border-l border-[#d4ad73]/48 bg-gradient-to-l from-[#070504] via-[#120d09] to-[#1d150f]" />
+
+          {/* Stepped 4-ply rag-vellum page block running full height */}
+          <span className="absolute inset-y-0 right-[7px] w-[4px] border-l border-[#5c4324]/70 bg-[#b8a382]" />
+          <span className="absolute inset-y-0 right-[10.5px] w-[4px] border-l border-[#684c29]/75 bg-[#ccb896] shadow-[-1px_0_2px_rgba(0,0,0,0.45)]" />
+          <span className="absolute inset-y-0 right-[14px] w-[4px] border-l border-[#73552f]/78 bg-[#dfd0b0] shadow-[-1px_0_2px_rgba(0,0,0,0.4)]" />
+          <span className="absolute inset-y-0 right-[17.5px] w-[4.5px] border-x border-[#684720]/82 bg-[#f1e5cc] shadow-[-2px_0_5px_rgba(0,0,0,0.55)]" />
+
+          {/* Subtle paper-edge deckle grain along outermost vellum ply */}
+          <span
+            className="absolute inset-y-0 right-[17.5px] w-[4.5px] opacity-25 mix-blend-multiply"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(to bottom, rgba(84,56,24,0.38) 0px, rgba(84,56,24,0.38) 1px, transparent 1px, transparent 4px)",
+            }}
+          />
+
+          {anyTabActive && <span className="absolute inset-y-5 right-[18.5px] w-[2px] bg-[#fbf4e6]" />}
+
+          {/* Interactive Brass & Crimson Fore-Edge Scroll Shuttle Nested Inside the 7px Mahogany Cover Channel */}
+          <div
+            ref={railRef}
+            data-scrollable="false"
+            data-dragging="false"
+            onPointerDown={handleRailPointerDown}
+            onPointerMove={handleRailPointerMove}
+            onPointerUp={handleRailPointerEnd}
+            onPointerCancel={handleRailPointerEnd}
+            className="group/rail pointer-events-none absolute top-[16px] right-0 bottom-[16px] z-30 w-[16px] cursor-pointer touch-none opacity-0 transition-opacity duration-200 data-[dragging=true]:cursor-grabbing data-[scrollable=true]:pointer-events-auto data-[scrollable=true]:opacity-100"
+          >
+            {/* Recessed horological guide hairline centered in the outer mahogany channel */}
+            <span className="pointer-events-none absolute inset-y-1.5 right-[2.75px] w-px bg-[#d4ad73]/22 transition-colors group-hover/rail:bg-[#ebd09e]/42" />
+
+            {/* Sliding sculpted brass bookmark shuttle + B-04 crimson garnet core */}
+            <span
+              ref={thumbRef}
+              style={{ height: "56px", transform: "translate3d(0, 0, 0)" }}
+              className="pointer-events-none absolute top-0 right-[0.5px] flex w-[5.5px] items-center justify-center border-y border-[#fff4db]/90 bg-gradient-to-b from-[#bd8f52] via-[#f4dfb4] to-[#9c6f38] opacity-80 shadow-[0_2px_8px_rgba(0,0,0,0.9),0_0_8px_rgba(212,173,115,0.28)] transition-[opacity,filter,box-shadow] duration-150 group-hover/rail:opacity-100 group-hover/rail:shadow-[0_2px_10px_rgba(0,0,0,0.95),0_0_12px_rgba(242,212,160,0.52)] group-data-[dragging=true]/rail:opacity-100 group-data-[dragging=true]/rail:brightness-110"
+            >
+              <span className="h-[6px] w-[3.5px] bg-[#9e191c] ring-[0.5px] ring-[#fff4db]/75" />
+            </span>
+          </div>
+
+          {/* Sculpted bookbinding headband (top) & tailband (bottom) brass clasps */}
+          <span className="absolute top-0 right-0 h-[16px] w-[22px] border-b border-[#d4ad73]/65 bg-gradient-to-b from-[#261b13] to-[#120c08] shadow-[0_3px_8px_rgba(0,0,0,0.8)]" />
+          <span className="absolute bottom-0 right-0 h-[16px] w-[22px] border-t border-[#d4ad73]/65 bg-gradient-to-t from-[#261b13] to-[#120c08] shadow-[0_-3px_8px_rgba(0,0,0,0.8)]" />
+        </div>
+
+        {/* Inward-Projecting Die-Cut Index Cascade (tucked physically behind the z-20 page lip at right-[19px]) */}
+        <div
+          className={`pointer-events-auto relative z-10 flex flex-col items-end py-7 pr-[19px] ${
+            dealOnMountRef.current ? "animate-sheaf-tabs" : ""
+          }`}
+        >
         {topFlag &&
           (() => {
             const flagClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(-3px_4px_7px_rgba(0,0,0,0.84))] ${
@@ -724,7 +911,8 @@ export function ArchivalPaperSheaf({
           })}
         </div>
       </div>
-    </nav>
+      </nav>
+    </>
   );
 
   return portalTarget ? createPortal(sheafNode, portalTarget) : sheafNode;
