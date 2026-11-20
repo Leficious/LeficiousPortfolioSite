@@ -444,7 +444,11 @@ html[lang="zh-CN"] .parchment-sheet h2 {
   --glint-x: 50%;
   --glint-y: 50%;
   transform: perspective(920px) rotateX(var(--card-rx)) rotateY(var(--card-ry));
-  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms ease, border-color 220ms ease;
+  transition:
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    translate 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 260ms ease,
+    border-color 220ms ease;
 }
 
 .tactile-tilt::after {
@@ -521,33 +525,10 @@ html[lang="zh-CN"] .parchment-sheet h2 {
   filter: sepia(0.38) contrast(1.1) brightness(0.98) saturate(0.78);
 }
 
-/* Persistent shell & route transition names */
-.site-header {
-  view-transition-name: site-header;
-}
-
-.celestial-mat {
-  view-transition-name: celestial-mat;
-}
-
-.atelier-header-bar {
-  view-transition-name: atelier-header-bar;
-}
-
-.atelier-active-tab {
-  view-transition-name: atelier-active-tab;
-}
-
-.atelier-fore-edge {
-  view-transition-name: atelier-sheaf;
-}
-
-.route-stage {
-  view-transition-name: route-content;
-}
-
 /* ============================================================================
- * F-01 TACTILE MOTION, CLOCKWORK DRIFT & PAGE TRANSITIONS (ZERO SCROLL LOCK)
+ * F-01 TACTILE MOTION, CLOCKWORK DRIFT & LIVE-DOM DIRECTIONAL TRANSITIONS
+ * Every keyframe ends at exact identity (`translate3d(0,0,0) rotate(0deg) scale(1)`)
+ * so animation completion produces 0.00px position/rotation delta against rest CSS.
  * ========================================================================== */
 
 @media (prefers-reduced-motion: no-preference) {
@@ -571,43 +552,22 @@ html[lang="zh-CN"] .parchment-sheet h2 {
     animation: astrolabe-ccw 155s linear infinite;
   }
 
-  @keyframes vt-pan-out-left {
+  /* Two-beat live-DOM directional room & folio choreography */
+  @keyframes stage-exit-left {
     from {
       opacity: 1;
       transform: translate3d(0, 0, 0);
     }
     to {
       opacity: 0;
-      transform: translate3d(-22px, 0, 0);
+      transform: translate3d(-56px, 0, 0);
     }
   }
 
-  @keyframes vt-pan-in-right {
+  @keyframes stage-enter-right {
     from {
       opacity: 0;
-      transform: translate3d(24px, 0, 0);
-    }
-    to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-    }
-  }
-
-  @keyframes vt-pan-out-right {
-    from {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-    }
-    to {
-      opacity: 0;
-      transform: translate3d(22px, 0, 0);
-    }
-  }
-
-  @keyframes vt-pan-in-left {
-    from {
-      opacity: 0;
-      transform: translate3d(-24px, 0, 0);
+      transform: translate3d(60px, 0, 0);
     }
     to {
       opacity: 1;
@@ -615,21 +575,43 @@ html[lang="zh-CN"] .parchment-sheet h2 {
     }
   }
 
-  @keyframes vt-folio-open-out {
+  @keyframes stage-exit-right {
+    from {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      opacity: 0;
+      transform: translate3d(56px, 0, 0);
+    }
+  }
+
+  @keyframes stage-enter-left {
+    from {
+      opacity: 0;
+      transform: translate3d(-60px, 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes stage-exit-folio-open {
     from {
       opacity: 1;
       transform: translate3d(0, 0, 0) scale(1);
     }
     to {
       opacity: 0;
-      transform: translate3d(0, -12px, 0) scale(0.99);
+      transform: translate3d(0, -18px, 0) scale(0.986);
     }
   }
 
-  @keyframes vt-folio-open-in {
+  @keyframes stage-enter-folio-open {
     from {
       opacity: 0;
-      transform: translate3d(0, 16px, 0) scale(0.99);
+      transform: translate3d(0, 24px, 0) scale(0.988);
     }
     to {
       opacity: 1;
@@ -637,21 +619,21 @@ html[lang="zh-CN"] .parchment-sheet h2 {
     }
   }
 
-  @keyframes vt-folio-close-out {
+  @keyframes stage-exit-folio-close {
     from {
       opacity: 1;
       transform: translate3d(0, 0, 0) scale(1);
     }
     to {
       opacity: 0;
-      transform: translate3d(0, 12px, 0) scale(0.99);
+      transform: translate3d(0, 18px, 0) scale(0.986);
     }
   }
 
-  @keyframes vt-folio-close-in {
+  @keyframes stage-enter-folio-close {
     from {
       opacity: 0;
-      transform: translate3d(0, -14px, 0) scale(0.992);
+      transform: translate3d(0, -20px, 0) scale(0.99);
     }
     to {
       opacity: 1;
@@ -659,14 +641,89 @@ html[lang="zh-CN"] .parchment-sheet h2 {
     }
   }
 
-  @keyframes vt-soft-fade-out {
+  @keyframes stage-exit-lang {
     from { opacity: 1; }
     to { opacity: 0; }
   }
 
-  @keyframes vt-soft-fade-in {
+  @keyframes stage-enter-lang {
     from { opacity: 0; }
     to { opacity: 1; }
+  }
+
+  .stage-exit-left {
+    pointer-events: none;
+    animation: stage-exit-left 155ms cubic-bezier(0.4, 0, 0.85, 1) forwards;
+  }
+
+  .stage-enter-right {
+    animation: stage-enter-right 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .stage-exit-right {
+    pointer-events: none;
+    animation: stage-exit-right 155ms cubic-bezier(0.4, 0, 0.85, 1) forwards;
+  }
+
+  .stage-enter-left {
+    animation: stage-enter-left 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .stage-exit-folio-open {
+    pointer-events: none;
+    animation: stage-exit-folio-open 155ms cubic-bezier(0.4, 0, 0.85, 1) forwards;
+  }
+
+  .stage-enter-folio-open {
+    animation: stage-enter-folio-open 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .stage-exit-folio-close {
+    pointer-events: none;
+    animation: stage-exit-folio-close 155ms cubic-bezier(0.4, 0, 0.85, 1) forwards;
+  }
+
+  .stage-enter-folio-close {
+    animation: stage-enter-folio-close 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .stage-exit-lang {
+    pointer-events: none;
+    animation: stage-exit-lang 110ms ease-in forwards;
+  }
+
+  .stage-enter-lang {
+    animation: stage-enter-lang 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes header-meta-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 4px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .animate-header-meta {
+    animation: header-meta-in 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes sheaf-tabs-deal {
+    from {
+      opacity: 0;
+      transform: translate3d(14px, 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .animate-sheaf-tabs {
+    animation: sheaf-tabs-deal 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   @keyframes folio-arc-in {
@@ -703,10 +760,11 @@ html[lang="zh-CN"] .parchment-sheet h2 {
     to { opacity: 1; transform: scale(1); }
   }
 
+  /* Base element already carries `-rotate-2`; end at `rotate(0deg)` so identity matches rest */
   @keyframes stamp-press {
-    0% { transform: scale(1.18) rotate(-4deg); opacity: 0.7; }
-    60% { transform: scale(0.96) rotate(-1.5deg); opacity: 1; }
-    100% { transform: scale(1) rotate(-2deg); opacity: 1; }
+    0% { transform: scale(1.18) rotate(-2.5deg); opacity: 0.72; }
+    60% { transform: scale(0.96) rotate(0.6deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
   }
 
   .animate-folio-arc {
@@ -732,8 +790,10 @@ html[lang="zh-CN"] .parchment-sheet h2 {
 
   /* ==========================================================================
    * INITIAL ATELIER LAMPLIGHT CURTAIN & 3-BEAT DESK ENTRANCE CHOREOGRAPHY
-   * Scoped strictly to data-atelier-stage="veiled"|"revealing" so once settled,
-   * zero fill-mode transforms interfere with hover tilts or folio switching.
+   * Scoped strictly to data-atelier-stage="veiled"|"revealing".
+   * Note: `.atelier-wing-left` (-4.8deg) and `.atelier-wing-right` (+3.6deg) already
+   * carry Tailwind v4 individual `rotate` properties, so keyframes MUST converge to
+   * `rotate(0deg)` (`transform` identity) for 0.00px settle delta!
    * ======================================================================== */
   @keyframes curtain-crest-poise {
     from {
@@ -802,22 +862,22 @@ html[lang="zh-CN"] .parchment-sheet h2 {
   @keyframes atelier-wing-fan-left {
     from {
       opacity: 0;
-      transform: translate3d(38px, 10px, 0) rotate(-0.8deg);
+      transform: translate3d(40px, 10px, 0) rotate(4deg);
     }
     to {
       opacity: 1;
-      transform: translate3d(0, 0, 0) rotate(-4.8deg);
+      transform: translate3d(0, 0, 0) rotate(0deg);
     }
   }
 
   @keyframes atelier-wing-fan-right {
     from {
       opacity: 0;
-      transform: translate3d(-38px, 10px, 0) rotate(0.8deg);
+      transform: translate3d(-40px, 10px, 0) rotate(-2.8deg);
     }
     to {
       opacity: 1;
-      transform: translate3d(0, 0, 0) rotate(3.6deg);
+      transform: translate3d(0, 0, 0) rotate(0deg);
     }
   }
 
@@ -867,142 +927,9 @@ html[lang="zh-CN"] .parchment-sheet h2 {
   }
 }
 
-::view-transition-old(root),
-::view-transition-new(root),
-::view-transition-old(site-header),
-::view-transition-new(site-header),
-::view-transition-old(celestial-mat),
-::view-transition-new(celestial-mat) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-::view-transition-group(celestial-mat) {
-  z-index: 0;
-}
-
-::view-transition-group(route-content) {
-  z-index: 10;
-  /* Prevent Chromium from morphing/stretching box height between 900px Home and 4800px Gallery! */
-  animation: none;
-}
-
-::view-transition-image-pair(route-content) {
-  isolation: isolate;
-}
-
-::view-transition-old(route-content),
-::view-transition-new(route-content) {
-  width: 100%;
-  height: auto;
-  overflow: clip;
-  object-fit: none;
-  object-position: top center;
-  mix-blend-mode: normal;
-}
-
-/* Default subtle depth deal */
-::view-transition-old(route-content) {
-  animation: vt-folio-open-out 165ms cubic-bezier(0.32, 0, 0.67, 0) both;
-}
-
-::view-transition-new(route-content) {
-  animation: vt-folio-open-in 340ms 55ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* Direction-aware horizontal room glides when clicking top Atelier / Gallery / About tabs */
-html[data-vt-kind="pan-right"]::view-transition-old(route-content) {
-  animation: vt-pan-out-left 165ms cubic-bezier(0.32, 0, 0.67, 0) both;
-}
-
-html[data-vt-kind="pan-right"]::view-transition-new(route-content) {
-  animation: vt-pan-in-right 350ms 50ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-html[data-vt-kind="pan-left"]::view-transition-old(route-content) {
-  animation: vt-pan-out-right 165ms cubic-bezier(0.32, 0, 0.67, 0) both;
-}
-
-html[data-vt-kind="pan-left"]::view-transition-new(route-content) {
-  animation: vt-pan-in-left 350ms 50ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-html[data-vt-kind="folio-close"]::view-transition-old(route-content) {
-  animation: vt-folio-close-out 160ms cubic-bezier(0.32, 0, 0.67, 0) both;
-}
-
-html[data-vt-kind="folio-close"]::view-transition-new(route-content) {
-  animation: vt-folio-close-in 340ms 50ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* Right bound book-block stays anchored flush to right-0 while its index tabs crossfade in place */
-::view-transition-group(atelier-sheaf) {
-  z-index: 45;
-  animation-duration: 280ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-::view-transition-old(atelier-sheaf) {
-  animation: vt-soft-fade-out 150ms ease-out both;
-  mix-blend-mode: normal;
-}
-
-::view-transition-new(atelier-sheaf) {
-  animation: vt-soft-fade-in 240ms 40ms ease-out both;
-  mix-blend-mode: normal;
-}
-
-/* Stationary Top Header Rail + Gliding Champagne-Gilt Underline Shuttle */
-::view-transition-group(atelier-header-bar) {
-  z-index: 55;
-  animation-duration: 240ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-::view-transition-old(atelier-header-bar) {
-  animation: vt-soft-fade-out 160ms ease-out both;
-  mix-blend-mode: normal;
-}
-
-::view-transition-new(atelier-header-bar) {
-  animation: vt-soft-fade-in 200ms 20ms ease-out both;
-  mix-blend-mode: normal;
-}
-
-::view-transition-group(atelier-active-tab) {
-  z-index: 56;
-  animation-duration: 340ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-::view-transition-old(atelier-active-tab),
-::view-transition-new(atelier-active-tab) {
-  height: 100%;
-  width: 100%;
-  mix-blend-mode: normal;
-}
-
-::view-transition-group(site-header) {
-  z-index: 60;
-}
-
-html.language-switching::view-transition-old(route-content) {
-  animation: vt-soft-fade-out 110ms ease-in both;
-}
-
-html.language-switching::view-transition-new(route-content) {
-  animation: vt-soft-fade-in 220ms 40ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .atelier-intro-curtain {
     display: none !important;
-  }
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation-duration: 0.01ms !important;
-    animation-delay: 0ms !important;
   }
 }
 

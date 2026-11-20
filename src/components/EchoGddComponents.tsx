@@ -62,7 +62,7 @@ function DiagramFrame({
   return (
     <figure
       ref={ref}
-      className={`slate-folio my-8 overflow-hidden border border-warm/35 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+      className={`slate-folio my-8 overflow-hidden border border-warm/35 transition-[opacity,translate] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         inView ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
       }`}
     >

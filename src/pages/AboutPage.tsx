@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ArchivalPaperSheaf,
-  AtelierHeaderRail,
   BrassCornerClasps,
   BrassPinThreads,
   BrassRule,
@@ -117,7 +116,7 @@ export function AboutPage() {
     : "/resume/Leficious_Technical_Game_Designer_Resume.pdf";
 
   return (
-    <div className="min-h-screen px-4 py-5 text-foreground sm:px-8 lg:px-10 lg:py-6 xl:pl-11 xl:pr-28">
+    <div className="min-h-screen px-4 pb-5 text-foreground sm:px-8 lg:px-10 lg:pb-6 xl:pl-11 xl:pr-28">
       <Seo
         title={text("Lefi Shan | Dossier & Correspondence", "单凯飞 · Lefi Shan | 个人档案与信函")}
         description={text(
@@ -125,26 +124,6 @@ export function AboutPage() {
           "关于单凯飞（Lefi Shan）：南加州大学电影艺术学院游戏设计与开发硕士在读。",
         )}
         path={localizedPath("/about")}
-      />
-
-      {/* ==================== 1. UNIFIED VICTORIAN ARCHIVAL HEADER RAIL ==================== */}
-      <AtelierHeaderRail
-        eyebrow={text("LEFI SHAN", "单凯飞 · LEFI SHAN")}
-        subtitle={text(
-          "Little Tokyo, LA · USC SCA & Gnomon",
-          "洛杉矶小东京 · 南加大 & Gnomon",
-        )}
-        maxWidthClass="max-w-[1380px]"
-        rightSlot={
-          <a
-            href={resumeHref}
-            download
-            className="brass-plaque inline-flex h-[36px] items-center gap-1.5 px-4 font-display text-[13px] font-bold tracking-[0.09em] whitespace-nowrap uppercase transition-colors xl:px-4.5 xl:text-[13.5px]"
-          >
-            <span>{text("Résumé (PDF)", "下载简历")}</span>
-            <span aria-hidden="true">↓</span>
-          </a>
-        }
       />
 
       <main id="main-content" tabIndex={-1} className="mx-auto mt-6 max-w-[1260px] pb-10 lg:mt-7">
@@ -345,7 +324,7 @@ export function AboutPage() {
                     rel="noreferrer"
                     onPointerMove={(e) => handleTactileCardMove(e, 3.2)}
                     onPointerLeave={resetTactileCard}
-                    className="slate-folio tactile-tilt group relative flex min-h-[76px] flex-col items-center justify-center border border-[#d8b47c]/55 px-2.5 py-3 text-center transition-all hover:-translate-y-0.5 hover:border-[#f3dfb9]"
+                    className="slate-folio tactile-tilt group relative flex min-h-[76px] flex-col items-center justify-center border border-[#d8b47c]/55 px-2.5 py-3 text-center hover:-translate-y-0.5 hover:border-[#f3dfb9]"
                   >
                     <span aria-hidden="true" className="pointer-events-none absolute inset-1.5 border border-warm/22" />
                     <span className="relative z-10 whitespace-nowrap font-display text-[16px] font-semibold leading-snug text-[#f7f0e2] transition-colors group-hover:text-[#f5dfb2]">

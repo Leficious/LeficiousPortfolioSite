@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArchivalPaperSheaf,
-  AtelierHeaderRail,
   BrassCornerClasps,
   BrassPinThreads,
   BrassRule,
@@ -98,7 +97,7 @@ export function ProjectPage() {
     .map((entry) => localizeGalleryEntry(entry, isChinese));
 
   return (
-    <div className="min-h-screen px-4 py-5 text-foreground sm:px-8 lg:px-10 lg:py-6 xl:pl-11 xl:pr-28">
+    <div className="min-h-screen px-4 pb-5 text-foreground sm:px-8 lg:px-10 lg:pb-6 xl:pl-11 xl:pr-28">
       <Seo
         title={`${project.title} | Leficious`}
         description={project.summary}
@@ -106,23 +105,6 @@ export function ProjectPage() {
         image={project.cover}
         imageWidth={project.coverWidth}
         imageHeight={project.coverHeight}
-      />
-
-      {/* ==================== 1. UNIFIED VICTORIAN ARCHIVAL HEADER RAIL ==================== */}
-      <AtelierHeaderRail
-        eyebrow="LEFICIOUS"
-        subtitle={`${text("Case Folio", "项目拆解卷")} ${folioRoman} / V · ${project.year}`}
-        maxWidthClass="max-w-[1380px]"
-        rightSlot={
-          <Link
-            to={localizedPath("/")}
-            viewTransition
-            className="brass-plaque inline-flex h-[36px] items-center gap-1.5 px-4 font-display text-[13px] font-bold tracking-[0.09em] whitespace-nowrap uppercase transition-colors xl:px-4.5 xl:text-[13.5px]"
-          >
-            <span aria-hidden="true">←</span>
-            <span>{text("Atelier Desk", "返回案台")}</span>
-          </Link>
-        }
       />
 
       <article id="main-content" tabIndex={-1} className="mx-auto mt-6 max-w-[1080px] pb-16">

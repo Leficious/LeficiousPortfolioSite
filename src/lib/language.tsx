@@ -1,5 +1,4 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, type ReactNode } from "react";
-import { flushSync } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
 /* eslint-disable react-refresh/only-export-components -- provider and hook form one small, shared language boundary. */
@@ -40,35 +39,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const nextPath = nextLanguage === "zh"
       ? basePath === "/" ? "/zh" : `/zh${basePath}`
       : basePath;
-    const updateRoute = () => navigate(
+
+    navigate(
       { pathname: nextPath, search: location.search, hash: location.hash },
       { replace: true },
     );
-
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const transitionDocument = document as Document & {
-      startViewTransition?: (update: () => void) => { finished: Promise<void> };
-    };
-
-    if (reduceMotion) {
-      updateRoute();
-      return;
-    }
-
-    document.documentElement.classList.add("language-switching");
-
-    if (transitionDocument.startViewTransition) {
-      const transition = transitionDocument.startViewTransition(() => {
-        flushSync(updateRoute);
-      });
-      void transition.finished.finally(() => {
-        document.documentElement.classList.remove("language-switching");
-      });
-      return;
-    }
-
-    flushSync(updateRoute);
-    window.setTimeout(() => document.documentElement.classList.remove("language-switching"), 260);
   }, [language, location.hash, location.pathname, location.search, navigate]);
 
   const value = useMemo<LanguageContextValue>(() => ({

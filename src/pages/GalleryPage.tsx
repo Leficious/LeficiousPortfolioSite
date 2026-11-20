@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ArchivalPaperSheaf,
-  AtelierHeaderRail,
   BrassRule,
   FolioCorners,
 } from "../components/AtelierChrome";
@@ -112,7 +111,7 @@ export function GalleryPage() {
   }, [location.state, navigate, searchParams, setSearchParams]);
 
   return (
-    <div className="min-h-screen px-4 py-5 text-foreground sm:px-8 lg:px-10 lg:py-6 xl:pl-11 xl:pr-28">
+    <div className="min-h-screen px-4 pb-5 text-foreground sm:px-8 lg:px-10 lg:pb-6 xl:pl-11 xl:pr-28">
       <Seo
         title={text("Gallery | Leficious", "作品画廊 | Leficious")}
         description={text(
@@ -126,30 +125,6 @@ export function GalleryPage() {
       />
 
       <div aria-hidden={selected ? "true" : undefined} inert={selected ? true : undefined}>
-        {/* ==================== 1. UNIFIED VICTORIAN ARCHIVAL HEADER RAIL ==================== */}
-        <AtelierHeaderRail
-          eyebrow="LEFICIOUS"
-          subtitle={text(
-            "3D Environments, Shaders & Tools",
-            "3D 场景、程序化材质与工具",
-          )}
-          maxWidthClass="max-w-[1380px]"
-          rightSlot={
-            <a
-              href={
-                isChinese
-                  ? "/resume/Kevin_Shan_CN_Game_Resume.pdf"
-                  : "/resume/Leficious_3D_Environment_Artist_Resume.pdf"
-              }
-              download
-              className="brass-plaque inline-flex h-[36px] items-center gap-1.5 px-4 font-display text-[13px] font-bold tracking-[0.09em] whitespace-nowrap uppercase transition-colors xl:px-4.5 xl:text-[13.5px]"
-            >
-              <span>{text("3D Art Résumé", "下载简历")}</span>
-              <span aria-hidden="true">↓</span>
-            </a>
-          }
-        />
-
         <main id="main-content" tabIndex={-1} className="mx-auto mt-6 max-w-[1260px]">
           {/* Title + Bronze-Clamped Environment Reel Stage Trigger */}
           <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">

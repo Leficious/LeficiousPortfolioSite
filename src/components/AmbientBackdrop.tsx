@@ -403,132 +403,104 @@ export function AmbientBackdrop({ onBackdropReady, dustActive = true }: AmbientB
       />
 
       {/*
-       * Authentic Dip-Pen Capillary Ink Bleed Filters (Zero Screentone / Zero Jagged Bite):
-       * Preserves an unbroken, anti-aliased glyph core on top while layering selective,
-       * macro-gated (~32% wet pockets, ~68% dry crisp stretches) outward capillary feathering
-       * underneath — so stems and serifs never get chewed or stair-stepped.
+       * Authentic Dip-Pen / Letterpress Cotton-Tooth Ink Contour Filters:
+       * Zero outer blur halo, zero morphology dilation, zero blotchy 30px clouds, and zero
+       * uniform 1px screentone. Applies a restrained two-harmonic contour micro-undulation
+       * (gentle stem-width nib flow + modulated 4-12px cotton-fiber tooth) with micro-meniscus
+       * anti-aliasing so strokes stay sharp, dark, and naturally organic.
        */}
       <svg width="0" height="0" aria-hidden="true" className="pointer-events-none fixed">
         <defs>
-          <filter id="letterpress-ink" x="-5%" y="-12%" width="110%" height="124%" colorInterpolationFilters="sRGB">
-            {/* 1. Unbroken, anti-aliased nib core with whisper-subtle hand-pressure flow */}
-            <feTurbulence type="fractalNoise" baseFrequency="0.035 0.05" numOctaves="2" seed="7" result="nibFlow" />
+          <filter id="letterpress-ink" x="-3%" y="-8%" width="106%" height="116%" colorInterpolationFilters="sRGB">
+            {/* 1. Whisper-subtle long-wave nib-pressure cadence along stems & bowls */}
+            <feTurbulence type="fractalNoise" baseFrequency="0.045 0.065" numOctaves="2" seed="7" result="nibCadence" />
             <feDisplacementMap
               in="SourceGraphic"
-              in2="nibFlow"
-              scale="0.24"
+              in2="nibCadence"
+              scale="0.28"
               xChannelSelector="R"
               yChannelSelector="G"
-              result="intactNibCore"
+              result="nibDrifted"
             />
 
-            {/* 2. Selective macro wet-pocket mask (~72% crisp dry edge, ~28% delicate pooled wicking) */}
-            <feTurbulence type="fractalNoise" baseFrequency="0.030 0.046" numOctaves="2" seed="19" result="macroPool" />
-            <feColorMatrix
-              in="macroPool"
-              type="matrix"
-              values="0 0 0 0 0
-                      0 0 0 0 0
-                      0 0 0 0 0
-                      8.0 0 0 0 -4.18"
-              result="wetPocketMask"
+            {/* 2. Cold-press cotton fiber grain (~4-11px wavelength) softly modulated so it is neither even nor blotchy */}
+            <feTurbulence type="fractalNoise" baseFrequency="0.19 0.25" numOctaves="2" seed="31" result="fineTooth" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.075 0.095" numOctaves="2" seed="17" result="fiberWeave" />
+            <feComposite
+              in="fineTooth"
+              in2="fiberWeave"
+              operator="arithmetic"
+              k1="0.55"
+              k2="0.45"
+              k3="0.28"
+              k4="-0.01"
+              result="organicPaperTooth"
             />
 
-            {/* 3. Restrained outward capillary feathering along cotton fibers (zero heavy blotching) */}
-            <feMorphology in="intactNibCore" operator="dilate" radius="0.16 0.10" result="inkPool" />
-            <feGaussianBlur in="inkPool" stdDeviation="0.72 0.52" result="pooledSpread" />
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.13 0.29"
-              numOctaves="3"
-              seed="43"
-              result="cottonFibers"
-            />
+            {/* 3. Sub-pixel perimeter bite (zero halo outline, zero stroke bloating) */}
             <feDisplacementMap
-              in="pooledSpread"
-              in2="cottonFibers"
-              scale="1.85"
+              in="nibDrifted"
+              in2="organicPaperTooth"
+              scale="0.58"
               xChannelSelector="R"
               yChannelSelector="G"
-              result="wickedSpread"
+              result="toothedGlyph"
             />
 
-            {/* Gate outward wicking strictly to sporadic wet pockets */}
-            <feComposite in="wickedSpread" in2="wetPocketMask" operator="in" result="localWicking" />
-
-            {/* Gentle anti-aliased capillary meniscus */}
+            {/* 4. Crisp anti-aliased meniscus recovery */}
+            <feGaussianBlur in="toothedGlyph" stdDeviation="0.15" result="smoothedEdge" />
             <feColorMatrix
-              in="localWicking"
+              in="smoothedEdge"
               type="matrix"
-              values="0.92 0 0 0 0
-                      0 0.88 0 0 0
-                      0 0 0.84 0 0
-                      0 0 0 2.35 -0.62"
-              result="smoothCapillarySwell"
+              values="1 0 0 0 0
+                      0 1 0 0 0
+                      0 0 1 0 0
+                      0 0 0 1.18 -0.07"
             />
-
-            {/* Intact anti-aliased glyph core sits cleanly on top of localized outward ink wicking */}
-            <feMerge>
-              <feMergeNode in="smoothCapillarySwell" />
-              <feMergeNode in="intactNibCore" />
-            </feMerge>
           </filter>
 
-          <filter id="letterpress-ink-sub" x="-4%" y="-10%" width="108%" height="120%" colorInterpolationFilters="sRGB">
-            <feTurbulence type="fractalNoise" baseFrequency="0.045 0.06" numOctaves="2" seed="13" result="subFlow" />
+          <filter id="letterpress-ink-sub" x="-3%" y="-8%" width="106%" height="116%" colorInterpolationFilters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.055 0.075" numOctaves="2" seed="13" result="subCadence" />
             <feDisplacementMap
               in="SourceGraphic"
-              in2="subFlow"
+              in2="subCadence"
               scale="0.18"
               xChannelSelector="R"
               yChannelSelector="G"
-              result="subIntactCore"
+              result="subDrifted"
             />
 
-            <feTurbulence type="fractalNoise" baseFrequency="0.036 0.054" numOctaves="2" seed="29" result="subPool" />
-            <feColorMatrix
-              in="subPool"
-              type="matrix"
-              values="0 0 0 0 0
-                      0 0 0 0 0
-                      0 0 0 0 0
-                      7.8 0 0 0 -4.12"
-              result="subPocketMask"
+            <feTurbulence type="fractalNoise" baseFrequency="0.21 0.27" numOctaves="2" seed="41" result="subTooth" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.085 0.11" numOctaves="2" seed="23" result="subWeave" />
+            <feComposite
+              in="subTooth"
+              in2="subWeave"
+              operator="arithmetic"
+              k1="0.55"
+              k2="0.45"
+              k3="0.28"
+              k4="-0.01"
+              result="subOrganicTooth"
             />
 
-            <feGaussianBlur in="subIntactCore" stdDeviation="0.58 0.44" result="subSpread" />
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.15 0.32"
-              numOctaves="3"
-              seed="53"
-              result="subFibers"
-            />
             <feDisplacementMap
-              in="subSpread"
-              in2="subFibers"
-              scale="1.35"
+              in="subDrifted"
+              in2="subOrganicTooth"
+              scale="0.38"
               xChannelSelector="R"
               yChannelSelector="G"
-              result="subWicked"
+              result="subToothed"
             />
 
-            <feComposite in="subWicked" in2="subPocketMask" operator="in" result="subLocalWick" />
-
+            <feGaussianBlur in="subToothed" stdDeviation="0.13" result="subSmoothed" />
             <feColorMatrix
-              in="subLocalWick"
+              in="subSmoothed"
               type="matrix"
-              values="0.92 0 0 0 0
-                      0 0.88 0 0 0
-                      0 0 0.84 0 0
-                      0 0 0 2.15 -0.58"
-              result="subCapillarySwell"
+              values="1 0 0 0 0
+                      0 1 0 0 0
+                      0 0 1 0 0
+                      0 0 0 1.15 -0.06"
             />
-
-            <feMerge>
-              <feMergeNode in="subCapillarySwell" />
-              <feMergeNode in="subIntactCore" />
-            </feMerge>
           </filter>
         </defs>
       </svg>

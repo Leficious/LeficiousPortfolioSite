@@ -185,11 +185,13 @@ export function AtelierIntroCurtain({
       setStage("revealing");
       onStageChange("revealing");
 
+      // Wait comfortably past the longest entrance keyframe (180ms delay + 540ms = 720ms)
+      // so every animated element has reached 100% identity transform before settling.
       window.setTimeout(() => {
         document.documentElement.dataset.atelierStage = "settled";
         setStage("settled");
         onStageChange("settled");
-      }, 640);
+      }, 860);
     },
     [onStageChange],
   );
@@ -277,7 +279,7 @@ export function AtelierIntroCurtain({
       aria-hidden="true"
       className={`atelier-intro-curtain fixed inset-0 z-[120] flex flex-col items-center justify-center bg-[#080605] select-none ${
         isRevealing
-          ? "pointer-events-none opacity-0 scale-[1.015] transition-[opacity,transform] duration-[540ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+          ? "pointer-events-none opacity-0 scale-[1.015] transition-[opacity,scale] duration-[540ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
           : "opacity-100 scale-100"
       }`}
     >
@@ -318,7 +320,7 @@ export function ScrollReveal({
     <div
       ref={ref}
       style={delayMs ? { transitionDelay: `${delayMs}ms` } : undefined}
-      className={`transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+      className={`transition-[opacity,translate] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         inView ? "translate-y-0 opacity-100" : "translate-y-3.5 opacity-0"
       } ${className}`}
     >

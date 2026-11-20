@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } f
 import { Link } from "react-router-dom";
 import {
   ArchivalPaperSheaf,
-  AtelierHeaderRail,
   BrassCornerClasps,
   BrassPinThreads,
   BrassRule,
@@ -213,7 +212,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
   const telemetry = isChinese ? activeMeta.telemetryZh : activeMeta.telemetryEn;
 
   return (
-    <div className="relative flex min-h-[calc(100vh-56px)] flex-col justify-between overflow-x-clip px-4 pt-5 pb-4 sm:px-8 lg:min-h-screen lg:px-10 lg:pt-6 lg:pb-4 xl:pl-11 xl:pr-28 2xl:pb-6">
+    <div className="relative flex flex-1 flex-col justify-between overflow-x-clip px-4 pb-4 sm:px-8 lg:px-10 lg:pb-4 xl:pl-11 xl:pr-28 2xl:pb-6">
       <Seo
         title={text("Leficious | Game, Level & Technical Designer", "Leficious | 游戏、关卡与技术设计师")}
         description={text(
@@ -221,41 +220,6 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
           "Leficious 的游戏、关卡与技术设计作品集：空间解谜、动作战斗原型与风格化 3D 环境。",
         )}
         path={localizedPath("/")}
-      />
-
-      {/* ==================== 1. ALIGNED VICTORIAN ARCHIVAL HEADER RAIL ==================== */}
-      <AtelierHeaderRail
-        eyebrow="LEFICIOUS"
-        subtitle={text(
-          "Game, Level & Technical Designer",
-          "游戏、关卡与技术设计师",
-        )}
-        maxWidthClass="max-w-[1380px]"
-        rightSlot={
-          isReelActive ? (
-            <a
-              href={
-                isChinese
-                  ? "/resume/Kevin_Shan_CN_Game_Resume.pdf"
-                  : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"
-              }
-              download
-              className="brass-plaque inline-flex h-[36px] cursor-pointer items-center gap-1.5 px-4 font-display text-[13px] font-bold tracking-[0.09em] whitespace-nowrap uppercase transition-colors xl:px-4.5 xl:text-[13.5px]"
-            >
-              <span>{text("Résumé (PDF)", "下载简历")}</span>
-              <span aria-hidden="true">↓</span>
-            </a>
-          ) : (
-            <button
-              type="button"
-              onClick={() => selectBinder("reel")}
-              className="brass-plaque inline-flex h-[36px] cursor-pointer items-center gap-1.5 px-4 font-display text-[13px] font-bold tracking-[0.09em] whitespace-nowrap uppercase transition-colors xl:px-4.5 xl:text-[13.5px]"
-            >
-              <span aria-hidden="true" className="text-[11px]">▶</span>
-              <span>{text("Master Reel", "年度集锦")}</span>
-            </button>
-          )
-        }
       />
 
       {/* Mobile / Tablet Compact Binder Strip (< xl) */}
@@ -323,7 +287,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               type="button"
               onClick={() => selectBinder(leftBgProject.slug)}
               aria-label={`${text("Inspect Folio", "切换至")} ${leftBgMeta.roman}: ${leftBgProject.title}`}
-              className="atelier-wing-left pointer-events-auto group absolute left-0 top-15 bottom-9 flex w-[255px] -rotate-[4.8deg] cursor-pointer flex-col justify-between border border-[#e5c489]/82 bg-gradient-to-br from-[#3e271a] via-[#28180f] to-[#150c08] px-3.5 py-4 text-left shadow-[-3px_2px_0_0_#efe2c8,-5px_4px_0_0_#0e0906,-7px_6px_0_0_#cbb48d,-24px_30px_56px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,238,202,0.42)] transition-all duration-300 hover:-translate-x-3 hover:-translate-y-2 hover:-rotate-[5.8deg] hover:border-[#fff0cc] xl:left-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:left-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
+              className="atelier-wing-left pointer-events-auto group absolute left-0 top-15 bottom-9 flex w-[255px] -rotate-[4.8deg] cursor-pointer flex-col justify-between border border-[#e5c489]/82 bg-gradient-to-br from-[#3e271a] via-[#28180f] to-[#150c08] px-3.5 py-4 text-left shadow-[-3px_2px_0_0_#efe2c8,-5px_4px_0_0_#0e0906,-7px_6px_0_0_#cbb48d,-24px_30px_56px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,238,202,0.42)] transition-[translate,rotate,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-x-3 hover:-translate-y-2 hover:-rotate-[5.8deg] hover:border-[#fff0cc] xl:left-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:left-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
             >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <img
@@ -331,7 +295,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   alt=""
                   loading="eager"
                   decoding="async"
-                  className="h-full w-full object-cover opacity-[0.28] mix-blend-luminosity contrast-115 saturate-50 transition-all duration-500 group-hover:scale-105 group-hover:opacity-[0.44]"
+                  className="h-full w-full object-cover opacity-[0.28] mix-blend-luminosity contrast-115 saturate-50 transition-[scale,opacity] duration-500 group-hover:scale-105 group-hover:opacity-[0.44]"
                 />
                 <span className="absolute inset-0 bg-gradient-to-r from-[#28180f]/82 via-[#23150d]/42 to-[#140c08]/88" />
               </div>
@@ -372,7 +336,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               type="button"
               onClick={() => selectBinder(rightBgProject.slug)}
               aria-label={`${text("Inspect Folio", "切换至")} ${rightBgMeta.roman}: ${rightBgProject.title}`}
-              className="atelier-wing-right pointer-events-auto group absolute right-0 top-19 bottom-6 flex w-[255px] rotate-[3.6deg] cursor-pointer flex-col justify-between border border-[#e5c489]/82 bg-gradient-to-bl from-[#521a1b] via-[#341011] to-[#1a0708] px-3.5 py-4 text-right shadow-[3px_2px_0_0_#efe2c8,5px_4px_0_0_#0e0906,7px_6px_0_0_#cbb48d,24px_30px_56px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,236,198,0.4)] transition-all duration-300 hover:translate-x-3 hover:-translate-y-2 hover:rotate-[4.6deg] hover:border-[#fff0cc] xl:right-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:right-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
+              className="atelier-wing-right pointer-events-auto group absolute right-0 top-19 bottom-6 flex w-[255px] rotate-[3.6deg] cursor-pointer flex-col justify-between border border-[#e5c489]/82 bg-gradient-to-bl from-[#521a1b] via-[#341011] to-[#1a0708] px-3.5 py-4 text-right shadow-[3px_2px_0_0_#efe2c8,5px_4px_0_0_#0e0906,7px_6px_0_0_#cbb48d,24px_30px_56px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,236,198,0.4)] transition-[translate,rotate,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:translate-x-3 hover:-translate-y-2 hover:rotate-[4.6deg] hover:border-[#fff0cc] xl:right-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:right-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
             >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <img
@@ -380,7 +344,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   alt=""
                   loading="eager"
                   decoding="async"
-                  className="h-full w-full object-cover opacity-[0.28] mix-blend-luminosity contrast-115 saturate-50 transition-all duration-500 group-hover:scale-105 group-hover:opacity-[0.44]"
+                  className="h-full w-full object-cover opacity-[0.28] mix-blend-luminosity contrast-115 saturate-50 transition-[scale,opacity] duration-500 group-hover:scale-105 group-hover:opacity-[0.44]"
                 />
                 <span className="absolute inset-0 bg-gradient-to-l from-[#341011]/82 via-[#2c0d0e]/42 to-[#190708]/88" />
               </div>

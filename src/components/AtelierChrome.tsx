@@ -1,5 +1,7 @@
-import { useId, type ReactNode } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
+import { isClientHydratedForPortals } from "../lib/atelierMotion";
 import { useLanguage } from "../lib/language";
 
 const FRAME_MAIN_D =
@@ -180,8 +182,8 @@ export function CrimsonStamp({
       width="96"
       height="96"
       decoding="async"
-      className={`shrink-0 select-none object-contain [filter:drop-shadow(0_5px_10px_rgba(0,0,0,0.68))_drop-shadow(0_1.5px_2px_rgba(0,0,0,0.86))] ${
-        stamped ? "animate-stamp-press" : "-rotate-2"
+      className={`-rotate-2 shrink-0 select-none object-contain [filter:drop-shadow(0_5px_10px_rgba(0,0,0,0.68))_drop-shadow(0_1.5px_2px_rgba(0,0,0,0.86))] ${
+        stamped ? "animate-stamp-press" : ""
       } ${className}`}
     />
   );
@@ -292,28 +294,94 @@ export function BrassRule({
   );
 }
 
+export type AtelierSection = "atelier" | "gallery" | "about";
+
+const TAB_OUTER_CLIP =
+  "polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px)";
+const TAB_INNER_CLIP =
+  "polygon(5.12px 0, calc(100% - 5.12px) 0, 100% 5.12px, 100% calc(100% - 5.12px), calc(100% - 5.12px) 100%, 5.12px 100%, 0 calc(100% - 5.12px), 0 5.12px)";
+
 /**
- * Unified top Victorian Archival Header Rail shared across Atelier, Gallery, Project, and Dossier routes.
- * Docks 3 cohesive ebony-morocco & sunlit-vellum folder tabs directly onto the header rule
- * alongside the brushed champagne-brass action plaque at top-right.
+ * Persistent top Victorian Archival Header Rail shared across Atelier, Gallery, Project, and Dossier routes.
+ * Uses a dual-layer sliding sunlit-vellum carriage + synchronized `clip-path: inset(...)` dark-ink mask
+ * so clicking between top tabs glides smoothly across the rail with crisp text contrast at every millisecond
+ * and 0.00px end-of-animation snap.
  */
 export function AtelierHeaderRail({
   eyebrow = "LEFICIOUS",
   subtitle,
+  activeSectionOverride,
   rightSlot,
+  rightSlotKey,
   maxWidthClass = "max-w-[1380px]",
 }: {
   eyebrow?: string;
   subtitle: string;
+  activeSectionOverride?: AtelierSection;
   rightSlot?: ReactNode;
+  rightSlotKey?: string;
   maxWidthClass?: string;
 }) {
   const { pathname } = useLocation();
-  const { text, localizedPath } = useLanguage();
+  const { language, text, localizedPath } = useLanguage();
 
   const cleanPath = pathname.replace(/^\/zh(?=\/|$)/, "") || "/";
-  const activeSection: "atelier" | "gallery" | "about" =
+  const derivedSection: AtelierSection =
     cleanPath.startsWith("/gallery") ? "gallery" : cleanPath.startsWith("/about") ? "about" : "atelier";
+  const activeSection = activeSectionOverride ?? derivedSection;
+
+  const navRef = useRef<HTMLElement | null>(null);
+  const tabRefs = useRef<Record<AtelierSection, HTMLAnchorElement | null>>({
+    atelier: null,
+    gallery: null,
+    about: null,
+  });
+
+  const [carriage, setCarriage] = useState<{
+    left: number;
+    width: number;
+    navWidth: number;
+    animate: boolean;
+  } | null>(null);
+  const prevSectionRef = useRef<AtelierSection>(activeSection);
+
+  const measureCarriage = useCallback(
+    (animate: boolean) => {
+      const nav = navRef.current;
+      const activeEl = tabRefs.current[activeSection];
+      if (!nav || !activeEl) return;
+      const navWidth = nav.offsetWidth;
+      const width = activeEl.offsetWidth;
+      if (navWidth === 0 || width === 0) return;
+      setCarriage({
+        left: activeEl.offsetLeft,
+        width,
+        navWidth,
+        animate,
+      });
+    },
+    [activeSection],
+  );
+
+  // Initial measurement + resize & language tracking without sliding lag
+  useEffect(() => {
+    measureCarriage(false);
+    const nav = navRef.current;
+    if (!nav || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => {
+      measureCarriage(false);
+    });
+    ro.observe(nav);
+    return () => ro.disconnect();
+  }, [language, measureCarriage]);
+
+  // Smooth spring-like glide whenever the active volume tab changes
+  useEffect(() => {
+    if (prevSectionRef.current !== activeSection) {
+      prevSectionRef.current = activeSection;
+      measureCarriage(true);
+    }
+  }, [activeSection, measureCarriage]);
 
   const roomItems = [
     {
@@ -336,10 +404,20 @@ export function AtelierHeaderRail({
     },
   ];
 
+  const carriageTransition = carriage?.animate
+    ? "transform 380ms cubic-bezier(0.22, 1, 0.36, 1), width 380ms cubic-bezier(0.22, 1, 0.36, 1)"
+    : "none";
+  const clipTransition = carriage?.animate
+    ? "clip-path 380ms cubic-bezier(0.22, 1, 0.36, 1)"
+    : "none";
+
   return (
     <div className={`atelier-header-rail relative z-30 mx-auto w-full ${maxWidthClass}`}>
       <header className="atelier-header-bar relative flex w-full flex-wrap items-center justify-between gap-3 border-b border-[#d4ad73]/38 pb-3.5 xl:flex-nowrap">
-        <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-3 gap-y-0.5 xl:flex-nowrap">
+        <div
+          key={`${eyebrow}|${subtitle}`}
+          className="animate-header-meta flex min-w-0 flex-1 flex-wrap items-baseline gap-x-3 gap-y-0.5 xl:flex-nowrap"
+        >
           <p className="shrink-0 font-display text-xl font-bold tracking-[0.18em] text-[#f7f0e2] uppercase sm:text-[22px]">
             {eyebrow}
           </p>
@@ -351,63 +429,110 @@ export function AtelierHeaderRail({
 
         <div className="flex shrink-0 items-center gap-2.5 2xl:gap-3">
           <nav
+            ref={navRef}
             aria-label={text("Primary Portfolio Volumes", "主要作品卷宗目录")}
-            className="hidden items-center gap-1.5 lg:flex"
+            className="relative hidden items-center gap-1.5 select-none lg:flex"
           >
             {roomItems.map((item) => {
-              const active = activeSection === item.id;
+              const activeFallback = !carriage && activeSection === item.id;
               return (
                 <Link
                   key={item.id}
+                  ref={(el) => {
+                    tabRefs.current[item.id] = el;
+                  }}
                   to={item.to}
-                  viewTransition
-                  aria-current={active ? "page" : undefined}
+                  aria-current={activeSection === item.id ? "page" : undefined}
                   className="group relative inline-flex h-[36px]"
                 >
                   <span
-                    style={{
-                      clipPath:
-                        "polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px)",
-                    }}
+                    style={{ clipPath: TAB_OUTER_CLIP }}
                     className={`inline-flex h-full items-center p-[1.5px] transition-colors duration-200 ${
-                      active
+                      activeFallback
                         ? "bg-gradient-to-b from-[#fff3d6] via-[#dfb97b] to-[#b5894b] shadow-[0_4px_12px_rgba(0,0,0,0.65)]"
                         : "bg-gradient-to-b from-[#e5c489]/75 to-[#8c6736]/58 shadow-[0_3px_8px_rgba(0,0,0,0.55)] group-hover:from-[#fff0cc] group-hover:to-[#c89d62]"
                     }`}
                   >
                     <span
-                      style={{
-                        clipPath:
-                          "polygon(5.12px 0, calc(100% - 5.12px) 0, 100% 5.12px, 100% calc(100% - 5.12px), calc(100% - 5.12px) 100%, 5.12px 100%, 0 calc(100% - 5.12px), 0 5.12px)",
-                      }}
-                      className={`inline-flex h-full items-center px-3.5 transition-colors xl:px-4 ${
-                        active
+                      style={{ clipPath: TAB_INNER_CLIP }}
+                      className={`inline-flex h-full items-center px-3.5 transition-colors duration-200 xl:px-4 ${
+                        activeFallback
                           ? "bg-gradient-to-b from-[#fcf6e8] to-[#eae0c8] text-[#14100c]"
                           : "bg-gradient-to-b from-[#211913] via-[#17110d] to-[#100c09] text-[#ede2cf] group-hover:from-[#2c2119] group-hover:to-[#18120e] group-hover:text-white"
                       }`}
                     >
                       <span className="font-display text-[13px] font-bold tracking-[0.08em] uppercase whitespace-nowrap xl:text-[13.5px]">
-                        <span className={active ? "text-rubric" : "text-[#e8c78c]"}>{item.roman}</span> · {item.label}
+                        <span className={activeFallback ? "text-rubric" : "text-[#e8c78c]"}>{item.roman}</span> ·{" "}
+                        {item.label}
                       </span>
                     </span>
                   </span>
-
-                  {/* Gliding champagne-gilt underline shuttle riding along the header rule with zero text overlap */}
-                  {active && (
-                    <span
-                      aria-hidden="true"
-                      className="atelier-active-tab pointer-events-none absolute inset-x-1.5 -bottom-[15px] h-[2px] bg-gradient-to-r from-[#c89d62] via-[#fff2d2] to-[#c89d62] shadow-[0_0_10px_rgba(242,212,160,0.55)]"
-                    />
-                  )}
                 </Link>
               );
             })}
+
+            {carriage && (
+              <>
+                {/* 1. Physical gliding chamfered sunlit-vellum & champagne-gilt tab carriage */}
+                <span
+                  aria-hidden="true"
+                  style={{
+                    width: `${carriage.width}px`,
+                    transform: `translate3d(${carriage.left}px, 0, 0)`,
+                    transition: carriageTransition,
+                    clipPath: TAB_OUTER_CLIP,
+                  }}
+                  className="pointer-events-none absolute top-0 left-0 z-10 inline-flex h-[36px] items-center bg-gradient-to-b from-[#fff3d6] via-[#dfb97b] to-[#b5894b] p-[1.5px] shadow-[0_5px_14px_rgba(0,0,0,0.68)]"
+                >
+                  <span
+                    style={{ clipPath: TAB_INNER_CLIP }}
+                    className="h-full w-full bg-gradient-to-b from-[#fcf6e8] to-[#eae0c8]"
+                  />
+                </span>
+
+                {/* 2. Synchronized dark iron-gall & rubric text layer clipped strictly to the gliding carriage */}
+                <span
+                  aria-hidden="true"
+                  style={{
+                    clipPath: `inset(0px ${Math.max(0, carriage.navWidth - carriage.left - carriage.width)}px 0px ${carriage.left}px)`,
+                    transition: clipTransition,
+                  }}
+                  className="pointer-events-none absolute inset-0 z-20 flex items-center gap-1.5"
+                >
+                  {roomItems.map((item) => (
+                    <span key={item.id} className="inline-flex h-[36px] items-center p-[1.5px]">
+                      <span className="inline-flex h-full items-center px-3.5 text-[#14100c] xl:px-4">
+                        <span className="font-display text-[13px] font-bold tracking-[0.08em] uppercase whitespace-nowrap xl:text-[13.5px]">
+                          <span className="text-rubric">{item.roman}</span> · {item.label}
+                        </span>
+                      </span>
+                    </span>
+                  ))}
+                </span>
+
+                {/* 3. Gliding champagne-gilt shuttle riding along the brass header rule */}
+                <span
+                  aria-hidden="true"
+                  style={{
+                    width: `${Math.max(0, carriage.width - 12)}px`,
+                    transform: `translate3d(${carriage.left + 6}px, 0, 0)`,
+                    transition: carriageTransition,
+                  }}
+                  className="pointer-events-none absolute -bottom-[15px] left-0 z-20 h-[2px] bg-gradient-to-r from-[#c89d62] via-[#fff2d2] to-[#c89d62] shadow-[0_0_10px_rgba(242,212,160,0.55)]"
+                />
+              </>
+            )}
           </nav>
 
           {rightSlot && (
             <>
               <span aria-hidden="true" className="hidden h-4.5 w-px bg-[#d4ad73]/38 lg:block" />
-              <div className="flex shrink-0 items-center justify-end lg:min-w-[158px]">{rightSlot}</div>
+              <div
+                key={rightSlotKey ?? activeSection}
+                className="animate-header-meta flex shrink-0 items-center justify-end lg:min-w-[158px]"
+              >
+                {rightSlot}
+              </div>
             </>
           )}
         </div>
@@ -436,9 +561,9 @@ export type SheafTabSpec = {
 
 /**
  * Flush Right-Edge Bound Book-Block & Mahogany Fore-Edge Dock (`right-0 inset-y-0`).
- * Mirrors the left spine architecturally so the viewport reads as an open folio volume,
- * with die-cut rag-vellum index tabs & a Venetian-carmine bookmark flag projecting
- * inward (leftward) from between the stepped bound pages instead of floating in mid-air.
+ * Portals to `document.body` once hydrated so `.route-stage` directional transforms never
+ * detach it from the right viewport wall; the bound vellum stack stays stationary (`z-20`)
+ * while the inward-projecting index tabs (`z-10`) deal smoothly out from between the pages.
  */
 export function ArchivalPaperSheaf({
   ariaLabel,
@@ -451,6 +576,15 @@ export function ArchivalPaperSheaf({
   tabs: SheafTabSpec[];
   progressPct?: number;
 }) {
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(() =>
+    isClientHydratedForPortals() && typeof document !== "undefined" ? document.body : null,
+  );
+  const dealOnMountRef = useRef<boolean>(isClientHydratedForPortals());
+
+  useEffect(() => {
+    setPortalTarget(document.body);
+  }, []);
+
   const anyTabActive = tabs.some((t) => t.active);
 
   const renderFlagInner = (active: boolean, label: string) => (
@@ -458,7 +592,7 @@ export function ArchivalPaperSheaf({
       style={{
         clipPath: "polygon(0 6px, 100% 0, 100% 100%, 0 calc(100% - 6px))",
       }}
-      className={`relative flex flex-col items-center gap-1.5 py-3 transition-all duration-200 2xl:py-3.5 ${
+      className={`relative flex flex-col items-center gap-1.5 py-3 transition-[width,background-color,color,border-color] duration-200 2xl:py-3.5 ${
         active
           ? "w-[44px] border-l-[3px] border-l-[#ebd09e] bg-gradient-to-l from-[#6b1416] to-[#8c1a1d] text-[#faf3e6] shadow-[inset_-4px_0_6px_rgba(10,3,3,0.45)]"
           : "w-[36px] border-l border-l-[#d4ad73]/45 bg-gradient-to-l from-[#420d0f] to-[#631417] text-[#ead8bc] shadow-[inset_-4px_0_6px_rgba(10,3,3,0.52)] group-hover:w-[40px] group-hover:from-[#581214] group-hover:to-[#7c191c] group-hover:text-[#faf3e6]"
@@ -474,15 +608,15 @@ export function ArchivalPaperSheaf({
     </span>
   );
 
-  return (
+  const sheafNode = (
     <nav
       aria-label={ariaLabel}
-      className="atelier-fore-edge fixed inset-y-0 right-0 z-40 hidden w-[70px] select-none xl:flex xl:flex-col xl:items-end xl:justify-center"
+      className="atelier-fore-edge fixed inset-y-0 right-0 z-40 hidden w-[70px] overflow-x-clip select-none xl:flex xl:flex-col xl:items-end xl:justify-center"
     >
-      {/* Full-Height Bound Morocco Board Lip + 4-Ply Stepped Rag-Vellum Page Stack Docked Flush at right-0 */}
+      {/* Full-Height Bound Morocco Board Lip + 4-Ply Stepped Rag-Vellum Page Stack Docked Flush at right-0 (z-20 above tabs) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 w-[22px] shadow-[-16px_0_34px_rgba(0,0,0,0.94)]"
+        className="pointer-events-none absolute inset-y-0 right-0 z-20 w-[22px] shadow-[-16px_0_34px_rgba(0,0,0,0.94)]"
       >
         {/* Outer ebony-mahogany book-cover board & gilt bevel */}
         <span className="absolute inset-y-0 right-0 w-[7px] border-l border-[#d4ad73]/48 bg-gradient-to-l from-[#070504] via-[#120d09] to-[#1d150f]" />
@@ -517,8 +651,12 @@ export function ArchivalPaperSheaf({
         <span className="absolute bottom-0 right-0 h-[16px] w-[22px] border-t border-[#d4ad73]/65 bg-gradient-to-t from-[#261b13] to-[#120c08] shadow-[0_-3px_8px_rgba(0,0,0,0.8)]" />
       </div>
 
-      {/* Inward-Projecting Die-Cut Index Cascade (tucked physically behind the outermost page lip at right-[19px]) */}
-      <div className="relative z-10 flex flex-col items-end py-7 pr-[19px]">
+      {/* Inward-Projecting Die-Cut Index Cascade (tucked physically behind the z-20 page lip at right-[19px]) */}
+      <div
+        className={`relative z-10 flex flex-col items-end py-7 pr-[19px] ${
+          dealOnMountRef.current ? "animate-sheaf-tabs" : ""
+        }`}
+      >
         {topFlag &&
           (() => {
             const flagClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(-3px_4px_7px_rgba(0,0,0,0.84))] ${
@@ -526,7 +664,7 @@ export function ArchivalPaperSheaf({
             }`;
             if (topFlag.to) {
               return (
-                <Link to={topFlag.to} viewTransition className={flagClass}>
+                <Link to={topFlag.to} className={flagClass}>
                   {renderFlagInner(Boolean(topFlag.active), topFlag.label)}
                 </Link>
               );
@@ -562,7 +700,7 @@ export function ArchivalPaperSheaf({
                 style={{
                   clipPath: "polygon(0 9px, 100% 0, 100% 100%, 0 calc(100% - 9px))",
                 }}
-                className={`relative flex flex-col items-center justify-center overflow-hidden py-2.5 transition-all duration-200 2xl:py-3.5 ${
+                className={`relative flex flex-col items-center justify-center overflow-hidden py-2.5 transition-[width,background-color,color,border-color] duration-200 2xl:py-3.5 ${
                   active
                     ? "w-[45px] border-l-[3px] border-l-rubric bg-[#fbf4e6] text-rubric shadow-[inset_-4px_0_6px_rgba(68,46,20,0.22)]"
                     : "w-[36px] border-l border-l-[#755228]/65 bg-[#eee3cc] text-[#1c140e] shadow-[inset_-5px_0_7px_rgba(44,28,12,0.28)] group-hover:w-[40px] group-hover:bg-[#f7efe0]"
@@ -590,7 +728,6 @@ export function ArchivalPaperSheaf({
                 <Link
                   key={tab.id}
                   to={tab.to}
-                  viewTransition
                   aria-current={active ? "page" : undefined}
                   style={{ zIndex: active ? 35 : 25 - idx }}
                   className={wrapperClass}
@@ -631,4 +768,6 @@ export function ArchivalPaperSheaf({
       </div>
     </nav>
   );
+
+  return portalTarget ? createPortal(sheafNode, portalTarget) : sheafNode;
 }

@@ -1,8 +1,19 @@
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent } from "react";
+
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+let clientHydratedForPortals = false;
+export function markClientHydratedForPortals() {
+  clientHydratedForPortals = true;
+}
+export function isClientHydratedForPortals(): boolean {
+  return clientHydratedForPortals;
+}
 
 /**
- * Global 60fps lerped cursor parallax & desk lamplight sheen driver.
- * Updates CSS custom properties on <html> without triggering React re-renders.
+ * Global frame-rate-independent lerped cursor parallax & desk lamplight sheen driver.
+ * Updates CSS custom properties on <html> without triggering React re-renders,
+ * converging smoothly to exact target across 60Hz, 144Hz, and 240Hz displays.
  */
 export function useDeskParallax() {
   useEffect(() => {
@@ -20,29 +31,45 @@ export function useDeskParallax() {
     let spotY = window.innerHeight * 0.44;
     let curSpotX = spotX;
     let curSpotY = spotY;
+    let lastTime = 0;
     let rafId = 0;
     let running = false;
 
-    const tick = () => {
-      currentX += (targetX - currentX) * 0.09;
-      currentY += (targetY - currentY) * 0.09;
-      curSpotX += (spotX - curSpotX) * 0.12;
-      curSpotY += (spotY - curSpotY) * 0.12;
+    const tick = (now: number) => {
+      const dt = lastTime ? Math.min(0.05, Math.max(0.001, (now - lastTime) / 1000)) : 1 / 60;
+      lastTime = now;
+
+      const alphaParallax = 1 - Math.exp(-8.5 * dt);
+      const alphaSpot = 1 - Math.exp(-11.5 * dt);
+
+      currentX += (targetX - currentX) * alphaParallax;
+      currentY += (targetY - currentY) * alphaParallax;
+      curSpotX += (spotX - curSpotX) * alphaSpot;
+      curSpotY += (spotY - curSpotY) * alphaSpot;
+
+      const settling =
+        Math.abs(targetX - currentX) > 0.00025 ||
+        Math.abs(targetY - currentY) > 0.00025 ||
+        Math.abs(spotX - curSpotX) > 0.12 ||
+        Math.abs(spotY - curSpotY) > 0.12;
+
+      if (!settling) {
+        currentX = targetX;
+        currentY = targetY;
+        curSpotX = spotX;
+        curSpotY = spotY;
+      }
 
       root.style.setProperty("--mx", currentX.toFixed(4));
       root.style.setProperty("--my", currentY.toFixed(4));
       root.style.setProperty("--spot-x", `${curSpotX.toFixed(1)}px`);
       root.style.setProperty("--spot-y", `${curSpotY.toFixed(1)}px`);
 
-      if (
-        Math.abs(targetX - currentX) > 0.0008 ||
-        Math.abs(targetY - currentY) > 0.0008 ||
-        Math.abs(spotX - curSpotX) > 0.4 ||
-        Math.abs(spotY - curSpotY) > 0.4
-      ) {
+      if (settling) {
         rafId = window.requestAnimationFrame(tick);
       } else {
         running = false;
+        lastTime = 0;
       }
     };
 
@@ -55,6 +82,7 @@ export function useDeskParallax() {
       spotY = event.clientY;
       if (!running) {
         running = true;
+        lastTime = 0;
         rafId = window.requestAnimationFrame(tick);
       }
     };
@@ -68,30 +96,25 @@ export function useDeskParallax() {
 }
 
 /**
- * Fires once when an element enters the viewport so GDD bars and chapters deal in crisply.
- * Defaults to visible during SSR and reduced-motion so content is never locked hidden.
+ * Fires once when a below-the-fold element enters the viewport.
+ * Initializes `true` on both SSR and client so above-the-fold elements never
+ * hydration-mismatch or flash invisible, only arming below-the-fold nodes before paint.
  */
 export function useInViewOnce<T extends HTMLElement = HTMLDivElement>(rootMargin = "120px 0px 80px 0px") {
   const ref = useRef<T | null>(null);
-  const [inView, setInView] = useState<boolean>(() => {
-    if (typeof window === "undefined") return true;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
-    return false;
-  });
+  const [inView, setInView] = useState<boolean>(true);
 
-  useEffect(() => {
-    if (inView) return;
+  useIsomorphicLayoutEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const node = ref.current;
-    if (!node || typeof IntersectionObserver === "undefined") {
-      setInView(true);
-      return;
-    }
+    if (!node || typeof IntersectionObserver === "undefined") return;
 
     const rect = node.getBoundingClientRect();
-    if (rect.top < window.innerHeight + 120 && rect.bottom > -80) {
-      setInView(true);
+    if (rect.top <= window.innerHeight * 0.94) {
       return;
     }
+
+    setInView(false);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -105,7 +128,7 @@ export function useInViewOnce<T extends HTMLElement = HTMLDivElement>(rootMargin
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [inView, rootMargin]);
+  }, [rootMargin]);
 
   return { ref, inView };
 }
