@@ -84,7 +84,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
           decoding="async"
           className={`${item.naturalAspect ? "" : "aspect-video "}h-auto w-full bg-[#0b0806] object-contain transition-transform duration-300 group-hover:scale-[1.008]`}
         />
-        <span className="absolute bottom-3 right-3 flex items-center gap-1.5 border border-warm/45 bg-[#120d0a]/92 px-2.5 py-1.5 font-numeral text-[10.5px] font-semibold tracking-wider text-[#f2e5cb] uppercase opacity-0 backdrop-blur-sm transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
+        <span className="absolute bottom-3 right-3 flex items-center gap-1.5 border border-warm/45 bg-[#120d0a]/92 px-2.5 py-1.5 font-numeral text-[12.5px] font-semibold tracking-wider text-[#f2e5cb] uppercase opacity-0 backdrop-blur-sm transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
           <ExpandIcon />
           {text("Inspect Plate", "放大检视")}
         </span>
@@ -109,7 +109,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
                 ref={closeRef}
                 type="button"
                 onClick={() => setExpanded(false)}
-                className="brass-plaque self-end inline-flex cursor-pointer items-center gap-2 px-3.5 py-1.5 font-numeral text-xs font-bold tracking-[0.12em] uppercase"
+                className="brass-plaque self-end inline-flex cursor-pointer items-center gap-2 px-3.5 py-1.5 font-display text-[13.5px] font-bold tracking-[0.1em] uppercase"
                 aria-label={text("Close expanded image", "关闭大图")}
               >
                 {text("Close Plate", "关闭图版")} <ExpandIcon close />
@@ -120,7 +120,7 @@ function ExpandableImage({ item }: { item: Extract<MediaItem, { type: "image" }>
                 className="max-h-[calc(100vh-8rem)] max-w-full border-2 border-warm/45 bg-[#090706] object-contain shadow-2xl"
               />
               {item.caption && (
-                <p className="max-w-4xl text-center font-display text-sm italic text-[#ddd0ba]">
+                <p className="max-w-4xl text-center font-display text-[16px] italic text-[#ddd0ba]">
                   <FormattedText>{item.caption}</FormattedText>
                 </p>
               )}
@@ -167,7 +167,7 @@ function YouTubeEmbed({ id, title, thumbnailSrc }: { id: string; title: string; 
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
       />
       <span aria-hidden="true" className="absolute inset-0 bg-black/22 transition-colors group-hover:bg-black/8" />
-      <span className="brass-plaque relative px-4.5 py-2 font-numeral text-xs font-bold tracking-[0.12em] uppercase transition-transform group-hover:scale-[1.03]">
+      <span className="brass-plaque relative px-4.5 py-2 font-display text-[13.5px] font-bold tracking-[0.1em] uppercase transition-transform group-hover:scale-[1.03]">
         ▶ {text("Play Clip", "播放片段")}
       </span>
     </button>
@@ -192,7 +192,7 @@ export function Media({ item }: { item: MediaItem }) {
         </div>
       </div>
       {item.caption && (
-        <figcaption className="px-0.5 text-[14.5px] leading-snug text-muted-foreground">
+        <figcaption className="px-0.5 text-[16px] leading-snug text-muted-foreground">
           <FormattedText>{item.caption}</FormattedText>
         </figcaption>
       )}

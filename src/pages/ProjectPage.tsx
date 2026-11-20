@@ -111,13 +111,13 @@ export function ProjectPage() {
       {/* ==================== 1. UNIFIED VICTORIAN ARCHIVAL HEADER RAIL ==================== */}
       <AtelierHeaderRail
         eyebrow="LEFICIOUS"
-        subtitle={`${text("Case Folio", "项目拆解卷")} ${folioRoman} / V · ${project.role} · ${project.year}`}
+        subtitle={`${text("Case Folio", "项目拆解卷")} ${folioRoman} / V · ${project.year}`}
         maxWidthClass="max-w-[1380px]"
         rightSlot={
           <Link
             to={localizedPath("/")}
             viewTransition
-            className="brass-plaque inline-flex h-[34px] items-center gap-1.5 px-4 font-display text-[12px] font-bold tracking-[0.11em] whitespace-nowrap uppercase transition-colors 2xl:px-4.5 2xl:text-[12.5px]"
+            className="brass-plaque inline-flex h-[36px] items-center gap-1.5 px-4 font-display text-[13px] font-bold tracking-[0.09em] whitespace-nowrap uppercase transition-colors xl:px-4.5 xl:text-[13.5px]"
           >
             <span aria-hidden="true">←</span>
             <span>{text("Atelier Desk", "返回案台")}</span>
@@ -148,7 +148,7 @@ export function ProjectPage() {
                   className="hidden h-12 w-12 shrink-0 opacity-90 sm:block"
                 />
                 <div>
-                  <p className="font-numeral text-[11px] font-bold tracking-[0.24em] text-parchment-muted uppercase">
+                  <p className="font-numeral text-[13px] font-bold tracking-[0.22em] text-parchment-muted uppercase">
                     {text("CASE FOLIO", "项目深度拆解卷宗")} · {folioRoman}
                   </p>
                   <h1 className="mt-0.5 font-display text-3xl font-bold tracking-tight text-parchment-ink sm:text-4xl md:text-5xl">
@@ -157,12 +157,12 @@ export function ProjectPage() {
                 </div>
               </div>
 
-              <p className="mt-2 font-display text-base font-medium italic text-rubric sm:text-lg">
+              <p className="mt-2 font-display text-[17.5px] font-medium italic text-rubric sm:text-[19px]">
                 {project.role} · {project.year}
               </p>
 
               <p
-                className={`mt-4 text-pretty text-[17px] leading-[1.64] text-parchment-ink sm:text-[18px] ${
+                className={`mt-4 text-pretty text-[18px] leading-[1.64] text-parchment-ink sm:text-[19px] ${
                   isChinese ? "zh-readable" : ""
                 }`}
               >
@@ -176,7 +176,7 @@ export function ProjectPage() {
                       href={project.externalLink.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="victorian-ticket victorian-ticket-ink inline-flex items-center gap-1.5 bg-[#140d09] px-4.5 py-2.5 font-numeral text-xs font-bold tracking-[0.12em] text-[#f6eedc] uppercase transition-all hover:-translate-y-0.5 hover:bg-[#2c1e15]"
+                      className="victorian-ticket victorian-ticket-ink inline-flex items-center gap-1.5 bg-[#140d09] px-4.5 py-2.5 font-display text-[13.5px] font-bold tracking-[0.1em] text-[#f6eedc] uppercase transition-all hover:-translate-y-0.5 hover:bg-[#2c1e15]"
                     >
                       {project.externalLink.label} <span aria-hidden="true">↗</span>
                     </a>
@@ -186,7 +186,7 @@ export function ProjectPage() {
                       key={item.url}
                       href={item.url}
                       download
-                      className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center gap-1.5 bg-parchment-deep/75 px-4.5 py-2.5 font-numeral text-xs font-bold tracking-[0.1em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
+                      className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center gap-1.5 bg-parchment-deep/75 px-4.5 py-2.5 font-display text-[13.5px] font-bold tracking-[0.09em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc]"
                     >
                       {item.label} <span aria-hidden="true">↓</span>
                     </a>
@@ -195,31 +195,31 @@ export function ProjectPage() {
               )}
             </div>
 
-            <dl className="space-y-3.5 text-[15.5px] md:col-span-4 md:border-l md:border-[#684720]/45 md:pl-6">
+            <dl className="space-y-3.5 text-[16px] md:col-span-4 md:border-l md:border-[#684720]/45 md:pl-6">
               <div>
-                <dt className="font-numeral text-[10px] font-bold tracking-[0.2em] text-parchment-muted uppercase">
+                <dt className="font-numeral text-[12px] font-bold tracking-[0.18em] text-parchment-muted uppercase">
                   {text("Discipline & Role", "职责与定位")}
                 </dt>
                 <dd className="mt-0.5 font-semibold text-parchment-ink">{project.role}</dd>
               </div>
               <div>
-                <dt className="font-numeral text-[10px] font-bold tracking-[0.2em] text-parchment-muted uppercase">
+                <dt className="font-numeral text-[12px] font-bold tracking-[0.18em] text-parchment-muted uppercase">
                   {text("Chronology", "制作年份")}
                 </dt>
-                <dd className="mt-0.5 font-numeral text-xs font-semibold text-parchment-ink">{project.year}</dd>
+                <dd className="mt-0.5 font-numeral text-[15px] font-semibold text-parchment-ink">{project.year}</dd>
               </div>
               <div>
-                <dt className="font-numeral text-[10px] font-bold tracking-[0.2em] text-parchment-muted uppercase">
+                <dt className="font-numeral text-[12px] font-bold tracking-[0.18em] text-parchment-muted uppercase">
                   {text("Engine & Craft", "引擎与技术栈")}
                 </dt>
-                <dd className="mt-1 text-[14.5px] leading-snug text-parchment-ink/92">{project.tags.join(" · ")}</dd>
+                <dd className="mt-1 text-[16px] leading-snug text-parchment-ink/92">{project.tags.join(" · ")}</dd>
               </div>
               {project.references && project.references.length > 0 && (
                 <div>
-                  <dt className="font-numeral text-[10px] font-bold tracking-[0.2em] text-parchment-muted uppercase">
+                  <dt className="font-numeral text-[12px] font-bold tracking-[0.18em] text-parchment-muted uppercase">
                     {text("Theoretical Framework", "理论参考")}
                   </dt>
-                  <dd className="mt-1 space-y-1 text-[14.5px]">
+                  <dd className="mt-1 space-y-1 text-[16px]">
                     {project.references.map((ref) => (
                       <a
                         key={ref.url}
@@ -273,7 +273,7 @@ export function ProjectPage() {
         {project.sections && (
           <nav
             aria-label={text("Jump to chapter", "跳转章节")}
-            className="sticky top-[52px] z-30 mt-6 overflow-hidden border border-[#d4ae73]/48 bg-[#120d0a]/95 px-4 py-2.5 text-xs text-muted-foreground shadow-[0_12px_32px_rgba(0,0,0,0.78)] backdrop-blur-md lg:top-3"
+            className="sticky top-[52px] z-30 mt-6 overflow-hidden border border-[#d4ae73]/48 bg-[#120d0a]/95 px-4 py-2.5 text-sm text-muted-foreground shadow-[0_12px_32px_rgba(0,0,0,0.78)] backdrop-blur-md lg:top-3"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5">
               {project.sections.map((section, sectionIndex) => {
@@ -287,13 +287,13 @@ export function ProjectPage() {
                     }`}
                   >
                     <span
-                      className={`font-numeral text-[11px] font-bold ${
+                      className={`font-numeral text-[13px] font-bold ${
                         isCurrent ? "text-[#e2be84]" : "text-warm/80"
                       }`}
                     >
                       {toRoman(sectionIndex + 1)}
                     </span>
-                    <span className="font-display text-sm font-semibold">
+                    <span className="font-display text-[15.5px] font-semibold">
                       {section.title}
                     </span>
                   </Link>
@@ -314,22 +314,22 @@ export function ProjectPage() {
 
           <div className="relative z-10 grid gap-8 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-3">
-              <p className="font-numeral text-[10.5px] font-bold tracking-[0.22em] text-[#e2be84] uppercase">
+              <p className="font-numeral text-[12.5px] font-bold tracking-[0.2em] text-[#e2be84] uppercase">
                 {text("PROLOGUE", "序章")}
               </p>
               <h2 className="mt-1 font-display text-2xl font-bold tracking-tight text-foreground">
                 {text("Overview & Scope", "项目背景与规模")}
               </h2>
-              <p className={`mt-2 text-[15px] leading-snug text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
+              <p className={`mt-2 text-[16.5px] leading-snug text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
                 <FormattedText>{project.scope}</FormattedText>
               </p>
             </div>
 
             <div className={`space-y-4 text-pretty leading-[1.66] md:col-span-9 ${isChinese ? "zh-readable" : ""}`}>
-              <p className="text-[18px] text-foreground/96">
+              <p className="text-[18.5px] text-foreground/96">
                 <FormattedText>{project.overview}</FormattedText>
               </p>
-              <ul className="space-y-2.5 pt-1 text-[16.5px] text-muted-foreground">
+              <ul className="space-y-2.5 pt-1 text-[17.5px] text-muted-foreground">
                 {project.outcomes.map((outcome) => (
                   <li key={outcome} className="flex gap-3">
                     <span aria-hidden="true" className="mt-2.5 h-1.5 w-1.5 shrink-0 rotate-45 border border-warm bg-rubric" />
@@ -341,10 +341,10 @@ export function ProjectPage() {
               {project.authorNote && (
                 <aside className="parchment-sheet relative mt-6 border-[3px] border-[#110b07] px-5 py-4 shadow-[0_14px_32px_rgba(0,0,0,0.65),4px_4px_0_-1px_#dfd0b2,6px_6px_0_0_#110b07] sm:px-6">
                   <CrimsonStamp className="pointer-events-none absolute right-5 -top-3.5 h-9.5 w-9.5" />
-                  <p className="relative z-10 font-numeral text-[10.5px] font-bold tracking-[0.2em] text-rubric uppercase">
+                  <p className="relative z-10 font-numeral text-[12.5px] font-bold tracking-[0.18em] text-rubric uppercase">
                     {text("Designer's Note", "设计师手记")}
                   </p>
-                  <p className={`relative z-10 mt-1.5 text-[16px] leading-relaxed text-parchment-ink ${isChinese ? "zh-readable" : ""}`}>
+                  <p className={`relative z-10 mt-1.5 text-[17px] leading-relaxed text-parchment-ink ${isChinese ? "zh-readable" : ""}`}>
                     <FormattedText>{project.authorNote}</FormattedText>
                   </p>
                 </aside>
@@ -358,7 +358,7 @@ export function ProjectPage() {
             <BrassRule ornate tone="slate" className="mb-10" />
             <div className="grid gap-8 md:grid-cols-12 md:gap-10">
               <div className="md:col-span-3">
-                <p className="font-numeral text-[10.5px] font-bold tracking-[0.2em] text-[#e2be84] uppercase">
+                <p className="font-numeral text-[12.5px] font-bold tracking-[0.2em] text-[#e2be84] uppercase">
                   {text("PLATES", "实机记录")}
                 </p>
                 <h2 className="mt-1 font-display text-2xl font-bold tracking-tight text-foreground">
@@ -388,7 +388,7 @@ export function ProjectPage() {
 
               <div className="relative z-10 grid gap-6 md:grid-cols-12 md:gap-10">
                 <div className="min-w-0 md:col-span-3">
-                  <span className="font-numeral text-xs font-bold tracking-[0.2em] text-[#e2be84]">
+                  <span className="font-numeral text-[13px] font-bold tracking-[0.2em] text-[#e2be84]">
                     {text("CHAPTER", "章节")} {toRoman(sectionIndex + 1)}
                   </span>
                   <h2 className="mt-1.5 break-words font-display text-2xl font-bold leading-snug tracking-tight text-foreground sm:text-[26px]">
@@ -396,7 +396,7 @@ export function ProjectPage() {
                   </h2>
                 </div>
                 <div
-                  className={`min-w-0 space-y-4 text-pretty text-[17.5px] leading-[1.68] text-foreground/90 md:col-span-9 ${
+                  className={`min-w-0 space-y-4 text-pretty text-[18.5px] leading-[1.68] text-foreground/92 md:col-span-9 ${
                     isChinese ? "zh-readable" : ""
                   }`}
                 >
@@ -433,7 +433,7 @@ export function ProjectPage() {
             <BrassRule ornate tone="slate" className="mb-9" />
             <div className="grid gap-8 md:grid-cols-12 md:gap-10">
               <div className="md:col-span-3">
-                <span className="font-numeral text-[10.5px] font-bold tracking-[0.2em] text-[#e2be84] uppercase">
+                <span className="font-numeral text-[12.5px] font-bold tracking-[0.2em] text-[#e2be84] uppercase">
                   {text("IMPLEMENTATION", "代码实现")}
                 </span>
                 <h2 className="mt-1 font-display text-2xl font-bold tracking-tight">{text("Core Source", "核心代码")}</h2>
@@ -457,7 +457,7 @@ export function ProjectPage() {
               <Link
                 to={localizedPath("/gallery")}
                 viewTransition
-                className="font-numeral text-xs font-bold tracking-[0.14em] text-[#e2be84] uppercase transition-colors hover:text-[#fbf3e4]"
+                className="font-numeral text-[13.5px] font-bold tracking-[0.14em] text-[#e2be84] uppercase transition-colors hover:text-[#fbf3e4]"
               >
                 {text("Open Gallery", "进入画廊")} →
               </Link>
@@ -485,10 +485,10 @@ export function ProjectPage() {
                     />
                   </div>
                   <div className="relative z-10 px-1.5 pt-3 pb-1">
-                    <p className="font-display text-base font-bold transition-colors group-hover:text-[#ebd09e]">
+                    <p className="font-display text-[18px] font-bold transition-colors group-hover:text-[#ebd09e]">
                       {entry.title}
                     </p>
-                    <p className="mt-0.5 font-numeral text-[10px] tracking-[0.14em] text-muted-foreground uppercase">
+                    <p className="mt-0.5 font-numeral text-[12px] tracking-[0.14em] text-muted-foreground uppercase">
                       {text("Inspect passes", "检视制作图层")} →
                     </p>
                   </div>
@@ -503,7 +503,7 @@ export function ProjectPage() {
           <Link
             to={localizedPath("/")}
             viewTransition
-            className="brass-plaque inline-flex w-fit items-center gap-2 px-5 py-2.5 font-numeral text-xs font-bold tracking-[0.14em] uppercase transition-transform hover:-translate-y-0.5"
+            className="brass-plaque inline-flex w-fit items-center gap-2 px-5 py-2.5 font-display text-[13.5px] font-bold tracking-[0.12em] uppercase transition-transform hover:-translate-y-0.5"
           >
             ← {text("Return to Atelier Desk", "返回案台卷宗")}
           </Link>
@@ -520,7 +520,7 @@ export function ProjectPage() {
               className="relative z-10 h-12 w-12 shrink-0 opacity-90 transition-transform duration-300 group-hover:scale-108"
             />
             <div className="relative z-10">
-              <span className="block font-numeral text-[10px] font-bold tracking-[0.2em] text-rubric uppercase">
+              <span className="block font-numeral text-[12px] font-bold tracking-[0.18em] text-rubric uppercase">
                 {text("NEXT CASE FOLIO", "下一卷宗")} · {nextRoman}
               </span>
               <span className="mt-0.5 block font-display text-xl font-bold tracking-tight text-parchment-ink transition-colors group-hover:text-rubric sm:text-2xl">

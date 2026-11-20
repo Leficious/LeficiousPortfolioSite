@@ -94,22 +94,22 @@ export function GalleryLightbox({
 
         <header className="relative z-10 flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-[#7a582e]/40 pb-3">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span className="font-numeral text-xs font-semibold tracking-[0.2em] text-parchment-muted">
+            <span className="font-numeral text-[13px] font-semibold tracking-[0.18em] text-parchment-muted">
               {text("SPECIMEN PLATE", "标本图版")} {formattedPlate}
             </span>
             <span aria-hidden="true" className="text-[#7a582e]/60">·</span>
-            <span className="font-numeral text-xs font-bold tracking-[0.14em] text-rubric">
+            <span className="font-numeral text-[13px] font-bold tracking-[0.14em] text-rubric">
               {text("PASS", "图层")} {String(slide + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
             </span>
             <span aria-hidden="true" className="hidden text-[#7a582e]/60 sm:inline">·</span>
-            <span className="hidden font-numeral text-xs text-parchment-muted sm:inline">{entry.year}</span>
+            <span className="hidden font-numeral text-[13px] text-parchment-muted sm:inline">{entry.year}</span>
           </div>
 
           <button
             ref={closeRef}
             type="button"
             onClick={onClose}
-            className="brass-plaque shrink-0 cursor-pointer px-4 py-1.5 font-numeral text-xs font-bold tracking-[0.12em] uppercase transition-transform active:scale-95"
+            className="brass-plaque shrink-0 cursor-pointer px-4 py-1.5 font-display text-[13px] font-bold tracking-[0.1em] uppercase transition-transform active:scale-95"
           >
             <span aria-hidden="true" className="mr-1.5">×</span>
             {text("Back to Gallery", "返回画廊")}
@@ -202,12 +202,12 @@ export function GalleryLightbox({
                         {item.type === "image" ? (
                           <img src={item.src} alt="" className="h-full w-full object-cover" loading="lazy" />
                         ) : (
-                          <span className="flex h-full items-center justify-center font-numeral text-[10px] tracking-widest text-[#d8b47c]">
+                          <span className="flex h-full items-center justify-center font-numeral text-[11px] tracking-widest text-[#d8b47c]">
                             ▶ REEL
                           </span>
                         )}
                         <span
-                          className={`absolute left-1 top-1 px-1 py-0.2 font-numeral text-[9.5px] font-bold leading-tight ${
+                          className={`absolute left-1 top-1 px-1 py-0.2 font-numeral text-[11px] font-bold leading-tight ${
                             active ? "bg-rubric text-[#faf3e6]" : "bg-[#120d0a]/88 text-[#ece2d0]"
                           }`}
                         >
@@ -230,26 +230,26 @@ export function GalleryLightbox({
                 <div>
                   <h2
                     id="gallery-dialog-title"
-                    className="font-display text-2xl font-semibold leading-tight tracking-tight text-parchment-ink"
+                    className="font-display text-[26px] font-semibold leading-tight tracking-tight text-parchment-ink"
                   >
                     {entry.title}
                   </h2>
-                  <p className="mt-1 font-display text-sm italic text-rubric">
+                  <p className="mt-1 font-display text-[15.5px] italic text-rubric">
                     {entry.tags.map((tag) => (isChinese ? galleryTagZh[tag] : tag)).join(" · ")}
                   </p>
                 </div>
                 <CrimsonStamp className="h-12 w-12" />
               </div>
 
-              <p className={`mt-4 text-[16px] leading-[1.62] text-parchment-ink/94 ${isChinese ? "zh-readable" : ""}`}>
+              <p className={`mt-4 text-[17px] leading-[1.62] text-parchment-ink/94 ${isChinese ? "zh-readable" : ""}`}>
                 <FormattedText>{entry.description}</FormattedText>
               </p>
 
               <div className="victorian-ticket victorian-ticket-vellum embossed-ticket mt-4 bg-parchment-deep/80 px-3.5 py-2.5">
-                <p className="font-numeral text-[10px] font-bold tracking-[0.2em] text-parchment-muted uppercase">
+                <p className="font-numeral text-[12px] font-bold tracking-[0.18em] text-parchment-muted uppercase">
                   {text("Craft & Contribution", "负责模块")}
                 </p>
-                <p className="mt-1 text-[14.5px] leading-snug text-parchment-ink/94">{entry.contribution}</p>
+                <p className="mt-1 text-[16px] leading-snug text-parchment-ink/94">{entry.contribution}</p>
               </div>
 
               <BrassRule ornate tone="parchment" className="my-4" />
@@ -262,7 +262,7 @@ export function GalleryLightbox({
                 <Link
                   to={localizedPath(entry.projectUrl)}
                   viewTransition
-                  className="victorian-ticket victorian-ticket-ink inline-flex items-center justify-between bg-[#191310] px-4 py-2.5 font-numeral text-xs font-semibold tracking-[0.1em] text-[#f2e8d5] uppercase transition-colors hover:bg-[#2e231d]"
+                  className="victorian-ticket victorian-ticket-ink inline-flex items-center justify-between bg-[#191310] px-4 py-2.5 font-display text-[13px] font-semibold tracking-[0.09em] text-[#f2e8d5] uppercase transition-colors hover:bg-[#2e231d]"
                 >
                   <span>{isChinese ? "展开关联项目卷宗" : entry.projectLabel ?? "Open Related Case Folio"}</span>
                   <span aria-hidden="true">→</span>
@@ -273,7 +273,7 @@ export function GalleryLightbox({
                 <button
                   type="button"
                   onClick={onNextEntry}
-                  className="victorian-ticket victorian-ticket-vellum inline-flex cursor-pointer items-center justify-between bg-transparent px-4 py-2 font-display text-sm font-semibold text-parchment-ink transition-colors hover:bg-[#191310]/8"
+                  className="victorian-ticket victorian-ticket-vellum inline-flex cursor-pointer items-center justify-between bg-transparent px-4 py-2 font-display text-[15px] font-semibold text-parchment-ink transition-colors hover:bg-[#191310]/8"
                 >
                   <span className="truncate pr-2">
                     {text("Next Specimen Plate", "下一件标本")}

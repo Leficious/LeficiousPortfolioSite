@@ -131,15 +131,15 @@ export function AboutPage() {
       <AtelierHeaderRail
         eyebrow={text("LEFI SHAN", "单凯飞 · LEFI SHAN")}
         subtitle={text(
-          "Little Tokyo, Los Angeles · USC SCA & Gnomon",
-          "洛杉矶小东京 · 南加大电影学院 & Gnomon",
+          "Little Tokyo, LA · USC SCA & Gnomon",
+          "洛杉矶小东京 · 南加大 & Gnomon",
         )}
         maxWidthClass="max-w-[1380px]"
         rightSlot={
           <a
             href={resumeHref}
             download
-            className="brass-plaque inline-flex h-[34px] items-center gap-1.5 px-4 font-display text-[12px] font-bold tracking-[0.11em] whitespace-nowrap uppercase transition-colors 2xl:px-4.5 2xl:text-[12.5px]"
+            className="brass-plaque inline-flex h-[36px] items-center gap-1.5 px-4 font-display text-[13px] font-bold tracking-[0.09em] whitespace-nowrap uppercase transition-colors xl:px-4.5 xl:text-[13.5px]"
           >
             <span>{text("Résumé (PDF)", "下载简历")}</span>
             <span aria-hidden="true">↓</span>
@@ -169,7 +169,7 @@ export function AboutPage() {
                         className="aspect-[4/5] w-full object-cover object-center transition-transform duration-500 hover:scale-[1.015]"
                       />
                     </div>
-                    <figcaption className="mt-2.5 text-center font-display text-xs italic text-parchment-muted">
+                    <figcaption className="mt-2.5 text-center font-display text-[14px] italic text-parchment-muted">
                       {text("Lefi (Kevin) Shan · Little Tokyo, LA", "单凯飞（Kevin Shan）· 洛杉矶")}
                     </figcaption>
                   </figure>
@@ -178,7 +178,7 @@ export function AboutPage() {
                     <h1 className="font-display text-4xl font-bold tracking-tight text-parchment-ink sm:text-[46px] sm:leading-[1.06]">
                       {text("Lefi Shan", "单凯飞 · Lefi Shan")}
                     </h1>
-                    <p className="mt-1.5 font-display text-[15.5px] font-medium italic text-rubric sm:text-[17px]">
+                    <p className="mt-1.5 font-display text-[17px] font-medium italic text-rubric sm:text-[18.5px]">
                       {text(
                         "Game, Level & Technical Designer · USC SCA & Gnomon",
                         "游戏、关卡与技术设计师 · 南加州大学电影艺术学院 & Gnomon",
@@ -186,7 +186,7 @@ export function AboutPage() {
                     </p>
 
                     <div
-                      className={`mt-4 space-y-3.5 text-pretty text-[16.5px] leading-[1.62] text-parchment-ink sm:text-[17.5px] ${
+                      className={`mt-4 space-y-3.5 text-pretty text-[17.5px] leading-[1.64] text-parchment-ink sm:text-[18.5px] ${
                         isChinese ? "zh-readable" : ""
                       }`}
                     >
@@ -212,7 +212,7 @@ export function AboutPage() {
                 <section aria-labelledby="outside-engine-heading">
                   <h2
                     id="outside-engine-heading"
-                    className="font-display text-lg font-bold tracking-tight text-parchment-ink sm:text-xl"
+                    className="font-display text-xl font-bold tracking-tight text-parchment-ink sm:text-[22px]"
                   >
                     {text("Outside of Games", "游戏之外")}
                   </h2>
@@ -221,14 +221,14 @@ export function AboutPage() {
                     {outsideDisciplines.map((item) => (
                       <div
                         key={item.roman}
-                        className="grid gap-1 py-3 sm:grid-cols-[205px_1fr] sm:items-baseline sm:gap-5"
+                        className="grid gap-1 py-3 sm:grid-cols-[215px_1fr] sm:items-baseline sm:gap-5"
                       >
-                        <h3 className="font-display text-[15.5px] font-bold text-parchment-ink">
-                          <span className="mr-1.5 font-numeral text-xs font-bold text-rubric">{item.roman}</span>
+                        <h3 className="font-display text-[17px] font-bold text-parchment-ink">
+                          <span className="mr-1.5 font-numeral text-[13.5px] font-bold text-rubric">{item.roman}</span>
                           · {isChinese ? item.titleZh : item.title}
                         </h3>
                         <p
-                          className={`text-[15.5px] leading-snug text-parchment-muted ${
+                          className={`text-[16.5px] leading-[1.52] text-parchment-muted ${
                             isChinese ? "zh-readable" : ""
                           }`}
                         >
@@ -258,19 +258,19 @@ export function AboutPage() {
                   <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#e8c78c]" />
                   <h2
                     id="credentials-heading"
-                    className="font-numeral text-xs font-bold tracking-[0.22em] text-[#e8c78c] uppercase"
+                    className="font-numeral text-[13px] font-bold tracking-[0.2em] text-[#e8c78c] uppercase"
                   >
                     {text("Academic & Guild Credentials", "学术履历与背景")}
                   </h2>
                   <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#e8c78c]" />
                 </div>
 
-                <div className="mt-4 space-y-3 border-y border-warm/28 py-4 text-[16px]">
+                <div className="mt-4 space-y-3 border-y border-warm/28 py-4 text-[17.5px]">
                   <div>
                     <p className="font-display font-semibold text-foreground">
                       {text("M.S. in Game Design & Development", "游戏设计与开发理学硕士（在读）")}
                     </p>
-                    <p className="text-[15px] italic text-muted-foreground">
+                    <p className="text-[16px] italic text-muted-foreground">
                       {text("USC School of Cinematic Arts (2028)", "南加州大学电影艺术学院 · 预计 2028")}
                     </p>
                   </div>
@@ -279,21 +279,21 @@ export function AboutPage() {
                     <p className="font-display font-semibold text-foreground">
                       {text("B.F.A. in Digital Production (Games)", "数字制作艺术学士（游戏方向）")}
                     </p>
-                    <p className="text-[15px] italic text-muted-foreground">
+                    <p className="text-[16px] italic text-muted-foreground">
                       {text("Gnomon School of Visual Effects · Student Reel (2025)", "Gnomon · 入选学院年度集锦 (2025)")}
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-3.5 space-y-1 text-[15px] text-muted-foreground">
+                <div className="mt-3.5 space-y-1 text-[16px] text-muted-foreground">
                   <p>
-                    <span className="font-numeral text-[11px] font-semibold tracking-[0.14em] text-[#e8c78c] uppercase">
+                    <span className="font-numeral text-[12.5px] font-semibold tracking-[0.14em] text-[#e8c78c] uppercase">
                       {text("Languages: ", "语言：")}
                     </span>
                     {text("English · Mandarin Chinese (Spoken)", "英语 · 普通话（口语流利）")}
                   </p>
                   <p>
-                    <span className="font-numeral text-[11px] font-semibold tracking-[0.14em] text-[#e8c78c] uppercase">
+                    <span className="font-numeral text-[12.5px] font-semibold tracking-[0.14em] text-[#e8c78c] uppercase">
                       {text("Regions: ", "意向地区：")}
                     </span>
                     {text("US · Canada · Europe · Japan · China", "美国 · 加拿大 · 欧洲 · 日本 · 中国")}
@@ -320,7 +320,7 @@ export function AboutPage() {
                   >
                     leficious@gmail.com
                   </span>
-                  <span className="mt-1 block font-numeral text-[10px] font-bold tracking-[0.18em] text-rubric uppercase">
+                  <span className="mt-1 block font-numeral text-[12px] font-bold tracking-[0.15em] text-rubric uppercase">
                     {copied
                       ? text("✓ Sealed & Copied to Clipboard", "✓ 已钤印并复制信箱地址")
                       : text("Direct Dispatch · Click Seal to Copy", "主联络信箱 · 点击红漆火印复制")}
@@ -329,7 +329,7 @@ export function AboutPage() {
 
                 <div className="relative z-10 flex shrink-0 flex-col items-center">
                   <CrimsonStamp stamped={copied} className="h-14 w-14 transition-transform group-hover:scale-106" />
-                  <span className="mt-1 font-display text-[11px] italic text-parchment-muted">
+                  <span className="mt-1 font-display text-[13px] italic text-parchment-muted">
                     {copied ? text("[ Copied ]", "[ 已复制 ]") : text("[ Stamp & Copy ]", "[ 钤印复制 ]")}
                   </span>
                 </div>
@@ -348,7 +348,7 @@ export function AboutPage() {
                     className="slate-folio tactile-tilt group relative flex min-h-[76px] flex-col items-center justify-center border border-[#d8b47c]/55 px-2.5 py-3 text-center transition-all hover:-translate-y-0.5 hover:border-[#f3dfb9]"
                   >
                     <span aria-hidden="true" className="pointer-events-none absolute inset-1.5 border border-warm/22" />
-                    <span className="relative z-10 whitespace-nowrap font-display text-[14.5px] font-semibold leading-snug text-[#f7f0e2] transition-colors group-hover:text-[#f5dfb2]">
+                    <span className="relative z-10 whitespace-nowrap font-display text-[16px] font-semibold leading-snug text-[#f7f0e2] transition-colors group-hover:text-[#f5dfb2]">
                       {isChinese ? card.labelZh : card.label}{" "}
                       <span aria-hidden="true" className="font-numeral text-[0.82em] text-[#e8c78c]">↗</span>
                     </span>
@@ -360,7 +360,7 @@ export function AboutPage() {
               <a
                 href={resumeHref}
                 download
-                className="brass-plaque flex w-full items-center justify-center gap-2.5 px-5 py-3.5 font-numeral text-xs font-bold tracking-[0.16em] uppercase transition-transform hover:-translate-y-0.5 active:scale-[0.99]"
+                className="brass-plaque flex w-full items-center justify-center gap-2.5 px-5 py-3.5 font-display text-[13.5px] font-bold tracking-[0.14em] uppercase transition-transform hover:-translate-y-0.5 active:scale-[0.99]"
               >
                 <span>{text("Download Full Résumé (PDF)", "下载完整游戏开发简历 (PDF)")}</span>
                 <span aria-hidden="true">↓</span>

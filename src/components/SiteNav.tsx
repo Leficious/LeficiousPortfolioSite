@@ -37,7 +37,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
     <span
       style={{ borderRadius: "50%" }}
       className={`relative flex h-9.5 w-9.5 items-center justify-center border-2 font-display ${
-        isReel ? "text-[11px]" : "text-[15px]"
+        isReel ? "text-[11.5px]" : "text-[15.5px]"
       } tracking-wider transition-colors duration-200 ${
         active
           ? "border-[#fff2d4] bg-gradient-to-b from-[#fbf3e2] to-[#dfd0b2] font-bold text-[#8f1616] shadow-[0_4px_12px_rgba(0,0,0,0.85),0_0_0_2px_#6e1515,inset_0_1px_0_rgba(255,255,255,0.9)]"
@@ -77,7 +77,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
         >
           <AstrolabeCrest className="h-11 w-11 drop-shadow-[0_3px_8px_rgba(0,0,0,0.85)]" />
           <span
-            className="font-display text-[13px] font-bold tracking-[0.26em] text-[#e8c891] uppercase transition-colors group-hover:text-[#fff6e5]"
+            className="font-display text-[13.5px] font-bold tracking-[0.25em] text-[#e8c891] uppercase transition-colors group-hover:text-[#fff6e5]"
             style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
           >
             LEFICIOUS
@@ -88,7 +88,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
         <nav aria-label={text("Showcase Reel & Case Folios I to V", "年度集锦与档案卷一至五")} className="flex w-full flex-col items-center">
           <div className="mb-1.5 flex items-center gap-1">
             <span aria-hidden="true" className="h-1 w-1 rotate-45 bg-rubric" />
-            <span className="font-display text-[10px] font-bold tracking-[0.2em] text-[#d8b47c] uppercase">
+            <span className="font-display text-[11.5px] font-bold tracking-[0.18em] text-[#d8b47c] uppercase">
               {text("FOLIOS", "卷宗")}
             </span>
             <span aria-hidden="true" className="h-1 w-1 rotate-45 bg-rubric" />
@@ -168,7 +168,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
           </div>
         </nav>
 
-        {/* Foot: Centered 40px Vertical Language Toggle & Compact CV Plaque (24px clear margin on both sides — zero tangents) */}
+        {/* Foot: Centered 44px Vertical Language Toggle & Compact CV Plaque (22px clear margin on both sides — zero tangents) */}
         <div className="flex w-full flex-col items-center gap-3">
           <div
             role="group"
@@ -177,7 +177,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
               clipPath:
                 "polygon(5px 0, calc(100% - 5px) 0, 100% 5px, 100% calc(100% - 5px), calc(100% - 5px) 100%, 5px 100%, 0 calc(100% - 5px), 0 5px)",
             }}
-            className="flex w-[40px] flex-col bg-gradient-to-b from-[#e5c489]/75 to-[#8c6736]/58 p-[1.25px] shadow-[0_4px_10px_rgba(0,0,0,0.75)]"
+            className="flex w-[44px] flex-col bg-gradient-to-b from-[#e5c489]/75 to-[#8c6736]/58 p-[1.25px] shadow-[0_4px_10px_rgba(0,0,0,0.75)]"
           >
             <div
               style={{
@@ -195,7 +195,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
                     onClick={() => setLanguage(opt)}
                     aria-pressed={active}
                     lang={opt === "zh" ? "zh-CN" : "en"}
-                    className={`flex h-[27px] w-full cursor-pointer items-center justify-center font-display text-[11px] font-bold tracking-wider transition-colors ${
+                    className={`flex h-[28px] w-full cursor-pointer items-center justify-center font-display text-[12.5px] font-bold tracking-wider transition-colors ${
                       active
                         ? "bg-gradient-to-b from-[#fcf6e8] to-[#e4d6ba] text-rubric"
                         : "bg-transparent text-[#cfc2ad] hover:bg-[#221a14] hover:text-white"
@@ -213,10 +213,10 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
             download
             title={text("Download Résumé (PDF)", "下载简历 (PDF)")}
             aria-label={text("Download Résumé (PDF)", "下载简历 (PDF)")}
-            className="victorian-ticket victorian-ticket-sm victorian-ticket-oxblood flex h-[30px] w-[40px] items-center justify-center gap-0.5 bg-gradient-to-b from-[#241b14] to-[#130e0a] font-display text-[10.5px] font-bold tracking-[0.06em] text-[#f4e4c3] uppercase transition-colors hover:from-[#5e1517] hover:to-[#3b0c0e] hover:text-white"
+            className="victorian-ticket victorian-ticket-sm victorian-ticket-oxblood flex h-[31px] w-[44px] items-center justify-center gap-0.5 bg-gradient-to-b from-[#241b14] to-[#130e0a] font-display text-[12px] font-bold tracking-[0.06em] text-[#f4e4c3] uppercase transition-colors hover:from-[#5e1517] hover:to-[#3b0c0e] hover:text-white"
           >
             <span>{text("CV", "简历")}</span>
-            {language === "en" && <span aria-hidden="true" className="text-[9.5px] text-[#e8c78c]">↓</span>}
+            {language === "en" && <span aria-hidden="true" className="text-[11px] text-[#e8c78c]">↓</span>}
           </a>
         </div>
       </aside>
@@ -229,7 +229,7 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
             <span className="font-display text-base font-bold tracking-[0.2em] text-[#e5c287]">LEFICIOUS</span>
           </Link>
 
-          <div className="flex items-center gap-4 text-sm font-display">
+          <div className="flex items-center gap-4 text-[15px] font-display">
             <NavLink
               to={localizedPath("/")}
               end
@@ -255,11 +255,11 @@ export function SiteNav({ activeFolioSlug, onSelectFolioSlug }: SiteNavProps) {
             <button
               type="button"
               onClick={() => setLanguage(language === "en" ? "zh" : "en")}
-              className="border border-warm/45 px-2 py-0.5 text-xs font-semibold text-[#e5c287]"
+              className="border border-warm/45 px-2 py-0.5 text-[13px] font-semibold text-[#e5c287]"
             >
               {language === "en" ? "中文" : "EN"}
             </button>
-            <a href={resumeHref} download className="brass-plaque px-2.5 py-1 text-xs font-bold">
+            <a href={resumeHref} download className="brass-plaque px-2.5 py-1 text-[13px] font-bold">
               {text("CV", "简历")} ↓
             </a>
           </div>
@@ -273,11 +273,11 @@ export function SiteFooter() {
   const { text } = useLanguage();
   return (
     <footer className="mt-16 border-t border-warm/35">
-      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-7 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-display text-[15px] tracking-wide text-foreground/90">
+      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-7 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <p className="font-display text-[16px] tracking-wide text-foreground/92">
           © {new Date().getFullYear()} Leficious · {text("Game, Level & Technical Design Atelier", "游戏、关卡与技术设计档案")}
         </p>
-        <p className="font-display text-xs font-bold tracking-[0.2em] text-warm uppercase">LOS ANGELES · CA</p>
+        <p className="font-display text-[13px] font-bold tracking-[0.2em] text-warm uppercase">LOS ANGELES · CA</p>
       </div>
     </footer>
   );

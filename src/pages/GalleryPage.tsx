@@ -130,8 +130,8 @@ export function GalleryPage() {
         <AtelierHeaderRail
           eyebrow="LEFICIOUS"
           subtitle={text(
-            "3D Environments, Shaders, Rigging & Tooling",
-            "3D 场景、程序化材质、绑定与工具",
+            "3D Environments, Shaders & Tools",
+            "3D 场景、程序化材质与工具",
           )}
           maxWidthClass="max-w-[1380px]"
           rightSlot={
@@ -142,7 +142,7 @@ export function GalleryPage() {
                   : "/resume/Leficious_3D_Environment_Artist_Resume.pdf"
               }
               download
-              className="brass-plaque inline-flex h-[34px] items-center gap-1.5 px-4 font-display text-[12px] font-bold tracking-[0.11em] whitespace-nowrap uppercase transition-colors 2xl:px-4.5 2xl:text-[12.5px]"
+              className="brass-plaque inline-flex h-[36px] items-center gap-1.5 px-4 font-display text-[13px] font-bold tracking-[0.09em] whitespace-nowrap uppercase transition-colors xl:px-4.5 xl:text-[13.5px]"
             >
               <span>{text("3D Art Résumé", "下载简历")}</span>
               <span aria-hidden="true">↓</span>
@@ -151,10 +151,10 @@ export function GalleryPage() {
         />
 
         <main id="main-content" tabIndex={-1} className="mx-auto mt-6 max-w-[1260px]">
-          {/* Salon Title + Bronze-Clamped Environment Reel Stage Trigger */}
+          {/* Title + Bronze-Clamped Environment Reel Stage Trigger */}
           <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div>
-              <p className="font-numeral text-[10.5px] font-bold tracking-[0.24em] text-warm uppercase">
+              <p className="font-numeral text-[12.5px] font-bold tracking-[0.22em] text-warm uppercase">
                 {text("ARCHIVE CATALOGUE · XXIX PLATES", "馆藏技术与美术标本目录")}
               </p>
               <h1 className="mt-1 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -179,15 +179,15 @@ export function GalleryPage() {
                   decoding="async"
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <span className="absolute inset-0 grid place-items-center bg-black/30 text-xs text-[#f7f0e2] transition-colors group-hover:bg-black/10">
+                <span className="absolute inset-0 grid place-items-center bg-black/30 text-sm text-[#f7f0e2] transition-colors group-hover:bg-black/10">
                   {reelExpanded ? "−" : "▶"}
                 </span>
               </span>
               <span className="relative z-10">
-                <span className="block font-display text-sm font-semibold text-foreground transition-colors group-hover:text-[#f3dfb9]">
+                <span className="block font-display text-[16px] font-semibold text-foreground transition-colors group-hover:text-[#f3dfb9]">
                   {text("Environment & Props Reel 2026", "2026 环境与道具作品集锦")}
                 </span>
-                <span className="block font-display text-xs italic text-muted-foreground">
+                <span className="block font-display text-[14px] italic text-muted-foreground">
                   {reelExpanded
                     ? text("Close theater stage ↑", "收起播放器 ↑")
                     : text("Open 16:9 reel stage ↓", "展开高清集锦舞台 ↓")}
@@ -217,11 +217,11 @@ export function GalleryPage() {
             <div className="relative mb-8 border border-[#d8b47c]/52 bg-gradient-to-b from-[#1a1410]/96 to-[#0f0c09]/96 p-3.5 shadow-[0_18px_42px_rgba(0,0,0,0.86),inset_0_1px_0_rgba(248,222,174,0.22)] sm:px-5 sm:py-4">
               <FolioCorners tone="slate" inset="inset-1.5" sizeClass="h-5 w-5" />
               <div className="relative z-10 mb-2.5 flex items-center justify-between gap-4 border-b border-warm/28 pb-2">
-                <span className="inline-flex items-center gap-2 font-numeral text-[10.5px] font-bold tracking-[0.22em] text-[#ede2cf] uppercase">
+                <span className="inline-flex items-center gap-2 font-numeral text-[12.5px] font-bold tracking-[0.18em] text-[#ede2cf] uppercase">
                   <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#e8c78c]" />
                   {text("Discipline Index", "按专业类别筛选")}
                 </span>
-                <span className="font-numeral text-[10.5px] font-bold tracking-[0.2em] text-[#e8c78c]" aria-live="polite">
+                <span className="font-numeral text-[12.5px] font-bold tracking-[0.18em] text-[#e8c78c]" aria-live="polite">
                   {visibleEntries.length} {text(visibleEntries.length === 1 ? "SPECIMEN" : "SPECIMENS", "件标本")}
                 </span>
               </div>
@@ -255,7 +255,7 @@ export function GalleryPage() {
                           clipPath:
                             "polygon(6.12px 0, calc(100% - 6.12px) 0, 100% 6.12px, 100% calc(100% - 6.12px), calc(100% - 6.12px) 100%, 6.12px 100%, 0 calc(100% - 6.12px), 0 6.12px)",
                         }}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 font-display text-xs font-semibold tracking-wide transition-colors sm:px-3.5 sm:text-[14px] ${
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 font-display text-[13.5px] font-semibold tracking-wide transition-colors sm:px-3.5 sm:text-[15px] ${
                           active
                             ? "bg-gradient-to-b from-[#fcf6e8] to-[#eae0c8] text-parchment-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.92)]"
                             : "bg-gradient-to-b from-[#231b15] to-[#140f0c] text-[#ede2cf] group-hover:from-[#2e231b] group-hover:to-[#1b1410] group-hover:text-white"
@@ -263,7 +263,7 @@ export function GalleryPage() {
                       >
                         <span>{label}</span>
                         <span
-                          className={`font-numeral text-[11px] font-semibold tabular-nums ${
+                          className={`font-numeral text-[12.5px] font-semibold tabular-nums ${
                             active ? "text-rubric" : "text-[#cabb9f] group-hover:text-[#f0d5a3]"
                           }`}
                         >
@@ -276,7 +276,7 @@ export function GalleryPage() {
               </div>
             </div>
 
-            {/* Mixed-Stock Victorian Salon Wall */}
+            {/* Mixed-Stock Victorian Wall */}
             <GalleryLayout>
               {visibleEntries.map((entry, index) => {
                 const isPinned = Boolean(entry.pinned);
@@ -314,14 +314,14 @@ export function GalleryPage() {
 
                     <div className="relative z-10 mb-2 flex w-full items-center justify-between px-2.5">
                       <span
-                        className={`font-numeral text-[10.5px] font-bold tracking-[0.18em] ${
+                        className={`font-numeral text-[12px] font-bold tracking-[0.16em] ${
                           isPinned ? "text-parchment-muted" : "text-[#e8c78c]"
                         }`}
                       >
                         {plateLabel} · {entry.year}
                       </span>
                       <span
-                        className={`font-numeral text-[10px] tracking-[0.12em] uppercase transition-transform duration-200 group-hover:translate-x-0.5 ${
+                        className={`font-numeral text-[11.5px] tracking-[0.1em] uppercase transition-transform duration-200 group-hover:translate-x-0.5 ${
                           isPinned ? "font-bold text-rubric" : "text-muted-foreground group-hover:text-[#f3dfb9]"
                         }`}
                       >
@@ -357,7 +357,7 @@ export function GalleryPage() {
 
                     <div className="relative z-10 flex w-full flex-col px-2.5 pt-3 pb-1">
                       <h2
-                        className={`font-display text-lg font-bold leading-snug tracking-tight transition-colors sm:text-[19px] ${
+                        className={`font-display text-[19px] font-bold leading-snug tracking-tight transition-colors sm:text-[20.5px] ${
                           isPinned
                             ? "text-parchment-ink group-hover:text-rubric"
                             : "text-foreground group-hover:text-[#ebd09e]"
@@ -366,7 +366,7 @@ export function GalleryPage() {
                         {entry.title}
                       </h2>
                       <p
-                        className={`mt-1 text-[15px] leading-snug ${
+                        className={`mt-1 text-[16px] leading-[1.48] ${
                           isPinned ? "text-parchment-muted" : "text-muted-foreground"
                         }`}
                       >

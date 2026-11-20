@@ -62,7 +62,7 @@ export function FeaturedReel({ id, zhId, title, description, thumbnailSrc, autoS
             />
             <span aria-hidden="true" className="absolute inset-0 bg-black/22 transition-colors duration-300 group-hover:bg-black/8" />
             <span className="absolute inset-0 grid place-items-center">
-              <span className="brass-plaque inline-flex items-center gap-2.5 px-5 py-2.5 font-numeral text-xs font-bold tracking-[0.14em] uppercase transition-transform duration-200 group-hover:scale-[1.03]">
+              <span className="brass-plaque inline-flex items-center gap-2.5 px-5 py-2.5 font-display text-[13.5px] font-bold tracking-[0.12em] uppercase transition-transform duration-200 group-hover:scale-[1.03]">
                 <PlayIcon />
                 <span>{text("Play Walkthrough", "播放实机演示")}</span>
               </span>
@@ -72,14 +72,14 @@ export function FeaturedReel({ id, zhId, title, description, thumbnailSrc, autoS
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-4 px-3.5 pt-3 pb-2 sm:px-4">
-        <p className={`max-w-2xl text-[15.5px] leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
+        <p className={`max-w-2xl text-[16.5px] leading-relaxed text-muted-foreground ${isChinese ? "zh-readable" : ""}`}>
           <FormattedText>{description}</FormattedText>
         </p>
         <a
           href={`https://youtu.be/${activeId}`}
           target="_blank"
           rel="noreferrer"
-          className="shrink-0 font-numeral text-[11px] font-semibold tracking-[0.14em] text-warm uppercase transition-colors hover:text-[#e2c088]"
+          className="shrink-0 font-numeral text-[13px] font-semibold tracking-[0.12em] text-warm uppercase transition-colors hover:text-[#e2c088]"
         >
           {text("Watch on YouTube", "在 YouTube 打开")} ↗
         </a>

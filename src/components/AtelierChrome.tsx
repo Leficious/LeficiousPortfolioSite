@@ -340,11 +340,11 @@ export function AtelierHeaderRail({
     <div className={`relative z-30 mx-auto w-full ${maxWidthClass}`}>
       <header className="relative flex w-full flex-wrap items-center justify-between gap-3 border-b border-[#d4ad73]/38 pb-3.5 xl:flex-nowrap">
         <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-3 gap-y-0.5 xl:flex-nowrap">
-          <p className="shrink-0 font-display text-xl font-bold tracking-[0.18em] text-[#f7f0e2] uppercase sm:text-[21px]">
+          <p className="shrink-0 font-display text-xl font-bold tracking-[0.18em] text-[#f7f0e2] uppercase sm:text-[22px]">
             {eyebrow}
           </p>
           <span aria-hidden="true" className="hidden h-1.5 w-1.5 shrink-0 rotate-45 bg-[#d4ad73] sm:inline-block" />
-          <p className="truncate font-display text-[15px] font-medium italic text-[#dfd2bc] sm:text-[16.5px]">
+          <p className="truncate font-display text-[16px] font-medium italic text-[#e6dac6] sm:text-[17.5px]">
             {subtitle}
           </p>
         </div>
@@ -366,7 +366,7 @@ export function AtelierHeaderRail({
                     clipPath:
                       "polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px)",
                   }}
-                  className={`group relative inline-flex h-[34px] p-[1.5px] transition-colors duration-200 ${
+                  className={`group relative inline-flex h-[36px] p-[1.5px] transition-colors duration-200 ${
                     active
                       ? "bg-gradient-to-b from-[#fff3d6] via-[#dfb97b] to-[#b5894b] shadow-[0_4px_12px_rgba(0,0,0,0.65)]"
                       : "bg-gradient-to-b from-[#e5c489]/75 to-[#8c6736]/58 shadow-[0_3px_8px_rgba(0,0,0,0.55)] hover:from-[#fff0cc] hover:to-[#c89d62]"
@@ -377,13 +377,13 @@ export function AtelierHeaderRail({
                       clipPath:
                         "polygon(5.12px 0, calc(100% - 5.12px) 0, 100% 5.12px, 100% calc(100% - 5.12px), calc(100% - 5.12px) 100%, 5.12px 100%, 0 calc(100% - 5.12px), 0 5.12px)",
                     }}
-                    className={`inline-flex h-full items-center px-3.5 transition-colors 2xl:px-4 ${
+                    className={`inline-flex h-full items-center px-3.5 transition-colors xl:px-4 ${
                       active
                         ? "bg-gradient-to-b from-[#fcf6e8] to-[#eae0c8] text-[#14100c]"
                         : "bg-gradient-to-b from-[#211913] via-[#17110d] to-[#100c09] text-[#ede2cf] group-hover:from-[#2c2119] group-hover:to-[#18120e] group-hover:text-white"
                     }`}
                   >
-                    <span className="font-display text-[12px] font-bold tracking-[0.09em] uppercase whitespace-nowrap 2xl:text-[13px]">
+                    <span className="font-display text-[13px] font-bold tracking-[0.08em] uppercase whitespace-nowrap xl:text-[13.5px]">
                       <span className={active ? "text-rubric" : "text-[#e8c78c]"}>{item.roman}</span> · {item.label}
                     </span>
                   </span>
@@ -444,15 +444,15 @@ export function ArchivalPaperSheaf({
       style={{
         clipPath: "polygon(0 0, 100% 5px, 100% calc(100% - 8px), 50% calc(100% - 1px), 0 100%)",
       }}
-      className={`relative flex flex-col items-center gap-1.5 py-3.5 transition-all duration-200 ${
+      className={`relative flex flex-col items-center gap-1.5 py-3 transition-all duration-200 2xl:py-3.5 ${
         active
-          ? "w-[40px] border-r-[3px] border-r-[#ebd09e] bg-gradient-to-r from-[#6b1416] to-[#8c1a1d] text-[#faf3e6]"
-          : "w-[34px] bg-gradient-to-r from-[#450e10] to-[#611417] text-[#ead8bc] group-hover:w-[37px] group-hover:from-[#5c1315] group-hover:to-[#7a191c] group-hover:text-[#faf3e6]"
+          ? "w-[42px] border-r-[3px] border-r-[#ebd09e] bg-gradient-to-r from-[#6b1416] to-[#8c1a1d] text-[#faf3e6]"
+          : "w-[36px] bg-gradient-to-r from-[#450e10] to-[#611417] text-[#ead8bc] group-hover:w-[39px] group-hover:from-[#5c1315] group-hover:to-[#7a191c] group-hover:text-[#faf3e6]"
       }`}
     >
       <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-[#ebd09e]" />
       <span
-        className="font-numeral text-[10.5px] font-bold tracking-[0.16em] uppercase whitespace-nowrap"
+        className="font-numeral text-[11.5px] font-bold tracking-[0.14em] uppercase whitespace-nowrap"
         style={{ writingMode: "vertical-rl" }}
       >
         {label}
@@ -463,7 +463,7 @@ export function ArchivalPaperSheaf({
   return (
     <nav
       aria-label={ariaLabel}
-      className="fixed right-2.5 top-6 bottom-8 z-40 hidden w-[60px] select-none xl:block 2xl:right-4"
+      className="fixed right-2.5 top-6 bottom-8 z-40 hidden w-[62px] select-none xl:block 2xl:right-4"
     >
       {/* 4-Ply Layered Ledger Paper Sheaf Fore-Edge */}
       <div
@@ -484,7 +484,7 @@ export function ArchivalPaperSheaf({
       </div>
 
       {/* Clean Architecturally Aligned Index Cascade */}
-      <div className="relative z-10 flex h-full flex-col items-start pt-5 pl-[10px]">
+      <div className="relative z-10 flex h-full flex-col items-start pt-4 pl-[10px] 2xl:pt-5">
         {topFlag &&
           (() => {
             const flagClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(2px_4px_6px_rgba(0,0,0,0.8))] ${
@@ -516,7 +516,7 @@ export function ArchivalPaperSheaf({
             );
           })()}
 
-        <div className={`${topFlag ? "mt-5" : "mt-2"} flex flex-col items-start gap-1`}>
+        <div className={`${topFlag ? "mt-3.5 2xl:mt-5" : "mt-2"} flex flex-col items-start gap-1`}>
           {tabs.map((tab, idx) => {
             const active = Boolean(tab.active);
             const wrapperClass = `group relative cursor-pointer transition-transform duration-200 [filter:drop-shadow(2px_4px_6px_rgba(0,0,0,0.75))] ${
@@ -527,18 +527,23 @@ export function ArchivalPaperSheaf({
               <span
                 style={{
                   clipPath: "polygon(0 0, 100% 9px, 100% calc(100% - 9px), 0 100%)",
-                  backgroundImage: 'url("/textures/rag-paper-tile.webp")',
-                  backgroundSize: "190px 190px",
-                  backgroundBlendMode: "multiply",
                 }}
-                className={`relative flex flex-col items-center justify-center py-3.5 transition-all duration-200 ${
+                className={`relative flex flex-col items-center justify-center overflow-hidden py-2.5 transition-all duration-200 2xl:py-3.5 ${
                   active
-                    ? "w-[42px] border-r-[3px] border-r-rubric bg-[#f7efe0] text-rubric"
-                    : "w-[34px] border-r border-r-[#755228]/60 bg-[#eadec6] text-[#1c140e] group-hover:w-[37px] group-hover:bg-[#f4ead6]"
+                    ? "w-[44px] border-r-[3px] border-r-rubric bg-[#faf3e4] text-rubric"
+                    : "w-[36px] border-r border-r-[#755228]/55 bg-[#efe4ce] text-[#1c140e] group-hover:w-[39px] group-hover:bg-[#f6eddc]"
                 }`}
               >
                 <span
-                  className="max-h-[118px] overflow-hidden font-display text-[12px] font-bold tracking-wide whitespace-nowrap"
+                  aria-hidden="true"
+                  style={{
+                    backgroundImage: 'url("/textures/rag-paper-tile.webp")',
+                    backgroundSize: "220px 220px",
+                  }}
+                  className="pointer-events-none absolute inset-0 opacity-[0.11] mix-blend-multiply"
+                />
+                <span
+                  className="relative z-10 max-h-[146px] overflow-hidden font-display text-[13px] font-bold tracking-[0.03em] whitespace-nowrap"
                   style={{ writingMode: "vertical-rl" }}
                 >
                   {tab.label}

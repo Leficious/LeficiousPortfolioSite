@@ -210,7 +210,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
   const telemetry = isChinese ? activeMeta.telemetryZh : activeMeta.telemetryEn;
 
   return (
-    <div className="relative flex min-h-[calc(100vh-56px)] flex-col justify-between overflow-x-clip px-4 py-5 sm:px-8 lg:min-h-screen lg:px-10 lg:py-6 xl:pl-11 xl:pr-28">
+    <div className="relative flex min-h-[calc(100vh-56px)] flex-col justify-between overflow-x-clip px-4 py-4 sm:px-8 lg:min-h-screen lg:px-10 lg:py-4 xl:pl-11 xl:pr-28 2xl:py-6">
       <Seo
         title={text("Leficious | Game, Level & Technical Designer", "Leficious | 游戏、关卡与技术设计师")}
         description={text(
@@ -224,8 +224,8 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
       <AtelierHeaderRail
         eyebrow="LEFICIOUS"
         subtitle={text(
-          "Game, Level & Technical Designer · USC SCA & Gnomon",
-          "游戏、关卡与技术设计师 · 南加大电影学院 & Gnomon",
+          "Game, Level & Technical Designer",
+          "游戏、关卡与技术设计师",
         )}
         maxWidthClass="max-w-[1380px]"
         rightSlot={
@@ -237,7 +237,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   : "/resume/Leficious_Technical_Game_Designer_Resume.pdf"
               }
               download
-              className="brass-plaque inline-flex h-[34px] cursor-pointer items-center gap-1.5 px-4 font-display text-[12px] font-bold tracking-[0.11em] whitespace-nowrap uppercase transition-colors 2xl:px-4.5 2xl:text-[12.5px]"
+              className="brass-plaque inline-flex h-[36px] cursor-pointer items-center gap-1.5 px-4 font-display text-[13px] font-bold tracking-[0.09em] whitespace-nowrap uppercase transition-colors xl:px-4.5 xl:text-[13.5px]"
             >
               <span>{text("Résumé (PDF)", "下载简历")}</span>
               <span aria-hidden="true">↓</span>
@@ -246,9 +246,9 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
             <button
               type="button"
               onClick={() => selectBinder("reel")}
-              className="brass-plaque inline-flex h-[34px] cursor-pointer items-center gap-1.5 px-4 font-display text-[12px] font-bold tracking-[0.11em] whitespace-nowrap uppercase transition-colors 2xl:px-4.5 2xl:text-[12.5px]"
+              className="brass-plaque inline-flex h-[36px] cursor-pointer items-center gap-1.5 px-4 font-display text-[13px] font-bold tracking-[0.09em] whitespace-nowrap uppercase transition-colors xl:px-4.5 xl:text-[13.5px]"
             >
-              <span aria-hidden="true" className="text-[10px]">▶</span>
+              <span aria-hidden="true" className="text-[11px]">▶</span>
               <span>{text("Master Reel", "年度集锦")}</span>
             </button>
           )
@@ -291,7 +291,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   clipPath:
                     "polygon(6.12px 0, calc(100% - 6.12px) 0, 100% 6.12px, 100% calc(100% - 6.12px), calc(100% - 6.12px) 100%, 6.12px 100%, 0 calc(100% - 6.12px), 0 6.12px)",
                 }}
-                className={`inline-flex items-center px-3.5 py-1.5 font-display text-xs font-semibold transition-colors ${
+                className={`inline-flex items-center px-3.5 py-1.5 font-display text-[13.5px] font-semibold transition-colors ${
                   active
                     ? "bg-gradient-to-b from-[#fbf3e2] to-[#e6d6b8] text-parchment-ink"
                     : "bg-gradient-to-b from-[#2e1f15] to-[#1c120d] text-[#e2d4be] group-hover:text-[#fbf3e4]"
@@ -305,7 +305,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
       </div>
 
       {/* ==================== 2. SPATIALLY LOCKED CASE-DESK STAGE ==================== */}
-      <main id="main-content" tabIndex={-1} className="relative my-auto mx-auto w-full max-w-[1380px] py-3 lg:py-4">
+      <main id="main-content" tabIndex={-1} className="relative my-auto mx-auto w-full max-w-[1380px] py-2 lg:py-2.5 2xl:py-4">
         {/* Stage Wrapper — aligns backing case-folders strictly within the vellum sheet's vertical span (zero top slivers or corner tangencies) */}
         <div className="relative">
           {/* Asymmetrically Staggered Victorian Bookbinding Backing Folios w/ Stepped Vellum Page-Edges & Airy Gilt Sigils */}
@@ -333,12 +333,12 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               <span aria-hidden="true" className="pointer-events-none absolute inset-2.5 border border-[#d8b47c]/28" />
 
               {/* Dedicated Exposed Outer-Wing Column — guarantees zero tangency with foreground vellum border */}
-              <div className="relative z-10 flex h-full w-[100px] flex-col justify-between xl:w-[108px] 2xl:w-[126px]">
+              <div className="relative z-10 flex h-full w-[78px] flex-col justify-between xl:w-[82px] 2xl:w-[116px]">
                 <div>
-                  <p className="font-numeral text-[10px] font-bold tracking-[0.22em] text-[#e8c78c]">
+                  <p className="font-numeral text-[11.5px] font-bold tracking-[0.2em] text-[#e8c78c]">
                     {text("FOLIO", "卷")} {leftBgMeta.roman}
                   </p>
-                  <p className="mt-1 font-display text-[13px] font-semibold leading-snug text-[#f7f0e2] group-hover:text-white 2xl:text-[14.5px]">
+                  <p className="mt-1 font-display text-[13.5px] font-semibold leading-snug text-[#f7f0e2] group-hover:text-white xl:text-[14px] 2xl:text-[15px]">
                     {leftBgProject.title}
                   </p>
                 </div>
@@ -347,7 +347,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   <ProjectSigil
                     slug={leftBgProject.slug}
                     variant="gilt"
-                    className="h-[82px] w-[82px] transition-transform duration-300 group-hover:scale-106 xl:h-[90px] xl:w-[90px] 2xl:h-[104px] 2xl:w-[104px]"
+                    className="h-[78px] w-[78px] transition-transform duration-300 group-hover:scale-106 xl:h-[86px] xl:w-[86px] 2xl:h-[104px] 2xl:w-[104px]"
                   />
                 </div>
 
@@ -355,7 +355,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   <span className="font-numeral text-2xl font-semibold tracking-wider text-[#e8c78c] transition-colors group-hover:text-[#fff6df] xl:text-3xl">
                     {leftBgMeta.roman}
                   </span>
-                  <span className="font-numeral text-[10px] tracking-[0.16em] text-[#d6c29f]/80 group-hover:text-[#fff6df]">
+                  <span className="font-numeral text-xs tracking-[0.16em] text-[#d6c29f]/85 group-hover:text-[#fff6df]">
                     →
                   </span>
                 </div>
@@ -380,12 +380,12 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               <span aria-hidden="true" className="pointer-events-none absolute inset-2.5 border border-[#d8b47c]/28" />
 
               {/* Dedicated Exposed Outer-Wing Column — guarantees zero tangency with foreground vellum border */}
-              <div className="relative z-10 ml-auto flex h-full w-[100px] flex-col justify-between xl:w-[108px] 2xl:w-[126px]">
+              <div className="relative z-10 ml-auto flex h-full w-[78px] flex-col justify-between xl:w-[82px] 2xl:w-[116px]">
                 <div>
-                  <p className="font-numeral text-[10px] font-bold tracking-[0.22em] text-[#e8c78c]">
+                  <p className="font-numeral text-[11.5px] font-bold tracking-[0.2em] text-[#e8c78c]">
                     {text("FOLIO", "卷")} {rightBgMeta.roman}
                   </p>
-                  <p className="mt-1 font-display text-[13px] font-semibold leading-snug text-[#f7f0e2] group-hover:text-white 2xl:text-[14.5px]">
+                  <p className="mt-1 font-display text-[13.5px] font-semibold leading-snug text-[#f7f0e2] group-hover:text-white xl:text-[14px] 2xl:text-[15px]">
                     {rightBgProject.title}
                   </p>
                 </div>
@@ -394,12 +394,12 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   <ProjectSigil
                     slug={rightBgProject.slug}
                     variant="gilt"
-                    className="h-[82px] w-[82px] transition-transform duration-300 group-hover:scale-106 xl:h-[90px] xl:w-[90px] 2xl:h-[104px] 2xl:w-[104px]"
+                    className="h-[78px] w-[78px] transition-transform duration-300 group-hover:scale-106 xl:h-[86px] xl:w-[86px] 2xl:h-[104px] 2xl:w-[104px]"
                   />
                 </div>
 
                 <div className="flex items-baseline justify-end gap-2">
-                  <span className="font-numeral text-[10px] tracking-[0.16em] text-[#d6c29f]/80 group-hover:text-[#fff6df]">
+                  <span className="font-numeral text-xs tracking-[0.16em] text-[#d6c29f]/85 group-hover:text-[#fff6df]">
                     ←
                   </span>
                   <span className="font-numeral text-2xl font-semibold tracking-wider text-[#e8c78c] transition-colors group-hover:text-[#fff6df] xl:text-3xl">
@@ -412,14 +412,14 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
 
           {/* Foreground Architecturally Level (0deg) Grand Rag-Vellum Case-Folio */}
           <div
-            className="relative z-20 mx-auto w-full lg:max-w-[936px] xl:max-w-[1002px] 2xl:max-w-[1068px]"
+            className="relative z-20 mx-auto w-full lg:max-w-[928px] xl:max-w-[984px] 2xl:max-w-[1068px]"
             style={{
               transform: "translate3d(calc(var(--mx) * 3.5px), calc(var(--my) * 2.5px), 0)",
             }}
           >
             <div key={activeFolioSlug} className="animate-folio-arc relative">
               <BrassPinThreads animKey={activeFolioSlug} />
-              <article className="parchment-sheet relative overflow-hidden border-[5px] border-[#110b07] px-5 pt-8 pb-6 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-9 sm:pt-8.5 sm:pb-7">
+              <article className="parchment-sheet relative overflow-hidden border-[5px] border-[#110b07] px-5 pt-7 pb-5 shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07] sm:px-9 sm:pt-7.5 sm:pb-5.5 2xl:pt-8.5 2xl:pb-7">
             <FolioCorners tone="parchment" />
 
             {isReelActive ? (
@@ -447,24 +447,24 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   ? "/reels/environment-props-reel-2026.jpg"
                   : "/reels/game-design-reel-2026.webp";
                 const companionLabel = isDesignReel
-                  ? text("2026 3D Environment & Props Reel", "2026 环境与道具集锦")
-                  : text("2026 Game & Level Design Reel", "2026 游戏与关卡设计集锦");
+                  ? text("3D Environment & Props Reel", "环境与道具作品集锦")
+                  : text("Game & Level Design Reel", "游戏与关卡设计集锦");
 
                 return (
                   <div className="relative z-10">
                     <header className="text-center">
-                      <p className="font-display text-[11.5px] font-bold tracking-[0.26em] text-parchment-muted uppercase">
+                      <p className="font-display text-[13px] font-bold tracking-[0.22em] text-parchment-muted uppercase">
                         {text("ATELIER SHOWCASE · MMXXVI", "年度实机集锦 · 2026")}
                       </p>
-                      <h1 className="mt-0.5 font-display text-3xl font-bold tracking-tight text-parchment-ink sm:text-[36px] sm:leading-[1.08]">
+                      <h1 className="mt-0.5 font-display text-3xl font-bold tracking-tight text-parchment-ink sm:text-[38px] sm:leading-[1.08]">
                         {primaryReelTitle}
                       </h1>
-                      <p className="mt-0.5 font-display text-[16px] font-medium italic text-rubric sm:text-[17.5px]">
+                      <p className="mt-0.5 font-display text-[17px] font-medium italic text-rubric sm:text-[18.5px]">
                         {primaryReelSub}
                       </p>
                     </header>
 
-                    <BrassRule ornate tone="parchment" className="my-3.5" />
+                    <BrassRule ornate tone="parchment" className="my-2.5 2xl:my-3.5" />
 
                     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.16fr_0.84fr] lg:items-stretch lg:gap-6 xl:gap-7">
                       {/* LEFT WING: Primary 2026 Reel Stage + 5 Case-Folio Quick-Open Tickets */}
@@ -498,7 +498,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.018]"
                                 />
                                 <span className="absolute inset-0 bg-gradient-to-t from-black/52 via-transparent to-black/14 transition-opacity group-hover:opacity-72" />
-                                <span className="brass-plaque absolute bottom-4 left-4 inline-flex items-center gap-2 px-4 py-2 font-display text-xs font-bold tracking-[0.14em] uppercase transition-transform duration-200 group-hover:scale-103 sm:px-5">
+                                <span className="brass-plaque absolute bottom-4 left-4 inline-flex items-center gap-2 px-4 py-2 font-display text-[13.5px] font-bold tracking-[0.12em] uppercase transition-transform duration-200 group-hover:scale-103 sm:px-5">
                                   <span aria-hidden="true">▶</span>
                                   <span>
                                     {isDesignReel
@@ -511,8 +511,8 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                           </div>
                         </div>
 
-                        {/* 5 Single-Row Embossed Case-Folio Index Tickets */}
-                        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-5">
+                        {/* 5 Single-Row Embossed Case-Folio Index Tickets (proportional flex so III. Fallen Valkyrie never cramps) */}
+                        <div className="flex flex-wrap items-stretch gap-1.5 sm:flex-nowrap">
                           {orderedProjects.map((proj) => {
                             const shortLabel = isChinese
                               ? BOARD_META[proj.slug].tabShortZh
@@ -522,7 +522,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                                 key={proj.slug}
                                 type="button"
                                 onClick={() => selectBinder(proj.slug)}
-                                className="victorian-ticket victorian-ticket-vellum victorian-ticket-vellum-interactive embossed-ticket cursor-pointer bg-[#fcf7eb] px-2 py-2 text-center font-display text-[11.5px] font-bold tracking-[0.03em] whitespace-nowrap text-parchment-ink transition-colors hover:bg-[#15100c] hover:text-[#f7f0e2]"
+                                className="victorian-ticket victorian-ticket-vellum victorian-ticket-vellum-interactive embossed-ticket flex-1 cursor-pointer bg-[#fcf7eb] px-2 py-2 text-center font-display text-[12.5px] font-bold tracking-[0.02em] whitespace-nowrap text-parchment-ink transition-colors hover:bg-[#15100c] hover:text-[#f7f0e2] sm:flex-auto xl:px-2.5 xl:text-[13px] 2xl:text-[13.5px]"
                               >
                                 {shortLabel}
                               </button>
@@ -531,7 +531,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                         </div>
                       </div>
 
-                      {/* RIGHT WING: Companion Reel Switcher + Cohesive Ebony-Morocco Doors into Salon Gallery & Dossier */}
+                      {/* RIGHT WING: Companion Reel Switcher + Cohesive Ebony-Morocco Doors into Gallery & Dossier */}
                       <div className="flex flex-col justify-between gap-3.5 lg:border-l lg:border-[#6e4c24]/40 lg:pl-6 xl:pl-7">
                         {/* Companion Reel Plate (displays the other 2026 Reel's proper YouTube thumbnail) */}
                         <button
@@ -554,22 +554,22 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                             />
                             <span className="absolute inset-0 bg-gradient-to-t from-black/68 via-transparent to-transparent" />
-                            <span className="absolute bottom-2 left-2.5 inline-flex items-center gap-1.5 border border-[#e5c489]/70 bg-[#140f0b]/92 px-2.5 py-0.5 font-display text-[11px] font-bold tracking-[0.12em] text-[#f7f0e2] uppercase">
+                            <span className="absolute bottom-2 left-2.5 inline-flex items-center gap-1.5 border border-[#e5c489]/70 bg-[#140f0b]/92 px-2.5 py-0.5 font-display text-[12px] font-bold tracking-[0.1em] text-[#f7f0e2] uppercase">
                               <span aria-hidden="true" className="text-[#e8c78c]">⇄</span>
                               {text("Companion Reel", "副卷集锦")}
                             </span>
                           </div>
                           <div className="mt-1.5 flex items-baseline justify-between gap-2 px-0.5">
-                            <span className="truncate font-display text-[14px] font-bold text-parchment-ink group-hover:text-rubric">
+                            <span className="truncate font-display text-[15.5px] font-bold text-parchment-ink group-hover:text-rubric">
                               {companionLabel}
                             </span>
-                            <span className="shrink-0 font-display text-[11px] font-bold tracking-[0.14em] text-rubric uppercase">
-                              {text("Load Stage →", "切换播放 →")}
+                            <span className="shrink-0 font-display text-[12.5px] font-bold tracking-[0.1em] text-rubric uppercase">
+                              {text("Switch →", "切换 →")}
                             </span>
                           </div>
                         </button>
 
-                        {/* Cohesive Museum Ebony-Morocco Doorways into Salon Gallery (29 Plates) & About / Dossier */}
+                        {/* Cohesive Museum Ebony-Morocco Doorways into Gallery (29 Plates) & About / Dossier */}
                         <div className="flex flex-col gap-2.5">
                           <Link
                             to={localizedPath("/gallery")}
@@ -577,11 +577,11 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                             className="slate-folio group relative flex items-center justify-between gap-3 border border-[#d8b47c]/62 px-4 py-3 text-left shadow-[3px_3px_0_0_#14100c,0_10px_22px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:border-[#f5dfb2]"
                           >
                             <div className="min-w-0">
-                              <p className="flex items-center gap-2 font-display text-[14px] font-bold tracking-[0.1em] whitespace-nowrap text-[#f7f0e2] uppercase group-hover:text-white">
+                              <p className="flex items-center gap-2 font-display text-[15px] font-bold tracking-[0.09em] whitespace-nowrap text-[#f7f0e2] uppercase group-hover:text-white">
                                 <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-[#e8c78c]" />
                                 {text("Gallery · 29 Plates", "作品画廊 · 29 件")}
                               </p>
-                              <p className="mt-0.5 truncate font-display text-[13.5px] italic text-[#d6c8b2]">
+                              <p className="mt-0.5 truncate font-display text-[15px] italic text-[#ded1bc]">
                                 {text(
                                   "3D environments, shaders, character rigs & Maya tools",
                                   "实时 3D 场景、程序化材质、绑定与 Maya 工具",
@@ -599,11 +599,11 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                             className="slate-folio group relative flex items-center justify-between gap-3 border border-[#d8b47c]/62 px-4 py-3 text-left shadow-[3px_3px_0_0_#14100c,0_10px_22px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:border-[#f5dfb2]"
                           >
                             <div className="min-w-0">
-                              <p className="flex items-center gap-2 font-display text-[14px] font-bold tracking-[0.1em] whitespace-nowrap text-[#f7f0e2] uppercase group-hover:text-white">
+                              <p className="flex items-center gap-2 font-display text-[15px] font-bold tracking-[0.09em] whitespace-nowrap text-[#f7f0e2] uppercase group-hover:text-white">
                                 <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-[#e8c78c]" />
                                 {text("About, Dossier & Dispatch", "个人档案、履历与联络信函")}
                               </p>
-                              <p className="mt-0.5 truncate font-display text-[13.5px] italic text-[#d6c8b2]">
+                              <p className="mt-0.5 truncate font-display text-[15px] italic text-[#ded1bc]">
                                 {text(
                                   "USC SCA & Gnomon credentials, direct email & CV",
                                   "南加大与 Gnomon 学术背景、直达信箱与简历",
@@ -625,19 +625,19 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               <div className="relative z-10">
                 {/* Unified Garamond Case Header — zero inline font collision */}
                 <header className="text-center">
-                  <p className="font-display text-[11.5px] font-bold tracking-[0.26em] text-parchment-muted uppercase">
+                  <p className="font-display text-[13px] font-bold tracking-[0.22em] text-parchment-muted uppercase">
                     {text("CASE FOLIO", "作品拆解卷")} {activeMeta.roman} · {activeProject.year}
                   </p>
-                  <h1 className="mt-0.5 font-display text-3xl font-bold tracking-tight text-parchment-ink sm:text-[36px] sm:leading-[1.08]">
+                  <h1 className="mt-0.5 font-display text-3xl font-bold tracking-tight text-parchment-ink sm:text-[38px] sm:leading-[1.08]">
                     {activeProject.title}
                   </h1>
-                  <p className="mt-0.5 font-display text-[16px] font-medium italic text-rubric sm:text-[17.5px]">
+                  <p className="mt-0.5 font-display text-[17px] font-medium italic text-rubric sm:text-[18.5px]">
                     {isChinese ? activeMeta.subtitleZh : activeMeta.subtitleEn} · {activeProject.role}
                   </p>
                 </header>
 
                 {/* Sculpted Chased-Bronze & Venetian Garnet Filigree Divider */}
-                <BrassRule ornate tone="parchment" className="my-3.5" />
+                <BrassRule ornate tone="parchment" className="my-2.5 2xl:my-3.5" />
 
                 {/* Height-Matched 2-Wing Spread */}
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.14fr_0.86fr] lg:items-stretch lg:gap-6 xl:gap-7">
@@ -673,7 +673,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                             />
                             <span className="absolute inset-0 bg-gradient-to-t from-black/62 via-transparent to-black/18 transition-opacity group-hover:opacity-78" />
 
-                            <span className="brass-plaque absolute bottom-4 left-4 inline-flex items-center gap-2 px-4 py-2 font-numeral text-[11px] font-bold tracking-[0.12em] uppercase transition-transform duration-200 group-hover:scale-103 sm:px-4.5">
+                            <span className="brass-plaque absolute bottom-4 left-4 inline-flex items-center gap-2 px-4 py-2 font-display text-[13.5px] font-bold tracking-[0.12em] uppercase transition-transform duration-200 group-hover:scale-103 sm:px-4.5">
                               <span aria-hidden="true">▶</span>
                               <span>{text("Play Walkthrough", "播放实机演示")}</span>
                             </span>
@@ -690,7 +690,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                           className="flex items-center justify-center gap-1.5 px-2 py-1 text-center sm:py-0.5"
                         >
                           <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-rubric" />
-                          <span className="whitespace-nowrap font-numeral text-[10.5px] font-bold tracking-[0.07em] text-parchment-ink uppercase">
+                          <span className="whitespace-nowrap font-display text-[13px] font-bold tracking-[0.02em] text-parchment-ink xl:text-[13.5px]">
                             {spec}
                           </span>
                         </div>
@@ -701,7 +701,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                   {/* RIGHT WING: Literary Case Summary + Loupe-Inspectable Blueprint + CTAs */}
                   <div className="flex flex-col justify-between gap-4 lg:border-l lg:border-[#684720]/48 lg:pl-6 xl:pl-7">
                     <p
-                      className={`text-pretty text-[16.5px] leading-[1.6] text-parchment-ink sm:text-[17.5px] ${
+                      className={`text-pretty text-[17.5px] leading-[1.62] text-parchment-ink sm:text-[18.5px] ${
                         isChinese ? "zh-readable" : ""
                       }`}
                     >
@@ -769,10 +769,10 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                       </div>
 
                       <div className="mt-2 flex items-baseline justify-between gap-2 px-0.5">
-                        <span className="truncate font-display text-[13px] font-medium italic text-parchment-muted">
+                        <span className="truncate font-display text-[14.5px] font-medium italic text-parchment-muted">
                           {isChinese ? activeMeta.plateLabelZh : activeMeta.plateLabelEn}
                         </span>
-                        <span className="shrink-0 font-numeral text-[10px] font-bold tracking-[0.14em] text-rubric uppercase">
+                        <span className="shrink-0 font-numeral text-[12px] font-bold tracking-[0.11em] text-rubric uppercase">
                           {text("Loupe / Inspect →", "放大镜 / 拆解 →")}
                         </span>
                       </div>
@@ -783,7 +783,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                       <Link
                         to={localizedPath(`/projects/${activeProject.slug}`)}
                         viewTransition
-                        className="victorian-ticket victorian-ticket-ink inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap bg-[#140d09] px-3.5 py-2.5 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-[#f6eedc] uppercase transition-colors hover:bg-[#2c1e15] 2xl:gap-2 2xl:px-4 2xl:text-xs"
+                        className="victorian-ticket victorian-ticket-ink inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap bg-[#140d09] px-3.5 py-2.5 font-display text-[12.5px] font-bold tracking-[0.08em] text-[#f6eedc] uppercase transition-colors hover:bg-[#2c1e15] xl:px-4 xl:text-[13px]"
                       >
                         <span>{text("Open Full Folio", "展开完整卷宗")}</span>
                         <span aria-hidden="true">→</span>
@@ -794,7 +794,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                           href={activeProject.externalLink.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center justify-center gap-1.5 whitespace-nowrap bg-parchment-deep/65 px-3.5 py-2.5 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc] 2xl:px-4 2xl:text-xs"
+                          className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center justify-center gap-1.5 whitespace-nowrap bg-parchment-deep/65 px-3.5 py-2.5 font-display text-[12.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc] xl:px-4 xl:text-[13px]"
                         >
                           <span>{activeProject.externalLink.label}</span>
                           <span aria-hidden="true">↗</span>
@@ -803,7 +803,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
                         <Link
                           to={localizedPath("/gallery")}
                           viewTransition
-                          className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center justify-center gap-1.5 whitespace-nowrap bg-parchment-deep/65 px-3.5 py-2.5 font-numeral text-[10.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc] 2xl:px-4 2xl:text-xs"
+                          className="victorian-ticket victorian-ticket-heavy embossed-ticket inline-flex items-center justify-center gap-1.5 whitespace-nowrap bg-parchment-deep/65 px-3.5 py-2.5 font-display text-[12.5px] font-bold tracking-[0.08em] text-parchment-ink uppercase transition-colors hover:bg-[#140d09] hover:text-[#f6eedc] xl:px-4 xl:text-[13px]"
                         >
                           <span>{text("Gallery", "画廊拆解")}</span>
                           <span aria-hidden="true">→</span>
@@ -821,8 +821,8 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
       </main>
 
       {/* Bottom Folio & Cartography Hint Bar */}
-      <div className="relative z-20 mt-4 flex items-center justify-center gap-3 text-xs text-muted-foreground">
-        <span className="font-numeral text-[10.5px] font-semibold tracking-[0.22em] text-warm uppercase">
+      <div className="relative z-20 mt-2 flex items-center justify-center gap-3 text-[14px] text-[#d8cbb6] 2xl:mt-4">
+        <span className="font-numeral text-[12.5px] font-semibold tracking-[0.18em] text-warm uppercase">
           {text("CASE INDEX", "卷宗索引")} {isReelActive ? "00" : activeMeta.roman} / V
         </span>
         <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-rubric" />

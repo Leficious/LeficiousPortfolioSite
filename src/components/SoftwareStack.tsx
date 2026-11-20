@@ -43,7 +43,7 @@ export function SoftwareStack({ software, showLabels = false, tone = "slate" }: 
   return (
     <div aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`}>
       <p
-        className={`font-numeral text-[10.5px] font-semibold tracking-[0.22em] uppercase ${
+        className={`font-numeral text-[12px] font-semibold tracking-[0.2em] uppercase ${
           isParchment ? "text-parchment-muted" : "text-warm/85"
         }`}
       >
@@ -54,7 +54,7 @@ export function SoftwareStack({ software, showLabels = false, tone = "slate" }: 
           <span
             key={name}
             title={name}
-            className={`victorian-ticket victorian-ticket-sm inline-flex min-h-7 items-center gap-2 px-2.5 py-1 text-xs transition-colors ${
+            className={`victorian-ticket victorian-ticket-sm inline-flex min-h-7.5 items-center gap-2 px-2.5 py-1 text-[14px] transition-colors ${
               isParchment
                 ? "victorian-ticket-vellum bg-parchment-deep/75 text-parchment-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.4)]"
                 : "bg-[#120d0a]/85 text-muted-foreground"
@@ -62,7 +62,7 @@ export function SoftwareStack({ software, showLabels = false, tone = "slate" }: 
           >
             <span
               aria-hidden="true"
-              className={`font-numeral text-[10.5px] font-bold tracking-wider ${
+              className={`font-numeral text-[12px] font-bold tracking-wider ${
                 isParchment ? "text-rubric" : "text-[#d4af77]"
               }`}
             >
@@ -93,9 +93,9 @@ export function SoftwareSummary({ software }: Pick<SoftwareStackProps, "software
   return (
     <p
       aria-label={`${text("Software and tools", "软件与工具")}: ${software.join(", ")}`}
-      className="flex items-baseline gap-2 text-xs text-muted-foreground"
+      className="flex items-baseline gap-2 text-[14px] text-muted-foreground"
     >
-      <span className="shrink-0 font-numeral text-[10px] font-semibold tracking-wider text-warm/85">{text("TOOLS", "工具")}</span>
+      <span className="shrink-0 font-numeral text-[12px] font-semibold tracking-wider text-warm/85">{text("TOOLS", "工具")}</span>
       <span className="min-w-0 truncate">{summary}</span>
     </p>
   );

@@ -20,16 +20,16 @@ export function NotFoundPage({ message }: { message?: string }) {
         <div className="parchment-sheet relative border-[5px] border-[#110b07] px-8 pt-10 pb-10 text-center shadow-[0_36px_88px_rgba(0,0,0,0.92),6px_6px_0_-1px_#dfd0b2,8px_8px_0_0_#110b07]">
           <FolioCorners tone="parchment" />
           <div className="relative z-10">
-            <p className="font-numeral text-xs font-bold tracking-[0.26em] text-rubric">ARCHIVE CDIV · 404</p>
+            <p className="font-numeral text-[13px] font-bold tracking-[0.24em] text-rubric">ARCHIVE CDIV · 404</p>
             <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-parchment-ink">{resolvedMessage}</h1>
             <BrassRule ornate tone="parchment" className="my-4" />
-            <p className="text-[16px] text-parchment-muted">
+            <p className="text-[17.5px] text-parchment-muted">
               {text("This plate does not exist or has been re-indexed.", "该页面不存在，或已被归入其他卷宗。")}
             </p>
             <Link
               to={localizedPath("/")}
               viewTransition
-              className="victorian-ticket victorian-ticket-ink mt-6 inline-flex items-center gap-2 bg-[#140d09] px-5 py-2.5 font-numeral text-xs font-bold tracking-[0.12em] text-[#f6eedc] uppercase transition-colors hover:bg-[#2c1e15]"
+              className="victorian-ticket victorian-ticket-ink mt-6 inline-flex items-center gap-2 bg-[#140d09] px-5 py-2.5 font-display text-[13.5px] font-bold tracking-[0.1em] text-[#f6eedc] uppercase transition-colors hover:bg-[#2c1e15]"
             >
               ← {text("Return to Atelier Desk", "返回案台卷宗")}
             </Link>

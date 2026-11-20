@@ -122,8 +122,8 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-variant-numeric: lining-nums;
-    font-size: 17.5px;
-    line-height: 1.62;
+    font-size: 18px;
+    line-height: 1.64;
     -webkit-font-smoothing: antialiased;
   }
 
