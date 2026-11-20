@@ -412,7 +412,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
 
           {/* Foreground Architecturally Level (0deg) Grand Rag-Vellum Case-Folio */}
           <div
-            className="relative z-20 mx-auto w-full lg:max-w-[928px] xl:max-w-[984px] 2xl:max-w-[1068px]"
+            className="relative z-20 mx-auto w-full lg:max-w-[920px] xl:max-w-[964px] 2xl:max-w-[1068px]"
             style={{
               transform: "translate3d(calc(var(--mx) * 3.5px), calc(var(--my) * 2.5px), 0)",
             }}

@@ -161,29 +161,18 @@
   }
 }
 
-/* Tactile handmade cotton rag-vellum sheet with dual-scale fibers, micro-abrasions & subtle edge wear */
+/* Tactile handmade cotton rag-vellum sheet with visible dry micro-abrasions, linen husks, foxing & archival edge grunge */
 .parchment-sheet {
   position: relative;
   background-color: var(--parchment);
-  background-image:
-    radial-gradient(circle at 4% 6%, rgba(124, 88, 44, 0.14) 0%, transparent 28%),
-    radial-gradient(circle at 96% 94%, rgba(118, 82, 40, 0.16) 0%, transparent 32%),
-    radial-gradient(circle at 95% 7%, rgba(128, 92, 48, 0.11) 0%, transparent 25%),
-    radial-gradient(circle at 6% 93%, rgba(120, 84, 42, 0.13) 0%, transparent 26%),
-    radial-gradient(
-      ellipse at 50% 20%,
-      rgba(255, 252, 244, 0.72) 0%,
-      rgba(244, 235, 216, 0.25) 62%,
-      rgba(198, 174, 136, 0.32) 100%
-    );
   color: var(--parchment-ink);
   box-shadow:
     0 34px 82px rgba(2, 1, 0, 0.9),
     0 8px 22px rgba(0, 0, 0, 0.62),
-    inset 0 1.5px 0 rgba(255, 253, 248, 0.86),
-    inset 0 0 46px rgba(102, 70, 32, 0.18),
-    inset 0 0 12px rgba(82, 54, 22, 0.14),
-    inset 0 0 0 1px rgba(112, 80, 40, 0.46);
+    inset 0 1.5px 0 rgba(255, 253, 248, 0.84),
+    inset 0 0 68px rgba(104, 68, 28, 0.25),
+    inset 0 0 18px rgba(82, 50, 18, 0.19),
+    inset 0 0 0 1px rgba(112, 80, 40, 0.5);
 }
 
 .parchment-sheet::before {
@@ -191,29 +180,67 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.38;
-  mix-blend-mode: multiply;
-  filter: contrast(1.52) brightness(1.06);
+  opacity: 0.92;
+  mix-blend-mode: normal;
   background-image:
-    url("/textures/rag-paper-tile.webp"),
-    url("/textures/rag-paper-tile.webp"),
+    radial-gradient(circle at 3% 5%, rgba(118, 78, 34, 0.22) 0%, transparent 29%),
+    radial-gradient(circle at 97% 95%, rgba(112, 74, 32, 0.24) 0%, transparent 34%),
+    radial-gradient(circle at 96% 6%, rgba(122, 82, 38, 0.18) 0%, transparent 26%),
+    radial-gradient(circle at 5% 94%, rgba(116, 76, 34, 0.2) 0%, transparent 28%),
+    radial-gradient(
+      ellipse at 50% 42%,
+      rgba(255, 252, 245, 0.28) 0%,
+      rgba(244, 233, 212, 0.08) 64%,
+      rgba(178, 144, 98, 0.24) 100%
+    ),
     repeating-linear-gradient(
       0deg,
-      rgba(92, 64, 30, 0.045) 0px,
-      rgba(92, 64, 30, 0.045) 1px,
+      rgba(92, 62, 26, 0.04) 0px,
+      rgba(92, 62, 26, 0.04) 1px,
       transparent 1px,
       transparent 4px
-    );
-  background-size: 420px 420px, 173px 173px, 100% 4px;
-  background-position: 0 0, 83px 129px, 0 0;
-  background-blend-mode: overlay, normal, normal;
+    ),
+    url("/textures/vellum-rag-grunge.webp"),
+    url("/textures/vellum-rag-grunge.webp");
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 4px,
+    431px 431px,
+    720px 720px;
+  background-position:
+    0 0,
+    0 0,
+    0 0,
+    0 0,
+    0 0,
+    0 0,
+    217px 149px,
+    0 0;
+  background-blend-mode:
+    normal,
+    normal,
+    normal,
+    normal,
+    normal,
+    multiply,
+    soft-light,
+    normal;
 }
 
-/* Subtle letterpress ink-wicking edge + sparse dry-ink micro-abrasions on vellum display headings (retains deep #14100c ink contrast) */
-.parchment-sheet h1,
-.parchment-sheet h2 {
+/* Sporadic fiber-gated capillary ink edge-bleed into cotton rag paper (solid ink core, zero screentone, crisp counters) */
+.parchment-sheet h1 {
   color: var(--parchment-ink);
-  filter: url(#letterpress-ink) drop-shadow(0 0.8px 0 rgba(255, 252, 242, 0.72));
+  filter: url(#letterpress-ink);
+}
+
+.parchment-sheet h2,
+.parchment-sheet h3,
+.parchment-sheet header p {
+  filter: url(#letterpress-ink-sub);
 }
 
 /* Deep museum ebony-morocco folio with crisp gilt top-bevel rim (high contrast for cream & gold type) */

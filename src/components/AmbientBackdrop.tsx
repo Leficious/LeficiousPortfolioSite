@@ -359,23 +359,122 @@ export function AmbientBackdrop(_props: { dialStep?: number }) {
         }`}
       />
 
-      {/* Global 0x0 SVG filter: subtle 0.85px ink-wicked glyph edges + sparse ~16% dry-ink micro-abrasions while keeping deep #14100c ink */}
+      {/* Global 0x0 SVG filters: sporadic fiber-gated capillary ink edge-bleed & crisp letterpress bite (zero blur, zero screentone) */}
       <svg width="0" height="0" aria-hidden="true" className="pointer-events-none fixed">
         <defs>
-          <filter id="letterpress-ink" x="-2%" y="-6%" width="104%" height="112%" colorInterpolationFilters="sRGB">
-            <feTurbulence type="fractalNoise" baseFrequency="0.62" numOctaves="2" seed="7" result="edgeNoise" />
-            <feDisplacementMap in="SourceGraphic" in2="edgeNoise" scale="0.85" xChannelSelector="R" yChannelSelector="G" result="wicked" />
-            <feTurbulence type="fractalNoise" baseFrequency="0.88" numOctaves="3" seed="23" result="fiberNoise" />
+          <filter id="letterpress-ink" x="-6%" y="-14%" width="112%" height="128%" colorInterpolationFilters="sRGB">
+            {/* 1. Subtle metal-type ink squeeze along stems & serifs */}
+            <feTurbulence type="fractalNoise" baseFrequency="0.08 0.11" numOctaves="2" seed="5" result="squeezeNoise" />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="squeezeNoise"
+              scale="1.75"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="squeezedInk"
+            />
+
+            {/* 2. Crisp fibrous edge bite on the 100% solid ink core (zero interior screentone holes) */}
+            <feTurbulence type="turbulence" baseFrequency="0.42 0.58" numOctaves="2" seed="17" result="rimFiber" />
+            <feDisplacementMap
+              in="squeezedInk"
+              in2="rimFiber"
+              scale="1.7"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="crispWickedCore"
+            />
+
+            {/* 3. Sporadic sharp capillary tendrils gated by directional cotton-fiber veins (no uniform blur!) */}
+            <feGaussianBlur in="squeezedInk" stdDeviation="0.72" result="thinRim" />
+            <feTurbulence type="turbulence" baseFrequency="0.22 0.48" numOctaves="3" seed="31" result="fiberVeins" />
+            <feDisplacementMap
+              in="thinRim"
+              in2="fiberVeins"
+              scale="4.4"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="warpedRim"
+            />
             <feColorMatrix
-              in="fiberNoise"
+              in="fiberVeins"
               type="matrix"
               values="0 0 0 0 0
                       0 0 0 0 0
                       0 0 0 0 0
-                      2.2 0 0 0 -1.32"
-              result="sparseAbrasion"
+                      3.4 0 0 0 -1.35"
+              result="sporadicVeinMask"
             />
-            <feComposite in="wicked" in2="sparseAbrasion" operator="out" />
+            <feComposite in="warpedRim" in2="sporadicVeinMask" operator="in" result="gatedTendrils" />
+            <feColorMatrix
+              in="gatedTendrils"
+              type="matrix"
+              values="1 0 0 0 0.06
+                      0 1 0 0 0.035
+                      0 0 1 0 0.01
+                      0 0 0 1.45 -0.18"
+              result="capillaryTendrils"
+            />
+
+            {/* 4. Stack crisp solid ink core OVER sharp sporadic capillary bleed tendrils */}
+            <feMerge>
+              <feMergeNode in="capillaryTendrils" />
+              <feMergeNode in="crispWickedCore" />
+            </feMerge>
+          </filter>
+
+          <filter id="letterpress-ink-sub" x="-4%" y="-12%" width="108%" height="124%" colorInterpolationFilters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.1 0.13" numOctaves="2" seed="13" result="subSqueeze" />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="subSqueeze"
+              scale="1.05"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="subSqueezed"
+            />
+            <feTurbulence type="turbulence" baseFrequency="0.48 0.64" numOctaves="2" seed="29" result="subRim" />
+            <feDisplacementMap
+              in="subSqueezed"
+              in2="subRim"
+              scale="1.15"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="subCore"
+            />
+            <feGaussianBlur in="subSqueezed" stdDeviation="0.52" result="subSoft" />
+            <feTurbulence type="turbulence" baseFrequency="0.28 0.56" numOctaves="3" seed="41" result="subVeins" />
+            <feDisplacementMap
+              in="subSoft"
+              in2="subVeins"
+              scale="2.8"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="subWarped"
+            />
+            <feColorMatrix
+              in="subVeins"
+              type="matrix"
+              values="0 0 0 0 0
+                      0 0 0 0 0
+                      0 0 0 0 0
+                      3.2 0 0 0 -1.32"
+              result="subVeinMask"
+            />
+            <feComposite in="subWarped" in2="subVeinMask" operator="in" result="subGated" />
+            <feColorMatrix
+              in="subGated"
+              type="matrix"
+              values="1 0 0 0 0.05
+                      0 1 0 0 0.03
+                      0 0 1 0 0.01
+                      0 0 0 1.3 -0.16"
+              result="subTendrils"
+            />
+            <feMerge>
+              <feMergeNode in="subTendrils" />
+              <feMergeNode in="subCore" />
+            </feMerge>
           </filter>
         </defs>
       </svg>
