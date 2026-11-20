@@ -161,7 +161,7 @@
   }
 }
 
-/* Tactile handmade cotton rag-vellum sheet with visible dry micro-abrasions, linen husks, foxing & archival edge grunge */
+/* Clean archival cotton-vellum sheet with subtle paper crinkles & soft parchment watercolor stains (zero dirt specks) */
 .parchment-sheet {
   position: relative;
   background-color: var(--parchment);
@@ -169,10 +169,10 @@
   box-shadow:
     0 34px 82px rgba(2, 1, 0, 0.9),
     0 8px 22px rgba(0, 0, 0, 0.62),
-    inset 0 1.5px 0 rgba(255, 253, 248, 0.84),
-    inset 0 0 68px rgba(104, 68, 28, 0.25),
-    inset 0 0 18px rgba(82, 50, 18, 0.19),
-    inset 0 0 0 1px rgba(112, 80, 40, 0.5);
+    inset 0 1.5px 0 rgba(255, 253, 248, 0.88),
+    inset 0 0 52px rgba(132, 96, 48, 0.14),
+    inset 0 0 14px rgba(98, 66, 28, 0.1),
+    inset 0 0 0 1px rgba(112, 80, 40, 0.46);
 }
 
 .parchment-sheet::before {
@@ -180,25 +180,16 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.92;
+  opacity: 0.8;
   mix-blend-mode: normal;
   background-image:
-    radial-gradient(circle at 3% 5%, rgba(118, 78, 34, 0.22) 0%, transparent 29%),
-    radial-gradient(circle at 97% 95%, rgba(112, 74, 32, 0.24) 0%, transparent 34%),
-    radial-gradient(circle at 96% 6%, rgba(122, 82, 38, 0.18) 0%, transparent 26%),
-    radial-gradient(circle at 5% 94%, rgba(116, 76, 34, 0.2) 0%, transparent 28%),
+    radial-gradient(circle at 4% 6%, rgba(168, 130, 78, 0.13) 0%, transparent 34%),
+    radial-gradient(circle at 96% 94%, rgba(162, 124, 72, 0.15) 0%, transparent 38%),
     radial-gradient(
       ellipse at 50% 42%,
-      rgba(255, 252, 245, 0.28) 0%,
-      rgba(244, 233, 212, 0.08) 64%,
-      rgba(178, 144, 98, 0.24) 100%
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(92, 62, 26, 0.04) 0px,
-      rgba(92, 62, 26, 0.04) 1px,
-      transparent 1px,
-      transparent 4px
+      rgba(255, 252, 246, 0.34) 0%,
+      rgba(246, 237, 220, 0.08) 68%,
+      rgba(194, 162, 116, 0.16) 100%
     ),
     url("/textures/vellum-rag-grunge.webp"),
     url("/textures/vellum-rag-grunge.webp");
@@ -206,40 +197,30 @@
     100% 100%,
     100% 100%,
     100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 4px,
-    431px 431px,
-    720px 720px;
+    503px 503px,
+    820px 820px;
   background-position:
     0 0,
     0 0,
     0 0,
-    0 0,
-    0 0,
-    0 0,
-    217px 149px,
+    241px 167px,
     0 0;
   background-blend-mode:
     normal,
     normal,
     normal,
-    normal,
-    normal,
-    multiply,
     soft-light,
     normal;
 }
 
-/* Sporadic fiber-gated capillary ink edge-bleed into cotton rag paper (solid ink core, zero screentone, crisp counters) */
+/* Delicate capillary ink edge-bleed on vellum display headings (subtle, crisp letterforms, zero screentone) */
 .parchment-sheet h1 {
   color: var(--parchment-ink);
   filter: url(#letterpress-ink);
 }
 
-.parchment-sheet h2,
-.parchment-sheet h3,
-.parchment-sheet header p {
+.parchment-sheet h2 {
+  color: var(--parchment-ink);
   filter: url(#letterpress-ink-sub);
 }
 

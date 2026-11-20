@@ -37,73 +37,73 @@ const BOARD_META: Record<string, FolioBoardMeta> = {
     roman: "I",
     tabShortEn: "I. Still Life",
     tabShortZh: "I · 静物",
-    subtitleEn: "The 235 kg Counterweight Archive",
-    subtitleZh: "235 kg 满额配重档案馆",
+    subtitleEn: "First-Person Surrealist Puzzle Game",
+    subtitleZh: "第一人称超现实空间解谜游戏",
     cinemaThumbSrc: "/projects/still-life/hero-poster.webp",
     plateSrc: "/projects/still-life/map-02-three-story-archive.webp",
     plateSrcZh: "/projects/still-life/map-02-three-story-archive-zh.webp",
     plateMode: "ink",
-    plateLabelEn: "FIG. II · 1F–3F Orthographic Plan",
-    plateLabelZh: "图 II · 1F–3F 正交动线图",
-    telemetryEn: ["235 kg · Zero-Slack", "5 Rooms · 3 Floors", "0 Dialogue · 0 HUD"],
-    telemetryZh: ["235 kg · 满额配重", "5 房间 · 三层立体", "零对白 · 零 UI"],
+    plateLabelEn: "1F–3F Archive Floorplan",
+    plateLabelZh: "1F–3F 展馆动线图",
+    telemetryEn: ["Weight & Escort Puzzles", "5 Rooms", "0 Dialogue · 0 HUD"],
+    telemetryZh: ["配重与护送解谜", "5 座展厅关卡", "零对白 · 零 UI"],
   },
   "an-echo-has-no-shape": {
     roman: "II",
     tabShortEn: "II. Echo",
     tabShortZh: "II · 回声无形",
-    subtitleEn: "Basin of Three Silences",
-    subtitleZh: "三重寂静之声波盆地",
+    subtitleEn: "First-Person Echolocation Puzzle Game",
+    subtitleZh: "第一人称回声定位解谜游戏",
     cinemaThumbSrc: "/projects/an-echo-has-no-shape/hero-poster.webp",
     plateSrc: "/projects/an-echo-has-no-shape/map-01-world-overview.webp",
     plateSrcZh: "/projects/an-echo-has-no-shape/map-01-world-overview-zh.webp",
     plateMode: "daguerreotype",
-    plateLabelEn: "FIG. I · 550m Basin Topology",
-    plateLabelZh: "图 I · 550m 盆地总图",
-    telemetryEn: ["550m · Sightless", "1 Verb · 42m Pulse", "3 Acoustic Gates"],
-    telemetryZh: ["550m · 无视界盆地", "单键 · 42m 声波", "三重声波习惯门"],
+    plateLabelEn: "World Overview Map",
+    plateLabelZh: "盆地世界总览图",
+    telemetryEn: ["Sightless World", "Single-Button Sonar", "3 Puzzle Regions"],
+    telemetryZh: ["无常驻视野", "单键声波探路", "3 大声学解谜区"],
   },
   "fallen-valkyrie": {
     roman: "III",
     tabShortEn: "III. Fallen Valkyrie",
     tabShortZh: "III · 堕落女武神",
-    subtitleEn: "Multiphase Boss & Stance Combat",
-    subtitleZh: "双武器姿态与多阶段 Boss 战",
+    subtitleEn: "3D Action Combat Prototype",
+    subtitleZh: "3D 动作战斗原型",
     cinemaThumbSrc: "/projects/fallen-valkyrie/cover.avif",
     plateSrc: "/projects/fallen-valkyrie/ai-statetree-01.avif",
     plateMode: "ink",
-    plateLabelEn: "FIG. VI · Boss StateTree Graph",
-    plateLabelZh: "图 VI · Boss 状态树决策图",
-    telemetryEn: ["3-Phase StateTree", "Dual-Stance Swaps", "Directional Stagger"],
-    telemetryZh: ["三阶段状态树", "双武器姿态切换", "受击方向与架势"],
+    plateLabelEn: "Boss StateTree AI Graph",
+    plateLabelZh: "Boss 状态树决策图",
+    telemetryEn: ["3-Phase Boss AI", "2 Weapon Stances", "Directional Stagger"],
+    telemetryZh: ["三阶段 Boss AI", "双武器姿态切换", "受击方向硬直"],
   },
   starshore: {
     roman: "IV",
     tabShortEn: "IV. Starshore",
     tabShortZh: "IV · 星岸",
-    subtitleEn: "Interconnected ARPG Loop",
-    subtitleZh: "飞行、索敌与数据驱动循环",
+    subtitleEn: "3D Action-RPG Prototype",
+    subtitleZh: "3D 动作角色扮演原型",
     cinemaThumbSrc: "/projects/starshore/hero-poster.jpg",
     plateSrc: "/projects/starshore/targeting-01.avif",
     plateMode: "daguerreotype",
-    plateLabelEn: "FIG. II · Soft-Lock Targeting",
-    plateLabelZh: "图 II · 半自动索敌拆解",
-    telemetryEn: ["Aerial & Ground 3C", "Soft-Lock Priority", "Data-Driven Loop"],
-    telemetryZh: ["陆空无缝 3C", "距离视角加权索敌", "数据驱动商店循环"],
+    plateLabelEn: "Soft-Lock Targeting Breakdown",
+    plateLabelZh: "半自动索敌逻辑图",
+    telemetryEn: ["Ground & Flight Combat", "Soft-Lock Targeting", "Inventory & Shop"],
+    telemetryZh: ["陆空无缝战斗", "半自动索敌", "背包与商店系统"],
   },
   "sacred-forest": {
     roman: "V",
     tabShortEn: "V. Sacred Forest",
     tabShortZh: "V · 圣域森林",
-    subtitleEn: "Stylized Shrine & Normal Tooling",
-    subtitleZh: "风格化神社与法线工具管线",
+    subtitleEn: "Unreal Engine 5 Stylized Environment",
+    subtitleZh: "Unreal Engine 5 风格化场景",
     cinemaThumbSrc: "/projects/sacred-forest/cover.avif",
     plateSrc: "/projects/sacred-forest/foliage-01.avif",
     plateMode: "daguerreotype",
-    plateLabelEn: "FIG. III · Foliage & Normal Tool",
-    plateLabelZh: "图 III · 植被拓扑与法线工具",
-    telemetryEn: ["UE5 Forest Shrine", "Maya Normal Tool", "Substance & Foliage"],
-    telemetryZh: ["UE5 森林神社", "自研法线工具", "程序化材质与植被"],
+    plateLabelEn: "Foliage & Normal Tool Breakdown",
+    plateLabelZh: "植被与法线工具拆解",
+    telemetryEn: ["UE5 Environment", "Custom Maya Tool", "Procedural Materials"],
+    telemetryZh: ["UE5 实时场景", "自研 Maya 工具", "程序化材质与植被"],
   },
 };
 
@@ -312,7 +312,7 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
           <div
             className="pointer-events-none absolute inset-0 hidden lg:block"
             style={{
-              transform: "translate3d(calc(var(--mx) * -9px), calc(var(--my) * -5px), 0)",
+              transform: "translate3d(calc(var(--mx) * -12px), calc(var(--my) * -6.5px), 0)",
             }}
           >
             {/* Left Backing Case-Folder — Dark Havana Morocco Leather + Cream Vellum Fore-Edge */}
@@ -320,17 +320,18 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               type="button"
               onClick={() => selectBinder(leftBgProject.slug)}
               aria-label={`${text("Inspect Folio", "切换至")} ${leftBgMeta.roman}: ${leftBgProject.title}`}
-              className="pointer-events-auto group absolute left-0 top-15 bottom-9 flex w-[255px] -rotate-[4.8deg] cursor-pointer flex-col justify-between border border-[#d8b47c]/70 bg-gradient-to-br from-[#342116] via-[#23150d] to-[#140c08] px-3.5 py-4 text-left shadow-[-3px_2px_0_0_#eadcc2,-4px_3px_0_0_#0e0906,-6px_5px_0_0_#c8b28b,-22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,236,198,0.28)] transition-all duration-300 hover:-translate-x-2.5 hover:-translate-y-1.5 hover:-rotate-[5.8deg] hover:border-[#f5dfb2] xl:left-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:left-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
+              className="pointer-events-auto group absolute left-0 top-15 bottom-9 flex w-[255px] -rotate-[4.8deg] cursor-pointer flex-col justify-between border border-[#e5c489]/82 bg-gradient-to-br from-[#3e271a] via-[#28180f] to-[#150c08] px-3.5 py-4 text-left shadow-[-3px_2px_0_0_#efe2c8,-5px_4px_0_0_#0e0906,-7px_6px_0_0_#cbb48d,-24px_30px_56px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,238,202,0.42)] transition-all duration-300 hover:-translate-x-3 hover:-translate-y-2 hover:-rotate-[5.8deg] hover:border-[#fff0cc] xl:left-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:left-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
             >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <img
                   src={leftBgMeta.cinemaThumbSrc}
                   alt=""
                   loading="lazy"
-                  className="h-full w-full object-cover opacity-12 mix-blend-soft-light transition-opacity duration-500 group-hover:opacity-22"
+                  className="h-full w-full object-cover opacity-[0.28] mix-blend-luminosity contrast-115 saturate-50 transition-all duration-500 group-hover:scale-105 group-hover:opacity-[0.44]"
                 />
+                <span className="absolute inset-0 bg-gradient-to-r from-[#28180f]/82 via-[#23150d]/42 to-[#140c08]/88" />
               </div>
-              <span aria-hidden="true" className="pointer-events-none absolute inset-2.5 border border-[#d8b47c]/28" />
+              <span aria-hidden="true" className="pointer-events-none absolute inset-2.5 border border-[#e5c489]/48 transition-colors group-hover:border-[#f5dfb2]/75" />
 
               {/* Dedicated Exposed Outer-Wing Column — guarantees zero tangency with foreground vellum border */}
               <div className="relative z-10 flex h-full w-[78px] flex-col justify-between xl:w-[82px] 2xl:w-[116px]">
@@ -367,17 +368,18 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
               type="button"
               onClick={() => selectBinder(rightBgProject.slug)}
               aria-label={`${text("Inspect Folio", "切换至")} ${rightBgMeta.roman}: ${rightBgProject.title}`}
-              className="pointer-events-auto group absolute right-0 top-19 bottom-6 flex w-[255px] rotate-[3.6deg] cursor-pointer flex-col justify-between border border-[#d8b47c]/70 bg-gradient-to-bl from-[#421515] via-[#2c0d0e] to-[#190708] px-3.5 py-4 text-right shadow-[3px_2px_0_0_#eadcc2,4px_3px_0_0_#0e0906,6px_5px_0_0_#c8b28b,22px_28px_54px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,232,196,0.26)] transition-all duration-300 hover:translate-x-2.5 hover:-translate-y-1.5 hover:rotate-[4.6deg] hover:border-[#f5dfb2] xl:right-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:right-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
+              className="pointer-events-auto group absolute right-0 top-19 bottom-6 flex w-[255px] rotate-[3.6deg] cursor-pointer flex-col justify-between border border-[#e5c489]/82 bg-gradient-to-bl from-[#521a1b] via-[#341011] to-[#1a0708] px-3.5 py-4 text-right shadow-[3px_2px_0_0_#efe2c8,5px_4px_0_0_#0e0906,7px_6px_0_0_#cbb48d,24px_30px_56px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,236,198,0.4)] transition-all duration-300 hover:translate-x-3 hover:-translate-y-2 hover:rotate-[4.6deg] hover:border-[#fff0cc] xl:right-0.5 xl:w-[275px] xl:px-4 xl:py-4.5 2xl:right-1 2xl:w-[308px] 2xl:px-4.5 2xl:py-5"
             >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <img
                   src={rightBgMeta.cinemaThumbSrc}
                   alt=""
                   loading="lazy"
-                  className="h-full w-full object-cover opacity-12 mix-blend-soft-light transition-opacity duration-500 group-hover:opacity-22"
+                  className="h-full w-full object-cover opacity-[0.28] mix-blend-luminosity contrast-115 saturate-50 transition-all duration-500 group-hover:scale-105 group-hover:opacity-[0.44]"
                 />
+                <span className="absolute inset-0 bg-gradient-to-l from-[#341011]/82 via-[#2c0d0e]/42 to-[#190708]/88" />
               </div>
-              <span aria-hidden="true" className="pointer-events-none absolute inset-2.5 border border-[#d8b47c]/28" />
+              <span aria-hidden="true" className="pointer-events-none absolute inset-2.5 border border-[#e5c489]/48 transition-colors group-hover:border-[#f5dfb2]/75" />
 
               {/* Dedicated Exposed Outer-Wing Column — guarantees zero tangency with foreground vellum border */}
               <div className="relative z-10 ml-auto flex h-full w-[78px] flex-col justify-between xl:w-[82px] 2xl:w-[116px]">
@@ -820,17 +822,14 @@ export function HomePage({ activeFolioSlug, onSelectFolioSlug }: HomePageProps) 
         </div>
       </main>
 
-      {/* Bottom Folio & Cartography Hint Bar */}
+      {/* Bottom Folio Hint Bar */}
       <div className="relative z-20 mt-2 flex items-center justify-center gap-3 text-[14px] text-[#d8cbb6] 2xl:mt-4">
         <span className="font-numeral text-[12.5px] font-semibold tracking-[0.18em] text-warm uppercase">
           {text("CASE INDEX", "卷宗索引")} {isReelActive ? "00" : activeMeta.roman} / V
         </span>
         <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-rubric" />
         <span className="hidden font-display italic sm:inline">
-          {text(
-            "Hover blueprint for 2.35× optical loupe · Switch folios via ledger tabs, flanking folios, or ← / →",
-            "悬停蓝图启用 2.35× 光学放大镜 · 通过右侧书签、底卷或 ← / → 切换卷宗",
-          )}
+          {text("Switch folios with ← / → or side tabs", "使用 ← / → 或侧边书签切换卷宗")}
         </span>
       </div>
 
