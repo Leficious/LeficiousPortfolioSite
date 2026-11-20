@@ -772,55 +772,64 @@ export function ArchivalPaperSheaf({
           {/* Ambient desk cast-shadow from the overhanging leather cover board */}
           <span className="absolute inset-y-0 right-0 w-[26px] border-l border-[#cfa668]/42 bg-gradient-to-l from-[#060403] via-[#140d09] to-[#231710] shadow-[-18px_0_38px_rgba(0,0,0,0.95)]" />
 
-          {/* 4 obliquely fanned deeper rag-vellum sheaves peeking behind & between the divider tabs */}
+          {/* 4 full-bleed Bezier-fanned deeper rag-vellum sheaves peeking behind & between the divider tabs */}
           <svg
             viewBox="0 0 36 1080"
             preserveAspectRatio="none"
             className="absolute inset-0 h-full w-full overflow-visible"
           >
             <defs>
-              <filter id={backShadowId} x="-35%" y="-2%" width="150%" height="104%">
-                <feDropShadow dx="-1.6" dy="1.4" stdDeviation="1.35" floodColor="#0d0703" floodOpacity="0.62" />
+              <filter id={backShadowId} x="-40%" y="-2%" width="160%" height="104%">
+                <feDropShadow dx="-1.6" dy="0.5" stdDeviation="1.35" floodColor="#0d0703" floodOpacity="0.62" />
               </filter>
             </defs>
 
-            {/* Back Sheaf 1 (Deepest aged signature) */}
+            {/* Back Sheaf 1 (Deepest aged signature, continuous full-bleed) */}
             <path
-              d="M 10.6 17 L 29.8 15 L 29.8 1065 L 14.0 1063 Z"
+              d="M 11.2 -24 C 14.8 310, 9.8 760, 13.6 1104 L 30.2 1104 L 30.2 -24 Z"
               fill="#c5b08d"
               stroke="#efe2c8"
               strokeWidth="0.7"
               strokeOpacity="0.48"
               filter={`url(#${backShadowId})`}
             />
-            {/* Back Sheaf 2 (Counter-fanned signature) */}
+            {/* Back Sheaf 2 (Counter-bowed signature weaving across Sheaf 1) */}
             <path
-              d="M 14.4 26 L 29.8 24 L 29.8 1056 L 10.8 1054 Z"
+              d="M 14.8 -24 C 10.6 340, 15.6 730, 11.4 1104 L 30.2 1104 L 30.2 -24 Z"
               fill="#d3c09f"
               stroke="#f6ebcf"
               strokeWidth="0.75"
-              strokeOpacity="0.56"
+              strokeOpacity="0.58"
               filter={`url(#${backShadowId})`}
             />
-            {/* Back Sheaf 3 (Stepped middle-back signature) */}
+            {/* Back Sheaf 3 (Gently S-curved middle-back signature) */}
             <path
-              d="M 12.2 35 L 29.8 33 L 29.8 1047 L 15.8 1045 Z"
+              d="M 12.6 -24 C 16.4 280, 11.8 680, 15.8 1104 L 30.2 1104 L 30.2 -24 Z"
               fill="#dfd0b2"
               stroke="#fbf2dd"
               strokeWidth="0.8"
-              strokeOpacity="0.64"
+              strokeOpacity="0.66"
               filter={`url(#${backShadowId})`}
             />
             {/* Back Sheaf 4 (Inner-saddle rag signature right behind divider tabs) */}
             <path
-              d="M 16.2 44 L 29.8 42 L 29.8 1038 L 12.6 1036 Z"
+              d="M 16.4 -24 C 12.8 390, 17.0 790, 13.4 1104 L 30.2 1104 L 30.2 -24 Z"
               fill="#ebe0c7"
               stroke="#fffaf0"
               strokeWidth="0.85"
-              strokeOpacity="0.72"
+              strokeOpacity="0.74"
               filter={`url(#${backShadowId})`}
             />
           </svg>
+
+          {/* Soft nocturnal lamplight vignette so top & bottom edges melt into room shadow without harsh cutoffs */}
+          <span
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(7,5,4,0.48) 0%, rgba(7,5,4,0.12) 7%, transparent 16%, transparent 84%, rgba(7,5,4,0.14) 93%, rgba(7,5,4,0.52) 100%)",
+            }}
+            className="absolute inset-0"
+          />
         </div>
 
         {/* 2. MIDDLE LAYER (z-20): Die-Cut Index Divider Tabs Sandwiched Between Back & Front Page Sheaves */}
@@ -953,7 +962,7 @@ export function ArchivalPaperSheaf({
         </div>
       </div>
 
-        {/* 3. FRONT LAYER (z-30, OVERLAPPING Tab Roots): 4 Fanned Sunlit Rag-Vellum Signatures + Mahogany Lip & Brass Shuttle */}
+        {/* 3. FRONT LAYER (z-30, OVERLAPPING Tab Roots): 4 Full-Bleed Bezier-Fanned Sunlit Signatures + Mahogany Lip & Brass Shuttle */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-y-0 right-0 z-30 w-[36px]"
@@ -964,78 +973,63 @@ export function ArchivalPaperSheaf({
             className="absolute inset-0 h-full w-full overflow-visible"
           >
             <defs>
-              <filter id={frontShadowId} x="-40%" y="-2%" width="160%" height="104%">
-                <feDropShadow dx="-1.8" dy="1.2" stdDeviation="1.35" floodColor="#120a04" floodOpacity="0.56" />
+              <filter id={frontShadowId} x="-45%" y="-2%" width="170%" height="104%">
+                <feDropShadow dx="-1.8" dy="0.5" stdDeviation="1.35" floodColor="#120a04" floodOpacity="0.56" />
               </filter>
             </defs>
 
-            {/* Front Sheaf 1 (Clamps directly over the right root of the divider tabs) */}
+            {/* Front Sheaf 1 (Clamps directly over the right root of the divider tabs, continuous full-bleed) */}
             <path
-              d="M 17.8 52 L 29.8 50 L 29.8 1030 L 17.4 1028 L 19.5 540 Z"
+              d="M 17.8 -24 C 20.6 320, 17.0 740, 19.6 1104 L 30.2 1104 L 30.2 -24 Z"
               fill="#ece0c7"
               stroke="#fffaf0"
               strokeWidth="0.8"
-              strokeOpacity="0.72"
+              strokeOpacity="0.74"
               filter={`url(#${frontShadowId})`}
             />
 
-            {/* Front Sheaf 2 (Counter-angled signature split into upper & lower folios so corner overlaps show mid-spine) */}
+            {/* Front Sheaf 2 (Counter-bowed signature crossing obliquely over Sheaf 1) */}
             <path
-              d="M 21.0 62 L 29.8 60 L 29.8 565 L 18.9 562 Z"
-              fill="#f3e8d2"
-              stroke="#fffdf7"
-              strokeWidth="0.85"
-              strokeOpacity="0.82"
-              filter={`url(#${frontShadowId})`}
-            />
-            <path
-              d="M 19.2 548 L 29.8 546 L 29.8 1020 L 21.4 1018 Z"
-              fill="#f5ead5"
+              d="M 21.4 -24 C 18.2 360, 22.2 710, 18.8 1104 L 30.2 1104 L 30.2 -24 Z"
+              fill="#f4e9d3"
               stroke="#fffdf8"
               strokeWidth="0.85"
               strokeOpacity="0.84"
               filter={`url(#${frontShadowId})`}
             />
 
-            {/* Front Sheaf 3 (Stepped upper-inner rag signature) */}
+            {/* Front Sheaf 3 (Gently S-fanned upper-inner rag signature) */}
             <path
-              d="M 22.0 72 L 29.8 70 L 29.8 1010 L 21.8 1008 L 23.9 525 Z"
+              d="M 21.8 -24 C 24.8 290, 20.8 690, 24.2 1104 L 30.2 1104 L 30.2 -24 Z"
               fill="#faf2e2"
               stroke="#ffffff"
               strokeWidth="0.85"
-              strokeOpacity="0.88"
+              strokeOpacity="0.9"
               filter={`url(#${frontShadowId})`}
             />
 
-            {/* Front Sheaf 4 (Topmost sunlit rag-vellum flyleaf) */}
+            {/* Front Sheaf 4 (Topmost sunlit rag-vellum flyleaf, continuous full-bleed) */}
             <path
-              d="M 25.2 82 L 29.8 80 L 29.8 392 L 23.8 389 Z"
+              d="M 25.6 -24 C 23.0 380, 26.2 770, 23.6 1104 L 30.2 1104 L 30.2 -24 Z"
               fill="#fffaf0"
               stroke="#ffffff"
               strokeWidth="0.85"
-              strokeOpacity="0.92"
-              filter={`url(#${frontShadowId})`}
-            />
-            <path
-              d="M 24.2 376 L 29.8 374 L 29.8 742 L 25.4 739 Z"
-              fill="#fdf7eb"
-              stroke="#ffffff"
-              strokeWidth="0.85"
-              strokeOpacity="0.92"
-              filter={`url(#${frontShadowId})`}
-            />
-            <path
-              d="M 23.9 726 L 29.8 724 L 29.8 1000 L 25.4 998 Z"
-              fill="#fffaf0"
-              stroke="#ffffff"
-              strokeWidth="0.85"
-              strokeOpacity="0.92"
+              strokeOpacity="0.94"
               filter={`url(#${frontShadowId})`}
             />
           </svg>
 
-          {/* Outer 6.5px ebony-mahogany book-cover fore-edge lip & gilt bevel */}
-          <span className="absolute inset-y-0 right-0 w-[6.5px] border-l border-[#d4ad73]/55 bg-gradient-to-l from-[#070504] via-[#120d09] to-[#1e150f] shadow-[-2px_0_5px_rgba(0,0,0,0.65)]" />
+          {/* Matching soft lamplight falloff at top & bottom bezels over the front sheaves */}
+          <span
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(7,5,4,0.46) 0%, rgba(7,5,4,0.1) 7%, transparent 16%, transparent 84%, rgba(7,5,4,0.12) 93%, rgba(7,5,4,0.5) 100%)",
+            }}
+            className="absolute inset-y-0 right-[6.5px] w-[20px]"
+          />
+
+          {/* Outer 6.5px ebony-mahogany book-cover fore-edge lip & gilt bevel (seamless full height) */}
+          <span className="absolute inset-y-0 right-0 w-[6.5px] border-l border-[#d4ad73]/52 bg-gradient-to-l from-[#070504] via-[#120d09] to-[#1e150f] shadow-[-2px_0_5px_rgba(0,0,0,0.65)]" />
 
           {/* Interactive Brass & Crimson Fore-Edge Scroll Shuttle Nested Inside the Outer Mahogany Channel */}
           <div
@@ -1046,7 +1040,7 @@ export function ArchivalPaperSheaf({
             onPointerMove={handleRailPointerMove}
             onPointerUp={handleRailPointerEnd}
             onPointerCancel={handleRailPointerEnd}
-            className="group/rail pointer-events-none absolute top-[15px] right-0 bottom-[15px] z-40 w-[15px] cursor-pointer touch-none opacity-0 transition-opacity duration-200 data-[dragging=true]:cursor-grabbing data-[scrollable=true]:pointer-events-auto data-[scrollable=true]:opacity-100"
+            className="group/rail pointer-events-none absolute top-2.5 right-0 bottom-2.5 z-40 w-[15px] cursor-pointer touch-none opacity-0 transition-opacity duration-200 data-[dragging=true]:cursor-grabbing data-[scrollable=true]:pointer-events-auto data-[scrollable=true]:opacity-100"
           >
             <span className="pointer-events-none absolute inset-y-1.5 right-[2.5px] w-px bg-[#d4ad73]/22 transition-colors group-hover/rail:bg-[#ebd09e]/42" />
             <span
@@ -1057,10 +1051,6 @@ export function ArchivalPaperSheaf({
               <span className="h-[6px] w-[3px] bg-[#9e191c] ring-[0.5px] ring-[#fff4db]/75" />
             </span>
           </div>
-
-          {/* Sculpted bookbinding headband (top) & tailband (bottom) brass clasps */}
-          <span className="absolute top-0 right-0 h-[15px] w-[26px] border-b border-[#d4ad73]/65 bg-gradient-to-b from-[#261b13] to-[#120c08] shadow-[0_3px_8px_rgba(0,0,0,0.82)]" />
-          <span className="absolute bottom-0 right-0 h-[15px] w-[26px] border-t border-[#d4ad73]/65 bg-gradient-to-t from-[#261b13] to-[#120c08] shadow-[0_-3px_8px_rgba(0,0,0,0.82)]" />
         </div>
       </nav>
     </>
